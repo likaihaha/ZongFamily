@@ -623,7 +623,6 @@ select {
   padding: 14px;
   background: #fffaf0;
   color: var(--muted);
-  white-space: pre-wrap;
 }
 
 .report-result.success {
@@ -636,6 +635,26 @@ select {
   border: 1px solid var(--accent);
   background: var(--accent-soft);
   color: #71312d;
+}
+
+.report-result p {
+  margin: 10px 0 0;
+}
+
+.chain-review {
+  margin-top: 14px;
+  border-top: 1px solid rgba(63, 111, 82, 0.28);
+  padding-top: 12px;
+}
+
+.chain-review h4 {
+  margin: 0 0 8px;
+}
+
+.chain-review ol,
+.report-result ul {
+  margin: 8px 0 0;
+  padding-left: 22px;
 }
 
 @media (max-width: 980px) {

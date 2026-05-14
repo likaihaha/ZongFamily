@@ -715,14 +715,32 @@ function submitReport() {
 
   if (relationOk && heirOk && descendantOk) {
     result.className = "report-result success";
-    result.textContent = "提交成功。\n\n结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，陈嘉东为陈静之女。根据 1998 年香港家族信托条款，陈嘉东虽不姓宗，仍具备继承资格。\n\n关键证据：知青名册、照片背注、旧户籍、陈静出生记录、陈嘉东学籍、DNA 亲缘比对、信托条款。";
+    result.innerHTML = `
+      <strong>提交成功。</strong>
+      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，陈嘉东为陈静之女。根据 1998 年香港家族信托条款，陈嘉东虽不姓宗，仍具备继承资格。</p>
+      <div class="chain-review">
+        <h4>证据链回顾</h4>
+        <ol>
+          <li>公开版本只承认宗世昌与李桂兰的六名子女。</li>
+          <li>知青名册和供销系统花名册证明罗月珍曾与宗世昌在云山有交集。</li>
+          <li>1969 年照片背注和旧户籍共同指向罗建宁。</li>
+          <li>陈静出生记录确认其母为罗建宁。</li>
+          <li>陈嘉东学籍确认其为陈静之女。</li>
+          <li>DNA 亲缘比对和信托条款共同确认继承资格。</li>
+        </ol>
+      </div>
+    `;
   } else {
     const missing = [];
     if (!relationOk) missing.push("关键关系或绑定证据仍有错误");
     if (!heirOk) missing.push("隐藏血脉第一代后代判断不正确");
     if (!descendantOk) missing.push("2020 年现居云山且具资格的后代判断不正确");
     result.className = "report-result fail";
-    result.textContent = `提交失败。\n\n${missing.map((item) => `- ${item}`).join("\n")}\n\n提示：不要只看论坛传闻。信托条款、照片背注、户籍和 DNA 记录才是强证据。`;
+    result.innerHTML = `
+      <strong>提交失败。</strong>
+      <ul>${missing.map((item) => `<li>${item}</li>`).join("")}</ul>
+      <p>提示：不要只看论坛传闻。信托条款、照片背注、户籍和 DNA 记录才是强证据。</p>
+    `;
   }
 }
 
