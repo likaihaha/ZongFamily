@@ -423,7 +423,15 @@ function renderFilters() {
 }
 
 function renderResults() {
-  const results = documents.filter(docMatches).sort((a, b) => b.trust - a.trust || b.year - a.year);
+  const hasQuery = Boolean(state.query.trim());
+  const results = documents
+    .map((doc, index) => ({ doc, index }))
+    .filter(({ doc }) => docMatches(doc))
+    .sort((a, b) => {
+      if (!hasQuery && state.source === "全部") return a.index - b.index;
+      return b.doc.trust - a.doc.trust || b.doc.year - a.doc.year || a.index - b.index;
+    })
+    .map(({ doc }) => doc);
   els.resultList.innerHTML = results.map((doc) => {
     const read = state.readDocs.has(doc.id) ? "is-read" : "";
     return `
