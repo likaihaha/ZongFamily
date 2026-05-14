@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>云山宗氏案 MVP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">档</span>
+        <div>
+          <h1>云山档案检索系统</h1>
+          <p>宗世昌遗产案 · MVP 0.1</p>
+        </div>
+      </div>
+
+      <nav class="tabs" aria-label="主导航">
+        <button class="tab is-active" data-view="search">资料库</button>
+        <button class="tab" data-view="tree">家谱</button>
+        <button class="tab" data-view="evidence">证据箱</button>
+        <button class="tab" data-view="report">提交</button>
+      </nav>
+
+      <section class="case-card">
+        <h2>当前目标</h2>
+        <ol>
+          <li>确认宗世昌公开家庭。</li>
+          <li>找出隐藏的第七支血脉。</li>
+          <li>为关键关系绑定证据。</li>
+          <li>提交最终继承人判断。</li>
+        </ol>
+      </section>
+
+      <section class="meter-card">
+        <div>
+          <span>资料阅读</span>
+          <strong id="read-count">0 / 0</strong>
+        </div>
+        <div>
+          <span>证据收藏</span>
+          <strong id="evidence-count">0</strong>
+        </div>
+        <div>
+          <span>关系完成</span>
+          <strong id="relation-count">0 / 4</strong>
+        </div>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">内部资料终端</p>
+          <h2 id="view-title">资料库</h2>
+        </div>
+        <div class="top-actions">
+          <button id="sound-btn" class="ghost-btn">声音：开</button>
+          <button id="save-btn" class="ghost-btn">保存</button>
+          <button id="reset-btn" class="ghost-btn danger">重置进度</button>
+        </div>
+      </header>
+
+      <section id="search-view" class="view is-active">
+        <div class="search-layout">
+          <section class="panel search-panel">
+            <label class="search-label" for="query">关键词检索</label>
+            <div class="search-row">
+              <input id="query" type="search" placeholder="试试：宗世昌、罗月珍、陈嘉东、信托、知青">
+              <button id="search-btn">搜索</button>
+            </div>
+            <div class="filter-row" id="source-filters"></div>
+            <div id="result-list" class="result-list"></div>
+          </section>
+
+          <article class="panel document-panel">
+            <div id="document-empty" class="empty-state">
+              <img src="assets/images/style-ui-sample.png" alt="云山宗氏案风格样张">
+              <h3>选择一份资料开始调查</h3>
+              <p>资料来源可信度不同。档案、户籍、信托、DNA 报告通常比论坛八卦更可靠。</p>
+            </div>
+            <div id="document-view" class="document-view" hidden></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="tree-view" class="view">
+        <div class="tree-layout">
+          <section class="panel people-panel">
+            <h3>人物档案</h3>
+            <div id="people-list" class="people-list"></div>
+          </section>
+          <section class="panel relation-panel">
+            <h3>关键关系推理</h3>
+            <p class="hint">为每条关系选择正确人物，并绑定你已经收藏的证据。提交时只检查关键关系，旁支可在后续版本扩展。</p>
+            <div id="relation-list" class="relation-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="evidence-view" class="view">
+        <section class="panel">
+          <h3>证据箱</h3>
+          <p class="hint">收藏过的资料会出现在这里。关键关系需要绑定强证据，而不是只凭八卦。</p>
+          <div id="evidence-list" class="evidence-list"></div>
+        </section>
+      </section>
+
+      <section id="report-view" class="view">
+        <section class="panel report-panel">
+          <h3>最终提交</h3>
+          <p>请提交你对“第七支血脉”的判断。系统会检查关键关系、证据绑定和继承资格。</p>
+
+          <label class="field-label" for="heir-select">谁是宗世昌隐藏血脉的第一代后代？</label>
+          <select id="heir-select"></select>
+
+          <label class="field-label" for="descendant-select">2020 年仍在云山县、具有继承资格的后代是谁？</label>
+          <select id="descendant-select"></select>
+
+          <button id="submit-report" class="primary-action">提交报告</button>
+          <div id="report-result" class="report-result" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

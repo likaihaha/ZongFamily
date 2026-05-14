@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《云山宗氏案》开发计划</title>
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --paper: #fffdf7;
+      --ink: #24211c;
+      --muted: #6e665c;
+      --line: #d8cfbf;
+      --accent: #8f3129;
+      --accent-bg: #f4ded9;
+      --blue: #245b7d;
+      --green: #3e7150;
+      --gold: #8b6f35;
+      --shadow: 0 18px 44px rgba(38, 30, 19, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 253, 247, 0.8), rgba(255, 253, 247, 0.9)),
+        repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 7px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.92);
+    }
+
+    .hero {
+      padding: 56px 0 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.64);
+      color: #51483d;
+      font-size: 13px;
+    }
+
+    main {
+      padding: 34px 0 72px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 253, 247, 0.84);
+      box-shadow: 0 10px 24px rgba(38, 30, 19, 0.06);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 7px 8px;
+      color: var(--blue);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: #eef4f6;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    section {
+      padding: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul, ol {
+      margin: 10px 0 18px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    table {
+      width: 100%;
+      margin: 16px 0 24px;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #efe7da;
+      color: #40382f;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .phase {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 3px 9px;
+      background: #ecf3ee;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 14px 16px;
+      background: var(--accent-bg);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffaf0;
+    }
+
+    .mini b {
+      display: block;
+      margin-bottom: 5px;
+      color: #3f382f;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      section {
+        padding: 24px 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="eyebrow">全流程开发计划</div>
+      <h1>《云山宗氏案》开发计划</h1>
+      <p class="subtitle">从文案真相表、谜题架构、核心代码、美术资产、音效接入，到 Demo 测试、完整内容生产、QA 和上线维护的端到端制作路线。</p>
+      <div class="meta">
+        <span class="pill">周期：6-9 个月</span>
+        <span class="pill">首版：一个完整家族案</span>
+        <span class="pill">团队：3-5 人小团队</span>
+        <span class="pill">目标：Steam 买断制</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <nav>
+      <strong>目录</strong>
+      <a href="#phase0">0. 项目准备期</a>
+      <a href="#phase1">1. 真相表与谜题架构</a>
+      <a href="#phase2">2. 核心原型期</a>
+      <a href="#phase3">3. Demo 内容制作期</a>
+      <a href="#phase4">4. 完整内容生产期</a>
+      <a href="#phase5">5. 系统打磨期</a>
+      <a href="#phase6">6. QA 与发布准备期</a>
+      <a href="#phase7">7. 上线后维护期</a>
+      <a href="#schedule">排期总览</a>
+      <a href="#mvp">最小可行版本</a>
+    </nav>
+
+    <article>
+      <section id="phase0">
+        <h2><span class="phase">0</span> 项目准备期：1-2 周</h2>
+        <p><strong>目标：</strong>确定游戏边界，避免一开始就把内容写散。</p>
+
+        <h3>产出</h3>
+        <ul>
+          <li>项目一句话定位。</li>
+          <li>首发案范围：宗世昌遗产案。</li>
+          <li>核心玩法定义：搜索、阅读、家谱、证据绑定、提交。</li>
+          <li>目标流程时长：6-8 小时。</li>
+          <li>主要人物数量：35-45 个。</li>
+          <li>线索数量：核心 60-80 条，烟雾 30-50 条。</li>
+          <li>技术选型：建议 Electron + React，或 Godot 4。</li>
+        </ul>
+
+        <h3>关键决策</h3>
+        <ul>
+          <li>首版只做一个完整案件。</li>
+          <li>不做开放式 AI 对话。</li>
+          <li>不做复杂 3D 场景。</li>
+          <li>不追求海量文本，优先保证推理闭环。</li>
+        </ul>
+      </section>
+
+      <section id="phase1">
+        <h2><span class="phase">1</span> 真相表与谜题架构期：2-4 周</h2>
+        <p><strong>目标：</strong>先把后台真相锁死，再生成线索。这是全项目最重要阶段。</p>
+
+        <h3>文案 / 策划任务</h3>
+        <ul>
+          <li>建立人物总表、家庭关系表、时间线表。</li>
+          <li>建立真实关系、公开关系、误传关系。</li>
+          <li>建立字辈规则和信托规则。</li>
+          <li>明确最终答案。</li>
+          <li>明确每个关键答案需要哪些证据支持。</li>
+          <li>明确每条误导线索误导什么。</li>
+        </ul>
+
+        <h3>核心表格</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>表格</th>
+              <th>字段</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>人物表</td>
+              <td>ID、姓名、别名、性别、出生年、死亡年、职业、父亲、母亲、配偶、子女、是否血亲、是否公开承认。</td>
+              <td>作为所有文本和系统数据的源头。</td>
+            </tr>
+            <tr>
+              <td>线索表</td>
+              <td>ID、标题、来源、年份、可信度、关键词、解锁条件、包含事实、包含误导、关联人物。</td>
+              <td>管理资料库内容和搜索命中。</td>
+            </tr>
+            <tr>
+              <td>证据链表</td>
+              <td>结论、必要证据、辅助证据、误导证据、提交条件。</td>
+              <td>确保答案可被唯一推导。</td>
+            </tr>
+            <tr>
+              <td>时间线表</td>
+              <td>年份、事件、涉及人物、来源线索。</td>
+              <td>检查年龄、婚期和历史顺序。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>程序任务</h3>
+        <ul>
+          <li>设计数据结构草案。</li>
+          <li>确认人物、关系、线索、证据如何存储。</li>
+          <li>写一个简单校验脚本，检查年龄和关系矛盾。</li>
+        </ul>
+
+        <h3>美术任务</h3>
+        <ul>
+          <li>收集参考图。</li>
+          <li>确定视觉关键词。</li>
+          <li>生成或绘制风格样张。</li>
+          <li>确定 UI 方向：档案终端、旧电脑、资料库。</li>
+        </ul>
+
+        <div class="callout">
+          <strong>阶段验收：</strong>不看任何正式文本，仅凭真相表能推导完整答案；没有年龄、婚期、代际硬矛盾；每个关键谜底至少有 2-3 条证据支撑。
+        </div>
+      </section>
+
+      <section id="phase2">
+        <h2><span class="phase">2</span> 核心原型期：4-6 周</h2>
+        <p><strong>目标：</strong>先做可玩的“资料搜索 + 家谱填写 + 提交判断”闭环。</p>
+
+        <h3>代码任务</h3>
+        <div class="grid">
+          <div class="mini"><b>资料系统</b>资料库页面、关键词搜索、文档阅读器。</div>
+          <div class="mini"><b>人物系统</b>人物数据库、别名、出生年和基础字段。</div>
+          <div class="mini"><b>家谱系统</b>节点编辑、父母/配偶/子女关系填写。</div>
+          <div class="mini"><b>证据系统</b>证据收藏、证据绑定、最终提交校验、本地存档。</div>
+        </div>
+
+        <h3>文案任务</h3>
+        <ul>
+          <li>写 20-30 条最核心线索。</li>
+          <li>写 5-8 条误导线索。</li>
+          <li>写第一章到第三章的任务引导。</li>
+          <li>写系统提示文案。</li>
+          <li>写提交成功 / 失败反馈。</li>
+        </ul>
+
+        <h3>美术任务</h3>
+        <ul>
+          <li>制作基础 UI 皮肤。</li>
+          <li>制作 3-5 套文档模板。</li>
+          <li>制作家谱节点样式。</li>
+          <li>制作基础图标。</li>
+          <li>制作主界面背景。</li>
+        </ul>
+
+        <h3>音效任务</h3>
+        <ul>
+          <li>键盘声、点击声、搜索声。</li>
+          <li>打开文档声、证据收藏声、关系确认声。</li>
+        </ul>
+      </section>
+
+      <section id="phase3">
+        <h2><span class="phase">3</span> Demo 内容制作期：4-8 周</h2>
+        <p><strong>目标：</strong>做出可公开试玩的 60-90 分钟 Demo。</p>
+
+        <h3>Demo 范围</h3>
+        <ul>
+          <li>第一章：确认宗世昌公开六子女。</li>
+          <li>第二章：发现八卦矛盾。</li>
+          <li>第三章：看到信托条款，意识到有隐藏血脉。</li>
+        </ul>
+
+        <h3>文案任务</h3>
+        <ul>
+          <li>完成 Demo 所需 40-50 条线索。</li>
+          <li>完成核心人物 20-25 个。</li>
+          <li>完成所有 Demo 内文档排版。</li>
+          <li>完成任务日志和阶段提示。</li>
+          <li>写 Demo 结尾悬念。</li>
+        </ul>
+
+        <h3>代码任务</h3>
+        <ul>
+          <li>搜索结果排序、关键词高亮、已读/未读状态。</li>
+          <li>资料收藏、笔记系统、家谱缩放和拖拽。</li>
+          <li>冲突提示、新关键词发现提示、设置菜单。</li>
+          <li>存档 / 读档稳定化。</li>
+        </ul>
+
+        <h3>美术与音效任务</h3>
+        <ul>
+          <li>完成主界面、资料库、家谱、证据箱界面。</li>
+          <li>完成 6-8 套文档皮肤。</li>
+          <li>制作主要人物头像或剪影。</li>
+          <li>制作 Steam Demo 封面图。</li>
+          <li>接入主界面环境音乐、阅读资料环境音乐、关键线索提示音。</li>
+        </ul>
+
+        <div class="callout">
+          <strong>阶段验收：</strong>陌生玩家能在 60-90 分钟内完成 Demo，理解核心玩法，并愿意继续追查“第七支血脉”。
+        </div>
+      </section>
+
+      <section id="phase4">
+        <h2><span class="phase">4</span> 完整内容生产期：8-12 周</h2>
+        <p><strong>目标：</strong>把宗世昌案做完整。</p>
+
+        <h3>文案任务</h3>
+        <ul>
+          <li>完成全部人物 35-45 个。</li>
+          <li>完成核心线索 60-80 条。</li>
+          <li>完成烟雾线索 30-50 条。</li>
+          <li>完成结局提交材料。</li>
+          <li>完成所有文档的来源、年份、关键词。</li>
+          <li>完成所有人物别名和错名设计。</li>
+          <li>完成所有证据链绑定。</li>
+        </ul>
+
+        <h3>代码任务</h3>
+        <ul>
+          <li>完善完整章节流程。</li>
+          <li>加入章节目标和提示系统。</li>
+          <li>加入最终报告生成。</li>
+          <li>加入成就系统。</li>
+          <li>加入统计数据：阅读数、搜索词、完成度。</li>
+          <li>优化搜索性能和家谱大图性能。</li>
+          <li>增加无障碍设置：字号、音量、动效开关。</li>
+        </ul>
+
+        <h3>美术任务</h3>
+        <ul>
+          <li>完成人物头像 / 剪影 40-60 个。</li>
+          <li>完成旧照片 10-20 张。</li>
+          <li>完成所有文档模板。</li>
+          <li>完成所有章节插图。</li>
+          <li>完成宣传图、Steam 商店胶囊图、图标和按钮状态。</li>
+        </ul>
+
+        <h3>音效任务</h3>
+        <ul>
+          <li>完整 UI 音效。</li>
+          <li>章节转场音效、关键发现音效、错误提交音效、结局音乐。</li>
+          <li>可选语音片段：宗世昌临终录音、陈静博客朗读、匿名电话。</li>
+        </ul>
+      </section>
+
+      <section id="phase5">
+        <h2><span class="phase">5</span> 系统打磨期：4-6 周</h2>
+        <p><strong>目标：</strong>让游戏从“能玩”变成“好玩”。</p>
+
+        <h3>重点优化</h3>
+        <ul>
+          <li>搜索体验、线索解锁节奏、家谱操作手感。</li>
+          <li>证据绑定流程、卡关提示、文档阅读舒适度。</li>
+          <li>任务目标清晰度、UI 字号和信息密度。</li>
+        </ul>
+
+        <h3>文案打磨</h3>
+        <ul>
+          <li>删掉无效线索，合并重复线索。</li>
+          <li>调整八卦口吻，避免过度滑稽。</li>
+          <li>增强关键线索的记忆点。</li>
+          <li>降低纯读文本疲劳。</li>
+          <li>确保每条线索都承担至少一个功能：给事实、给关键词、给误导、给情绪。</li>
+        </ul>
+
+        <h3>代码与美术打磨</h3>
+        <ul>
+          <li>搜索容错、别名命中、关键词推荐、自动保存。</li>
+          <li>快捷键、资料标签、家谱布局自动整理。</li>
+          <li>错误提交反馈更具体。</li>
+          <li>统一字体、纸张质感、扫描噪点。</li>
+          <li>优化色彩对比，保证长文本可读。</li>
+        </ul>
+
+        <h3>测试任务</h3>
+        <ul>
+          <li>3-5 名核心推理玩家测试。</li>
+          <li>3-5 名普通玩家测试。</li>
+          <li>记录所有搜索词、平均卡关时长、误判最多的人物关系。</li>
+          <li>根据数据调整线索。</li>
+        </ul>
+      </section>
+
+      <section id="phase6">
+        <h2><span class="phase">6</span> QA 与发布准备期：4-6 周</h2>
+        <p><strong>目标：</strong>修 bug、补体验、准备上线。</p>
+
+        <h3>QA 测试</h3>
+        <ul>
+          <li>全流程测试、存档读档测试、不同分辨率测试。</li>
+          <li>字体显示测试、搜索边界测试、家谱节点极端操作测试。</li>
+          <li>重复提交测试、音量设置测试、Steam Deck 初步兼容测试。</li>
+        </ul>
+
+        <h3>文案 QA</h3>
+        <ul>
+          <li>错别字、人名一致性、年份一致性、称谓一致性。</li>
+          <li>年龄计算、来源可信度一致性、关键词遗漏、文档格式统一。</li>
+        </ul>
+
+        <h3>发布物料</h3>
+        <ul>
+          <li>Steam 商店页、游戏简介、宣传截图、预告片。</li>
+          <li>Demo 版本、Press Kit、开发者介绍、常见问题。</li>
+          <li>隐私说明、字体 / 音效 / 素材授权清单。</li>
+        </ul>
+      </section>
+
+      <section id="phase7">
+        <h2><span class="phase">7</span> 上线后维护期：1-3 个月</h2>
+        <h3>任务</h3>
+        <ul>
+          <li>收集玩家反馈，修复 bug。</li>
+          <li>调整卡关提示，增加搜索同义词。</li>
+          <li>修正文案歧义，优化结局报告。</li>
+          <li>准备 DLC 或第二案。</li>
+        </ul>
+
+        <h3>重点观察数据</h3>
+        <ul>
+          <li>玩家最常搜但搜不到的词。</li>
+          <li>玩家最常填错的关系。</li>
+          <li>玩家最常卡住的章节。</li>
+          <li>玩家读完率最低的资料。</li>
+          <li>玩家平均通关时间。</li>
+          <li>玩家是否理解最终真相。</li>
+        </ul>
+      </section>
+
+      <section id="schedule">
+        <h2>推荐排期总览</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>时间</th>
+              <th>核心成果</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>项目准备</td>
+              <td>1-2 周</td>
+              <td>确定范围、玩法、内容规模和技术路线。</td>
+            </tr>
+            <tr>
+              <td>真相表与谜题架构</td>
+              <td>2-4 周</td>
+              <td>锁定后台真相、证据链和误导结构。</td>
+            </tr>
+            <tr>
+              <td>核心原型</td>
+              <td>4-6 周</td>
+              <td>跑通搜索、阅读、家谱、证据、提交闭环。</td>
+            </tr>
+            <tr>
+              <td>Demo 内容</td>
+              <td>4-8 周</td>
+              <td>完成 60-90 分钟可公开试玩版本。</td>
+            </tr>
+            <tr>
+              <td>完整内容生产</td>
+              <td>8-12 周</td>
+              <td>完成宗世昌案全部内容。</td>
+            </tr>
+            <tr>
+              <td>系统打磨</td>
+              <td>4-6 周</td>
+              <td>优化搜索、家谱、证据绑定和阅读体验。</td>
+            </tr>
+            <tr>
+              <td>QA 与发布准备</td>
+              <td>4-6 周</td>
+              <td>修 bug、准备 Steam 页面与发布物料。</td>
+            </tr>
+            <tr>
+              <td>总计</td>
+              <td>6-9 个月</td>
+              <td>首发一个完整家族推理案。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="mvp">
+        <h2>最小可行版本</h2>
+        <p>如果想更快验证市场，可以先做一个 2 个月 MVP。</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>内容</th>
+              <th>范围</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>人物</td>
+              <td>15-20 个。</td>
+            </tr>
+            <tr>
+              <td>线索</td>
+              <td>30-40 条。</td>
+            </tr>
+            <tr>
+              <td>流程</td>
+              <td>约 60 分钟。</td>
+            </tr>
+            <tr>
+              <td>系统</td>
+              <td>搜索、阅读、家谱、提交。</td>
+            </tr>
+            <tr>
+              <td>美术</td>
+              <td>一套 UI + 三种文档模板。</td>
+            </tr>
+            <tr>
+              <td>真相</td>
+              <td>只做陈静 / 罗建宁 / 罗月珍隐藏血脉线。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>MVP 验证目标：</strong>确认玩家是否喜欢“中文家谱推理 + 档案检索”的核心玩法。验证通过后，再扩展宗氏全家族。
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    《云山宗氏案》开发计划 · 从文案到代码、美术、音效、测试和上线维护
+  </footer>
+</body>
+</html>

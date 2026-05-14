@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《云山宗氏案》美术与音频提示词清单</title>
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --paper: #fffdf7;
+      --ink: #24211c;
+      --muted: #6e665c;
+      --line: #d8cfbf;
+      --accent: #8f3129;
+      --accent-bg: #f4ded9;
+      --blue: #245b7d;
+      --green: #3e7150;
+      --shadow: 0 18px 44px rgba(38, 30, 19, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 253, 247, 0.82), rgba(255, 253, 247, 0.92)),
+        repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 7px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.92);
+    }
+
+    .hero {
+      padding: 56px 0 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.64);
+      color: #51483d;
+      font-size: 13px;
+    }
+
+    main {
+      padding: 34px 0 72px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 258px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 253, 247, 0.84);
+      box-shadow: 0 10px 24px rgba(38, 30, 19, 0.06);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 7px 8px;
+      color: var(--blue);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: #eef4f6;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    section {
+      padding: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul {
+      margin: 10px 0 18px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    table {
+      width: 100%;
+      margin: 16px 0 24px;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #efe7da;
+      color: #40382f;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code, pre {
+      font-family: Consolas, "SFMono-Regular", "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      border: 1px solid #d6d1ca;
+      border-radius: 8px;
+      padding: 14px;
+      background: #1f2428;
+      color: #f2f0e8;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .prompt {
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid #d6d1ca;
+      border-radius: 8px;
+      background: #fbf7ee;
+      color: #302b24;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 14px 16px;
+      background: var(--accent-bg);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 3px 9px;
+      background: #ecf3ee;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 880px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      section {
+        padding: 24px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="eyebrow">资产生成提示词 v0.1</div>
+      <h1>《云山宗氏案》美术与音频提示词清单</h1>
+      <p class="subtitle">用于生成游戏美术样张、界面素材、文档模板、人物档案照、宣传图、背景音乐与 UI 音效。整体方向是县城档案调查、低饱和、真实、克制悬疑，不走恐怖和赛博朋克路线。</p>
+      <div class="meta">
+        <span class="pill">美术：档案调查 / 县城机关 / 旧互联网</span>
+        <span class="pill">音乐：极简悬疑 / 环境氛围 / 长时间不疲劳</span>
+        <span class="pill">音效：旧电脑 / 纸张 / 搜索终端</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <nav>
+      <strong>目录</strong>
+      <a href="#visual-base">美术通用提示词</a>
+      <a href="#backgrounds">背景图</a>
+      <a href="#portraits">人物头像</a>
+      <a href="#photos">旧照片</a>
+      <a href="#documents">文档模板</a>
+      <a href="#web-ui">论坛与网页</a>
+      <a href="#icons">UI 图标</a>
+      <a href="#genealogy">家谱节点</a>
+      <a href="#promo">宣传图</a>
+      <a href="#audio-base">音频通用提示词</a>
+      <a href="#music">音乐提示词</a>
+      <a href="#sfx">音效提示词</a>
+      <a href="#voice">语音提示词</a>
+    </nav>
+
+    <article>
+      <section id="visual-base">
+        <h2>美术通用提示词</h2>
+        <h3>通用风格前缀</h3>
+        <pre><code>中国县城档案调查游戏美术，写实但略带复古质感，低饱和色彩，旧纸张纹理，扫描噪点，真实办公资料感，克制悬疑氛围，非恐怖，非赛博朋克，干净构图，适合作为文字推理游戏素材</code></pre>
+        <h3>通用反向提示词</h3>
+        <pre><code>不要血腥，不要恐怖怪物，不要霓虹赛博，不要夸张动漫风，不要现代豪华都市感，不要过度电影海报化，不要虚构乱码文字占据主体，不要真实品牌标志，不要水印</code></pre>
+      </section>
+
+      <section id="backgrounds">
+        <h2>背景图</h2>
+        <table>
+          <thead><tr><th>资产</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>档案室背景</td><td><div class="prompt">中国县城档案馆内部，老式铁皮档案柜，泛黄文件盒，木质办公桌，台灯微亮，空气中有细小灰尘，安静压抑，1990年代机关单位质感，横版 16:9</div></td></tr>
+            <tr><td>办公桌背景</td><td><div class="prompt">深夜调查员办公桌，旧电脑显示器，摊开的档案袋，钢笔，搪瓷杯，几张老照片，暖黄台灯，真实静物摄影风格，横版 16:9</div></td></tr>
+            <tr><td>云山县街景</td><td><div class="prompt">中国南方小县城街道，旧商铺招牌，灰白楼房，远处山影，阴天，2020年前后县城生活感，纪实摄影风格，横版 16:9</div></td></tr>
+            <tr><td>世昌集团大楼</td><td><div class="prompt">县城民营企业总部大楼，1990年代建成的办公楼，门口有简洁企业牌匾，低调但有年代感，阴天，写实摄影风格</div></td></tr>
+            <tr><td>县医院走廊</td><td><div class="prompt">县人民医院旧楼走廊，白色瓷砖，绿色墙裙，塑料椅，公告栏，冷色荧光灯，真实医疗机构氛围</div></td></tr>
+            <tr><td>县一中校门</td><td><div class="prompt">中国县城重点高中校门，红色校名牌匾，学生自行车，公告栏，夏日午后，纪实风格</div></td></tr>
+            <tr><td>老式网吧</td><td><div class="prompt">2000年代县城电脑室，老式 CRT 显示器，塑料键盘，昏暗灯光，墙上贴着过期海报，怀旧写实风格</div></td></tr>
+            <tr><td>KTV包厢</td><td><div class="prompt">县城KTV包厢，深色沙发，旧麦克风，彩色灯带但不过度炫丽，略显疲惫的生活感，写实风格</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="portraits">
+        <h2>人物头像 / 剪影</h2>
+        <table>
+          <thead><tr><th>人物类型</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>宗世昌老年头像</td><td><div class="prompt">80多岁中国县城企业家，短白发，表情严肃，穿深色中山装或旧西装，黑白档案照，轻微磨损，证件照构图</div></td></tr>
+            <tr><td>宗世昌青年照片</td><td><div class="prompt">1960年代中国青年男子，朴素工装，神情坚毅，黑白老照片，边缘泛黄，略微失焦</div></td></tr>
+            <tr><td>李桂兰头像</td><td><div class="prompt">老年中国女性，朴素短发，深色棉衣，表情温和但坚韧，黑白证件照，县城档案资料风格</div></td></tr>
+            <tr><td>罗月珍知青照</td><td><div class="prompt">1960年代女知青，麻花辫，朴素衬衫，年轻但忧郁，黑白老照片，轻微划痕，真实年代感</div></td></tr>
+            <tr><td>罗建宁档案照</td><td><div class="prompt">1970年代出生的中国女性，青年证件照，普通工人家庭气质，低调，黑白或褪色彩照</div></td></tr>
+            <tr><td>陈静头像</td><td><div class="prompt">30多岁县城KTV女老板，生活感强，表情坚强，非 glamour，半身证件照风格，低饱和</div></td></tr>
+            <tr><td>陈嘉东学生照</td><td><div class="prompt">高中女生，校服，干净短发或马尾，表情克制，县一中学生档案照，真实自然</div></td></tr>
+            <tr><td>宗建红头像</td><td><div class="prompt">50多岁女企业家，短发，深色西装，强势克制，企业官网头像风格</div></td></tr>
+            <tr><td>宗建芳头像</td><td><div class="prompt">60岁左右妇联干部，端庄，短发，深色外套，机关单位宣传照</div></td></tr>
+            <tr><td>匿名人物剪影</td><td><div class="prompt">无法辨认的中国成年人剪影，档案遮挡效果，脸部被阴影或纸张裁切遮住，悬疑但不恐怖</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="photos">
+        <h2>旧照片类</h2>
+        <table>
+          <thead><tr><th>资产</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>1969年春节合影</td><td><div class="prompt">1969年中国县城单位春节联欢会黑白合影，十几名男女站在礼堂前，朴素服装，横幅模糊，照片边缘泛黄，有手写标记空间</div></td></tr>
+            <tr><td>世昌综合商店旧照</td><td><div class="prompt">1980年代初中国县城小商店门面，木质柜台，搪瓷招牌，夫妻经营，黑白或褪色彩照，真实纪实</div></td></tr>
+            <tr><td>1995年挂牌仪式</td><td><div class="prompt">1990年代县城企业挂牌仪式，红布招牌，员工合影，旧彩色照片，颗粒感</div></td></tr>
+            <tr><td>陈静KTV开业照</td><td><div class="prompt">2015年县城KTV开业照片，花篮，红色横幅，普通装修，几名亲友合影，手机照片质感</div></td></tr>
+            <tr><td>县一中表彰照片</td><td><div class="prompt">高中领奖照片，红色背景板，学生拿奖状，老师站旁边，县城学校宣传照</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="documents">
+        <h2>文档模板</h2>
+        <table>
+          <thead><tr><th>模板</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>县志扫描页</td><td><div class="prompt">中国地方县志扫描页，竖排或横排中文排版，泛黄纸张，黑色宋体文字，页边有污渍，正式史志资料感</div></td></tr>
+            <tr><td>工会讣告</td><td><div class="prompt">1980年代中国工厂工会讣告，白纸黑字，标题庄重，纸张发黄，红色公章，扫描件风格</div></td></tr>
+            <tr><td>内部会议纪要</td><td><div class="prompt">企业内部会议纪要，A4纸，表格抬头，密级标记，红色印章，复印痕迹，真实办公文件</div></td></tr>
+            <tr><td>香港信托文件</td><td><div class="prompt">1990年代法律信托文件，英文与中文混排，正式合同版式，签名页，低饱和扫描件</div></td></tr>
+            <tr><td>DNA报告</td><td><div class="prompt">疾控中心亲缘鉴定报告，医学表格，编号，印章，关键数据被部分遮挡，真实扫描件</div></td></tr>
+            <tr><td>户籍证明</td><td><div class="prompt">中国县城户籍档案页，表格，手写姓名，红色公章，部分信息打码，旧纸质档案感</div></td></tr>
+            <tr><td>妇联帮扶档案</td><td><div class="prompt">县妇联创业帮扶登记表，表格栏目，手写备注，蓝黑钢笔字，机关档案风格</div></td></tr>
+            <tr><td>报刊剪报</td><td><div class="prompt">地方报纸剪报，窄栏排版，黑白照片，标题醒目，纸张边缘不规则，贴在档案本上</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="web-ui">
+        <h2>论坛 / 博客 / 网页界面</h2>
+        <table>
+          <thead><tr><th>资产</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>2008年地方论坛</td><td><div class="prompt">2008年前后中文地方论坛网页界面，浅蓝灰色表格布局，头像小图标，楼层回复，老互联网风格</div></td></tr>
+            <tr><td>2014年个人博客</td><td><div class="prompt">2014年中文个人博客页面，白底，侧边栏，日记标题，日期，生活化文字区，旧网页截图风格</div></td></tr>
+            <tr><td>2020年短视频评论</td><td><div class="prompt">手机短视频评论区界面，中文评论列表，头像圆形，点赞图标，白色背景，真实移动端截图风格</div></td></tr>
+            <tr><td>企业官网领导页</td><td><div class="prompt">县城企业集团官网“领导团队”页面，蓝白配色，人物头像卡片，正式但略显过时的网站风格</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="icons">
+        <h2>UI 图标</h2>
+        <table>
+          <thead><tr><th>图标</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>搜索图标</td><td><div class="prompt">简洁线性图标，放大镜，适合档案调查游戏UI，单色深蓝</div></td></tr>
+            <tr><td>证据图标</td><td><div class="prompt">简洁线性图标，文件夹中夹着纸张，单色暗红</div></td></tr>
+            <tr><td>人物图标</td><td><div class="prompt">简洁线性图标，证件头像轮廓，单色墨黑</div></td></tr>
+            <tr><td>家谱图标</td><td><div class="prompt">简洁线性图标，三个人物节点连接成家族树，单色深绿</div></td></tr>
+            <tr><td>冲突提示图标</td><td><div class="prompt">简洁线性图标，三角警告符号加文件角标，单色暗红</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="genealogy">
+        <h2>家谱节点样式</h2>
+        <table>
+          <thead><tr><th>节点</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>已确认血缘节点</td><td><div class="prompt">文字推理游戏家谱节点UI，矩形资料卡，深绿色细边框，姓名、出生年、证据数量位置，干净清晰</div></td></tr>
+            <tr><td>未确认人物节点</td><td><div class="prompt">家谱节点UI，灰色虚线边框，问号头像，低对比度，表示身份未确认</div></td></tr>
+            <tr><td>非婚生关系节点</td><td><div class="prompt">家谱关系UI，暗红色虚线连接，带小型证据标记，克制严肃</div></td></tr>
+            <tr><td>玩家猜测节点</td><td><div class="prompt">家谱节点UI，蓝色边框，角落有铅笔图标，表示玩家手动填写</div></td></tr>
+            <tr><td>错误冲突节点</td><td><div class="prompt">家谱节点UI，浅红底色，暗红边框，角落警告图标，提示年龄或关系冲突</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="promo">
+        <h2>关键宣传图</h2>
+        <table>
+          <thead><tr><th>资产</th><th>提示词</th></tr></thead>
+          <tbody>
+            <tr><td>Steam主视觉</td><td><div class="prompt">中国县城档案悬疑游戏主视觉，一张摊开的宗氏家谱图，周围散落老照片、信托文件、红色印章、旧电脑屏幕，画面中心留出标题空间，克制悬疑，写实插画风，横版 16:9</div></td></tr>
+            <tr><td>商店胶囊图</td><td><div class="prompt">旧档案袋、红色“绝密”印章、模糊家谱线条、县城企业大楼剪影，强识别度，适合Steam胶囊图，简洁构图</div></td></tr>
+            <tr><td>Demo封面</td><td><div class="prompt">深夜档案桌面，旧电脑屏幕显示“搜索：罗月珍”，旁边是泛黄合影和信托文件，悬疑但不恐怖，横版</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="audio-base">
+        <h2>音频通用提示词</h2>
+        <h3>音乐通用风格</h3>
+        <pre><code>为中文档案推理游戏《云山宗氏案》创作背景音乐。整体氛围为深夜档案室、县城旧机关、家族秘密、克制悬疑。音乐要安静、低饱和、真实、有年代感，适合长时间阅读文本和推理。不要恐怖惊吓，不要动作大片，不要赛博朋克，不要流行歌曲结构，不要明显旋律喧宾夺主。循环播放自然，结尾可无缝回到开头。</code></pre>
+
+        <h3>音效通用风格</h3>
+        <pre><code>为文字推理游戏制作短小、干净、低侵入的 UI 音效。声音来源应像旧电脑、纸张、档案柜、扫描仪、办公室设备。音效长度短，瞬态清晰，不能刺耳，不能像手机游戏奖励音，不能恐怖化。适合玩家长时间搜索资料、阅读文档、整理家谱。</code></pre>
+      </section>
+
+      <section id="music">
+        <h2>音乐提示词</h2>
+        <table>
+          <thead><tr><th>音乐资产</th><th>提示词</th><th>建议规格</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>主菜单主题</td>
+              <td><div class="prompt">深夜县城档案室氛围音乐，低频持续音，极简钢琴单音，远处旧电流噪声，淡淡弦乐垫底，克制悬疑但不恐怖。情绪像打开一份尘封多年的家族档案。不要鼓点，不要强旋律，适合主菜单循环。</div></td>
+              <td>60-90 秒，无缝循环，-18 LUFS 左右</td>
+            </tr>
+            <tr>
+              <td>资料阅读循环</td>
+              <td><div class="prompt">非常安静的资料阅读背景音乐，轻微钢琴、柔和合成器垫、纸张般的细微纹理声，节奏缓慢，几乎没有明显旋律。适合长时间阅读县志、博客、档案和会议纪要，不打扰文字理解。</div></td>
+              <td>90-120 秒，无缝循环</td>
+            </tr>
+            <tr>
+              <td>搜索系统循环</td>
+              <td><div class="prompt">旧电脑资料库检索氛围音乐，低频嗡鸣、轻微硬盘运转质感、极简脉冲音，速度中慢，带一点调查推进感。不要电子舞曲，不要赛博朋克，只保留旧办公终端的真实感。</div></td>
+              <td>60-90 秒，无缝循环</td>
+            </tr>
+            <tr>
+              <td>家谱推理循环</td>
+              <td><div class="prompt">家谱关系推理界面背景音乐，低音弦乐持续音、稀疏钢琴、轻微木质敲击纹理，感觉像在把散乱证据一条条连起来。悬疑、理性、冷静，不要紧张追逐感。</div></td>
+              <td>90 秒，无缝循环</td>
+            </tr>
+            <tr>
+              <td>关键线索发现</td>
+              <td><div class="prompt">短促的关键线索发现音乐点，像思路突然亮起。一个柔和钢琴音加细小金属泛音，克制、有余韵，不要胜利音效，不要夸张上扬。</div></td>
+              <td>2-4 秒，一次性 stinger</td>
+            </tr>
+            <tr>
+              <td>关系确认</td>
+              <td><div class="prompt">确认人物关系时的短音乐反馈，温和、理性、低调。可以用木琴或轻钢片琴加一层纸张摩擦质感，表达“证据吻合”。不要可爱化，不要手游奖励感。</div></td>
+              <td>1-2 秒</td>
+            </tr>
+            <tr>
+              <td>关系冲突</td>
+              <td><div class="prompt">家谱关系冲突提示音乐点，低沉短音、轻微不协和，像档案中出现红色批注。严肃但不吓人，不要警报，不要恐怖。</div></td>
+              <td>1-2 秒</td>
+            </tr>
+            <tr>
+              <td>终章提交</td>
+              <td><div class="prompt">最终提交前的背景音乐，情绪逐渐升起但保持克制。钢琴、低弦、微弱合唱质感，表现尘封真相终于被整理清楚。不要宏大史诗，不要煽情过度。</div></td>
+              <td>120 秒，可循环或线性播放</td>
+            </tr>
+            <tr>
+              <td>真相揭晓</td>
+              <td><div class="prompt">真相揭晓音乐，安静、怅然、有人情味。钢琴主导，弦乐轻轻进入，氛围像旧照片背后的名字终于被读出来。不要胜利凯旋，不要恐怖反转。</div></td>
+              <td>90-120 秒，线性播放</td>
+            </tr>
+            <tr>
+              <td>片尾音乐</td>
+              <td><div class="prompt">游戏片尾音乐，县城记忆、家族秘密、档案尘埃落定。温柔但带一点遗憾，极简钢琴与弦乐，尾声自然淡出。适合结尾制作人员名单。</div></td>
+              <td>120-180 秒</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="sfx">
+        <h2>音效提示词</h2>
+        <table>
+          <thead><tr><th>音效资产</th><th>提示词</th><th>建议规格</th></tr></thead>
+          <tbody>
+            <tr><td>鼠标点击</td><td><div class="prompt">旧办公电脑鼠标轻点击声，短、干净、低音量，带一点塑料按键质感，不刺耳，适合频繁 UI 操作。</div></td><td>0.1-0.2 秒，mono/stereo 均可</td></tr>
+            <tr><td>键盘输入</td><td><div class="prompt">老式薄膜键盘输入声，轻微塑料敲击，节奏自然，可用于搜索框输入。声音不要机械键盘化，不要太响。</div></td><td>单键 0.1 秒，另做 3 秒连续输入版本</td></tr>
+            <tr><td>旧电脑启动</td><td><div class="prompt">旧办公电脑启动音效，电流轻响、硬盘转动、CRT 显示器轻微高频声，真实克制，不要科幻启动音。</div></td><td>3-5 秒</td></tr>
+            <tr><td>搜索加载</td><td><div class="prompt">档案检索系统搜索加载声，短促硬盘读取、轻微电子脉冲、低频运转，表示系统正在查找资料。</div></td><td>0.8-1.5 秒，可循环片段</td></tr>
+            <tr><td>搜索无结果</td><td><div class="prompt">搜索无结果的低调反馈音，轻微下沉的电子提示，带一点空白感，不要错误警报，不要刺耳。</div></td><td>0.5-0.8 秒</td></tr>
+            <tr><td>文档打开</td><td><div class="prompt">打开扫描档案文件的音效，轻微纸张翻动叠加旧电脑窗口弹出声，真实、短促、柔和。</div></td><td>0.5-1 秒</td></tr>
+            <tr><td>文档关闭</td><td><div class="prompt">关闭档案文件的音效，纸张轻轻合上、窗口收起，低调干净。</div></td><td>0.4-0.8 秒</td></tr>
+            <tr><td>纸张翻页</td><td><div class="prompt">泛黄档案纸张翻页声，干燥、轻薄、真实，适合阅读县志和旧报刊。</div></td><td>0.5-1 秒，多做 3 个变体</td></tr>
+            <tr><td>扫描仪</td><td><div class="prompt">老式扫描仪工作声，滑轨移动、微弱马达、纸张扫描，办公室真实质感。</div></td><td>3-6 秒，可裁剪循环</td></tr>
+            <tr><td>证据收藏</td><td><div class="prompt">把证据加入证据箱的音效，文件轻放入档案夹、轻微金属扣合，表达“已收集”。不要奖励金币声。</div></td><td>0.6-1 秒</td></tr>
+            <tr><td>证据绑定</td><td><div class="prompt">证据与人物关系绑定成功音效，纸张盖章声加柔和确认提示，严肃、可信、短促。</div></td><td>0.8-1.2 秒</td></tr>
+            <tr><td>红章盖印</td><td><div class="prompt">红色公章盖在纸上的声音，橡胶印章下压、纸张轻震，真实办公室档案感。</div></td><td>0.4-0.7 秒</td></tr>
+            <tr><td>关系确认</td><td><div class="prompt">家谱关系确认 UI 音效，轻微连接线吸附声、温和提示音，表达关系被证据支撑。</div></td><td>0.4-0.8 秒</td></tr>
+            <tr><td>关系冲突</td><td><div class="prompt">关系冲突 UI 音效，低沉短促、不协和、像红笔划过纸面。不要尖锐报警。</div></td><td>0.4-0.8 秒</td></tr>
+            <tr><td>新关键词发现</td><td><div class="prompt">发现新关键词的短提示音，纸面上出现批注的感觉，轻微铅笔划线加柔和电子提示。</div></td><td>0.5-0.8 秒</td></tr>
+            <tr><td>家谱节点拖动</td><td><div class="prompt">家谱节点拖动的轻微 UI 滑动声，纸卡在桌面上移动的摩擦质感，极低音量。</div></td><td>0.2-0.5 秒，可循环</td></tr>
+            <tr><td>家谱连线生成</td><td><div class="prompt">家谱关系线生成的音效，细线拉开、轻微吸附、柔和确认，适合连接父母与子女。</div></td><td>0.5-0.8 秒</td></tr>
+            <tr><td>旧录像播放噪声</td><td><div class="prompt">旧采访录像开始播放的噪声，磁带底噪、轻微电流、画面同步抖动感，真实旧媒体质感。</div></td><td>2-4 秒</td></tr>
+            <tr><td>电话录音底噪</td><td><div class="prompt">旧电话录音底噪，窄频带、人声前的电流杂音、轻微线路不稳，适合匿名电话录音。</div></td><td>10-20 秒循环底噪</td></tr>
+            <tr><td>最终提交按钮</td><td><div class="prompt">最终提交报告的严肃音效，文件盖章、低频确认、轻微房间混响，表达决定已提交。</div></td><td>1.5-2.5 秒</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="voice">
+        <h2>可选语音提示词</h2>
+        <p>语音建议少量使用，作为关键证据或情绪节点。生成时应要求自然口语、弱表演、县城现实感。</p>
+        <table>
+          <thead><tr><th>语音资产</th><th>提示词</th><th>建议规格</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>宗世昌临终录音</td>
+              <td><div class="prompt">老年男性中文录音，声音虚弱、缓慢、带病房环境混响，像手机在病床旁录下的临终话语。情绪克制，有遗憾，不要戏剧化哭腔。背景有极轻微医院仪器声和空调声。</div></td>
+              <td>15-30 秒，窄动态，轻微失真</td>
+            </tr>
+            <tr>
+              <td>陈静博客朗读</td>
+              <td><div class="prompt">30多岁中国县城女性朗读个人博客，语气平静但压着情绪，生活感强，不要播音腔。内容像回忆 2014 年返乡、怀孕、创业和母女生活。</div></td>
+              <td>30-60 秒，近距离干声</td>
+            </tr>
+            <tr>
+              <td>匿名电话</td>
+              <td><div class="prompt">匿名中文电话录音，声音经过轻微变调和电话压缩，语气紧张、克制，说话人不想暴露身份。背景有轻微街边环境声，但不能影响听清。</div></td>
+              <td>10-20 秒，电话带宽</td>
+            </tr>
+            <tr>
+              <td>旧采访片段</td>
+              <td><div class="prompt">1990年代地方电视台采访录音质感，中年男性或女性普通话略带地方口音，语气正式、朴素，背景有轻微磁带噪声和室内混响。</div></td>
+              <td>20-40 秒，旧录像质感</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>音频制作建议：</strong>背景音乐保持弱存在感，UI 音效要短而轻。这个游戏的听觉目标不是吓玩家，而是让玩家愿意在深夜继续读下一份档案。
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    《云山宗氏案》美术与音频提示词清单 · 可用于 AI 生成、外包沟通和内部资产规范
+  </footer>
+</body>
+</html>

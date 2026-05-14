@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《云山宗氏案》游戏立项与制作文档 v0.1</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf7;
+      --ink: #24211c;
+      --muted: #6f6658;
+      --line: #d8cfbf;
+      --accent: #9b2f25;
+      --accent-soft: #f4ded9;
+      --blue: #245b7d;
+      --green: #3f6f52;
+      --shadow: 0 18px 50px rgba(38, 30, 19, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 253, 247, 0.76), rgba(255, 253, 247, 0.86)),
+        repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 6px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.9);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 56px 0 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.62);
+      color: #51483d;
+      font-size: 13px;
+    }
+
+    main {
+      padding: 34px 0 72px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 253, 247, 0.82);
+      box-shadow: 0 10px 24px rgba(38, 30, 19, 0.06);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 7px 8px;
+      color: var(--blue);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: #eef4f6;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    section {
+      padding: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul, ol {
+      margin: 10px 0 18px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    table {
+      width: 100%;
+      margin: 16px 0 24px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #efe7da;
+      color: #40382f;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code, pre {
+      font-family: Consolas, "SFMono-Regular", "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      border: 1px solid #d6d1ca;
+      border-radius: 8px;
+      padding: 14px;
+      background: #1f2428;
+      color: #f2f0e8;
+      line-height: 1.55;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 14px 16px;
+      background: var(--accent-soft);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffaf0;
+    }
+
+    .mini b {
+      display: block;
+      margin-bottom: 5px;
+      color: #3f382f;
+    }
+
+    .tag-high {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .tag-low {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      section {
+        padding: 24px 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="eyebrow">游戏制作文档 v0.1</div>
+      <h1>《云山宗氏案》</h1>
+      <p class="subtitle">一款档案检索、家谱推理与证据比对驱动的中文悬疑解谜游戏。玩家需要从县志、论坛、博客、短视频评论、内部档案和信托文件中，找出宗世昌家族隐藏的第七支血脉。</p>
+      <div class="meta">
+        <span class="pill">类型：文字推理 / 资料检索</span>
+        <span class="pill">平台：PC / Steam 优先</span>
+        <span class="pill">核心：家谱填空 + 证据绑定</span>
+        <span class="pill">首发目标：6-8 小时</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <nav>
+      <strong>目录</strong>
+      <a href="#project">一、立项文档</a>
+      <a href="#design">二、策划文档</a>
+      <a href="#story">三、修订设定</a>
+      <a href="#tech">四、技术文档</a>
+      <a href="#art">五、美术需求</a>
+      <a href="#audio">六、音效需求</a>
+      <a href="#production">七、制作建议</a>
+    </nav>
+
+    <article>
+      <section id="project">
+        <h2>一、游戏立项文档</h2>
+        <h3>项目定位</h3>
+        <p><strong>项目名称：</strong>《云山宗氏案》</p>
+        <p><strong>暂定英文名：</strong>The Yanshan Inheritance</p>
+        <p><strong>游戏类型：</strong>档案检索 + 家谱推理 + 文字解谜 + 证据比对</p>
+        <p><strong>核心一句话：</strong>玩家通过搜索报刊、档案、论坛、博客、视频评论和内部文件，拼出宗氏家族隐藏血脉，找出有权继承宗世昌家族信托的第七支后代。</p>
+
+        <h3>目标用户</h3>
+        <ul>
+          <li>喜欢《The Roottrees are Dead》《真探》《疑案追声》《奥伯拉丁的回归》《黄金像案件》的玩家。</li>
+          <li>偏好文字推理、人物关系网、信息检索、冷静破案感的用户。</li>
+          <li>对中国县城叙事、家族企业、地方档案、互联网八卦感兴趣的玩家。</li>
+        </ul>
+
+        <h3>核心卖点</h3>
+        <div class="grid">
+          <div class="mini"><b>中文本土豪门案</b>以县城民营企业、家族信托和遗产争夺为核心。</div>
+          <div class="mini"><b>仿真资料库</b>包含县志、周刊、论坛、博客、短视频评论、会议纪要。</div>
+          <div class="mini"><b>家谱填空推理</b>玩家需要填写亲属关系，而不是只选凶手。</div>
+          <div class="mini"><b>真假线索并存</b>八卦、误传和硬证据混在一起，考验来源判断。</div>
+        </div>
+
+        <h3>商业模式与周期</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>项目</th>
+              <th>建议</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>商业模式</td>
+              <td>买断制，首发可定价 38-58 元人民币。</td>
+            </tr>
+            <tr>
+              <td>首发内容</td>
+              <td>一个完整家族案，约 6-8 小时流程。</td>
+            </tr>
+            <tr>
+              <td>后续扩展</td>
+              <td>DLC 可做新家族、新县城、新企业案。</td>
+            </tr>
+            <tr>
+              <td>制作周期</td>
+              <td>原型 1 个月；Demo 2-3 个月；完整首发版 6-9 个月。</td>
+            </tr>
+            <tr>
+              <td>基础团队</td>
+              <td>策划/编剧 1-2 人，程序 1 人，美术 1 人，音效兼职或外包。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="design">
+        <h2>二、游戏策划文档</h2>
+        <h3>世界观背景</h3>
+        <p>云山县，2020 年。地方民营企业巨头宗世昌去世，世昌集团陷入遗产风波。一份 1998 年设立的香港信托文件曝光，规定所有宗世昌血缘后代均可成为受益人。问题是：宗世昌真的只有六个子女吗？</p>
+
+        <h3>玩家身份</h3>
+        <p>玩家是受委托的独立档案调查员，使用一台内部资料终端，搜索云山县多年来散落的公开与半公开资料，重建宗氏家族谱系。</p>
+
+        <h3>主要目标</h3>
+        <ol>
+          <li>填完整宗氏家族树。</li>
+          <li>判断每个人与宗世昌的血缘关系。</li>
+          <li>找出第七支血脉。</li>
+          <li>提交最终继承人名单和证据链。</li>
+        </ol>
+
+        <h3>章节结构</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>章节</th>
+              <th>内容</th>
+              <th>玩家目标</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>第一章：六个孩子</td>
+              <td>官网、县志、讣告建立公开家族。</td>
+              <td>确认宗世昌与李桂兰的六名公开子女。</td>
+            </tr>
+            <tr>
+              <td>第二章：错乱的八卦</td>
+              <td>论坛、周刊、短视频评论出现大量矛盾。</td>
+              <td>学会区分低可信来源与硬证据。</td>
+            </tr>
+            <tr>
+              <td>第三章：香港信托</td>
+              <td>信托文件揭露血缘优先条款。</td>
+              <td>理解不姓宗也可能有继承权。</td>
+            </tr>
+            <tr>
+              <td>第四章：贵州女知青</td>
+              <td>县志、老照片、知青名册指向罗月珍。</td>
+              <td>追踪隐藏血脉母亲。</td>
+            </tr>
+            <tr>
+              <td>第五章：陈静的错位身份</td>
+              <td>陈静被外界误认作宗建芳女儿。</td>
+              <td>发现她真正来自罗建宁一支。</td>
+            </tr>
+            <tr>
+              <td>终章：血缘证明</td>
+              <td>DNA、照片背注、信托条款形成证据链。</td>
+              <td>提交完整家谱与第七支继承人。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>核心系统</h3>
+        <ul>
+          <li><strong>搜索系统：</strong>玩家输入姓名、机构、年份、地点、别名，检索资料库。</li>
+          <li><strong>家谱系统：</strong>玩家填写人物节点，设置父母、配偶、子女、出生年、死亡年。</li>
+          <li><strong>证据系统：</strong>关键关系必须绑定证据，没有证据不能提交最终答案。</li>
+          <li><strong>可信度系统：</strong>每条资料有来源类型，但不直接标真假。</li>
+          <li><strong>矛盾提示系统：</strong>提示出生年、父母年龄、婚姻时间等明显异常，但不直接给答案。</li>
+        </ul>
+      </section>
+
+      <section id="story">
+        <h2>三、修订设定</h2>
+        <h3>官方家庭</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>人物</th>
+              <th>设定</th>
+              <th>作用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>宗世昌</td>
+              <td>1932-2020，世昌集团创始人。</td>
+              <td>全案源头。</td>
+            </tr>
+            <tr>
+              <td>李桂兰</td>
+              <td>1934-2010，宗世昌妻子，早期共同创业者。</td>
+              <td>公开家族基准。</td>
+            </tr>
+            <tr>
+              <td>宗建国</td>
+              <td>1956 年生，长子，计划经济局干部。</td>
+              <td>早期婚姻矛盾线。</td>
+            </tr>
+            <tr>
+              <td>宗建芳</td>
+              <td>1958 年生，长女，县妇联干部。</td>
+              <td>陈静误认母亲线。</td>
+            </tr>
+            <tr>
+              <td>宗建民</td>
+              <td>1959 年生，次子，物资局干部。</td>
+              <td>集团继承权争议线。</td>
+            </tr>
+            <tr>
+              <td>宗建红</td>
+              <td>1962 年生，次女，世昌集团第二代掌门。</td>
+              <td>集团主控与争产线。</td>
+            </tr>
+            <tr>
+              <td>宗建平</td>
+              <td>1963 年生，三子，公安系统出身。</td>
+              <td>权力保护伞与谣言线。</td>
+            </tr>
+            <tr>
+              <td>宗建丽</td>
+              <td>1975 年生，幼女，供销社干部。</td>
+              <td>年龄修正与旁支线。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>隐藏血脉</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>人物</th>
+              <th>设定</th>
+              <th>谜题功能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>罗月珍</td>
+              <td>贵州籍女知青，1968 年前后到云山县。</td>
+              <td>隐藏血脉母亲。</td>
+            </tr>
+            <tr>
+              <td>罗建宁</td>
+              <td>1969 年生，宗世昌非婚生女，随母姓罗。</td>
+              <td>真正的第七继承人。</td>
+            </tr>
+            <tr>
+              <td>陈静 / 陈明静</td>
+              <td>1988 年生，罗建宁之女，后改名陈静。</td>
+              <td>玩家中期锁定的关键人物。</td>
+            </tr>
+            <tr>
+              <td>陈嘉东 / 陈小东</td>
+              <td>2004 年生，陈静之女，小名小东。</td>
+              <td>第四代“嘉”字辈提示。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>核心反转：</strong>陈静不是宗建芳的女儿。宗建芳只是资助过她，帮她挂靠档案、开 KTV。真正连接宗家的，是陈静母系中的罗建宁与罗月珍。
+        </div>
+
+        <h3>关键线索样例</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>线索</th>
+              <th>内容</th>
+              <th>作用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>《云山商界》1996 年专访</td>
+              <td>宗世昌与李桂兰育有六名子女。</td>
+              <td>建立官方版本。</td>
+            </tr>
+            <tr>
+              <td>《云山县志》1995 年卷</td>
+              <td>1968 年云山县接收贵州籍女知青罗月珍。</td>
+              <td>埋下隐藏母亲线索。</td>
+            </tr>
+            <tr>
+              <td>妇联旧档</td>
+              <td>2014 年宗建芳为陈静提供创业帮扶，备注其外婆曾为贵州返城知青。</td>
+              <td>连接陈静与罗月珍。</td>
+            </tr>
+            <tr>
+              <td>县一中论坛</td>
+              <td>陈小东正式姓名为陈嘉东。</td>
+              <td>露出“嘉”字辈。</td>
+            </tr>
+            <tr>
+              <td>香港信托节选</td>
+              <td>受益人不限姓氏、不限婚生状态，只看血缘。</td>
+              <td>解释陈静一支的继承资格。</td>
+            </tr>
+            <tr>
+              <td>档案馆照片</td>
+              <td>1969 年春节合影背面写有“月珍，建宁满月后勿回”。</td>
+              <td>接近真相的强证据。</td>
+            </tr>
+            <tr>
+              <td>疾控中心 DNA 记录</td>
+              <td>陈静样本与宗世昌旧病历血样存在直系血缘关系。</td>
+              <td>最终确认。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="tech">
+        <h2>四、技术文档</h2>
+        <h3>推荐技术栈</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>建议</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>客户端</td>
+              <td>Electron + React，或 Godot 4。</td>
+            </tr>
+            <tr>
+              <td>数据</td>
+              <td>JSON 起步，后期可换 SQLite。</td>
+            </tr>
+            <tr>
+              <td>搜索</td>
+              <td>关键词倒排索引，支持别名与模糊搜索。</td>
+            </tr>
+            <tr>
+              <td>家谱图</td>
+              <td>React Flow / Cytoscape.js / 自研 SVG。</td>
+            </tr>
+            <tr>
+              <td>存档</td>
+              <td>本地 JSON。</td>
+            </tr>
+            <tr>
+              <td>多语言</td>
+              <td>i18n JSON 字典。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>人物数据结构</h3>
+        <pre><code>{
+  "id": "chen_jing",
+  "name": "陈静",
+  "aliases": ["陈明静"],
+  "birthYear": 1988,
+  "gender": "female",
+  "truthTags": ["hidden_bloodline"],
+  "publicMisread": ["被误认为宗建芳之女"]
+}</code></pre>
+
+        <h3>关系数据结构</h3>
+        <pre><code>{
+  "from": "luo_jianning",
+  "to": "chen_jing",
+  "type": "mother",
+  "evidenceRequired": true,
+  "acceptedEvidence": ["doc_birth_chenjing", "doc_blog_2014"]
+}</code></pre>
+
+        <h3>线索数据结构</h3>
+        <pre><code>{
+  "id": "doc_014",
+  "title": "云山县知青名册节选",
+  "year": 1968,
+  "sourceType": "archive",
+  "trustLevel": 5,
+  "keywords": ["罗月珍", "贵州", "知青", "云山县"],
+  "content": "..."
+}</code></pre>
+
+        <h3>MVP 功能范围</h3>
+        <ul>
+          <li>搜索资料。</li>
+          <li>阅读资料。</li>
+          <li>填写家谱。</li>
+          <li>绑定证据。</li>
+          <li>最终提交。</li>
+          <li>基础存档。</li>
+        </ul>
+
+        <h3>校验规则</h3>
+        <ul>
+          <li>子女出生不能早于父母出生。</li>
+          <li>父母年龄过低或过高时给出异常提示。</li>
+          <li>婚姻时间与子女出生冲突时给出弱提示。</li>
+          <li>关键血缘关系必须绑定高可信证据。</li>
+          <li>同一人物的别名可以合并，但需要证据确认。</li>
+        </ul>
+      </section>
+
+      <section id="art">
+        <h2>五、美术需求文档</h2>
+        <h3>整体方向</h3>
+        <p>县城档案室 + 复古办公电脑 + 旧报刊扫描件 + 早期互联网论坛。风格应真实、克制、有年代感，不做夸张赛博风。</p>
+
+        <h3>关键词</h3>
+        <p>档案、泛黄纸张、扫描噪点、县城机关、旧电脑、地方论坛、家族企业、隐秘遗产。</p>
+
+        <h3>主要界面</h3>
+        <ul>
+          <li>登录界面：仿内部系统登录，不需要复杂动画。</li>
+          <li>桌面界面：资料库、家谱、笔记、证据箱、任务记录。</li>
+          <li>搜索结果页：显示标题、来源、年份、摘要。</li>
+          <li>文档阅读页：支持县志、报刊、论坛、博客、短视频评论、会议纪要、DNA报告、信托文件等皮肤。</li>
+          <li>家谱图界面：清晰优先，支持缩放、拖拽、证据绑定。</li>
+        </ul>
+
+        <h3>素材清单</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>素材</th>
+              <th>数量建议</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>人物头像 / 剪影</td>
+              <td>40-60</td>
+              <td>建议用黑白证件照、剪影、老照片局部。</td>
+            </tr>
+            <tr>
+              <td>文档模板</td>
+              <td>10-15</td>
+              <td>不同来源有不同纸张和排版。</td>
+            </tr>
+            <tr>
+              <td>报刊版式</td>
+              <td>5</td>
+              <td>正式报刊与八卦周刊要明显区分。</td>
+            </tr>
+            <tr>
+              <td>论坛 / 博客皮肤</td>
+              <td>4</td>
+              <td>体现 2008-2020 年互联网年代差异。</td>
+            </tr>
+            <tr>
+              <td>旧照片</td>
+              <td>10-20</td>
+              <td>关键照片应有局部放大功能。</td>
+            </tr>
+            <tr>
+              <td>图标</td>
+              <td>40</td>
+              <td>搜索、证据、人物、关系、锁定、冲突等。</td>
+            </tr>
+            <tr>
+              <td>背景图</td>
+              <td>5-8</td>
+              <td>档案室、办公桌、旧电脑、县城街景。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>色彩建议</h3>
+        <ul>
+          <li>主色：灰白、档案黄、墨黑。</li>
+          <li>辅色：暗红用于关键证据，蓝色用于系统链接。</li>
+          <li>避免恐怖化和血腥风。</li>
+          <li>不要做花哨霓虹，重点是可信的地方档案感。</li>
+        </ul>
+      </section>
+
+      <section id="audio">
+        <h2>六、音效与音乐需求文档</h2>
+        <h3>声音方向</h3>
+        <p>安静、压抑、真实。像深夜档案室里查旧资料，而不是恐怖游戏。</p>
+
+        <h3>音乐需求</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>场景</th>
+              <th>需求</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>主界面</td>
+              <td>低频环境音，轻微电流声。</td>
+            </tr>
+            <tr>
+              <td>阅读资料</td>
+              <td>极弱钢琴或弦乐铺底。</td>
+            </tr>
+            <tr>
+              <td>发现关键线索</td>
+              <td>短促提示音，不夸张。</td>
+            </tr>
+            <tr>
+              <td>家谱推理</td>
+              <td>稳定、克制、轻微紧张。</td>
+            </tr>
+            <tr>
+              <td>终章提交</td>
+              <td>情绪逐渐升起，但保持冷静。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>音效清单</h3>
+        <ul>
+          <li>键盘输入声、鼠标点击声、旧电脑启动声。</li>
+          <li>搜索加载声、文档打开声、纸张翻动声、扫描仪声。</li>
+          <li>证据加入收藏声、关系确认声、错误提交声。</li>
+          <li>新关键词发现声、旧录像播放噪声、短视频评论弹出声、电话录音杂音。</li>
+        </ul>
+
+        <h3>可选语音</h3>
+        <ul>
+          <li>宗世昌临终录音。</li>
+          <li>旧采访片段。</li>
+          <li>陈静博客朗读。</li>
+          <li>匿名电话录音。</li>
+        </ul>
+      </section>
+
+      <section id="production">
+        <h2>七、制作建议</h2>
+        <h3>内容规模</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>项目</th>
+              <th>建议数量</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>主要人物</td>
+              <td>35-45 个。</td>
+            </tr>
+            <tr>
+              <td>核心线索</td>
+              <td>60-80 条。</td>
+            </tr>
+            <tr>
+              <td>烟雾线索</td>
+              <td>30-50 条。</td>
+            </tr>
+            <tr>
+              <td>最终关键证据</td>
+              <td>8-12 条。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>生产流程</h3>
+        <ol>
+          <li>先锁定后台真相表，包括每个人的出生年、父母、配偶、子女、真实关系、公开关系、误传关系。</li>
+          <li>从真相表派生所有线索，不要靠灵感随写。</li>
+          <li>把线索分成硬证据、半可信资料、低可信八卦三层。</li>
+          <li>每写完一批线索，就用校验器检查年龄、婚姻、代际、字辈是否冲突。</li>
+          <li>进行真人试玩，记录玩家卡在哪些关键词。</li>
+          <li>删掉无法推动推理的噪音，保留能制造误判但可被证据纠正的干扰。</li>
+        </ol>
+
+        <div class="callout">
+          <strong>最重要的原则：</strong>不要追求线索越多越好。这个游戏的爽点是玩家回头看时发现，有些八卦其实是钥匙，有些权威资料只是家族想让外界相信的版本。
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    《云山宗氏案》制作文档 v0.1 · 适用于立项、团队沟通、Demo 开发与内容校验
+  </footer>
+</body>
+</html>
