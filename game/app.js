@@ -353,6 +353,7 @@ const state = {
   relationAnswers: {},
   report: { heir: "", descendant: "" },
   sound: true,
+  ambient: false,
   notes: ""
 };
 
@@ -366,8 +367,12 @@ const audio = {
   conflict: new Audio("assets/audio/sfx/relation-conflict.wav"),
   voiceChen: new Audio("assets/audio/voice/chen-jing-blog.wav"),
   voiceAnonymous: new Audio("assets/audio/voice/anonymous-call.wav"),
-  voiceDeathbed: new Audio("assets/audio/voice/zong-deathbed.wav")
+  voiceDeathbed: new Audio("assets/audio/voice/zong-deathbed.wav"),
+  ambient: new Audio("assets/audio/bgm/archive-room-bed.wav")
 };
+
+audio.ambient.loop = true;
+audio.ambient.volume = 0.35;
 
 function $(id) {
   return document.getElementById(id);
@@ -383,6 +388,7 @@ function saveState() {
     relationAnswers: state.relationAnswers,
     report: state.report,
     sound: state.sound,
+    ambient: state.ambient,
     notes: state.notes
   };
   localStorage.setItem("yunshan-save", JSON.stringify(serializable));
@@ -401,6 +407,7 @@ function loadState() {
     state.relationAnswers = parsed.relationAnswers || {};
     state.report = parsed.report || { heir: "", descendant: "" };
     state.sound = parsed.sound !== false;
+    state.ambient = parsed.ambient === true;
     state.notes = parsed.notes || "";
   } catch {
     localStorage.removeItem("yunshan-save");
@@ -644,6 +651,7 @@ function renderCounters() {
   const correctCount = relationPrompts.filter(isRelationCorrect).length;
   $("relation-count").textContent = `${correctCount} / ${relationPrompts.length}`;
   $("sound-btn").textContent = `声音：${state.sound ? "开" : "关"}`;
+  $("ambient-btn").textContent = `环境音：${state.ambient ? "开" : "关"}`;
 }
 
 function renderLeads() {
@@ -832,7 +840,25 @@ function bindEvents() {
   });
   $("sound-btn").addEventListener("click", () => {
     state.sound = !state.sound;
+    if (!state.sound) {
+      state.ambient = false;
+      audio.ambient.pause();
+    }
     playSound("click");
+    renderAll();
+  });
+  $("ambient-btn").addEventListener("click", () => {
+    if (!state.sound) return;
+    state.ambient = !state.ambient;
+    if (state.ambient) {
+      audio.ambient.currentTime = 0;
+      audio.ambient.play().catch(() => {
+        state.ambient = false;
+        renderAll();
+      });
+    } else {
+      audio.ambient.pause();
+    }
     renderAll();
   });
   document.querySelector(".voice-list").addEventListener("click", (event) => {
