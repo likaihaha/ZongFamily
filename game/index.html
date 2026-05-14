@@ -48,6 +48,11 @@
           <strong id="relation-count">0 / 4</strong>
         </div>
       </section>
+
+      <section class="case-card">
+        <h2>线索板</h2>
+        <div id="lead-list" class="lead-list"></div>
+      </section>
     </aside>
 
     <main class="workspace">
@@ -101,11 +106,22 @@
       </section>
 
       <section id="evidence-view" class="view">
-        <section class="panel">
-          <h3>证据箱</h3>
-          <p class="hint">收藏过的资料会出现在这里。关键关系需要绑定强证据，而不是只凭八卦。</p>
-          <div id="evidence-list" class="evidence-list"></div>
-        </section>
+        <div class="evidence-layout">
+          <section class="panel">
+            <h3>证据箱</h3>
+            <p class="hint">收藏过的资料会出现在这里。关键关系需要绑定强证据，而不是只凭八卦。</p>
+            <div id="evidence-list" class="evidence-list"></div>
+          </section>
+          <section class="panel">
+            <h3>录音资料</h3>
+            <p class="hint">这些是 Demo 占位语音，用于验证声音节奏。正式版可替换为真人或高质量 TTS。</p>
+            <div class="voice-list">
+              <button data-voice="chen">陈静博客朗读</button>
+              <button data-voice="anonymous">匿名电话</button>
+              <button data-voice="deathbed">宗世昌临终录音</button>
+            </div>
+          </section>
+        </div>
       </section>
 
       <section id="report-view" class="view">

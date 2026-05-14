@@ -266,7 +266,10 @@ const audio = {
   paper: new Audio("assets/audio/sfx/paper-open.wav"),
   evidence: new Audio("assets/audio/sfx/evidence-added.wav"),
   ok: new Audio("assets/audio/sfx/relation-ok.wav"),
-  conflict: new Audio("assets/audio/sfx/relation-conflict.wav")
+  conflict: new Audio("assets/audio/sfx/relation-conflict.wav"),
+  voiceChen: new Audio("assets/audio/voice/chen-jing-blog.wav"),
+  voiceAnonymous: new Audio("assets/audio/voice/anonymous-call.wav"),
+  voiceDeathbed: new Audio("assets/audio/voice/zong-deathbed.wav")
 };
 
 function $(id) {
@@ -501,6 +504,37 @@ function renderCounters() {
   $("sound-btn").textContent = `声音：${state.sound ? "开" : "关"}`;
 }
 
+function renderLeads() {
+  const leads = [
+    {
+      done: state.readDocs.has("doc_official_family"),
+      text: "先确认公开六子女，不要急着相信论坛。"
+    },
+    {
+      done: state.readDocs.has("doc_trust_clause"),
+      text: "找到信托条款，确认“不姓宗也可能继承”。"
+    },
+    {
+      done: state.readDocs.has("doc_educated_youth") && state.readDocs.has("doc_photo_back"),
+      text: "追踪贵州女知青罗月珍和“建宁”两个关键词。"
+    },
+    {
+      done: state.readDocs.has("doc_chen_birth") && state.readDocs.has("doc_jiadong_school"),
+      text: "确认陈静、陈嘉东之间的母女关系。"
+    },
+    {
+      done: relationPrompts.every(isRelationCorrect),
+      text: "把四条关键关系全部绑定强证据。"
+    }
+  ];
+  $("lead-list").innerHTML = leads.map((lead) => `
+    <div class="lead-item ${lead.done ? "done" : ""}">
+      <span>${lead.done ? "✓" : "□"}</span>
+      <span>${lead.text}</span>
+    </div>
+  `).join("");
+}
+
 function renderAll() {
   els.query.value = state.query;
   renderFilters();
@@ -511,6 +545,7 @@ function renderAll() {
   renderEvidence();
   renderReportOptions();
   renderCounters();
+  renderLeads();
   saveState();
 }
 
@@ -609,6 +644,22 @@ function bindEvents() {
     state.sound = !state.sound;
     playSound("click");
     renderAll();
+  });
+  document.querySelector(".voice-list").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-voice]");
+    if (!button) return;
+    const map = {
+      chen: audio.voiceChen,
+      anonymous: audio.voiceAnonymous,
+      deathbed: audio.voiceDeathbed
+    };
+    const clip = map[button.dataset.voice];
+    if (!clip) return;
+    Object.values(map).forEach((item) => {
+      item.pause();
+      item.currentTime = 0;
+    });
+    if (state.sound) clip.play().catch(() => {});
   });
   $("save-btn").addEventListener("click", () => {
     saveState();
