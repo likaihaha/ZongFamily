@@ -36,6 +36,18 @@ node tools/validate_game.js
 powershell -ExecutionPolicy Bypass -File tools/generate_audio.ps1
 ```
 
+运行浏览器烟测：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1
+```
+
+用 Edge 打开游戏：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/launch_game.ps1
+```
+
 ## 版本控制约定
 
 - `mvp/playable-shell`：可打开、可搜索、可提交的最小闭环。

@@ -293,6 +293,22 @@ const documents = [
 
 const relationPrompts = [
   {
+    id: "rel_public_family",
+    title: "公开家庭核验",
+    prompt: "公开资料中，宗世昌的妻子是谁？",
+    slots: ["丈夫", "妻子", "证据"],
+    correct: ["zong_shichang", "li_guilan", "doc_official_family"],
+    requiredEvidence: ["doc_official_family"]
+  },
+  {
+    id: "rel_chen_jianfang",
+    title: "误认关系澄清",
+    prompt: "陈静为什么会被误认为宗建芳的女儿？",
+    slots: ["帮扶干部", "挂靠说明", "帮扶档案"],
+    correct: ["zong_jianfang", "doc_talent_window", "doc_women_fed"],
+    requiredEvidence: ["doc_talent_window", "doc_women_fed"]
+  },
+  {
     id: "rel_zong_luo",
     title: "隐藏血脉第一代",
     prompt: "谁是宗世昌的非婚生女？",
@@ -500,7 +516,7 @@ function renderPeople() {
 function selectOptions(kind) {
   const personOptions = people.map((p) => `<option value="${p.id}">${p.name}（${p.birth}）</option>`).join("");
   const docOptions = documents.map((d) => `<option value="${d.id}">${d.title}</option>`).join("");
-  if (kind.includes("文件") || kind.includes("证明") || kind.includes("证据")) return docOptions;
+  if (kind.includes("文件") || kind.includes("证明") || kind.includes("证据") || kind.includes("档案") || kind.includes("说明")) return docOptions;
   return personOptions;
 }
 
@@ -639,7 +655,7 @@ function renderLeads() {
     },
     {
       done: relationPrompts.every(isRelationCorrect),
-      text: "把四条关键关系全部绑定强证据。"
+      text: "把所有关键关系全部绑定强证据。"
     }
   ];
   $("lead-list").innerHTML = leads.map((lead) => `
@@ -700,7 +716,10 @@ function runAutotest() {
     "doc_dna_record",
     "doc_school_forum",
     "doc_jiadong_school",
-    "doc_trust_clause"
+    "doc_trust_clause",
+    "doc_official_family",
+    "doc_talent_window",
+    "doc_women_fed"
   ]);
   state.relationAnswers = {};
   for (const rel of relationPrompts) {

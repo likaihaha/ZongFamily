@@ -1,6 +1,6 @@
 # 测试报告
 
-更新时间：2026-05-15 01:46 Asia/Shanghai
+更新时间：2026-05-15 01:51 Asia/Shanghai
 
 ## 已执行
 
@@ -16,7 +16,7 @@ node tools/validate_game.js
 
 - 人物：17
 - 资料：27
-- 关键关系：4
+- 关键关系：6
 - 错误：0
 - 警告：0
 
@@ -47,7 +47,7 @@ powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1
 - Edge headless 打开 `game/index.html?autotest=1`
 - 自动阅读全部资料
 - 自动收藏关键证据
-- 自动填写四条关键关系
+- 自动填写六条关键关系
 - 自动提交最终报告
 - 页面输出 `data-autotest="pass"`
 - 生成截图：`docs/smoke-autotest.png`
