@@ -26,6 +26,7 @@ body {
     repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.03) 0, rgba(36, 33, 28, 0.03) 1px, transparent 1px, transparent 7px),
     var(--bg);
   font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 button,
@@ -45,6 +46,7 @@ button {
 }
 
 .sidebar {
+  min-width: 0;
   border-right: 1px solid var(--line);
   padding: 22px;
   background: rgba(255, 253, 247, 0.86);
@@ -651,14 +653,67 @@ select {
   }
 
   .tabs {
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
 
   .tab {
+    flex: 0 0 auto;
+    min-width: 76px;
     text-align: center;
   }
 
   .relation-grid {
     grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    padding: 18px;
+  }
+
+  .topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .top-actions {
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .top-actions button {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    width: 100%;
+  }
+
+  .sidebar,
+  .workspace {
+    padding: 16px;
+  }
+
+  .brand {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .search-row {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-state {
+    min-height: 380px;
+  }
+
+  .document-body {
+    padding: 18px 14px;
+  }
+
+  .meter-card div {
+    justify-content: flex-start;
   }
 }
