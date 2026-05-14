@@ -225,7 +225,8 @@ button {
 
 .search-layout,
 .tree-layout,
-.evidence-layout {
+.evidence-layout,
+.notes-layout {
   display: grid;
   gap: 18px;
   align-items: start;
@@ -241,6 +242,10 @@ button {
 
 .evidence-layout {
   grid-template-columns: 1fr 320px;
+}
+
+.notes-layout {
+  grid-template-columns: minmax(420px, 1fr) 360px;
 }
 
 .panel {
@@ -519,6 +524,32 @@ select {
   text-align: left;
 }
 
+.notes-input {
+  width: 100%;
+  min-height: 460px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #fffdf8;
+  color: var(--ink);
+  line-height: 1.75;
+}
+
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.keyword-list button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #fffaf0;
+  color: var(--blue);
+}
+
 .report-panel {
   max-width: 760px;
 }
@@ -558,7 +589,8 @@ select {
   .app-shell,
   .search-layout,
   .tree-layout,
-  .evidence-layout {
+  .evidence-layout,
+  .notes-layout {
     grid-template-columns: 1fr;
   }
 
@@ -568,7 +600,7 @@ select {
   }
 
   .tabs {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .tab {

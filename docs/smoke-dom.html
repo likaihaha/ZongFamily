@@ -20,6 +20,7 @@
         <button class="tab" data-view="search">资料库</button>
         <button class="tab" data-view="tree">家谱</button>
         <button class="tab" data-view="evidence">证据箱</button>
+        <button class="tab" data-view="notes">笔记</button>
         <button class="tab is-active" data-view="report">提交</button>
       </nav>
 
@@ -913,6 +914,21 @@
               <button data-voice="anonymous">匿名电话</button>
               <button data-voice="deathbed">宗世昌临终录音</button>
             </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="notes-view" class="view">
+        <div class="notes-layout">
+          <section class="panel">
+            <h3>调查笔记</h3>
+            <p class="hint">这里会自动保存。建议记录你认为可靠的证据链，而不是只摘录八卦。</p>
+            <textarea id="notes-input" class="notes-input" placeholder="例如：罗月珍 -&gt; 罗建宁 -&gt; 陈静 -&gt; 陈嘉东。需要 DNA、户籍、学籍和信托共同支撑。"></textarea>
+          </section>
+          <section class="panel">
+            <h3>已发现关键词</h3>
+            <p class="hint">关键词来自已阅读资料，可点击回到资料库继续搜索。</p>
+            <div id="keyword-list" class="keyword-list"><button data-keyword="陈静">陈静</button><button data-keyword="宗世昌">宗世昌</button><button data-keyword="罗月珍">罗月珍</button><button data-keyword="宗建芳">宗建芳</button><button data-keyword="陈小东">陈小东</button><button data-keyword="罗建宁">罗建宁</button><button data-keyword="信托">信托</button><button data-keyword="宗建红">宗建红</button><button data-keyword="DNA">DNA</button><button data-keyword="陈嘉东">陈嘉东</button><button data-keyword="陈明静">陈明静</button><button data-keyword="贵州">贵州</button><button data-keyword="建宁">建宁</button><button data-keyword="KTV">KTV</button><button data-keyword="1969">1969</button><button data-keyword="第七支">第七支</button><button data-keyword="高二">高二</button><button data-keyword="教育局">教育局</button><button data-keyword="李桂兰">李桂兰</button><button data-keyword="母亲">母亲</button><button data-keyword="匿名信">匿名信</button><button data-keyword="世昌集团">世昌集团</button><button data-keyword="外婆">外婆</button><button data-keyword="县一中">县一中</button><button data-keyword="宗明军">宗明军</button><button data-keyword="1968">1968</button><button data-keyword="1970">1970</button><button data-keyword="2004">2004</button><button data-keyword="2015">2015</button><button data-keyword="表妹">表妹</button><button data-keyword="仓储点">仓储点</button><button data-keyword="唱响KTV">唱响KTV</button><button data-keyword="出生记录">出生记录</button><button data-keyword="创业帮扶">创业帮扶</button><button data-keyword="档案挂靠">档案挂靠</button><button data-keyword="第七个继承人">第七个继承人</button></div>
           </section>
         </div>
       </section>

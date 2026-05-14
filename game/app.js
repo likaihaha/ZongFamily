@@ -336,7 +336,8 @@ const state = {
   collected: new Set(),
   relationAnswers: {},
   report: { heir: "", descendant: "" },
-  sound: true
+  sound: true,
+  notes: ""
 };
 
 const els = {};
@@ -365,7 +366,8 @@ function saveState() {
     collected: [...state.collected],
     relationAnswers: state.relationAnswers,
     report: state.report,
-    sound: state.sound
+    sound: state.sound,
+    notes: state.notes
   };
   localStorage.setItem("yunshan-save", JSON.stringify(serializable));
 }
@@ -383,6 +385,7 @@ function loadState() {
     state.relationAnswers = parsed.relationAnswers || {};
     state.report = parsed.report || { heir: "", descendant: "" };
     state.sound = parsed.sound !== false;
+    state.notes = parsed.notes || "";
   } catch {
     localStorage.removeItem("yunshan-save");
   }
@@ -458,7 +461,7 @@ function renderDocument() {
         ${trustBadge(doc)}
       </div>
     </header>
-    <div class="document-body">${doc.body}</div>
+    <div class="document-body doc-source-${doc.source}">${doc.body}</div>
     <div class="doc-actions">
       <button id="collect-doc" class="${state.collected.has(doc.id) ? "is-collected" : ""}">
         ${state.collected.has(doc.id) ? "已加入证据箱" : "加入证据箱"}
@@ -576,6 +579,30 @@ function renderReportOptions() {
   els.descendantSelect.value = state.report.descendant || "";
 }
 
+function discoveredKeywords() {
+  const counts = new Map();
+  for (const docId of state.readDocs) {
+    const doc = documents.find((item) => item.id === docId);
+    if (!doc) continue;
+    for (const keyword of doc.keywords) {
+      counts.set(keyword, (counts.get(keyword) || 0) + 1);
+    }
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"))
+    .slice(0, 36)
+    .map(([keyword]) => keyword);
+}
+
+function renderNotes() {
+  if (els.notesInput && els.notesInput.value !== state.notes) {
+    els.notesInput.value = state.notes;
+  }
+  const keywords = discoveredKeywords();
+  els.keywordList.innerHTML = keywords.map((keyword) => `<button data-keyword="${keyword}">${keyword}</button>`).join("")
+    || `<p class="hint">阅读资料后会出现关键词。</p>`;
+}
+
 function renderCounters() {
   $("read-count").textContent = `${state.readDocs.size} / ${documents.length}`;
   $("evidence-count").textContent = `${state.collected.size}`;
@@ -624,6 +651,7 @@ function renderAll() {
   renderRelations();
   renderEvidence();
   renderReportOptions();
+  renderNotes();
   renderCounters();
   renderLeads();
   saveState();
@@ -633,7 +661,7 @@ function switchView(viewName) {
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
-  $("view-title").textContent = { search: "资料库", tree: "家谱", evidence: "证据箱", report: "提交" }[viewName];
+  $("view-title").textContent = { search: "资料库", tree: "家谱", evidence: "证据箱", notes: "笔记", report: "提交" }[viewName];
 }
 
 function submitReport() {
@@ -748,6 +776,18 @@ function bindEvents() {
     state.report.descendant = els.descendantSelect.value;
     saveState();
   });
+  els.notesInput.addEventListener("input", () => {
+    state.notes = els.notesInput.value;
+    saveState();
+  });
+  els.keywordList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-keyword]");
+    if (!button) return;
+    state.query = button.dataset.keyword;
+    switchView("search");
+    playSound("search");
+    renderAll();
+  });
   $("submit-report").addEventListener("click", () => {
     submitReport();
     playSound($("report-result").classList.contains("success") ? "ok" : "conflict");
@@ -795,6 +835,8 @@ function init() {
     peopleList: $("people-list"),
     relationList: $("relation-list"),
     evidenceList: $("evidence-list"),
+    notesInput: $("notes-input"),
+    keywordList: $("keyword-list"),
     heirSelect: $("heir-select"),
     descendantSelect: $("descendant-select")
   });
