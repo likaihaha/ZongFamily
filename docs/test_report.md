@@ -1,0 +1,60 @@
+# 测试报告
+
+更新时间：2026-05-15 01:46 Asia/Shanghai
+
+## 已执行
+
+### 数据自检
+
+命令：
+
+```powershell
+node tools/validate_game.js
+```
+
+结果：
+
+- 人物：17
+- 资料：27
+- 关键关系：4
+- 错误：0
+- 警告：0
+
+### 音频生成
+
+命令：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/generate_audio.ps1
+```
+
+结果：
+
+- 生成 6 个 UI 音效
+- 生成 1 个占位环境底噪
+- 生成 3 个 Windows TTS 占位语音
+
+### 浏览器烟测
+
+命令：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1
+```
+
+结果：
+
+- Edge headless 打开 `game/index.html?autotest=1`
+- 自动阅读全部资料
+- 自动收藏关键证据
+- 自动填写四条关键关系
+- 自动提交最终报告
+- 页面输出 `data-autotest="pass"`
+- 生成截图：`docs/smoke-autotest.png`
+
+## 当前风险
+
+- 尚未进行真人试玩，无法判断搜索关键词和线索密度是否舒适。
+- 人物头像仍以样张和文字卡为主，缺少批量档案照。
+- BGM 是程序生成的占位底噪，商业质感不足。
+- 当前是静态 Web MVP，尚未封装为桌面应用。

@@ -208,6 +208,86 @@ const documents = [
     keywords: ["宗世昌", "临终", "外面还有一个孩子", "李桂兰", "私生子"],
     summary: "宗世昌临终提到外面的孩子，但没有说完。",
     body: "宗世昌：我这一辈子，最对不起的人是你们的母亲。她跟着我从一无所有开始，吃了太多苦。\n\n宗世昌：还有一件事，我一直没说。其实，我在外面还有一个孩子……\n\n录音到此后出现病房杂音，七天后宗世昌去世。"
+  },
+  {
+    id: "doc_hospital_blood",
+    title: "云山县人民医院住院样本留存单",
+    year: 2020,
+    source: "医院",
+    trust: 5,
+    keywords: ["宗世昌", "住院", "血样", "样本B", "疾控中心", "DNA"],
+    summary: "解释 DNA 记录中的宗世昌血样来源。",
+    body: "患者姓名：宗世昌。\n住院号：YS2020-0317。\n样本类型：外周血。\n\n备注：患者家属申请保留样本用于后续继承相关司法鉴定。样本编号与疾控中心亲缘比对记录中的样本 B 一致。"
+  },
+  {
+    id: "doc_notary_meeting",
+    title: "云山县公证处接待笔录",
+    year: 2020,
+    source: "公证",
+    trust: 4,
+    keywords: ["公证处", "匿名信", "宗建红", "信托", "第七支", "罗建宁"],
+    summary: "家族成员第一次正式面对第七支血脉。",
+    body: "2020 年 9 月，世昌集团方面就家族信托受益人范围向本处咨询。宗建红称匿名信内容“荒唐”，但同时要求查询 1968 至 1970 年间县供销系统知青档案。\n\n接待人员备注：来访人尤其关注“罗姓女知青”和“建宁”两个关键词。"
+  },
+  {
+    id: "doc_supply_roster",
+    title: "县供销系统仓储点临时工花名册",
+    year: 1969,
+    source: "档案",
+    trust: 5,
+    keywords: ["供销系统", "仓储点", "宗世昌", "罗月珍", "临时工", "1969"],
+    summary: "证明宗世昌与罗月珍曾在同一系统工作。",
+    body: "1969 年仓储点临时用工登记显示：宗世昌负责夜间值守与货物调拨，罗月珍负责出入库抄录。\n\n两人姓名在 1969 年 2 月至 8 月期间多次出现在同一值班表上。"
+  },
+  {
+    id: "doc_old_postcard",
+    title: "旧明信片残片",
+    year: 1971,
+    source: "私人收藏",
+    trust: 3,
+    keywords: ["月珍", "建宁", "贵州", "明信片", "宗世昌"],
+    summary: "私人收藏，不能单独定案，但与强证据互相印证。",
+    body: "明信片寄出地为贵州，收件人为云山县供销社宿舍“宗 S”。\n\n残存文字：“建宁会走路了。你不用再寄钱，我也不会回去。月珍。”\n\n明信片没有完整收件人姓名，因此只能作为辅助证据。"
+  },
+  {
+    id: "doc_ktv_license",
+    title: "唱响 KTV 个体工商登记",
+    year: 2015,
+    source: "工商",
+    trust: 5,
+    keywords: ["陈静", "唱响KTV", "工商登记", "陈明静", "2015"],
+    summary: "确认陈静曾用名与创业时间。",
+    body: "经营者：陈静。\n曾用名：陈明静。\n经营场所：云山县云山镇老电影院二楼。\n成立日期：2015 年 5 月 12 日。\n\n登记材料中附有县妇联创业帮扶证明复印件。"
+  },
+  {
+    id: "doc_talent_window",
+    title: "云山县教育局人才窗口档案挂靠说明",
+    year: 2014,
+    source: "教育局",
+    trust: 4,
+    keywords: ["陈静", "档案挂靠", "教育局", "宗建芳", "误传"],
+    summary: "解释为什么外界误以为陈静在教育局上班。",
+    body: "陈静档案关系于 2014 年短期挂靠教育局人才服务窗口。该挂靠不构成劳动关系，也非正式入职。\n\n经办意见：由县妇联宗建芳转介，属返乡女性创业扶持配套手续。"
+  },
+  {
+    id: "doc_family_meeting",
+    title: "世昌集团家族会议纪要节选",
+    year: 2020,
+    source: "内部文件",
+    trust: 3,
+    keywords: ["家族会议", "宗建红", "宗建芳", "罗月珍", "第七支", "信托"],
+    summary: "家族内部有人知道罗月珍的名字。",
+    body: "宗建红：我父亲只有六个公开子女。\n宗建民：公开的不代表全部。\n宗建芳：如果你们真要查，就去查供销社旧档，不要只盯着现在这些孩子。\n\n会议末尾有人提到“罗月珍”三个字，但录音不清，纪要员未做正式记录。"
+  },
+  {
+    id: "doc_false_peng",
+    title: "地方论坛《云山茶馆》：贵州男友误认帖",
+    year: 2020,
+    source: "论坛",
+    trust: 1,
+    keywords: ["陈静", "贵州男友", "彭宗日", "误认", "陈小东"],
+    summary: "解释陈静线的一个错误方向。",
+    body: "有网友把陈静早年男友与电竞选手彭宗日联系起来，称“照片像”。\n\n但彭宗日 2000 年生，2008 年仅 8 岁，不可能是陈静早年恋人。该帖后续被多人指出年龄不符。"
   }
 ];
 
@@ -575,6 +655,38 @@ function submitReport() {
   }
 }
 
+function runAutotest() {
+  state.readDocs = new Set(documents.map((doc) => doc.id));
+  state.collected = new Set([
+    "doc_photo_back",
+    "doc_luo_birth",
+    "doc_chen_birth",
+    "doc_dna_record",
+    "doc_school_forum",
+    "doc_jiadong_school",
+    "doc_trust_clause"
+  ]);
+  state.relationAnswers = {};
+  for (const rel of relationPrompts) {
+    state.relationAnswers[rel.id] = {
+      slots: [...rel.correct],
+      evidence: [...rel.requiredEvidence]
+    };
+  }
+  state.report = { heir: "luo_jianning", descendant: "chen_jiadong" };
+  switchView("report");
+  renderAll();
+  submitReport();
+  document.body.dataset.autotest = $("report-result").classList.contains("success") ? "pass" : "fail";
+}
+
+function maybeRunAutotest() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("autotest") === "1") {
+    runAutotest();
+  }
+}
+
 function bindEvents() {
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
   els.searchBtn.addEventListener("click", () => {
@@ -689,6 +801,7 @@ function init() {
   loadState();
   bindEvents();
   renderAll();
+  maybeRunAutotest();
 }
 
 init();
