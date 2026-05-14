@@ -412,6 +412,7 @@ select {
 }
 
 .document-body {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 22px;
@@ -420,6 +421,56 @@ select {
     repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 5px);
   line-height: 1.9;
   white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.document-body::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.doc-watermark {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: rgba(143, 49, 41, 0.14);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 0;
+  transform: rotate(-8deg);
+}
+
+.doc-kind-archive {
+  background:
+    linear-gradient(rgba(255, 253, 247, 0.92), rgba(255, 253, 247, 0.96)),
+    repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.026) 0, rgba(36, 33, 28, 0.026) 1px, transparent 1px, transparent 5px);
+}
+
+.doc-kind-legal {
+  border-color: #b9b0a1;
+  background:
+    linear-gradient(rgba(247, 249, 248, 0.94), rgba(247, 249, 248, 0.98)),
+    repeating-linear-gradient(90deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 8px);
+}
+
+.doc-kind-web {
+  border-color: #c1d0d7;
+  background: linear-gradient(#f8fcff, #eef5f8);
+}
+
+.doc-kind-private {
+  border-color: #cdb9a1;
+  background:
+    linear-gradient(rgba(255, 249, 239, 0.92), rgba(255, 249, 239, 0.98)),
+    radial-gradient(circle at 20% 10%, rgba(143, 49, 41, 0.08), transparent 28%);
+}
+
+.doc-kind-press {
+  column-width: 320px;
+  column-gap: 28px;
+  background: #fffaf0;
 }
 
 .doc-actions {

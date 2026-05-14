@@ -420,6 +420,14 @@ function trustBadge(doc) {
   return `<span class="badge low">低可信</span>`;
 }
 
+function sourceKind(source) {
+  if (["档案", "户籍", "公证", "工商", "教育局", "学校", "医院"].includes(source)) return "archive";
+  if (["信托", "DNA"].includes(source)) return "legal";
+  if (["论坛", "短视频", "博客", "八卦周刊"].includes(source)) return "web";
+  if (["内部文件", "录音整理", "私人收藏"].includes(source)) return "private";
+  return "press";
+}
+
 function docMatches(doc) {
   const query = state.query.trim().toLowerCase();
   const sourceOk = state.source === "全部" || doc.source === state.source;
@@ -485,7 +493,10 @@ function renderDocument() {
         ${trustBadge(doc)}
       </div>
     </header>
-    <div class="document-body doc-source-${doc.source}">${doc.body}</div>
+    <div class="document-body doc-kind-${sourceKind(doc.source)}">
+      <span class="doc-watermark">${doc.source}</span>
+      ${doc.body}
+    </div>
     <div class="doc-actions">
       <button id="collect-doc" class="${state.collected.has(doc.id) ? "is-collected" : ""}">
         ${state.collected.has(doc.id) ? "已加入证据箱" : "加入证据箱"}
