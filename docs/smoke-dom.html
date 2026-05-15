@@ -22,6 +22,7 @@
         <button class="tab" data-view="evidence">证据箱</button>
         <button class="tab" data-view="notes">笔记</button>
         <button class="tab" data-view="updates">更新日志</button>
+        <button class="tab" data-view="settings">设置</button>
         <button class="tab is-active" data-view="report">提交</button>
       </nav>
 
@@ -1186,6 +1187,19 @@
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-15</strong>
+        <span>设置与存档菜单</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>新增“设置”标签页，集中管理音效、环境音、保存、导出和重置</li><li>本地进度可导出为 JSON，方便试玩后回收调查路径</li><li>重置进度增加输入确认，降低误清空风险</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game/app.js passed</li><li>npm.cmd run validate passed</li><li>tools/run_smoke.ps1 passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
         <span>关系冲突提示</span>
       </header>
       <div class="update-log-body">
@@ -1261,6 +1275,46 @@
       </div>
     </article>
   </div>
+        </section>
+      </section>
+
+      <section id="settings-view" class="view">
+        <section class="panel settings-panel">
+          <h3>设置与存档</h3>
+          <div class="settings-grid">
+            <article class="settings-card">
+              <h4>声音</h4>
+              <label class="toggle-row">
+                <input id="sound-toggle" type="checkbox">
+                <span>界面音效与录音播放</span>
+              </label>
+              <label class="toggle-row">
+                <input id="ambient-toggle" type="checkbox">
+                <span>档案室环境音</span>
+              </label>
+            </article>
+
+            <article class="settings-card">
+              <h4>本地进度</h4>
+              <dl id="save-summary" class="save-summary">
+    <dt>资料阅读</dt><dd>27 / 27</dd>
+    <dt>证据收藏</dt><dd>10</dd>
+    <dt>关系完成</dt><dd>6 / 6</dd>
+    <dt>调查笔记</dt><dd>0 字</dd>
+  </dl>
+              <div class="settings-actions">
+                <button id="settings-save" class="ghost-btn">保存进度</button>
+                <button id="export-save" class="ghost-btn">导出 JSON</button>
+              </div>
+            </article>
+
+            <article class="settings-card danger-zone">
+              <h4>重置</h4>
+              <p class="hint">输入“清空”后才可删除本机浏览器里的调查进度。</p>
+              <input id="reset-confirm-input" type="text" autocomplete="off" placeholder="输入：清空">
+              <button id="settings-reset" class="ghost-btn danger" disabled="">清空本地进度</button>
+            </article>
+          </div>
         </section>
       </section>
 

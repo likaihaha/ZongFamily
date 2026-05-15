@@ -367,6 +367,20 @@ const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc
 const updateLogs = [
   {
     date: "2026-05-15",
+    title: "设置与存档菜单",
+    changes: [
+      "新增“设置”标签页，集中管理音效、环境音、保存、导出和重置",
+      "本地进度可导出为 JSON，方便试玩后回收调查路径",
+      "重置进度增加输入确认，降低误清空风险"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
     title: "关系冲突提示",
     changes: [
       "关键关系卡新增冲突提示，区分人物不吻合、强证据缺失和弱证据干扰",
@@ -542,8 +556,8 @@ function $(id) {
   return document.getElementById(id);
 }
 
-function saveState() {
-  const serializable = {
+function serializeState() {
+  return {
     query: state.query,
     source: state.source,
     selectedDoc: state.selectedDoc,
@@ -555,6 +569,10 @@ function saveState() {
     ambient: state.ambient,
     notes: state.notes
   };
+}
+
+function saveState() {
+  const serializable = serializeState();
   localStorage.setItem("yunshan-save", JSON.stringify(serializable));
 }
 
@@ -1030,6 +1048,22 @@ function renderUpdates() {
   `).join("");
 }
 
+function renderSettings() {
+  if (!els.saveSummary) return;
+  const correctCount = relationPrompts.filter(isRelationCorrect).length;
+  const notesChars = state.notes.trim().length;
+  els.soundToggle.checked = state.sound;
+  els.ambientToggle.checked = state.sound && state.ambient;
+  els.ambientToggle.disabled = !state.sound;
+  els.saveSummary.innerHTML = `
+    <dt>资料阅读</dt><dd>${state.readDocs.size} / ${documents.length}</dd>
+    <dt>证据收藏</dt><dd>${state.collected.size}</dd>
+    <dt>关系完成</dt><dd>${correctCount} / ${relationPrompts.length}</dd>
+    <dt>调查笔记</dt><dd>${notesChars} 字</dd>
+  `;
+  els.settingsReset.disabled = els.resetConfirmInput.value.trim() !== "清空";
+}
+
 function renderCounters() {
   $("read-count").textContent = `${state.readDocs.size} / ${documents.length}`;
   $("evidence-count").textContent = `${state.collected.size}`;
@@ -1099,6 +1133,7 @@ function renderAll() {
   renderReportOptions();
   renderNotes();
   renderUpdates();
+  renderSettings();
   renderCounters();
   renderPhaseGoal();
   renderLeads();
@@ -1109,7 +1144,51 @@ function switchView(viewName) {
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
-  $("view-title").textContent = { search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", report: "\u63d0\u4ea4" }[viewName];
+  $("view-title").textContent = { search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", settings: "\u8bbe\u7f6e", report: "\u63d0\u4ea4" }[viewName];
+}
+
+function toggleSound(enabled) {
+  state.sound = enabled;
+  if (!state.sound) {
+    state.ambient = false;
+    audio.ambient.pause();
+    if (activeVoiceClip) {
+      activeVoiceClip.pause();
+      activeVoiceClip.currentTime = 0;
+    }
+  }
+}
+
+function toggleAmbient(enabled) {
+  if (!state.sound) return;
+  state.ambient = enabled;
+  if (state.ambient) {
+    audio.ambient.currentTime = 0;
+    audio.ambient.play().catch(() => {
+      state.ambient = false;
+      renderAll();
+    });
+  } else {
+    audio.ambient.pause();
+  }
+}
+
+function exportSave() {
+  saveState();
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    version: "mvp-0.1",
+    progress: serializeState()
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `yunshan-save-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
 }
 
 function submitReport() {
@@ -1277,26 +1356,21 @@ function bindEvents() {
     playSound($("report-result").classList.contains("success") ? "ok" : "conflict");
   });
   $("sound-btn").addEventListener("click", () => {
-    state.sound = !state.sound;
-    if (!state.sound) {
-      state.ambient = false;
-      audio.ambient.pause();
-    }
+    toggleSound(!state.sound);
     playSound("click");
     renderAll();
   });
   $("ambient-btn").addEventListener("click", () => {
-    if (!state.sound) return;
-    state.ambient = !state.ambient;
-    if (state.ambient) {
-      audio.ambient.currentTime = 0;
-      audio.ambient.play().catch(() => {
-        state.ambient = false;
-        renderAll();
-      });
-    } else {
-      audio.ambient.pause();
-    }
+    toggleAmbient(!state.ambient);
+    renderAll();
+  });
+  els.soundToggle.addEventListener("change", () => {
+    toggleSound(els.soundToggle.checked);
+    playSound("click");
+    renderAll();
+  });
+  els.ambientToggle.addEventListener("change", () => {
+    toggleAmbient(els.ambientToggle.checked);
     renderAll();
   });
   document.querySelector(".voice-list").addEventListener("click", (event) => {
@@ -1310,6 +1384,22 @@ function bindEvents() {
   });
   $("reset-btn").addEventListener("click", () => {
     if (!confirm("确定要清空本地进度吗？")) return;
+    localStorage.removeItem("yunshan-save");
+    location.reload();
+  });
+  els.settingsSave.addEventListener("click", () => {
+    saveState();
+    playSound("click");
+    alert("进度已保存。");
+    renderAll();
+  });
+  els.exportSave.addEventListener("click", () => {
+    exportSave();
+    playSound("click");
+  });
+  els.resetConfirmInput.addEventListener("input", renderSettings);
+  els.settingsReset.addEventListener("click", () => {
+    if (els.resetConfirmInput.value.trim() !== "清空") return;
     localStorage.removeItem("yunshan-save");
     location.reload();
   });
@@ -1329,6 +1419,13 @@ function init() {
     notesInput: $("notes-input"),
     keywordList: $("keyword-list"),
     updateLogList: $("update-log-list"),
+    soundToggle: $("sound-toggle"),
+    ambientToggle: $("ambient-toggle"),
+    saveSummary: $("save-summary"),
+    settingsSave: $("settings-save"),
+    exportSave: $("export-save"),
+    resetConfirmInput: $("reset-confirm-input"),
+    settingsReset: $("settings-reset"),
     phaseGoalBody: $("phase-goal-body"),
     heirSelect: $("heir-select"),
     descendantSelect: $("descendant-select")

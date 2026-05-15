@@ -23,6 +23,7 @@
         <button class="tab" data-view="evidence">证据箱</button>
         <button class="tab" data-view="notes">笔记</button>
         <button class="tab" data-view="updates">更新日志</button>
+        <button class="tab" data-view="settings">设置</button>
         <button class="tab" data-view="report">提交</button>
       </nav>
 
@@ -152,6 +153,41 @@
           <h3>开发更新日志</h3>
           <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
           <div id="update-log-list" class="update-log-list"></div>
+        </section>
+      </section>
+
+      <section id="settings-view" class="view">
+        <section class="panel settings-panel">
+          <h3>设置与存档</h3>
+          <div class="settings-grid">
+            <article class="settings-card">
+              <h4>声音</h4>
+              <label class="toggle-row">
+                <input id="sound-toggle" type="checkbox">
+                <span>界面音效与录音播放</span>
+              </label>
+              <label class="toggle-row">
+                <input id="ambient-toggle" type="checkbox">
+                <span>档案室环境音</span>
+              </label>
+            </article>
+
+            <article class="settings-card">
+              <h4>本地进度</h4>
+              <dl id="save-summary" class="save-summary"></dl>
+              <div class="settings-actions">
+                <button id="settings-save" class="ghost-btn">保存进度</button>
+                <button id="export-save" class="ghost-btn">导出 JSON</button>
+              </div>
+            </article>
+
+            <article class="settings-card danger-zone">
+              <h4>重置</h4>
+              <p class="hint">输入“清空”后才可删除本机浏览器里的调查进度。</p>
+              <input id="reset-confirm-input" type="text" autocomplete="off" placeholder="输入：清空">
+              <button id="settings-reset" class="ghost-btn danger" disabled>清空本地进度</button>
+            </article>
+          </div>
         </section>
       </section>
 
