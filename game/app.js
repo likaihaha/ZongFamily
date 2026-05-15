@@ -47,6 +47,11 @@ const documents = [
     trust: 5,
     keywords: ["香港信托", "血缘", "DNA", "受益人", "非婚生", "宗世昌"],
     summary: "说明不姓宗也可能成为受益人。",
+    image: {
+      src: "assets/images/evidence/trust-clause-1998.jpg",
+      alt: "1998 年香港家族信托文件扫描图",
+      caption: "扫描件节选：被遮盖的条款页、印章和签署区显示这是一份正式信托材料。"
+    },
     body: "本人宗世昌确认，本信托项下的受益人包括：本人的直系血亲后代，以及能够通过 DNA 鉴定证明与本人存在血缘关系的其他个人。\n\n无论该等个人是否使用“宗”作为姓氏，无论其是否婚生或非婚生，无论其母亲或监护人的身份或婚姻状况如何，只要能够证明血缘关系，均有权享受本信托项下权益。"
   },
   {
@@ -77,6 +82,11 @@ const documents = [
     trust: 5,
     keywords: ["罗月珍", "宗世昌", "建宁", "满月", "照片背面", "1969"],
     summary: "照片背面出现“建宁”关键字。",
+    image: {
+      src: "assets/images/evidence/photo-back-1969.jpg",
+      alt: "1969 年春节合影与照片背注扫描图",
+      caption: "档案馆影像：合影与背注同档保存，提示宗世昌、罗月珍和“建宁”之间存在早期交集。"
+    },
     body: "档案馆藏 1969 年春节联欢会合影。照片正面可见青年宗世昌与女知青罗月珍同框。\n\n照片背面有一行蓝黑钢笔字：“月珍，建宁满月后勿回。此事我会安排。”字迹旁另有模糊署名，只能辨出“世”字。"
   },
   {
@@ -137,6 +147,11 @@ const documents = [
     trust: 5,
     keywords: ["陈静", "宗世昌", "DNA", "亲缘", "直系血缘", "罗建宁"],
     summary: "最终确认陈静与宗世昌存在直系血缘。",
+    image: {
+      src: "assets/images/evidence/dna-record-2019.jpg",
+      alt: "2019 年亲缘比对记录扫描图",
+      caption: "检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。"
+    },
     body: "样本 A：陈明静，女，1988 年生。\n样本 B：宗世昌住院期间留存血样。\n\n鉴定意见：样本 A 与样本 B 符合祖孙辈直系亲缘关系，不排除样本 A 之母为样本 B 亲生子女的可能性。"
   },
   {
@@ -147,6 +162,11 @@ const documents = [
     trust: 5,
     keywords: ["罗建宁", "罗月珍", "建宁", "贵州", "迁入", "1970"],
     summary: "证明罗月珍带着罗建宁回贵州。",
+    image: {
+      src: "assets/images/evidence/hukou-1970.jpg",
+      alt: "1970 年旧户籍迁入登记扫描图",
+      caption: "户籍册影像：随迁婴儿登记和空缺父亲栏，是罗建宁身世链条的关键物证。"
+    },
     body: "迁入人：罗月珍，女，二十一岁。\n随迁幼女：罗建宁，女，出生年月登记为 1969 年 12 月。\n\n父亲栏：未填。备注：原籍人员返乡，携未满周岁女婴一名。"
   },
   {
@@ -336,13 +356,55 @@ const relationPrompts = [
     id: "rel_trust",
     title: "继承资格",
     prompt: "哪份文件证明不姓宗也可继承？",
-    slots: ["信托文件", "血缘证明", "现居后代"],
-    correct: ["doc_trust_clause", "doc_dna_record", "chen_jiadong"],
-    requiredEvidence: ["doc_trust_clause", "doc_dna_record"]
+    slots: ["证明文件"],
+    correct: ["doc_trust_clause"],
+    requiredEvidence: ["doc_trust_clause"]
   }
 ];
 
 const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc.source)))];
+
+const updateLogs = [
+  {
+    date: "2026-05-15",
+    title: "关键证据图接入",
+    changes: [
+      "为照片背注、信托文件、DNA 记录、户籍迁入登记补充证据图片",
+      "资料库结果、资料详情和证据箱都会显示已绑定的证据图",
+      "项目内引用版已压缩为 JPG，降低静态页面加载体积"
+    ],
+    checks: [
+      "npm run validate passed",
+      "npm run smoke passed"
+    ],
+  },
+  {
+    date: "2026-05-15",
+    title: "烟测与内容校验加固",
+    changes: [
+      "run_smoke.ps1 会检查 Edge 退出码、DOM 文件存在性和非空内容",
+      "烟测保留 autotest pass 与提交成功断言，避免空 DOM 误判通过",
+      "validate 增加内容包提交答案与 app.js 提交逻辑一致性检查"
+    ],
+    checks: [
+      "npm run validate passed",
+      "npm run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
+    title: "游戏内更新日志",
+    changes: [
+      "新增侧边栏“更新日志”标签页",
+      "新增更新日志视图容器与列表节点",
+      "renderUpdates() 已接入 renderAll()，用于记录稳定变更和验证结果"
+    ],
+    checks: [
+      "npm run validate passed",
+      "npm run smoke passed"
+    ]
+  }
+];
 
 const state = {
   query: "",
@@ -472,6 +534,21 @@ function sourceKind(source) {
   return "press";
 }
 
+function getDocImage(doc) {
+  return doc.image || null;
+}
+
+function docImageFigure(doc, size = "full") {
+  const image = getDocImage(doc);
+  if (!image) return "";
+  return `
+    <figure class="doc-image doc-image-${size}">
+      <img src="${image.src}" alt="${image.alt}" loading="lazy">
+      <figcaption>${image.caption}</figcaption>
+    </figure>
+  `;
+}
+
 function docMatches(doc) {
   const query = state.query.trim().toLowerCase();
   const sourceOk = state.source === "全部" || doc.source === state.source;
@@ -502,16 +579,21 @@ function renderResults() {
     .map(({ doc }) => doc);
   els.resultList.innerHTML = results.map((doc) => {
     const read = state.readDocs.has(doc.id) ? "is-read" : "";
+    const imageData = getDocImage(doc);
+    const image = imageData ? `<img class="result-thumb" src="${imageData.src}" alt="" loading="lazy">` : "";
     return `
-      <button class="result-card ${read}" data-doc-id="${doc.id}">
-        <h4>${doc.title}</h4>
-        <div class="meta-line">
-          <span class="badge">${doc.year}</span>
-          <span class="badge">${doc.source}</span>
-          ${trustBadge(doc)}
-          ${state.collected.has(doc.id) ? '<span class="badge high">已收藏</span>' : ""}
+      <button class="result-card ${read} ${imageData ? "has-image" : ""}" data-doc-id="${doc.id}">
+        ${image}
+        <div>
+          <h4>${doc.title}</h4>
+          <div class="meta-line">
+            <span class="badge">${doc.year}</span>
+            <span class="badge">${doc.source}</span>
+            ${trustBadge(doc)}
+            ${state.collected.has(doc.id) ? '<span class="badge high">已收藏</span>' : ""}
+          </div>
+          <p>${doc.summary}</p>
         </div>
-        <p>${doc.summary}</p>
       </button>
     `;
   }).join("") || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或来源试试。</p></div>`;
@@ -537,6 +619,7 @@ function renderDocument() {
         ${trustBadge(doc)}
       </div>
     </header>
+    ${docImageFigure(doc)}
     <div class="document-body doc-kind-${sourceKind(doc.source)}">
       <span class="doc-watermark">${doc.source}</span>
       ${doc.body}
@@ -628,7 +711,8 @@ function isRelationCorrect(rel) {
   const answer = state.relationAnswers[rel.id];
   if (!answer) return false;
   const slotsOk = rel.correct.every((value, index) => answer.slots?.[index] === value);
-  const evidenceOk = rel.requiredEvidence.every((id) => answer.evidence?.includes(id));
+  const selectedDocs = new Set([...(answer.slots || []), ...(answer.evidence || [])]);
+  const evidenceOk = rel.requiredEvidence.every((id) => selectedDocs.has(id));
   return slotsOk && evidenceOk;
 }
 
@@ -638,6 +722,7 @@ function renderEvidence() {
     const doc = documents.find((item) => item.id === docId);
     return `
       <article class="evidence-card">
+        ${docImageFigure(doc, "card")}
         <h4>${doc.title}</h4>
         <div class="meta-line">
           <span class="badge">${doc.year}</span>
@@ -680,6 +765,24 @@ function renderNotes() {
   const keywords = discoveredKeywords();
   els.keywordList.innerHTML = keywords.map((keyword) => `<button data-keyword="${keyword}">${keyword}</button>`).join("")
     || `<p class="hint">阅读资料后会出现关键词。</p>`;
+}
+
+function renderUpdates() {
+  if (!els.updateLogList) return;
+  els.updateLogList.innerHTML = updateLogs.map((log) => `
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>${log.date}</strong>
+        <span>${log.title}</span>
+      </header>
+      <div class="update-log-body">
+        <h4>\u53d8\u66f4\u5185\u5bb9</h4>
+        <ul>${log.changes.map((item) => `<li>${item}</li>`).join("")}</ul>
+        <h4>\u9a8c\u8bc1\u7ed3\u679c</h4>
+        <ul>${log.checks.map((item) => `<li>${item}</li>`).join("")}</ul>
+      </div>
+    </article>
+  `).join("");
 }
 
 function renderCounters() {
@@ -732,6 +835,7 @@ function renderAll() {
   renderEvidence();
   renderReportOptions();
   renderNotes();
+  renderUpdates();
   renderCounters();
   renderLeads();
   saveState();
@@ -741,7 +845,7 @@ function switchView(viewName) {
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
-  $("view-title").textContent = { search: "资料库", tree: "家谱", evidence: "证据箱", notes: "笔记", report: "提交" }[viewName];
+  $("view-title").textContent = { search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", report: "\u63d0\u4ea4" }[viewName];
 }
 
 function submitReport() {
@@ -754,7 +858,7 @@ function submitReport() {
     result.className = "report-result success";
     result.innerHTML = `
       <strong>提交成功。</strong>
-      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，陈嘉东为陈静之女。根据 1998 年香港家族信托条款，陈嘉东虽不姓宗，仍具备继承资格。</p>
+      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，按 1998 年香港家族信托条款同样具备继承资格；陈嘉东为陈静之女，虽不姓宗，仍是 2020 年现居云山且具继承资格的后代。</p>
       <div class="chain-review">
         <h4>证据链回顾</h4>
         <ol>
@@ -763,7 +867,7 @@ function submitReport() {
           <li>1969 年照片背注和旧户籍共同指向罗建宁。</li>
           <li>陈静出生记录确认其母为罗建宁。</li>
           <li>陈嘉东学籍确认其为陈静之女。</li>
-          <li>DNA 亲缘比对和信托条款共同确认继承资格。</li>
+          <li>DNA 亲缘比对和信托条款共同确认陈静一支的继承资格。</li>
         </ol>
       </div>
     `;
@@ -945,6 +1049,7 @@ function init() {
     evidenceList: $("evidence-list"),
     notesInput: $("notes-input"),
     keywordList: $("keyword-list"),
+    updateLogList: $("update-log-list"),
     heirSelect: $("heir-select"),
     descendantSelect: $("descendant-select")
   });

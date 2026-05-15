@@ -33,7 +33,8 @@ const requiredRootFields = [
   "truthTable",
   "clues",
   "documents",
-  "familyMembers"
+  "familyMembers",
+  "submission"
 ];
 
 for (const field of requiredRootFields) {
@@ -82,13 +83,25 @@ validateIdArray(data.clues, "clues");
 validateIdArray(data.documents, "documents");
 validateIdArray(data.familyMembers, "familyMembers");
 
+const truthIds = new Set((data.truthTable || []).map((item) => item.id));
+const familyMemberIds = new Set((data.familyMembers || []).map((item) => item.id));
+
 for (const [index, clue] of data.clues.entries()) {
+  if (typeof clue.name !== "string" || !clue.name.trim()) {
+    fail(`clues[${index}].name must be a non-empty string`);
+  }
+  if (typeof clue.type !== "string" || !clue.type.trim()) {
+    fail(`clues[${index}].type must be a non-empty string`);
+  }
   if (!Array.isArray(clue.supportsTruthIds)) {
     fail(`clues[${index}].supportsTruthIds must be an array`);
     continue;
   }
+  if (clue.supportsTruthIds.length === 0) {
+    fail(`clues[${index}].supportsTruthIds must not be empty`);
+  }
   for (const truthId of clue.supportsTruthIds) {
-    if (!data.truthTable.find((item) => item.id === truthId)) {
+    if (!truthIds.has(truthId)) {
       fail(`clues[${index}] references missing truth id: ${truthId}`);
     }
   }
@@ -97,6 +110,45 @@ for (const [index, clue] of data.clues.entries()) {
 for (const [index, truth] of data.truthTable.entries()) {
   if (typeof truth.statement !== "string" || !truth.statement.trim()) {
     fail(`truthTable[${index}].statement must be a non-empty string`);
+  }
+}
+
+for (const [index, doc] of data.documents.entries()) {
+  if (typeof doc.title !== "string" || !doc.title.trim()) {
+    fail(`documents[${index}].title must be a non-empty string`);
+  }
+  if (typeof doc.category !== "string" || !doc.category.trim()) {
+    fail(`documents[${index}].category must be a non-empty string`);
+  }
+  if (typeof doc.body !== "string" || doc.body.trim().length < 10) {
+    fail(`documents[${index}].body must be at least 10 characters`);
+  }
+}
+
+const requiredTruthIds = (data.truthTable || [])
+  .filter((truth) => truth.required === true)
+  .map((truth) => truth.id);
+for (const truthId of requiredTruthIds) {
+  const covered = data.clues.some((clue) => clue.supportsTruthIds?.includes(truthId));
+  if (!covered) {
+    fail(`Required truth is not supported by any clue: ${truthId}`);
+  }
+}
+
+if (!data.submission || typeof data.submission !== "object") {
+  fail("submission must be an object");
+} else {
+  const { firstHiddenLineageAnswer, qualifiedHeir2020Answer } = data.submission;
+  if (typeof firstHiddenLineageAnswer !== "string" || !firstHiddenLineageAnswer.trim()) {
+    fail("submission.firstHiddenLineageAnswer must be a non-empty string");
+  } else if (!familyMemberIds.has(firstHiddenLineageAnswer)) {
+    fail(`submission.firstHiddenLineageAnswer is not a known family member id: ${firstHiddenLineageAnswer}`);
+  }
+
+  if (typeof qualifiedHeir2020Answer !== "string" || !qualifiedHeir2020Answer.trim()) {
+    fail("submission.qualifiedHeir2020Answer must be a non-empty string");
+  } else if (!familyMemberIds.has(qualifiedHeir2020Answer)) {
+    fail(`submission.qualifiedHeir2020Answer is not a known family member id: ${qualifiedHeir2020Answer}`);
   }
 }
 

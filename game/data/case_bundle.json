@@ -91,12 +91,20 @@
       "id": "doc_photo_back",
       "title": "云山县档案馆：1969 年春节合影背注",
       "category": "archive",
+      "image": {
+        "src": "assets/images/evidence/photo-back-1969.jpg",
+        "alt": "1969 年春节合影与照片背注扫描图"
+      },
       "body": "照片背面有“月珍，建宁满月后勿回”的手写字样。"
     },
     {
       "id": "doc_luo_birth",
       "title": "黔中地区旧户籍迁入登记",
       "category": "hukou",
+      "image": {
+        "src": "assets/images/evidence/hukou-1970.jpg",
+        "alt": "1970 年旧户籍迁入登记扫描图"
+      },
       "body": "罗月珍携幼女罗建宁迁入贵州，父亲栏未填。"
     },
     {
@@ -115,12 +123,20 @@
       "id": "doc_trust_clause",
       "title": "香港家族信托文件节选",
       "category": "legal",
+      "image": {
+        "src": "assets/images/evidence/trust-clause-1998.jpg",
+        "alt": "1998 年香港家族信托文件扫描图"
+      },
       "body": "受益人不限姓氏和婚生状态，只要证明与宗世昌存在直系血缘即可。"
     },
     {
       "id": "doc_dna_record",
       "title": "云山县疾控中心亲缘比对记录",
       "category": "dna",
+      "image": {
+        "src": "assets/images/evidence/dna-record-2019.jpg",
+        "alt": "2019 年亲缘比对记录扫描图"
+      },
       "body": "陈静样本与宗世昌留存血样符合祖孙辈直系亲缘关系。"
     }
   ],

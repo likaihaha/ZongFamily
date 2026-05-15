@@ -21,6 +21,7 @@
         <button class="tab" data-view="tree">家谱</button>
         <button class="tab" data-view="evidence">证据箱</button>
         <button class="tab" data-view="notes">笔记</button>
+        <button class="tab" data-view="updates">更新日志</button>
         <button class="tab is-active" data-view="report">提交</button>
       </nav>
 
@@ -104,301 +105,382 @@
             </div>
             <div class="filter-row" id="source-filters"><button class="is-active" data-source="全部">全部</button><button class="" data-source="报刊">报刊</button><button class="" data-source="官网">官网</button><button class="" data-source="信托">信托</button><button class="" data-source="内部文件">内部文件</button><button class="" data-source="县志">县志</button><button class="" data-source="档案">档案</button><button class="" data-source="民俗">民俗</button><button class="" data-source="博客">博客</button><button class="" data-source="论坛">论坛</button><button class="" data-source="短视频">短视频</button><button class="" data-source="DNA">DNA</button><button class="" data-source="户籍">户籍</button><button class="" data-source="学校">学校</button><button class="" data-source="八卦周刊">八卦周刊</button><button class="" data-source="录音整理">录音整理</button><button class="" data-source="医院">医院</button><button class="" data-source="公证">公证</button><button class="" data-source="私人收藏">私人收藏</button><button class="" data-source="工商">工商</button><button class="" data-source="教育局">教育局</button></div>
             <div id="result-list" class="result-list">
-      <button class="result-card is-read" data-doc-id="doc_official_family">
-        <h4>《云山商界》1996 年宗世昌专访</h4>
-        <div class="meta-line">
-          <span class="badge">1996</span>
-          <span class="badge">报刊</span>
-          <span class="badge warn">需交叉验证</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_official_family">
+        
+        <div>
+          <h4>《云山商界》1996 年宗世昌专访</h4>
+          <div class="meta-line">
+            <span class="badge">1996</span>
+            <span class="badge">报刊</span>
+            <span class="badge warn">需交叉验证</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>建立宗世昌公开家庭版本。</p>
         </div>
-        <p>建立宗世昌公开家庭版本。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_group_history">
-        <h4>世昌集团官网《集团历程》</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">官网</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_group_history">
+        
+        <div>
+          <h4>世昌集团官网《集团历程》</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">官网</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>修正集团掌门时间线。</p>
         </div>
-        <p>修正集团掌门时间线。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_trust_clause">
-        <h4>香港家族信托文件节选</h4>
-        <div class="meta-line">
-          <span class="badge">1998</span>
-          <span class="badge">信托</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read has-image" data-doc-id="doc_trust_clause">
+        <img class="result-thumb" src="assets/images/evidence/trust-clause-1998.jpg" alt="" loading="lazy">
+        <div>
+          <h4>香港家族信托文件节选</h4>
+          <div class="meta-line">
+            <span class="badge">1998</span>
+            <span class="badge">信托</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>说明不姓宗也可能成为受益人。</p>
         </div>
-        <p>说明不姓宗也可能成为受益人。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_anonymous_letter">
-        <h4>世昌集团匿名信</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">内部文件</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_anonymous_letter">
+        
+        <div>
+          <h4>世昌集团匿名信</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">内部文件</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>提示第七支血脉的后代仍在云山。</p>
         </div>
-        <p>提示第七支血脉的后代仍在云山。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_educated_youth">
-        <h4>《云山县志》1995 年卷：知青名册节选</h4>
-        <div class="meta-line">
-          <span class="badge">1995</span>
-          <span class="badge">县志</span>
-          <span class="badge high">可信度高</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_educated_youth">
+        
+        <div>
+          <h4>《云山县志》1995 年卷：知青名册节选</h4>
+          <div class="meta-line">
+            <span class="badge">1995</span>
+            <span class="badge">县志</span>
+            <span class="badge high">可信度高</span>
+            
+          </div>
+          <p>证明罗月珍曾在云山。</p>
         </div>
-        <p>证明罗月珍曾在云山。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_photo_back">
-        <h4>云山县档案馆：1969 年春节合影背注</h4>
-        <div class="meta-line">
-          <span class="badge">1969</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read has-image" data-doc-id="doc_photo_back">
+        <img class="result-thumb" src="assets/images/evidence/photo-back-1969.jpg" alt="" loading="lazy">
+        <div>
+          <h4>云山县档案馆：1969 年春节合影背注</h4>
+          <div class="meta-line">
+            <span class="badge">1969</span>
+            <span class="badge">档案</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>照片背面出现“建宁”关键字。</p>
         </div>
-        <p>照片背面出现“建宁”关键字。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_naming_rule">
-        <h4>《云山民俗》：宗氏家族字辈观察</h4>
-        <div class="meta-line">
-          <span class="badge">2015</span>
-          <span class="badge">民俗</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_naming_rule">
+        
+        <div>
+          <h4>《云山民俗》：宗氏家族字辈观察</h4>
+          <div class="meta-line">
+            <span class="badge">2015</span>
+            <span class="badge">民俗</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>说明宗家字辈规律。</p>
         </div>
-        <p>说明宗家字辈规律。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_women_fed">
-        <h4>云山县妇联创业帮扶登记表</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_women_fed">
+        
+        <div>
+          <h4>云山县妇联创业帮扶登记表</h4>
+          <div class="meta-line">
+            <span class="badge">2014</span>
+            <span class="badge">档案</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>解释陈静与宗建芳的关系不是母女。</p>
         </div>
-        <p>解释陈静与宗建芳的关系不是母女。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_blog_chenjing">
-        <h4>陈静博客：2014 年 3 月 15 日</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">博客</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_blog_chenjing">
+        
+        <div>
+          <h4>陈静博客：2014 年 3 月 15 日</h4>
+          <div class="meta-line">
+            <span class="badge">2014</span>
+            <span class="badge">博客</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>陈静私人日记暗示母系秘密。</p>
         </div>
-        <p>陈静私人日记暗示母系秘密。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_school_forum">
-        <h4>云山家长汇论坛：县一中家长会</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_school_forum">
+        
+        <div>
+          <h4>云山家长汇论坛：县一中家长会</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">论坛</span>
+            <span class="badge low">低可信</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>确认陈小东正式名为陈嘉东。</p>
         </div>
-        <p>确认陈小东正式名为陈嘉东。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_tiktok_chenjing">
-        <h4>陈静短视频《我的乖女儿》转写</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">短视频</span>
-          <span class="badge low">低可信</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_tiktok_chenjing">
+        
+        <div>
+          <h4>陈静短视频《我的乖女儿》转写</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">短视频</span>
+            <span class="badge low">低可信</span>
+            
+          </div>
+          <p>强化陈静与陈小东母女关系。</p>
         </div>
-        <p>强化陈静与陈小东母女关系。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_dna_record">
-        <h4>云山县疾控中心亲缘比对记录</h4>
-        <div class="meta-line">
-          <span class="badge">2019</span>
-          <span class="badge">DNA</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read has-image" data-doc-id="doc_dna_record">
+        <img class="result-thumb" src="assets/images/evidence/dna-record-2019.jpg" alt="" loading="lazy">
+        <div>
+          <h4>云山县疾控中心亲缘比对记录</h4>
+          <div class="meta-line">
+            <span class="badge">2019</span>
+            <span class="badge">DNA</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>最终确认陈静与宗世昌存在直系血缘。</p>
         </div>
-        <p>最终确认陈静与宗世昌存在直系血缘。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_luo_birth">
-        <h4>黔中地区旧户籍迁入登记</h4>
-        <div class="meta-line">
-          <span class="badge">1970</span>
-          <span class="badge">户籍</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read has-image" data-doc-id="doc_luo_birth">
+        <img class="result-thumb" src="assets/images/evidence/hukou-1970.jpg" alt="" loading="lazy">
+        <div>
+          <h4>黔中地区旧户籍迁入登记</h4>
+          <div class="meta-line">
+            <span class="badge">1970</span>
+            <span class="badge">户籍</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>证明罗月珍带着罗建宁回贵州。</p>
         </div>
-        <p>证明罗月珍带着罗建宁回贵州。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_chen_birth">
-        <h4>陈静出生医学记录复印件</h4>
-        <div class="meta-line">
-          <span class="badge">1988</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_chen_birth">
+        
+        <div>
+          <h4>陈静出生医学记录复印件</h4>
+          <div class="meta-line">
+            <span class="badge">1988</span>
+            <span class="badge">档案</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>确认陈静是罗建宁之女。</p>
         </div>
-        <p>确认陈静是罗建宁之女。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_jiadong_school">
-        <h4>云山县第一中学学生信息表</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">学校</span>
-          <span class="badge warn">需交叉验证</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_jiadong_school">
+        
+        <div>
+          <h4>云山县第一中学学生信息表</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">学校</span>
+            <span class="badge warn">需交叉验证</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>确认陈嘉东是陈静之女。</p>
         </div>
-        <p>确认陈嘉东是陈静之女。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_gossip_wrong_mother">
-        <h4>地方论坛《云山茶馆》：陈静身世帖</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_gossip_wrong_mother">
+        
+        <div>
+          <h4>地方论坛《云山茶馆》：陈静身世帖</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">论坛</span>
+            <span class="badge low">低可信</span>
+            
+          </div>
+          <p>低可信误导：把宗建芳写成陈静母亲。</p>
         </div>
-        <p>低可信误导：把宗建芳写成陈静母亲。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_gossip_li_tianci">
-        <h4>《云山八卦周刊》：李天赐疑云</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">八卦周刊</span>
-          <span class="badge low">低可信</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_gossip_li_tianci">
+        
+        <div>
+          <h4>《云山八卦周刊》：李天赐疑云</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">八卦周刊</span>
+            <span class="badge low">低可信</span>
+            
+          </div>
+          <p>干扰线：李天赐被怀疑与信托有关。</p>
         </div>
-        <p>干扰线：李天赐被怀疑与信托有关。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_gossip_mingjun">
-        <h4>地方论坛《云山商界八卦》：宗明军绯闻</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_gossip_mingjun">
+        
+        <div>
+          <h4>地方论坛《云山商界八卦》：宗明军绯闻</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">论坛</span>
+            <span class="badge low">低可信</span>
+            
+          </div>
+          <p>低可信干扰线。</p>
         </div>
-        <p>低可信干扰线。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_zong_deathbed">
-        <h4>宗世昌临终录音整理</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">录音整理</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_zong_deathbed">
+        
+        <div>
+          <h4>宗世昌临终录音整理</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">录音整理</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>宗世昌临终提到外面的孩子，但没有说完。</p>
         </div>
-        <p>宗世昌临终提到外面的孩子，但没有说完。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_hospital_blood">
-        <h4>云山县人民医院住院样本留存单</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">医院</span>
-          <span class="badge high">可信度高</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_hospital_blood">
+        
+        <div>
+          <h4>云山县人民医院住院样本留存单</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">医院</span>
+            <span class="badge high">可信度高</span>
+            
+          </div>
+          <p>解释 DNA 记录中的宗世昌血样来源。</p>
         </div>
-        <p>解释 DNA 记录中的宗世昌血样来源。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_notary_meeting">
-        <h4>云山县公证处接待笔录</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">公证</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_notary_meeting">
+        
+        <div>
+          <h4>云山县公证处接待笔录</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">公证</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>家族成员第一次正式面对第七支血脉。</p>
         </div>
-        <p>家族成员第一次正式面对第七支血脉。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_supply_roster">
-        <h4>县供销系统仓储点临时工花名册</h4>
-        <div class="meta-line">
-          <span class="badge">1969</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_supply_roster">
+        
+        <div>
+          <h4>县供销系统仓储点临时工花名册</h4>
+          <div class="meta-line">
+            <span class="badge">1969</span>
+            <span class="badge">档案</span>
+            <span class="badge high">可信度高</span>
+            
+          </div>
+          <p>证明宗世昌与罗月珍曾在同一系统工作。</p>
         </div>
-        <p>证明宗世昌与罗月珍曾在同一系统工作。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_old_postcard">
-        <h4>旧明信片残片</h4>
-        <div class="meta-line">
-          <span class="badge">1971</span>
-          <span class="badge">私人收藏</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_old_postcard">
+        
+        <div>
+          <h4>旧明信片残片</h4>
+          <div class="meta-line">
+            <span class="badge">1971</span>
+            <span class="badge">私人收藏</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>私人收藏，不能单独定案，但与强证据互相印证。</p>
         </div>
-        <p>私人收藏，不能单独定案，但与强证据互相印证。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_ktv_license">
-        <h4>唱响 KTV 个体工商登记</h4>
-        <div class="meta-line">
-          <span class="badge">2015</span>
-          <span class="badge">工商</span>
-          <span class="badge high">可信度高</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_ktv_license">
+        
+        <div>
+          <h4>唱响 KTV 个体工商登记</h4>
+          <div class="meta-line">
+            <span class="badge">2015</span>
+            <span class="badge">工商</span>
+            <span class="badge high">可信度高</span>
+            
+          </div>
+          <p>确认陈静曾用名与创业时间。</p>
         </div>
-        <p>确认陈静曾用名与创业时间。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_talent_window">
-        <h4>云山县教育局人才窗口档案挂靠说明</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">教育局</span>
-          <span class="badge warn">需交叉验证</span>
-          <span class="badge high">已收藏</span>
+      <button class="result-card is-read " data-doc-id="doc_talent_window">
+        
+        <div>
+          <h4>云山县教育局人才窗口档案挂靠说明</h4>
+          <div class="meta-line">
+            <span class="badge">2014</span>
+            <span class="badge">教育局</span>
+            <span class="badge warn">需交叉验证</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p>解释为什么外界误以为陈静在教育局上班。</p>
         </div>
-        <p>解释为什么外界误以为陈静在教育局上班。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_family_meeting">
-        <h4>世昌集团家族会议纪要节选</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">内部文件</span>
-          <span class="badge warn">需交叉验证</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_family_meeting">
+        
+        <div>
+          <h4>世昌集团家族会议纪要节选</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">内部文件</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p>家族内部有人知道罗月珍的名字。</p>
         </div>
-        <p>家族内部有人知道罗月珍的名字。</p>
       </button>
     
-      <button class="result-card is-read" data-doc-id="doc_false_peng">
-        <h4>地方论坛《云山茶馆》：贵州男友误认帖</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-          
+      <button class="result-card is-read " data-doc-id="doc_false_peng">
+        
+        <div>
+          <h4>地方论坛《云山茶馆》：贵州男友误认帖</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">论坛</span>
+            <span class="badge low">低可信</span>
+            
+          </div>
+          <p>解释陈静线的一个错误方向。</p>
         </div>
-        <p>解释陈静线的一个错误方向。</p>
       </button>
     </div>
           </section>
@@ -875,26 +957,10 @@
         <div class="relation-grid">
           
             <label>
-              <span class="field-label">信托文件</span>
+              <span class="field-label">证明文件</span>
               <select data-slot-index="0">
                 <option value="">未选择</option>
                 <option value="doc_official_family">《云山商界》1996 年宗世昌专访</option><option value="doc_group_history">世昌集团官网《集团历程》</option><option value="doc_trust_clause">香港家族信托文件节选</option><option value="doc_anonymous_letter">世昌集团匿名信</option><option value="doc_educated_youth">《云山县志》1995 年卷：知青名册节选</option><option value="doc_photo_back">云山县档案馆：1969 年春节合影背注</option><option value="doc_naming_rule">《云山民俗》：宗氏家族字辈观察</option><option value="doc_women_fed">云山县妇联创业帮扶登记表</option><option value="doc_blog_chenjing">陈静博客：2014 年 3 月 15 日</option><option value="doc_school_forum">云山家长汇论坛：县一中家长会</option><option value="doc_tiktok_chenjing">陈静短视频《我的乖女儿》转写</option><option value="doc_dna_record">云山县疾控中心亲缘比对记录</option><option value="doc_luo_birth">黔中地区旧户籍迁入登记</option><option value="doc_chen_birth">陈静出生医学记录复印件</option><option value="doc_jiadong_school">云山县第一中学学生信息表</option><option value="doc_gossip_wrong_mother">地方论坛《云山茶馆》：陈静身世帖</option><option value="doc_gossip_li_tianci">《云山八卦周刊》：李天赐疑云</option><option value="doc_gossip_mingjun">地方论坛《云山商界八卦》：宗明军绯闻</option><option value="doc_zong_deathbed">宗世昌临终录音整理</option><option value="doc_hospital_blood">云山县人民医院住院样本留存单</option><option value="doc_notary_meeting">云山县公证处接待笔录</option><option value="doc_supply_roster">县供销系统仓储点临时工花名册</option><option value="doc_old_postcard">旧明信片残片</option><option value="doc_ktv_license">唱响 KTV 个体工商登记</option><option value="doc_talent_window">云山县教育局人才窗口档案挂靠说明</option><option value="doc_family_meeting">世昌集团家族会议纪要节选</option><option value="doc_false_peng">地方论坛《云山茶馆》：贵州男友误认帖</option>
-              </select>
-            </label>
-          
-            <label>
-              <span class="field-label">血缘证明</span>
-              <select data-slot-index="1">
-                <option value="">未选择</option>
-                <option value="doc_official_family">《云山商界》1996 年宗世昌专访</option><option value="doc_group_history">世昌集团官网《集团历程》</option><option value="doc_trust_clause">香港家族信托文件节选</option><option value="doc_anonymous_letter">世昌集团匿名信</option><option value="doc_educated_youth">《云山县志》1995 年卷：知青名册节选</option><option value="doc_photo_back">云山县档案馆：1969 年春节合影背注</option><option value="doc_naming_rule">《云山民俗》：宗氏家族字辈观察</option><option value="doc_women_fed">云山县妇联创业帮扶登记表</option><option value="doc_blog_chenjing">陈静博客：2014 年 3 月 15 日</option><option value="doc_school_forum">云山家长汇论坛：县一中家长会</option><option value="doc_tiktok_chenjing">陈静短视频《我的乖女儿》转写</option><option value="doc_dna_record">云山县疾控中心亲缘比对记录</option><option value="doc_luo_birth">黔中地区旧户籍迁入登记</option><option value="doc_chen_birth">陈静出生医学记录复印件</option><option value="doc_jiadong_school">云山县第一中学学生信息表</option><option value="doc_gossip_wrong_mother">地方论坛《云山茶馆》：陈静身世帖</option><option value="doc_gossip_li_tianci">《云山八卦周刊》：李天赐疑云</option><option value="doc_gossip_mingjun">地方论坛《云山商界八卦》：宗明军绯闻</option><option value="doc_zong_deathbed">宗世昌临终录音整理</option><option value="doc_hospital_blood">云山县人民医院住院样本留存单</option><option value="doc_notary_meeting">云山县公证处接待笔录</option><option value="doc_supply_roster">县供销系统仓储点临时工花名册</option><option value="doc_old_postcard">旧明信片残片</option><option value="doc_ktv_license">唱响 KTV 个体工商登记</option><option value="doc_talent_window">云山县教育局人才窗口档案挂靠说明</option><option value="doc_family_meeting">世昌集团家族会议纪要节选</option><option value="doc_false_peng">地方论坛《云山茶馆》：贵州男友误认帖</option>
-              </select>
-            </label>
-          
-            <label>
-              <span class="field-label">现居后代</span>
-              <select data-slot-index="2">
-                <option value="">未选择</option>
-                <option value="zong_shichang">宗世昌（1932）</option><option value="li_guilan">李桂兰（1934）</option><option value="zong_jianguo">宗建国（1956）</option><option value="zong_jianfang">宗建芳（1958）</option><option value="zong_jianmin">宗建民（1959）</option><option value="zong_jianhong">宗建红（1962）</option><option value="zong_jianping">宗建平（1963）</option><option value="zong_jianli">宗建丽（1975）</option><option value="luo_yuezhen">罗月珍（1949）</option><option value="luo_jianning">罗建宁（1969）</option><option value="chen_jing">陈静（1988）</option><option value="chen_jiadong">陈嘉东（2004）</option><option value="zong_minghui">宗明辉（1984）</option><option value="zong_mingjun">宗明军（1990）</option><option value="li_qiang">李强（1986）</option><option value="li_min">李敏（1989）</option><option value="li_tianci">李天赐（2020）</option>
               </select>
             </label>
           
@@ -902,7 +968,7 @@
         <div>
           <strong>绑定证据</strong>
           <div class="evidence-options">
-            <label><input type="checkbox" value="doc_photo_back">云山县档案馆：1969 年春节合影背注</label><label><input type="checkbox" value="doc_luo_birth">黔中地区旧户籍迁入登记</label><label><input type="checkbox" value="doc_chen_birth">陈静出生医学记录复印件</label><label><input type="checkbox" value="doc_dna_record" checked="">云山县疾控中心亲缘比对记录</label><label><input type="checkbox" value="doc_school_forum">云山家长汇论坛：县一中家长会</label><label><input type="checkbox" value="doc_jiadong_school">云山县第一中学学生信息表</label><label><input type="checkbox" value="doc_trust_clause" checked="">香港家族信托文件节选</label><label><input type="checkbox" value="doc_official_family">《云山商界》1996 年宗世昌专访</label><label><input type="checkbox" value="doc_talent_window">云山县教育局人才窗口档案挂靠说明</label><label><input type="checkbox" value="doc_women_fed">云山县妇联创业帮扶登记表</label>
+            <label><input type="checkbox" value="doc_photo_back">云山县档案馆：1969 年春节合影背注</label><label><input type="checkbox" value="doc_luo_birth">黔中地区旧户籍迁入登记</label><label><input type="checkbox" value="doc_chen_birth">陈静出生医学记录复印件</label><label><input type="checkbox" value="doc_dna_record">云山县疾控中心亲缘比对记录</label><label><input type="checkbox" value="doc_school_forum">云山家长汇论坛：县一中家长会</label><label><input type="checkbox" value="doc_jiadong_school">云山县第一中学学生信息表</label><label><input type="checkbox" value="doc_trust_clause" checked="">香港家族信托文件节选</label><label><input type="checkbox" value="doc_official_family">《云山商界》1996 年宗世昌专访</label><label><input type="checkbox" value="doc_talent_window">云山县教育局人才窗口档案挂靠说明</label><label><input type="checkbox" value="doc_women_fed">云山县妇联创业帮扶登记表</label>
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
@@ -919,6 +985,12 @@
             <p class="hint">收藏过的资料会出现在这里。关键关系需要绑定强证据，而不是只凭八卦。</p>
             <div id="evidence-list" class="evidence-list">
       <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/photo-back-1969.jpg" alt="1969 年春节合影与照片背注扫描图" loading="lazy">
+      <figcaption>档案馆影像：合影与背注同档保存，提示宗世昌、罗月珍和“建宁”之间存在早期交集。</figcaption>
+    </figure>
+  
         <h4>云山县档案馆：1969 年春节合影背注</h4>
         <div class="meta-line">
           <span class="badge">1969</span>
@@ -929,6 +1001,12 @@
       </article>
     
       <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/hukou-1970.jpg" alt="1970 年旧户籍迁入登记扫描图" loading="lazy">
+      <figcaption>户籍册影像：随迁婴儿登记和空缺父亲栏，是罗建宁身世链条的关键物证。</figcaption>
+    </figure>
+  
         <h4>黔中地区旧户籍迁入登记</h4>
         <div class="meta-line">
           <span class="badge">1970</span>
@@ -939,6 +1017,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>陈静出生医学记录复印件</h4>
         <div class="meta-line">
           <span class="badge">1988</span>
@@ -949,6 +1028,12 @@
       </article>
     
       <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
+      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
+    </figure>
+  
         <h4>云山县疾控中心亲缘比对记录</h4>
         <div class="meta-line">
           <span class="badge">2019</span>
@@ -959,6 +1044,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>云山家长汇论坛：县一中家长会</h4>
         <div class="meta-line">
           <span class="badge">2020</span>
@@ -969,6 +1055,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>云山县第一中学学生信息表</h4>
         <div class="meta-line">
           <span class="badge">2020</span>
@@ -979,6 +1066,12 @@
       </article>
     
       <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
+      <figcaption>扫描件节选：被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
+    </figure>
+  
         <h4>香港家族信托文件节选</h4>
         <div class="meta-line">
           <span class="badge">1998</span>
@@ -989,6 +1082,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>《云山商界》1996 年宗世昌专访</h4>
         <div class="meta-line">
           <span class="badge">1996</span>
@@ -999,6 +1093,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>云山县教育局人才窗口档案挂靠说明</h4>
         <div class="meta-line">
           <span class="badge">2014</span>
@@ -1009,6 +1104,7 @@
       </article>
     
       <article class="evidence-card">
+        
         <h4>云山县妇联创业帮扶登记表</h4>
         <div class="meta-line">
           <span class="badge">2014</span>
@@ -1046,6 +1142,53 @@
         </div>
       </section>
 
+      <section id="updates-view" class="view">
+        <section class="panel updates-panel">
+          <h3>开发更新日志</h3>
+          <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
+          <div id="update-log-list" class="update-log-list">
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>关键证据图接入</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>为照片背注、信托文件、DNA 记录、户籍迁入登记补充证据图片</li><li>资料库结果、资料详情和证据箱都会显示已绑定的证据图</li><li>项目内引用版已压缩为 JPG，降低静态页面加载体积</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>npm run validate passed</li><li>npm run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>烟测与内容校验加固</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>run_smoke.ps1 会检查 Edge 退出码、DOM 文件存在性和非空内容</li><li>烟测保留 autotest pass 与提交成功断言，避免空 DOM 误判通过</li><li>validate 增加内容包提交答案与 app.js 提交逻辑一致性检查</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>npm run validate passed</li><li>npm run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>游戏内更新日志</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>新增侧边栏“更新日志”标签页</li><li>新增更新日志视图容器与列表节点</li><li>renderUpdates() 已接入 renderAll()，用于记录稳定变更和验证结果</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>npm run validate passed</li><li>npm run smoke passed</li></ul>
+      </div>
+    </article>
+  </div>
+        </section>
+      </section>
+
       <section id="report-view" class="view is-active">
         <section class="panel report-panel">
           <h3>最终提交</h3>
@@ -1060,7 +1203,7 @@
           <button id="submit-report" class="primary-action">提交报告</button>
           <div id="report-result" class="report-result success" aria-live="polite">
       <strong>提交成功。</strong>
-      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，陈嘉东为陈静之女。根据 1998 年香港家族信托条款，陈嘉东虽不姓宗，仍具备继承资格。</p>
+      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，按 1998 年香港家族信托条款同样具备继承资格；陈嘉东为陈静之女，虽不姓宗，仍是 2020 年现居云山且具继承资格的后代。</p>
       <div class="chain-review">
         <h4>证据链回顾</h4>
         <ol>
@@ -1069,7 +1212,7 @@
           <li>1969 年照片背注和旧户籍共同指向罗建宁。</li>
           <li>陈静出生记录确认其母为罗建宁。</li>
           <li>陈嘉东学籍确认其为陈静之女。</li>
-          <li>DNA 亲缘比对和信托条款共同确认继承资格。</li>
+          <li>DNA 亲缘比对和信托条款共同确认陈静一支的继承资格。</li>
         </ol>
       </div>
     </div>

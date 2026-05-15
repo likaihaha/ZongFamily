@@ -23,6 +23,10 @@
       "id": "doc-example",
       "title": "资料标题",
       "category": "archive",
+      "image": {
+        "src": "assets/images/evidence/example.jpg",
+        "alt": "资料图片说明"
+      },
       "body": "资料正文。"
     }
   ],

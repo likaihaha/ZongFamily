@@ -1,7 +1,7 @@
 {
   "scripts": {
     "tts:edge": "node tools/generate_edge_tts.mjs",
-    "validate": "node tools/validate_content_bundle.mjs game/data/case_bundle.json && node tools/validate_game.js",
+    "validate": "node tools/validate_content_bundle.mjs game/data/case_bundle.json && node tools/validate_submission_consistency.mjs && node tools/validate_game.js",
     "smoke": "powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1"
   },
   "devDependencies": {
