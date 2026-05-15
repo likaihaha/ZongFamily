@@ -43,7 +43,7 @@ const documents = [
     source: "官网",
     trust: 4,
     keywords: ["世昌集团", "宗建红", "宗明辉", "宗明军", "董事长", "集团历程"],
-    summary: "修正集团掌门时间线。",
+    summary: "列出世昌集团历任董事长更替。",
     body: "1982 年：世昌综合商店成立。\n1985 年：世昌贸易公司成立。\n1995 年：世昌集团挂牌。\n2005 年：宗建红正式接任董事长。\n2015 年：宗明辉接任第三任董事长。\n2020 年：宗明军接任第四任董事长。\n\n官网措辞谨慎，没有提及家族信托纠纷。"
   },
   {
@@ -233,7 +233,7 @@ const documents = [
     source: "论坛",
     trust: 1,
     keywords: ["陈静", "宗建芳", "母女", "教育局", "KTV"],
-    summary: "低可信误导：把宗建芳写成陈静母亲。",
+    summary: "网帖把宗建芳写成陈静母亲，但缺少原始材料。",
     body: "有人说唱响 KTV 的陈静是宗建芳主任的女儿，所以当年才那么容易挂档案、开店。\n\n不过也有人回帖说这只是帮扶关系，陈静亲妈早就不在了。帖子后来被管理员锁定。"
   },
   {
@@ -253,7 +253,7 @@ const documents = [
     source: "论坛",
     trust: 1,
     keywords: ["宗明军", "表妹", "绯闻", "宗嘉瑞", "世昌集团"],
-    summary: "低可信传闻。",
+    summary: "网帖牵扯宗明军绯闻，但人物称谓多处错乱。",
     body: "网帖称宗明军与表妹关系不清，还牵出某个未婚生子传闻。\n\n帖子内人物称谓多处错误，把宗明欣写成男性，又把不同支系混为一谈，可信度很低。"
   },
   {
@@ -343,7 +343,7 @@ const documents = [
     source: "论坛",
     trust: 1,
     keywords: ["陈静", "贵州男友", "彭宗日", "误认", "陈小东"],
-    summary: "解释陈静线的一个错误方向。",
+    summary: "网帖把陈静早年男友牵到无关人物。",
     body: "有网友把陈静早年男友与电竞选手彭宗日联系起来，称“照片像”。\n\n但彭宗日 2000 年生，2008 年仅 8 岁，不可能是陈静早年恋人。该帖后续被多人指出年龄不符。"
   },
   {
@@ -413,7 +413,7 @@ const documents = [
     source: "论坛",
     trust: 1,
     keywords: ["钱树林", "罗建宁", "罗月珍", "贵州司机", "误导", "父亲"],
-    summary: "低可信误导：把黔中司机钱树林写成罗建宁父亲。",
+    summary: "网帖把黔中司机钱树林写成罗建宁父亲。",
     body: "帖子声称罗建宁父亲是黔中汽车队司机钱树林，理由是钱树林年轻时常跑云山线路。\n\n但帖内把罗建宁出生地写成贵州，又称罗月珍 1968 年从未离开黔中，与县志、户籍迁入登记和云山卫生院接生登记均冲突。\n\n该帖可信度较低，应与县志、户籍和接生登记等原始材料交叉核对。"
   },
   {
@@ -525,6 +525,26 @@ const documents = [
     keywords: ["宗建丽", "宗世昌", "旧信", "李桂兰", "罗月珍", "建宁"],
     summary: "宗建丽保留旧信，为李桂兰信稿和照片背注提供搜索入口。",
     body: "宗建丽在父亲遗物清单中单独列出“桂兰未寄信、贵州来信、背面写建宁的旧照片”三项，并注明暂不交给集团办公室。\n\n她给宗建芳的短信写道：“大姐，爸年轻时的事我们不一定能替他遮住。至少先弄清楚罗月珍和建宁到底是不是同一个线。”\n\n清单本身不是强证据，但能把李桂兰未寄信、照片背注、罗月珍和罗建宁名字串成自然搜索链。"
+  },
+  {
+    id: "doc_archive_request_log",
+    title: "云山县档案馆 2020 年调档登记簿",
+    year: 2020,
+    source: "档案",
+    trust: 4,
+    keywords: ["调档登记", "档案馆", "宗建芳", "宗建丽", "供销系统", "知青名册", "照片背注", "罗月珍", "建宁"],
+    summary: "宗家内部曾回查供销社旧档与照片背注。",
+    body: "档案馆 2020 年 9 月调档登记显示，宗建芳曾以妇联旧案复核名义查询“1968 至 1970 年供销系统知青名册”，宗建丽则单独预约查看“1969 春节合影背注”和“贵州来信残件”。\n\n登记员备注：两人查询时间相隔三天，均特别标注“罗月珍”“建宁”两个关键词，但没有申请复制原件。\n\n这份登记簿不能证明血缘，只能说明宗家内部有人已经沿着知青名册、照片背注和旧信方向查过一轮。"
+  },
+  {
+    id: "doc_scholarship_notice",
+    title: "县一中 2020 年秋奖学金公示撤稿截图",
+    year: 2020,
+    source: "网页存档",
+    trust: 2,
+    keywords: ["陈嘉东", "陈小东", "奖学金", "县一中", "陈静", "宗家", "撤稿"],
+    summary: "撤稿截图出现陈嘉东姓名，也混入宗家传闻。",
+    body: "网页存档保留了一张县一中奖学金公示撤稿截图，名单中“陈嘉东”旁被人手写标注“小东，唱响 KTV 陈静女儿”。\n\n评论区有人追问“是不是宗家照顾的那个孩子”，但没有给出证据；学校随后以保护未成年人隐私为由撤下名单。\n\n该截图适合作为搜索陈嘉东、陈小东和陈静的入口，但不能用来证明继承资格，也不能替代学生信息表、家访记录和 DNA 资料。"
   }
 ];
 
@@ -582,6 +602,20 @@ const relationPrompts = [
 const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc.source)))];
 
 const updateLogs = [
+  {
+    date: "2026-05-15",
+    title: "搜索链补强",
+    changes: [
+      "新增 2 份资料：档案馆调档登记簿和县一中奖学金公示撤稿截图",
+      "资料库从 48 条扩到 50 条，补强宗建芳/宗建丽回查旧档与陈嘉东姓名搜索入口",
+      "新增内容只作为搜索路径和误导材料，不改变最终提交答案"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
   {
     date: "2026-05-15",
     title: "调查备忘录系统",
@@ -1282,7 +1316,7 @@ function renderResults() {
     return `
       <button class="result-card ${read} ${imageData ? "has-image" : ""}" data-doc-id="${doc.id}">
         ${image}
-        <div>
+        <div class="result-copy">
           <h4>${doc.title}</h4>
           <div class="meta-line">
             <span class="badge">${doc.year}</span>
@@ -1290,7 +1324,7 @@ function renderResults() {
             ${trustBadge(doc)}
             ${state.collected.has(doc.id) ? '<span class="badge high">已收藏</span>' : ""}
           </div>
-          <p>${doc.summary}</p>
+          <p class="doc-summary">${doc.summary}</p>
         </div>
       </button>
     `;
@@ -1510,7 +1544,7 @@ function renderEvidence() {
           <span class="badge">${doc.source}</span>
           ${trustBadge(doc)}
         </div>
-        <p>${doc.summary}</p>
+        <p class="doc-summary">${doc.summary}</p>
       </article>
     `;
   }).join("") || `<div class="empty-state"><h3>证据箱为空</h3><p>打开资料后点击“加入证据箱”。</p></div>`;

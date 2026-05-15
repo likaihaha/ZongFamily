@@ -168,6 +168,18 @@
       "name": "宗建丽整理父亲旧信清单",
       "type": "private",
       "supportsTruthIds": ["truth-luo-yuezhen", "truth-luo-jianning"]
+    },
+    {
+      "id": "clue-archive-request-log",
+      "name": "云山县档案馆 2020 年调档登记簿",
+      "type": "archive",
+      "supportsTruthIds": ["truth-luo-yuezhen", "truth-luo-jianning"]
+    },
+    {
+      "id": "clue-scholarship-notice",
+      "name": "县一中 2020 年秋奖学金公示撤稿截图",
+      "type": "web-archive",
+      "supportsTruthIds": ["truth-chen-line"]
     }
   ],
   "documents": [
@@ -354,6 +366,18 @@
       "title": "宗建丽整理父亲旧信清单",
       "category": "private",
       "body": "宗建丽旧信清单列出李桂兰未寄信、贵州来信和写有建宁的旧照片，形成追踪罗月珍与罗建宁的搜索入口。"
+    },
+    {
+      "id": "doc_archive_request_log",
+      "title": "云山县档案馆 2020 年调档登记簿",
+      "category": "archive",
+      "body": "2020 年 9 月，宗建芳和宗建丽先后调阅供销系统知青名册、1969 年春节合影背注和贵州来信残件，并标注罗月珍与建宁两个关键词。"
+    },
+    {
+      "id": "doc_scholarship_notice",
+      "title": "县一中 2020 年秋奖学金公示撤稿截图",
+      "category": "web-archive",
+      "body": "网页存档截图把陈嘉东、小东和陈静联系起来，但评论区的宗家照顾传闻缺少证据，只能作为搜索入口。"
     }
   ],
   "familyMembers": [
