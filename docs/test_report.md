@@ -34,6 +34,21 @@ powershell -ExecutionPolicy Bypass -File tools/generate_audio.ps1
 - 生成 1 个占位环境底噪
 - 生成 3 个 Windows TTS 占位语音
 
+### 免费神经网络 TTS
+
+命令：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/generate_edge_tts.ps1
+```
+
+结果：
+
+- 生成陈静博客朗读：`chen-jing-blog-edge.mp3`
+- 生成匿名电话：`anonymous-call-edge.mp3`
+- 生成宗世昌临终录音：`zong-deathbed-edge.mp3`
+- 当前免费 TTS 由 Node 包 `edge-tts-universal` 生成，许可证为 AGPL-3.0，商业发布前需处理授权风险。
+
 ### 浏览器烟测
 
 命令：

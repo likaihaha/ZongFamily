@@ -36,6 +36,14 @@ node tools/validate_game.js
 powershell -ExecutionPolicy Bypass -File tools/generate_audio.ps1
 ```
 
+生成免费神经网络 TTS 语音：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/generate_edge_tts.ps1
+```
+
+当前实现走 Node 包 `edge-tts-universal`，第一次运行前请先执行 `npm install`，不需要 API key。注意该包许可证为 AGPL-3.0；如果未来商业发布，建议替换为已确认商业授权的 TTS 或真人配音。
+
 运行浏览器烟测：
 
 ```powershell

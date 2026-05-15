@@ -365,11 +365,25 @@ const audio = {
   evidence: new Audio("assets/audio/sfx/evidence-added.wav"),
   ok: new Audio("assets/audio/sfx/relation-ok.wav"),
   conflict: new Audio("assets/audio/sfx/relation-conflict.wav"),
-  voiceChen: new Audio("assets/audio/voice/chen-jing-blog.wav"),
-  voiceAnonymous: new Audio("assets/audio/voice/anonymous-call.wav"),
-  voiceDeathbed: new Audio("assets/audio/voice/zong-deathbed.wav"),
   ambient: new Audio("assets/audio/bgm/archive-room-bed.wav")
 };
+
+const voiceAssets = {
+  chen: {
+    preferred: "assets/audio/voice/chen-jing-blog-edge.mp3",
+    fallback: "assets/audio/voice/chen-jing-blog.wav"
+  },
+  anonymous: {
+    preferred: "assets/audio/voice/anonymous-call-edge.mp3",
+    fallback: "assets/audio/voice/anonymous-call.wav"
+  },
+  deathbed: {
+    preferred: "assets/audio/voice/zong-deathbed-edge.mp3",
+    fallback: "assets/audio/voice/zong-deathbed.wav"
+  }
+};
+
+let activeVoiceClip = null;
 
 audio.ambient.loop = true;
 audio.ambient.volume = 0.35;
@@ -419,6 +433,29 @@ function playSound(name) {
   const clip = audio[name];
   clip.currentTime = 0;
   clip.play().catch(() => {});
+}
+
+function playVoice(key) {
+  if (!state.sound || !voiceAssets[key]) return;
+  if (activeVoiceClip) {
+    activeVoiceClip.pause();
+    activeVoiceClip.currentTime = 0;
+  }
+
+  const asset = voiceAssets[key];
+  const clip = new Audio(asset.preferred);
+  activeVoiceClip = clip;
+  clip.addEventListener("error", () => {
+    if (activeVoiceClip !== clip) return;
+    const fallback = new Audio(asset.fallback);
+    activeVoiceClip = fallback;
+    fallback.play().catch(() => {});
+  }, { once: true });
+  clip.play().catch(() => {
+    const fallback = new Audio(asset.fallback);
+    activeVoiceClip = fallback;
+    fallback.play().catch(() => {});
+  });
 }
 
 function trustBadge(doc) {
@@ -882,18 +919,7 @@ function bindEvents() {
   document.querySelector(".voice-list").addEventListener("click", (event) => {
     const button = event.target.closest("[data-voice]");
     if (!button) return;
-    const map = {
-      chen: audio.voiceChen,
-      anonymous: audio.voiceAnonymous,
-      deathbed: audio.voiceDeathbed
-    };
-    const clip = map[button.dataset.voice];
-    if (!clip) return;
-    Object.values(map).forEach((item) => {
-      item.pause();
-      item.currentTime = 0;
-    });
-    if (state.sound) clip.play().catch(() => {});
+    playVoice(button.dataset.voice);
   });
   $("save-btn").addEventListener("click", () => {
     saveState();
