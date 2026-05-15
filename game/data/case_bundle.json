@@ -144,6 +144,30 @@
       "name": "老街社区 2016 年走访记录",
       "type": "community",
       "supportsTruthIds": ["truth-chen-line"]
+    },
+    {
+      "id": "clue-sibling-meeting-2020",
+      "name": "宗家六子女临时会谈纪要",
+      "type": "corporate",
+      "supportsTruthIds": ["truth-public-family", "truth-trust"]
+    },
+    {
+      "id": "clue-jianhong-pr-plan",
+      "name": "世昌集团舆情应对草案",
+      "type": "corporate",
+      "supportsTruthIds": ["truth-trust"]
+    },
+    {
+      "id": "clue-ktv-reopen-check",
+      "name": "唱响 KTV 2020 年复工检查表",
+      "type": "community",
+      "supportsTruthIds": ["truth-chen-line"]
+    },
+    {
+      "id": "clue-jianli-old-letters",
+      "name": "宗建丽整理父亲旧信清单",
+      "type": "private",
+      "supportsTruthIds": ["truth-luo-yuezhen", "truth-luo-jianning"]
     }
   ],
   "documents": [
@@ -169,7 +193,7 @@
       "id": "doc_yunqian_bus_line",
       "title": "云山至黔中旧客运线路备案",
       "category": "traffic",
-      "body": "交通档案显示云山至黔中方向长期存在客运和邮电往来，可解释黔中汇款、明信片和司机误导线为何同时出现。"
+      "body": "交通档案显示云山至黔中方向长期存在客运和邮电往来，可说明黔中汇款、明信片和司机传闻为何同时出现。"
     },
     {
       "id": "doc_photo_back",
@@ -269,7 +293,7 @@
       "id": "doc_estate_law_note",
       "title": "云山县司法所继承咨询摘记",
       "category": "legal",
-      "body": "继承咨询摘记提示玩家同时核对 DNA、医院血样、出生记录和信托条款，才能判断陈嘉东线的资格。"
+      "body": "继承咨询摘记列明需同时核对 DNA、医院血样、出生记录和信托条款，才能判断陈嘉东线的资格。"
     },
     {
       "id": "doc_equity_draft_2005",
@@ -306,6 +330,30 @@
       "title": "老街社区 2016 年走访记录",
       "category": "community",
       "body": "社区走访记录写明陈静独自抚养女儿陈嘉东，小名小东，可补强陈静与陈嘉东的长期共同生活事实。"
+    },
+    {
+      "id": "doc_sibling_meeting_2020",
+      "title": "宗家六子女临时会谈纪要",
+      "category": "corporate",
+      "body": "会谈纪要显示宗建红、宗建民、宗建芳和宗建丽对第七支传闻态度不一，可继续追踪旧信、宗建芳和宗建丽。"
+    },
+    {
+      "id": "doc_jianhong_pr_plan",
+      "title": "世昌集团舆情应对草案",
+      "category": "corporate",
+      "body": "舆情草案试图把第七个继承人包装为旧照片误读，却要求内部排查罗建宁、陈静、陈嘉东和家族信托。"
+    },
+    {
+      "id": "doc_ktv_reopen_check",
+      "title": "唱响 KTV 2020 年复工检查表",
+      "category": "community",
+      "body": "复工检查表把陈静经营的 KTV、陈嘉东同住登记、健康码检查和社区走访连接到 2020 年秋调查路径。"
+    },
+    {
+      "id": "doc_jianli_old_letters",
+      "title": "宗建丽整理父亲旧信清单",
+      "category": "private",
+      "body": "宗建丽旧信清单列出李桂兰未寄信、贵州来信和写有建宁的旧照片，形成追踪罗月珍与罗建宁的搜索入口。"
     }
   ],
   "familyMembers": [

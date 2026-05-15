@@ -11,10 +11,10 @@ const people = [
   { id: "luo_jianning", name: "罗建宁", aliases: ["建宁"], birth: 1969, role: "罗月珍之女", note: "名字中的“建”暗合宗家第二代字辈。" },
   { id: "chen_jing", name: "陈静", aliases: ["陈明静", "唱响KTV老板娘"], birth: 1988, role: "KTV经营者", note: "罗建宁之女，2014 年返乡创业。" },
   { id: "chen_jiadong", name: "陈嘉东", aliases: ["陈小东", "小东"], birth: 2004, role: "县一中学生", note: "陈静之女，正式名中的“嘉”对应宗家第四代字辈。" },
-  { id: "zong_minghui", name: "宗明辉", aliases: [], birth: 1984, role: "世昌集团第三任董事长", note: "宗建民之子，干扰线。" },
-  { id: "zong_mingjun", name: "宗明军", aliases: [], birth: 1990, role: "世昌集团第四任董事长", note: "宗建民之子，干扰线。" },
-  { id: "li_qiang", name: "李强", aliases: [], birth: 1986, role: "鼎辉基金合伙人", note: "宗建红之子，干扰线。" },
-  { id: "li_min", name: "李敏", aliases: [], birth: 1989, role: "世昌集团客服主管", note: "宗建红之女，李天赐之母，干扰线。" },
+  { id: "zong_minghui", name: "宗明辉", aliases: [], birth: 1984, role: "世昌集团第三任董事长", note: "宗建民之子，曾参与集团换届。" },
+  { id: "zong_mingjun", name: "宗明军", aliases: [], birth: 1990, role: "世昌集团第四任董事长", note: "宗建民之子，2020 年接任集团董事长。" },
+  { id: "li_qiang", name: "李强", aliases: [], birth: 1986, role: "鼎辉基金合伙人", note: "宗建红之子，参与鼎辉尽调往来。" },
+  { id: "li_min", name: "李敏", aliases: [], birth: 1989, role: "世昌集团客服主管", note: "宗建红之女，李天赐之母。" },
   { id: "li_tianci", name: "李天赐", aliases: [], birth: 2020, role: "李敏之子", note: "八卦中被怀疑与信托有关，但证据不足。" },
   { id: "he_guosheng", name: "何国生", aliases: ["何会计"], birth: 1944, role: "供销社老会计", note: "1969 年经手仓储点临时借支和汇款登记。" },
   { id: "zhou_meiying", name: "周美英", aliases: ["周助产"], birth: 1939, role: "云山卫生院助产员", note: "曾在接生登记里留下罗月珍相关备注。" },
@@ -64,7 +64,7 @@ const documents = [
     trust: 4,
     keywords: ["2020", "健康码", "登记", "预约", "档案馆", "医院", "KTV"],
     summary: "说明 2020 年秋走访调查的现实阻力。",
-    body: "县政务服务大厅、档案馆、医院、学校等公共场所继续执行预约、测温、扫码和来访登记制度。涉及病历、学籍、户籍、档案原件的事项，需出示单位介绍信或委托材料。\n\n娱乐场所复工后需补齐消防和公共卫生检查记录，社区负责核验租住人口和经营场所登记。\n\n这份公告不涉及宗家事实，但解释了为什么玩家需要公证处委托函，也解释了陈静 KTV 和社区记录会留下额外痕迹。"
+    body: "县政务服务大厅、档案馆、医院、学校等公共场所继续执行预约、测温、扫码和来访登记制度。涉及病历、学籍、户籍、档案原件的事项，需出示单位介绍信或委托材料。\n\n娱乐场所复工后需补齐消防和公共卫生检查记录，社区负责核验租住人口和经营场所登记。\n\n这份公告不涉及宗家事实，但可说明公证处委托函、经营场所复工检查记录和社区租住人口登记在 2020 年秋具备制度背景。"
   },
   {
     id: "doc_yunqian_bus_line",
@@ -74,7 +74,7 @@ const documents = [
     trust: 3,
     keywords: ["云山", "黔中", "客运", "邮电所", "罗月珍", "钱树林"],
     summary: "补充云山和黔中之间长期往来的交通背景。",
-    body: "交通局旧档记载，云山至黔中方向的省际客运线路在 1980 年代已经固定，每周两班，途经红石公社、云山邮电所和县供销社仓储点附近。\n\n备注页提到，早年线路常由黔中汽车队承接临时加班车，因此当地论坛后来把钱树林这类司机和罗建宁身世联系起来。\n\n该档案只能证明两地交通往来便利，不能证明亲缘关系。它的作用是解释黔中汇款、明信片和司机误导线为何会同时出现。"
+    body: "交通局旧档记载，云山至黔中方向的省际客运线路在 1980 年代已经固定，每周两班，途经红石公社、云山邮电所和县供销社仓储点附近。\n\n备注页提到，早年线路常由黔中汽车队承接临时加班车，因此当地论坛后来把钱树林这类司机和罗建宁身世联系起来。\n\n该档案只能证明两地交通往来便利，不能证明亲缘关系；黔中汇款、明信片和钱树林传闻仍需分别核对原始来源。"
   },
   {
     id: "doc_trust_clause",
@@ -243,7 +243,7 @@ const documents = [
     source: "八卦周刊",
     trust: 1,
     keywords: ["李敏", "李天赐", "宗世昌", "信托", "DNA"],
-    summary: "干扰线：李天赐被怀疑与信托有关。",
+    summary: "传闻称李天赐与信托有关。",
     body: "李敏带儿子李天赐出入鉴定机构，引起外界猜测。有人认为这个孩子的父亲与宗家信托有关。\n\n但周刊没有提供任何正式报告，通篇仅引用匿名爆料。"
   },
   {
@@ -253,7 +253,7 @@ const documents = [
     source: "论坛",
     trust: 1,
     keywords: ["宗明军", "表妹", "绯闻", "宗嘉瑞", "世昌集团"],
-    summary: "低可信干扰线。",
+    summary: "低可信传闻。",
     body: "网帖称宗明军与表妹关系不清，还牵出某个未婚生子传闻。\n\n帖子内人物称谓多处错误，把宗明欣写成男性，又把不同支系混为一谈，可信度很低。"
   },
   {
@@ -394,7 +394,7 @@ const documents = [
     trust: 3,
     keywords: ["罗建宁", "贵州", "母亲", "云山", "建宁", "宗家"],
     summary: "罗建宁成年后仍回避云山身世。",
-    body: "受访同学回忆，罗建宁读书时很少谈父亲，只说“云山那边的人不要我妈回去”。\n\n她有一次酒后提到，自己的名字不是外婆取的，“是一个不能认的男人写在照片背后的”。\n\n访谈年代较晚，且属于转述，只能作为玩家追踪“照片背注”和“建宁”关键词的辅助线索。"
+    body: "受访同学回忆，罗建宁读书时很少谈父亲，只说“云山那边的人不要我妈回去”。\n\n她有一次酒后提到，自己的名字不是外婆取的，“是一个不能认的男人写在照片背后的”。\n\n访谈年代较晚，且属于转述，只能作为追踪“照片背注”和“建宁”关键词的辅助线索。"
   },
   {
     id: "doc_teacher_visit",
@@ -414,7 +414,7 @@ const documents = [
     trust: 1,
     keywords: ["钱树林", "罗建宁", "罗月珍", "贵州司机", "误导", "父亲"],
     summary: "低可信误导：把黔中司机钱树林写成罗建宁父亲。",
-    body: "帖子声称罗建宁父亲是黔中汽车队司机钱树林，理由是钱树林年轻时常跑云山线路。\n\n但帖内把罗建宁出生地写成贵州，又称罗月珍 1968 年从未离开黔中，与县志、户籍迁入登记和云山卫生院接生登记均冲突。\n\n这条线索适合用来训练玩家排除低可信来源。"
+    body: "帖子声称罗建宁父亲是黔中汽车队司机钱树林，理由是钱树林年轻时常跑云山线路。\n\n但帖内把罗建宁出生地写成贵州，又称罗月珍 1968 年从未离开黔中，与县志、户籍迁入登记和云山卫生院接生登记均冲突。\n\n该帖可信度较低，应与县志、户籍和接生登记等原始材料交叉核对。"
   },
   {
     id: "doc_estate_law_note",
@@ -423,8 +423,8 @@ const documents = [
     source: "司法所",
     trust: 4,
     keywords: ["继承", "非婚生", "信托", "DNA", "陈嘉东", "直系血亲"],
-    summary: "补充解释为什么陈嘉东线需要血缘和信托共同成立。",
-    body: "咨询摘记：若仅按普通法定继承路径，非婚生子女和其后代仍需完成亲缘证明；若涉及境外家族信托，则以信托文本约定为优先审查材料之一。\n\n工作人员建议：先固定宗世昌留存血样来源，再核对陈静一支的母系出生记录。未成年人陈嘉东是否直接受益，还需看信托受益人层级是否覆盖直系后代。\n\n该摘记不是判决，但能提示玩家把 DNA、医院血样、出生记录和信托条款连成一组。"
+    summary: "说明陈嘉东线需要同时核验血缘与信托条款。",
+    body: "咨询摘记：若仅按普通法定继承路径，非婚生子女和其后代仍需完成亲缘证明；若涉及境外家族信托，则以信托文本约定为优先审查材料之一。\n\n工作人员建议：先固定宗世昌留存血样来源，再核对陈静一支的母系出生记录。未成年人陈嘉东是否直接受益，还需看信托受益人层级是否覆盖直系后代。\n\n该摘记不是判决，但将 DNA、医院血样、出生记录和信托条款列为同组核验材料。"
   },
   {
     id: "doc_equity_draft_2005",
@@ -444,7 +444,7 @@ const documents = [
     trust: 3,
     keywords: ["魏雪琴", "宗明辉", "宗明军", "宗建红", "董事会", "换届"],
     summary: "宗家第二、三代围绕控制权已经出现裂痕。",
-    body: "换届备忘记载，宗建红主张由宗明辉接任第三任董事长，宗建民一支则要求保留物流板块否决权。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，避免玩家把董事长位置误当成继承资格。"
+    body: "换届备忘记载，宗建红主张由宗明辉接任第三任董事长，宗建民一支则要求保留物流板块否决权。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，可说明董事长席位不等同于继承资格。"
   },
   {
     id: "doc_jianfang_note",
@@ -473,8 +473,8 @@ const documents = [
     source: "金融文件",
     trust: 4,
     keywords: ["李强", "鼎辉基金", "尽调", "李天赐", "DNA", "信托"],
-    summary: "解释李强和李天赐为什么会成为误导线。",
-    body: "鼎辉基金向世昌集团发出的尽调函要求核实李强、李敏和李天赐是否涉及境外信托受益安排。\n\n附件只要求确认公开亲属关系和反洗钱资料，没有 DNA 鉴定结论，也没有把李天赐列为新增受益人。\n\n它能解释八卦来源，却不能支持李天赐继承资格。"
+    summary: "说明李强和李天赐被卷入传闻的文件来源。",
+    body: "鼎辉基金向世昌集团发出的尽调函要求核实李强、李敏和李天赐是否涉及境外信托受益安排。\n\n附件只要求确认公开亲属关系和反洗钱资料，没有 DNA 鉴定结论，也没有把李天赐列为新增受益人。\n\n该函只能说明八卦来源，不能支持李天赐继承资格。"
   },
   {
     id: "doc_neighborhood_visit",
@@ -485,6 +485,46 @@ const documents = [
     keywords: ["马丽华", "陈静", "陈嘉东", "陈小东", "社区走访", "单亲"],
     summary: "社区记录补强陈静与陈嘉东的长期共同生活事实。",
     body: "老街社区走访记录写明：陈静，个体经营户，独自抚养女儿陈嘉东，小名小东，就读县一中初中部。\n\n马丽华备注：“孩子随母姓，不愿谈外祖家。陈静称以后若有人问起宗家，只说自己靠唱响 KTV 养孩子。”\n\n该记录不是血缘证据，但能补足陈嘉东作为陈静子女的生活连续性。"
+  },
+  {
+    id: "doc_sibling_meeting_2020",
+    title: "宗家六子女临时会谈纪要",
+    year: 2020,
+    source: "内部文件",
+    trust: 3,
+    keywords: ["宗建红", "宗建民", "宗建芳", "宗建丽", "六名子女", "第七支"],
+    summary: "宗家六子女对第七支传闻的态度并不一致。",
+    body: "宗世昌去世后，六名公开子女在世昌集团小会议室临时碰头。\n\n宗建红主张先压住“第七支”传闻，宗建民关心物流板块是否被重新估值，宗建芳则提醒“若真有孩子，至少不能让外人先找到”。宗建丽只要求保留父亲生前资料，不同意销毁旧信件。\n\n纪要没有新增血缘证据，但显示公开六子女内部并非铁板一块，宗建芳、宗建丽和旧信件仍有继续核查价值。"
+  },
+  {
+    id: "doc_jianhong_pr_plan",
+    title: "世昌集团舆情应对草案",
+    year: 2020,
+    source: "内部文件",
+    trust: 2,
+    keywords: ["宗建红", "匿名信", "第七个继承人", "舆情", "信托", "罗建宁"],
+    summary: "宗建红试图把继承问题包装成网络谣言。",
+    body: "草案建议统一口径：“集团未收到任何新增继承人正式主张，网络所谓第七个继承人系旧照片误读。”\n\n附件要求法务先排查罗建宁、陈静、陈嘉东三个名字是否出现在公开资料中，同时避免在媒体回应里提到家族信托。\n\n该草案可信度低于正式法律材料，但可说明宗建红知道信托和罗建宁线索不能被简单否认。"
+  },
+  {
+    id: "doc_ktv_reopen_check",
+    title: "唱响 KTV 2020 年复工检查表",
+    year: 2020,
+    source: "社区",
+    trust: 4,
+    keywords: ["陈静", "陈嘉东", "唱响KTV", "复工检查", "健康码", "马丽华"],
+    summary: "陈静返乡后的经营和居住状态在 2020 年仍可核验。",
+    body: "复工检查表记载，唱响 KTV 经营人陈静，场所位于老电影院二楼，后巷附属房用于临时住宿。\n\n马丽华在检查意见中写明：经营人需补登记未成年同住人员陈嘉东，晚间营业期间由母亲负责照看，不得让学生进入包厢区。\n\n这份材料把 2020 年秋的办事须知、KTV 租赁备案、社区走访和学校家访连接起来，适合搜索“复工检查”或“健康码”后继续追踪陈静。"
+  },
+  {
+    id: "doc_jianli_old_letters",
+    title: "宗建丽整理父亲旧信清单",
+    year: 2020,
+    source: "私人收藏",
+    trust: 3,
+    keywords: ["宗建丽", "宗世昌", "旧信", "李桂兰", "罗月珍", "建宁"],
+    summary: "宗建丽保留旧信，为李桂兰信稿和照片背注提供搜索入口。",
+    body: "宗建丽在父亲遗物清单中单独列出“桂兰未寄信、贵州来信、背面写建宁的旧照片”三项，并注明暂不交给集团办公室。\n\n她给宗建芳的短信写道：“大姐，爸年轻时的事我们不一定能替他遮住。至少先弄清楚罗月珍和建宁到底是不是同一个线。”\n\n清单本身不是强证据，但能把李桂兰未寄信、照片背注、罗月珍和罗建宁名字串成自然搜索链。"
   }
 ];
 
@@ -544,6 +584,20 @@ const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc
 const updateLogs = [
   {
     date: "2026-05-15",
+    title: "宗家冲突内容扩充",
+    changes: [
+      "新增 4 份资料，补强宗家六子女内部冲突与陈静返乡后的地方关系网",
+      "新增资料覆盖六子女会谈、集团舆情草案、KTV 复工检查和宗建丽旧信清单",
+      "资料库从 44 条扩到 48 条，并同步写入内容包摘要和线索索引"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
     title: "云山县设定补充",
     changes: [
       "明确云山县为虚构江南省西南部、靠近黔中山区的南方山地县城",
@@ -562,7 +616,7 @@ const updateLogs = [
     changes: [
       "新增 3 名地方与集团支线人物：改制会计、集团法务和老街社区主任",
       "新增 6 份资料，覆盖 2005 股权改制、2015 董事会换届、宗建芳便条、KTV 租赁、鼎辉尽调和社区走访",
-      "新增资料把公司股权、信托资格和陈静返乡后的生活网络拆开，减少玩家把股权控制误当继承答案"
+      "新增资料把公司股权、信托资格和陈静返乡后的生活网络拆开，便于区分股权控制与继承资格"
     ],
     checks: [
       "node --check game/app.js passed",
@@ -575,7 +629,7 @@ const updateLogs = [
     title: "内容扩充第一轮",
     changes: [
       "新增 4 名支线人物：供销社会计、卫生院助产员、黔中司机和县一中班主任",
-      "新增 8 份资料，覆盖接生登记、借支单、汇款回执、未寄出信稿、访谈、家访记录和两条误导线",
+      "新增 8 份资料，覆盖接生登记、借支单、汇款回执、未寄出信稿、访谈、家访记录和两则传闻材料",
       "新增材料围绕罗月珍离县、罗建宁出生、陈静返乡和陈嘉东身份形成更多搜索路径"
     ],
     checks: [
@@ -603,7 +657,7 @@ const updateLogs = [
     title: "关系冲突提示",
     changes: [
       "关键关系卡新增冲突提示，区分人物不吻合、强证据缺失和弱证据干扰",
-      "提示会给出下一步可搜索关键词，减少玩家在家谱页反复试错",
+      "提示会给出下一步可搜索关键词，减少关系核验时的反复试错",
       "错误关系选择会播放冲突音效，正确闭环仍播放确认音效"
     ],
     checks: [
@@ -617,7 +671,7 @@ const updateLogs = [
     changes: [
       "侧边栏新增动态阶段提示卡",
       "阶段提示会根据阅读、证据收藏和关系完成度推荐下一步搜索或跳转",
-      "玩家可直接点击阶段按钮进入资料库、家谱或最终提交"
+      "阶段按钮可直接进入资料库、家谱或最终提交"
     ],
     checks: [
       "npm.cmd run validate passed",
@@ -739,6 +793,94 @@ const phaseGoals = [
     done: () => relationPrompts.every(isRelationCorrect) && state.report.heir === "luo_jianning" && state.report.descendant === "chen_jiadong"
   }
 ];
+
+const visitLocations = [
+  {
+    id: "archives",
+    title: "县档案馆",
+    image: "assets/images/photo-backgrounds/archive-room.png",
+    query: "罗月珍",
+    meta: "户籍 · 知青 · 旧报刊",
+    text: "调阅迁入登记、知青名册和早年公开报道，核对罗月珍与宗世昌在云山的交集。"
+  },
+  {
+    id: "hospital",
+    title: "县医院",
+    image: "assets/images/photo-backgrounds/county-hospital-corridor.png",
+    query: "DNA",
+    meta: "血样 · 出生 · 病历",
+    text: "复核出生记录、留存血样和亲缘比对来源，确认陈静一支是否具备强证据。"
+  },
+  {
+    id: "school",
+    title: "县一中",
+    image: "assets/images/photo-backgrounds/county-school-gate.png",
+    query: "陈嘉东",
+    meta: "学籍 · 家访 · 未成年人",
+    text: "查验陈嘉东学籍、班主任家访和监护人信息，补齐现居云山的后代链条。"
+  },
+  {
+    id: "ktv",
+    title: "唱响 KTV 后巷",
+    image: "assets/images/photo-backgrounds/county-ktv-room.png",
+    query: "陈静",
+    meta: "租赁 · 社区 · 复工检查",
+    text: "核对陈静返乡后的经营登记、租住人口记录和社区走访材料。"
+  },
+  {
+    id: "group",
+    title: "世昌集团",
+    image: "assets/images/photo-backgrounds/shichang-group-building.png",
+    query: "信托",
+    meta: "股权 · 董事会 · 信托",
+    text: "区分公司控制权、公开子女口径和家族信托受益人审查。"
+  },
+  {
+    id: "yunqian",
+    title: "云山至黔中旧线",
+    image: "assets/images/photo-backgrounds/yunshan-street.png",
+    query: "黔中",
+    meta: "客运 · 邮电 · 传闻",
+    text: "核对两地长期往来的交通背景，排除司机认父等低可信传闻。"
+  }
+];
+
+const personGroups = [
+  {
+    title: "公开宗家",
+    hint: "公开资料承认的宗世昌家庭。",
+    tone: "official",
+    ids: ["zong_shichang", "li_guilan", "zong_jianguo", "zong_jianfang", "zong_jianmin", "zong_jianhong", "zong_jianping", "zong_jianli"]
+  },
+  {
+    title: "隐藏血脉",
+    hint: "需要用强证据串联的第七支。",
+    tone: "hidden",
+    ids: ["luo_yuezhen", "luo_jianning", "chen_jing", "chen_jiadong"]
+  },
+  {
+    title: "集团旁支与传闻人物",
+    hint: "与股权、尽调或坊间传闻有关，继承资格需另行核验。",
+    tone: "related",
+    ids: ["zong_minghui", "zong_mingjun", "li_qiang", "li_min", "li_tianci", "qian_shulin"]
+  },
+  {
+    title: "证人与经手人",
+    hint: "提供档案、访谈或手续来源的人。",
+    tone: "witness",
+    ids: ["he_guosheng", "zhou_meiying", "huang_yaling", "fang_renjie", "wei_xueqin", "ma_lihua"]
+  }
+];
+
+const personPortraits = {
+  zong_shichang: "assets/images/future-assets/portraits/zong-shichang-old-portrait.png",
+  zong_jianfang: "assets/images/future-assets/portraits/zong-jianfang-portrait.png",
+  zong_jianhong: "assets/images/future-assets/portraits/zong-jianhong-portrait.png",
+  luo_yuezhen: "assets/images/future-assets/portraits/luo-yuezhen-youth-photo.png",
+  luo_jianning: "assets/images/future-assets/portraits/luo-jianning-file-photo.png",
+  chen_jing: "assets/images/future-assets/portraits/chen-jing-portrait.png",
+  chen_jiadong: "assets/images/future-assets/portraits/chen-jiadong-student-photo.png"
+};
 
 const els = {};
 const audio = {
@@ -983,6 +1125,21 @@ function renderFilters() {
   }).join("");
 }
 
+function renderVisitLocations() {
+  if (!els.locationList) return;
+  els.locationList.innerHTML = visitLocations.map((location) => `
+    <button class="location-card" data-location-query="${location.query}" aria-label="前往${location.title}">
+      <img src="${location.image}" alt="" loading="lazy">
+      <span class="location-shade"></span>
+      <span class="location-copy">
+        <span class="location-meta">${location.meta}</span>
+        <strong>${location.title}</strong>
+        <span>${location.text}</span>
+      </span>
+    </button>
+  `).join("");
+}
+
 function renderResults() {
   const hasQuery = Boolean(state.query.trim());
   const results = documents
@@ -1039,7 +1196,7 @@ function renderDocument() {
     ${docDetailImageFigures(doc)}
     <div class="document-body doc-kind-${sourceKind(doc.source)}">
       <span class="doc-watermark">${doc.source}</span>
-      ${doc.body}
+      <div class="doc-text">${doc.body}</div>
     </div>
     <div class="doc-actions">
       <button id="collect-doc" class="${state.collected.has(doc.id) ? "is-collected" : ""}">
@@ -1050,21 +1207,38 @@ function renderDocument() {
   `;
 }
 
+function renderAvatar(person) {
+  const portrait = personPortraits[person.id];
+  if (portrait) return `<img class="avatar avatar-img" src="${portrait}" alt="${person.name}头像" loading="lazy">`;
+  return `<div class="avatar">${person.name.slice(0, 1)}</div>`;
+}
+
 function renderPeople() {
-  els.peopleList.innerHTML = people.map((person) => `
-    <article class="person-card">
-      <div class="person-head">
-        <div class="avatar">${person.name.slice(0, 1)}</div>
-        <div>
-          <h4>${person.name}</h4>
-          <div class="person-meta">
-            <span class="badge">${person.birth}${person.death ? `-${person.death}` : ""}</span>
-            <span class="badge">${person.role}</span>
-          </div>
-        </div>
+  const byId = new Map(people.map((person) => [person.id, person]));
+  els.peopleList.innerHTML = personGroups.map((group) => `
+    <section class="person-group person-group-${group.tone}">
+      <header>
+        <h4>${group.title}</h4>
+        <p>${group.hint}</p>
+      </header>
+      <div class="person-group-list">
+        ${group.ids.map((id) => byId.get(id)).filter(Boolean).map((person) => `
+          <article class="person-card">
+            <div class="person-head">
+              ${renderAvatar(person)}
+              <div>
+                <h4>${person.name}</h4>
+                <div class="person-meta">
+                  <span class="badge">${person.birth}${person.death ? `-${person.death}` : ""}</span>
+                  <span class="badge">${person.role}</span>
+                </div>
+              </div>
+            </div>
+            <p>${person.note}</p>
+          </article>
+        `).join("")}
       </div>
-      <p>${person.note}</p>
-    </article>
+    </section>
   `).join("");
 }
 
@@ -1342,6 +1516,7 @@ function renderLeads() {
 }
 
 function renderAll() {
+  renderVisitLocations();
   els.query.value = state.query;
   renderFilters();
   renderResults();
@@ -1363,7 +1538,7 @@ function switchView(viewName) {
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
-  $("view-title").textContent = { search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", settings: "\u8bbe\u7f6e", report: "\u63d0\u4ea4" }[viewName];
+  $("view-title").textContent = { visit: "走访调查", search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", settings: "\u8bbe\u7f6e", report: "\u63d0\u4ea4" }[viewName];
 }
 
 function toggleSound(enabled) {
@@ -1484,6 +1659,15 @@ function maybeRunAutotest() {
 
 function bindEvents() {
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
+  els.locationList.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-location-query]");
+    if (!card) return;
+    state.query = card.dataset.locationQuery;
+    state.source = "全部";
+    switchView("search");
+    playSound("search");
+    renderAll();
+  });
   els.phaseGoalBody.addEventListener("click", (event) => {
     const button = event.target.closest("[data-phase-view]");
     if (!button) return;
@@ -1630,6 +1814,7 @@ function init() {
     searchBtn: $("search-btn"),
     sourceFilters: $("source-filters"),
     resultList: $("result-list"),
+    locationList: $("location-list"),
     documentEmpty: $("document-empty"),
     documentView: $("document-view"),
     peopleList: $("people-list"),

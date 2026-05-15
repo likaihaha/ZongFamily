@@ -12,13 +12,14 @@
       <div class="brand">
         <span class="brand-mark">档</span>
         <div>
-          <h1>云山档案检索系统</h1>
-          <p>宗世昌遗产案 · MVP 0.1</p>
+          <h1>云山宗氏案调查台</h1>
+          <p>公证处委托案 · 2020 秋</p>
         </div>
       </div>
 
       <nav class="tabs" aria-label="主导航">
-        <button class="tab is-active" data-view="search">资料库</button>
+        <button class="tab is-active" data-view="visit">走访</button>
+        <button class="tab" data-view="search">资料库</button>
         <button class="tab" data-view="tree">家谱</button>
         <button class="tab" data-view="evidence">证据箱</button>
         <button class="tab" data-view="notes">笔记</button>
@@ -66,8 +67,8 @@
     <main class="workspace">
       <header class="topbar">
         <div>
-          <p class="eyebrow">内部资料终端</p>
-          <h2 id="view-title">资料库</h2>
+          <p class="eyebrow">云山县公证处委托案</p>
+          <h2 id="view-title">走访调查</h2>
         </div>
         <div class="top-actions">
           <button id="sound-btn" class="ghost-btn">声音：开</button>
@@ -77,7 +78,27 @@
         </div>
       </header>
 
-      <section id="search-view" class="view is-active">
+      <section id="visit-view" class="view is-active">
+        <div class="visit-layout">
+          <section class="visit-hero">
+            <img src="assets/images/photo-backgrounds/investigation-desk.png" alt="云山宗氏案调查桌面">
+            <div class="visit-hero-copy">
+              <p class="eyebrow">2020 年 9 月 28 日 · 云山县</p>
+              <h3>宗世昌遗产继承核验</h3>
+              <p>受云山县公证处委托，核验宗氏公开家谱之外的直系血亲线索。走访记录、档案调阅和访谈材料将汇入资料库。</p>
+            </div>
+          </section>
+          <section class="location-section">
+            <div class="section-heading">
+              <h3>今日走访</h3>
+              <p>选择地点，调阅该处可取得的案卷和线索。</p>
+            </div>
+            <div id="location-list" class="location-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="search-view" class="view">
         <div class="search-layout">
           <section class="panel search-panel">
             <label class="search-label" for="query">关键词检索</label>

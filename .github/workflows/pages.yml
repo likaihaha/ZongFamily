@@ -39,8 +39,11 @@ jobs:
             --exclude 'assets/images/future-assets/' \
             --exclude 'assets/images/generated/' \
             --exclude 'assets/images/generated-cn/' \
-            --exclude 'assets/images/photo-backgrounds/' \
             game/ _site/game/
+          grep -ho "assets/images/future-assets/[^\"' ]*" game/app.js game/index.html | sort -u | while read -r asset; do
+            mkdir -p "_site/game/$(dirname "$asset")"
+            cp "game/$asset" "_site/game/$asset"
+          done
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
