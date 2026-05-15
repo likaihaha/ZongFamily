@@ -684,6 +684,17 @@ select {
   color: var(--accent);
 }
 
+.relation-feedback {
+  margin: 0;
+  padding: 10px 12px 10px 28px;
+  border: 1px solid #e6c9b7;
+  border-radius: 7px;
+  background: #fff5ec;
+  color: #7d3b22;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
 .evidence-card p {
   margin: 7px 0 0;
   color: var(--muted);

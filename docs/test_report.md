@@ -1,6 +1,6 @@
 # 测试报告
 
-更新时间：2026-05-15 14:49 Asia/Shanghai
+更新时间：2026-05-15 17:19 Asia/Shanghai
 
 ## 已执行
 
@@ -9,16 +9,20 @@
 命令：
 
 ```powershell
+node --check game\app.js
 npm.cmd run validate
 powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
 ```
 
 结果：
 
+- `game/app.js` 语法检查通过。
 - 内容包校验通过。
 - 提交答案一致性校验通过。
 - 游戏数据自检通过：17 名人物、27 条资料、6 条关键关系、0 错误、0 警告。
 - Edge headless 烟测通过，已生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮新增的关系冲突提示不影响自动通关路径。
+- GitHub Pages 发布目录模拟通过：排除未来素材后约 7.59 MB，保留 `game/` 可玩入口和证据图片。
 
 ### 数据自检
 

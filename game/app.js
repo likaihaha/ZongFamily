@@ -367,6 +367,19 @@ const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc
 const updateLogs = [
   {
     date: "2026-05-15",
+    title: "关系冲突提示",
+    changes: [
+      "关键关系卡新增冲突提示，区分人物不吻合、强证据缺失和弱证据干扰",
+      "提示会给出下一步可搜索关键词，减少玩家在家谱页反复试错",
+      "错误关系选择会播放冲突音效，正确闭环仍播放确认音效"
+    ],
+    checks: [
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
     title: "阶段提示接入",
     changes: [
       "侧边栏新增动态阶段提示卡",
@@ -825,13 +838,77 @@ function selectOptions(kind) {
   return personOptions;
 }
 
+function itemLabel(id) {
+  return people.find((person) => person.id === id)?.name
+    || documents.find((doc) => doc.id === id)?.title
+    || id;
+}
+
+function relationSearchHint(rel) {
+  return rel.requiredEvidence
+    .map((docId) => documents.find((doc) => doc.id === docId)?.keywords?.[0])
+    .filter(Boolean)
+    .join("、");
+}
+
+function hasRelationInput(answer) {
+  return Boolean(answer?.slots?.some(Boolean) || answer?.evidence?.length);
+}
+
+function relationFeedback(rel, answer) {
+  if (!hasRelationInput(answer)) {
+    return [];
+  }
+
+  const feedback = [];
+  rel.correct.forEach((value, index) => {
+    const selected = answer.slots?.[index];
+    if (selected && selected !== value) {
+      feedback.push(`${rel.slots[index]}“${itemLabel(selected)}”与强证据不吻合。`);
+    }
+  });
+
+  const selectedDocs = new Set([...(answer.slots || []), ...(answer.evidence || [])]);
+  const missingEvidence = rel.requiredEvidence.filter((docId) => !selectedDocs.has(docId));
+  if (missingEvidence.length > 0) {
+    feedback.push(`缺少强证据：${missingEvidence.map(itemLabel).join("、")}。`);
+  }
+
+  const weakEvidence = (answer.evidence || [])
+    .map((docId) => documents.find((doc) => doc.id === docId))
+    .filter((doc) => doc && doc.trust < 3 && !rel.requiredEvidence.includes(doc.id));
+  if (weakEvidence.length > 0) {
+    feedback.push(`已绑定弱来源：${weakEvidence.map((doc) => doc.title).join("、")}，它们只能辅助排除传闻。`);
+  }
+
+  if (feedback.length === 0 && !isRelationCorrect(rel)) {
+    feedback.push("人物选择接近，但证据链还没有闭合。");
+  }
+
+  const searchHint = relationSearchHint(rel);
+  if (searchHint && !isRelationCorrect(rel)) {
+    feedback.push(`建议回资料库搜索：${searchHint}。`);
+  }
+
+  return feedback;
+}
+
+function hasRelationConflict(rel) {
+  const answer = state.relationAnswers[rel.id];
+  return hasRelationInput(answer) && !isRelationCorrect(rel);
+}
+
 function renderRelations() {
   els.relationList.innerHTML = relationPrompts.map((rel) => {
     const answer = state.relationAnswers[rel.id] || { slots: ["", "", ""], evidence: [] };
     const complete = isRelationCorrect(rel);
+    const feedback = relationFeedback(rel, answer);
     const status = complete
       ? `<div class="relation-status ok">已确认：关系和证据均吻合</div>`
       : `<div class="relation-status bad">待确认：请补充正确人物和必要证据</div>`;
+    const feedbackHtml = complete || feedback.length === 0
+      ? ""
+      : `<ul class="relation-feedback">${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 
     return `
       <article class="relation-card" data-relation-id="${rel.id}">
@@ -861,6 +938,7 @@ function renderRelations() {
           </div>
         </div>
         ${status}
+        ${feedbackHtml}
       </article>
     `;
   }).join("");
@@ -1170,7 +1248,8 @@ function bindEvents() {
       current.evidence = values;
     }
     state.relationAnswers[relId] = current;
-    playSound(isRelationCorrect(relationPrompts.find((rel) => rel.id === relId)) ? "ok" : "click");
+    const rel = relationPrompts.find((item) => item.id === relId);
+    playSound(rel && isRelationCorrect(rel) ? "ok" : rel && hasRelationConflict(rel) ? "conflict" : "click");
     renderAll();
   });
   els.heirSelect.addEventListener("change", () => {

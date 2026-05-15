@@ -797,6 +797,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     
       <article class="relation-card" data-relation-id="rel_chen_jianfang">
@@ -838,6 +839,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     
       <article class="relation-card" data-relation-id="rel_zong_luo">
@@ -879,6 +881,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     
       <article class="relation-card" data-relation-id="rel_luo_chen">
@@ -920,6 +923,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     
       <article class="relation-card" data-relation-id="rel_chen_child">
@@ -961,6 +965,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     
       <article class="relation-card" data-relation-id="rel_trust">
@@ -1002,6 +1007,7 @@
           </div>
         </div>
         <div class="relation-status ok">已确认：关系和证据均吻合</div>
+        
       </article>
     </div>
           </section>
@@ -1177,6 +1183,19 @@
           <h3>开发更新日志</h3>
           <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
           <div id="update-log-list" class="update-log-list">
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>关系冲突提示</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>关键关系卡新增冲突提示，区分人物不吻合、强证据缺失和弱证据干扰</li><li>提示会给出下一步可搜索关键词，减少玩家在家谱页反复试错</li><li>错误关系选择会播放冲突音效，正确闭环仍播放确认音效</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>npm.cmd run validate passed</li><li>tools/run_smoke.ps1 passed</li></ul>
+      </div>
+    </article>
+  
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-15</strong>

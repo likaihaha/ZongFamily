@@ -28,10 +28,24 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare Pages artifact
+        shell: bash
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp index.html _site/
+          cp .nojekyll _site/
+          rsync -a \
+            --exclude 'assets/images/future-assets/' \
+            --exclude 'assets/images/generated/' \
+            --exclude 'assets/images/generated-cn/' \
+            --exclude 'assets/images/photo-backgrounds/' \
+            game/ _site/game/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
