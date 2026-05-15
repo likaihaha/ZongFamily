@@ -1,0 +1,1025 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《云山宗氏案》正式版计划</title>
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --paper: #fffdf7;
+      --ink: #24211c;
+      --muted: #6e665c;
+      --line: #d8cfbf;
+      --accent: #8f3129;
+      --accent-bg: #f4ded9;
+      --blue: #245b7d;
+      --green: #3e7150;
+      --gold: #8b6f35;
+      --shadow: 0 18px 44px rgba(38, 30, 19, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 253, 247, 0.82), rgba(255, 253, 247, 0.9)),
+        repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 7px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.92);
+    }
+
+    .hero {
+      padding: 56px 0 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.66);
+      color: #51483d;
+      font-size: 13px;
+    }
+
+    main {
+      padding: 34px 0 72px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 253, 247, 0.86);
+      box-shadow: 0 10px 24px rgba(38, 30, 19, 0.06);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 7px 8px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    section {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      background: rgba(255, 253, 247, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 25px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .lead {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .cards-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fffaf0;
+    }
+
+    .card h3,
+    .card h4 {
+      margin-top: 0;
+    }
+
+    .card h4 {
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 15px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: white;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tag.strong {
+      border-color: rgba(62, 113, 80, 0.42);
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .tag.warn {
+      border-color: rgba(143, 49, 41, 0.38);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffaf0;
+    }
+
+    .step span:first-child {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .milestone {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px;
+      border-left: 3px solid var(--line);
+      padding-left: 14px;
+    }
+
+    .milestone strong {
+      color: var(--accent);
+    }
+
+    .matrix {
+      width: 100%;
+      margin-top: 14px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .matrix th,
+    .matrix td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix th {
+      background: #f1e8da;
+      color: #40392f;
+      font-size: 14px;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .callout {
+      border: 1px solid rgba(143, 49, 41, 0.28);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff7f3;
+    }
+
+    .callout strong {
+      color: var(--accent);
+    }
+
+    code {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
+      background: #fffaf0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    footer {
+      padding: 26px 0 42px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      .grid,
+      .cards-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .milestone {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="eyebrow">正式版规划文档</div>
+      <h1>《云山宗氏案》正式版本计划</h1>
+      <p class="subtitle">目标是把当前 Web MVP 升级为一个完整调查推理游戏：家谱不再是答案板，而是玩家用资料、证据和推理逐步点亮的调查成果。</p>
+      <div class="meta">
+        <span class="pill">版本：Formal Plan 0.3</span>
+        <span class="pill">日期：2026-05-16 Asia/Shanghai</span>
+        <span class="pill">核心：家谱与资料双渐进解锁</span>
+        <span class="pill">范围：Demo 到正式版路线</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <nav aria-label="文档目录">
+      <strong>目录</strong>
+      <a href="#vision">1. 产品愿景</a>
+      <a href="#first-run">2. 首次体验</a>
+      <a href="#principles">3. 设计原则</a>
+      <a href="#structure">4. 游戏结构</a>
+      <a href="#genealogy">5. 正式版家谱</a>
+      <a href="#archive-unlock">6. 资料解锁</a>
+      <a href="#systems">7. 核心系统</a>
+      <a href="#content">8. 内容规模</a>
+      <a href="#data">9. 数据与校验</a>
+      <a href="#ui">10. 界面规划</a>
+      <a href="#production">11. 制作阶段</a>
+      <a href="#next">12. 下一步执行</a>
+    </nav>
+
+    <div class="content">
+      <section id="vision">
+        <h2>1. 产品愿景</h2>
+        <p class="lead">正式版的核心体验不是“找到正确答案”，而是“把一个被家族、地方关系和档案噪声掩盖的血脉事实查出来”。</p>
+        <div class="grid cards-3">
+          <article class="card">
+            <h4>玩家身份</h4>
+            <p>玩家是受云山县公证处委托的调查员，需要核验宗世昌家族信托中的直系血亲资格。</p>
+          </article>
+          <article class="card">
+            <h4>核心动作</h4>
+            <p>走访、检索、阅读、收藏、比对、排除误导、补全家谱、提交证据链。</p>
+          </article>
+          <article class="card">
+            <h4>最终反馈</h4>
+            <p>家谱图、关系核验卡和最终报告共同呈现玩家是否真正理解了证据链。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="first-run">
+        <h2>2. 首次游玩历程与感受目标</h2>
+        <p class="lead">玩家第一次打开游戏时，不应该像进入一套功能后台，而应该像坐到一张刚被交接的调查桌前：信息有限、责任明确、第一处裂缝隐约可见。</p>
+
+        <h3>开局 30 分钟目标情绪</h3>
+        <div class="grid cards-3">
+          <article class="card">
+            <h4>0-3 分钟：被委托</h4>
+            <p>玩家理解自己是谁、为什么查、当前只知道公开宗家版本。情绪目标是“我接到一个看似普通但有点不对劲的委托”。</p>
+          </article>
+          <article class="card">
+            <h4>3-8 分钟：摸到边缘</h4>
+            <p>玩家第一次打开资料库和家谱，只看到公开家谱、公开资料和模糊缺口。情绪目标是“这里缺了一块，但我还不知道缺什么”。</p>
+          </article>
+          <article class="card">
+            <h4>8-15 分钟：发现裂缝</h4>
+            <p>匿名信、临终录音或会议纪要让玩家得到第一个异常关键词。情绪目标是“公开说法不完整”。</p>
+          </article>
+          <article class="card">
+            <h4>15-25 分钟：主动追查</h4>
+            <p>玩家带着关键词去搜索或走访，资料库开始开放少量新材料。情绪目标是“这是我自己顺出来的线”。</p>
+          </article>
+          <article class="card">
+            <h4>25-30 分钟：第一次闭环</h4>
+            <p>玩家完成一条小关系核验，例如公开家庭或宗建芳误认。情绪目标是“我能用证据排除一个错误说法”。</p>
+          </article>
+          <article class="card">
+            <h4>离开前：想继续</h4>
+            <p>备忘录留下下一步方向，不剧透答案。情绪目标是“我知道下一步该查哪里，而且想查”。</p>
+          </article>
+        </div>
+
+        <h3>第一次打开时看到什么</h3>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>界面</th>
+              <th>开局展示</th>
+              <th>避免展示</th>
+              <th>设计意图</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>走访首页</td>
+              <td>调查桌、委托摘要、今日可去地点中的 2-3 个基础地点。</td>
+              <td>全部地点、后段地点、明确指向陈嘉东的地点。</td>
+              <td>让玩家先有现实场景和行动感。</td>
+            </tr>
+            <tr>
+              <td>资料库</td>
+              <td>公开报道、官网、公告、县情、少量模糊传闻。</td>
+              <td>学校信息表、DNA、司法咨询、信托资格、完整陈嘉东线。</td>
+              <td>资料库是调查工具，不是答案搜索引擎。</td>
+            </tr>
+            <tr>
+              <td>家谱</td>
+              <td>宗世昌、李桂兰、公开六子女、一个“未核验分支？”空节点。</td>
+              <td>罗月珍、罗建宁、陈静、陈嘉东完整链条。</td>
+              <td>让家谱成为后续发现的奖励。</td>
+            </tr>
+            <tr>
+              <td>证据箱</td>
+              <td>空证据箱与一条说明：证据需要从资料中收藏。</td>
+              <td>预置关键证据。</td>
+              <td>让玩家意识到证据是自己收集来的。</td>
+            </tr>
+            <tr>
+              <td>备忘录</td>
+              <td>少量非剧透任务：确认公开家庭、阅读委托、查匿名信来源。</td>
+              <td>“寻找陈嘉东”“确认罗建宁”这类后段任务。</td>
+              <td>提供方向，但不替玩家推理。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>首次流程脚本</h3>
+        <div class="flow">
+          <div class="step">
+            <span>1</span>
+            <div>
+              <strong>开场交接</strong>
+              <p>玩家看到公证处委托摘要、宗世昌死亡时间、公开家庭版本和“匿名信称仍有后代在云山”的模糊冲突。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>2</span>
+            <div>
+              <strong>第一次点开家谱</strong>
+              <p>家谱只显示公开宗家和未知缺口。玩家的第一反应应该是“这张图现在不完整”。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>3</span>
+            <div>
+              <strong>第一次搜索</strong>
+              <p>搜索“宗世昌”能得到公开资料；搜索后段人物不会直接出答案，而是提示检索范围不足或缺少前置线索。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>4</span>
+            <div>
+              <strong>第一次收藏证据</strong>
+              <p>玩家收藏公开家庭资料，家谱公开家庭关系可被确认，证据箱从空变成可用。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>5</span>
+            <div>
+              <strong>第一次关系核验</strong>
+              <p>玩家完成一个简单闭环，例如确认宗世昌与李桂兰，学习“人物选择 + 证据绑定 + 证据链小结”的规则。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>6</span>
+            <div>
+              <strong>第一个异常关键词</strong>
+              <p>匿名信、临终录音或会议纪要给出“第七支”“罗姓女知青”“建宁”等入口词，玩家进入真正调查。</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>首次体验不要做什么</h3>
+        <ul>
+          <li>不要开局展示完整隐藏血脉链。</li>
+          <li>不要让玩家搜索任意后段关键词都能得到强证据。</li>
+          <li>不要开局给出过多地点、人物和任务。</li>
+          <li>不要把教程做成弹窗说明书，应该嵌入备忘录和第一条关系核验。</li>
+          <li>不要让玩家第一次失败时只看到“错误”，必须解释缺的是人物、证据还是资料阶段。</li>
+        </ul>
+      </section>
+
+      <section id="principles">
+        <h2>3. 设计原则</h2>
+        <div class="flow">
+          <div class="step">
+            <span>1</span>
+            <div>
+              <strong>家谱不是答案板</strong>
+              <p>正式版一开始只显示公开家谱。隐藏血脉以未知节点、疑似节点和待证实关系逐步出现。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>2</span>
+            <div>
+              <strong>证据质量比证据数量重要</strong>
+              <p>强证据、辅助材料和传闻误导必须在 UI 与数据层明确区分，避免玩家靠乱勾证据通关。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>3</span>
+            <div>
+              <strong>发现节奏大于信息堆叠</strong>
+              <p>人物、地点和资料应该随着调查推进逐步打开，而不是在开局把 60 人和 200 份资料全部摊开。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>4</span>
+            <div>
+              <strong>资料库也不是答案库</strong>
+              <p>正式版开局不能搜出所有关键资料。资料可见性必须随关键词、地点、任务和证据链进度逐步开放。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>5</span>
+            <div>
+              <strong>错误路径要可解释</strong>
+              <p>玩家选错不是简单失败，而是得到“为什么这条证据不足”“哪份资料互相冲突”的反馈。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="structure">
+        <h2>4. 游戏结构</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>主案</h3>
+            <ul>
+              <li>宗世昌遗产继承核验。</li>
+              <li>公开六子女与境外家族信托之间的冲突。</li>
+              <li>隐藏直系血亲是否存在、是否具备继承资格。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>暗线</h3>
+            <ul>
+              <li>罗月珍：贵州籍知青，连接 1969 年云山旧档。</li>
+              <li>罗建宁：隐藏血脉第一代关键节点。</li>
+              <li>陈静：返乡经营者，连接母系链条与地方误传。</li>
+              <li>陈嘉东：2020 年现居云山的后代。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>支线</h3>
+            <ul>
+              <li>宗建芳误认：帮扶干部被误认为陈静母亲。</li>
+              <li>钱树林误导：交通便利不等于亲缘关系。</li>
+              <li>李天赐传闻：信托尽调不等于新增受益人。</li>
+              <li>股权与信托混淆：公司控制权不能排除血缘后代。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>章节建议</h3>
+            <ol>
+              <li>公开家庭与匿名信。</li>
+              <li>1969 年云山旧档。</li>
+              <li>罗建宁与陈静母系链。</li>
+              <li>陈嘉东身份与继承资格。</li>
+              <li>最终公证报告。</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section id="genealogy">
+        <h2>5. 正式版家谱设计</h2>
+        <p>正式版家谱要从“静态展示”改成“调查状态机”。它显示的不是开发者知道的真相，而是玩家当前已经发现、怀疑或证实的关系。</p>
+
+        <h3>初始状态</h3>
+        <ul>
+          <li>显示宗世昌、李桂兰和公开六子女。</li>
+          <li>显示一个模糊节点：<code>未核验分支？</code>。</li>
+          <li>不显示罗月珍、罗建宁、陈静、陈嘉东的完整隐藏链条。</li>
+          <li>旁支、证人、经手人默认进入人物档案池，不进入主血脉图。</li>
+        </ul>
+
+        <h3>解锁节奏</h3>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>触发资料或动作</th>
+              <th>家谱变化</th>
+              <th>玩家感知</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>匿名信、临终录音</td>
+              <td>出现“疑似第七支”空节点。</td>
+              <td>知道公开家谱之外可能有缺口。</td>
+            </tr>
+            <tr>
+              <td>知青名册、供销社花名册</td>
+              <td>出现“罗月珍？”候选节点。</td>
+              <td>第一次锁定 1968-1970 年云山线索。</td>
+            </tr>
+            <tr>
+              <td>照片背注、接生登记、旧户籍</td>
+              <td>解锁“罗建宁”节点，关系从未知变为强疑似。</td>
+              <td>血脉链条开始成形，但仍需血缘证据。</td>
+            </tr>
+            <tr>
+              <td>陈静出生记录</td>
+              <td>解锁“陈静”节点。</td>
+              <td>母女承接被固定。</td>
+            </tr>
+            <tr>
+              <td>学籍、家访、社区资料</td>
+              <td>解锁“陈嘉东”节点。</td>
+              <td>现居云山后代浮出水面。</td>
+            </tr>
+            <tr>
+              <td>DNA、医院血样、信托条款</td>
+              <td>血缘链和继承资格进入可提交状态。</td>
+              <td>从“发现人物”进入“证明资格”。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>关系状态</h3>
+        <div class="tag-row">
+          <span class="tag">hidden：未出现</span>
+          <span class="tag">unknown：未知节点</span>
+          <span class="tag">suspected：疑似关系</span>
+          <span class="tag warn">conflict：冲突关系</span>
+          <span class="tag strong">confirmed：已确认</span>
+          <span class="tag">rejected：已排除</span>
+        </div>
+      </section>
+
+      <section id="archive-unlock">
+        <h2>6. 资料库渐进解锁</h2>
+        <p class="lead">正式版资料库不能在开局展示所有资料。玩家搜索“陈嘉东”时，如果尚未建立陈静、陈小东或县一中线索，就不应直接看到学校信息表、司法咨询、KTV 记录等后段材料。</p>
+
+        <h3>资料可见性分层</h3>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>可见范围</th>
+              <th>代表资料</th>
+              <th>设计目的</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>开局可见</td>
+              <td>公开报道、官网、公告、县情、少量八卦入口。</td>
+              <td>宗世昌专访、集团官网、县情概览、匿名信。</td>
+              <td>建立案件背景和公开家庭版本。</td>
+            </tr>
+            <tr>
+              <td>关键词可发现</td>
+              <td>玩家先从资料里获得关键词后，搜索才会出现。</td>
+              <td>罗月珍、建宁、知青、供销社相关档案。</td>
+              <td>让玩家从线索推导下一步，而不是乱搜撞答案。</td>
+            </tr>
+            <tr>
+              <td>地点/任务解锁</td>
+              <td>走访档案馆、医院、学校、社区、KTV、世昌集团后开放。</td>
+              <td>学籍、家访、社区记录、复工检查、集团文件。</td>
+              <td>把资料取得和调查行动绑定起来。</td>
+            </tr>
+            <tr>
+              <td>证据链后段</td>
+              <td>玩家已经建立人物链后才出现。</td>
+              <td>DNA、医院血样、信托细则、司法咨询。</td>
+              <td>防止后段强证据过早剧透最终答案。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>搜索“陈嘉东”的正式版行为</h3>
+        <div class="flow">
+          <div class="step">
+            <span>1</span>
+            <div>
+              <strong>开局搜索</strong>
+              <p>不直接显示学校信息表、家访记录、司法咨询或 KTV 复工检查。可显示“检索范围不足”提示，或只出现一条低可信模糊论坛结果。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>2</span>
+            <div>
+              <strong>发现陈静后</strong>
+              <p>开放 KTV、社区、返乡经营相关资料，但仍不直接给出完整继承资格链。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>3</span>
+            <div>
+              <strong>发现陈小东/县一中后</strong>
+              <p>开放学校信息表、家访记录、奖学金撤稿等身份资料。</p>
+            </div>
+          </div>
+          <div class="step">
+            <span>4</span>
+            <div>
+              <strong>血缘链进入后段</strong>
+              <p>开放司法咨询、DNA、医院血样和信托资格材料，用于最终提交。</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>资料解锁状态</h3>
+        <div class="tag-row">
+          <span class="tag">public：开局可见</span>
+          <span class="tag">keyword：关键词发现</span>
+          <span class="tag">location：地点解锁</span>
+          <span class="tag">task：任务解锁</span>
+          <span class="tag strong">chain：证据链后段</span>
+          <span class="tag warn">decoy：可见但低可信误导</span>
+        </div>
+      </section>
+
+      <section id="systems">
+        <h2>7. 核心系统</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>资料库搜索</h3>
+            <ul>
+              <li>支持关键词、来源、可信度、人物、时间线和调查目的筛选。</li>
+              <li>搜索结果必须先经过资料可见性过滤，未解锁资料不进入结果列表。</li>
+              <li>搜索结果不直接剧透，只通过标题、摘要和来源诱导判断。</li>
+              <li>如果关键词正确但权限或调查阶段不足，显示“检索范围不足”而不是空白失败。</li>
+              <li>低可信资料负责制造入口和误导，不负责定案。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>文档阅读</h3>
+            <ul>
+              <li>每份资料包含来源、年份、可信度、关键词、正文和证据用途。</li>
+              <li>关键资料可加入证据箱。</li>
+              <li>正式版需要多个文档模板：档案、网页、信件、医院、学校、信托。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>证据箱</h3>
+            <ul>
+              <li>按血缘、身份、继承资格、误导排除分组。</li>
+              <li>支持玩家备注、证据标签、引用到关系。</li>
+              <li>关系核验时只优先展示相关证据，避免全量资料刷屏。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>关系核验</h3>
+            <ul>
+              <li>每次聚焦一条关系。</li>
+              <li>玩家选择人物、关系类型和证据卡。</li>
+              <li>系统反馈证据链缺口，而不是只报“对/错”。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>调查备忘录</h3>
+            <ul>
+              <li>承载主线任务、支线排除和教学提示。</li>
+              <li>待办状态随阅读、收藏、核验和提交自动更新。</li>
+              <li>正式版可加入“已搁置”“已排除”“稍后复查”。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>最终提交</h3>
+            <ul>
+              <li>提交隐藏血脉第一代、现居后代和完整证据链。</li>
+              <li>结局按证据完整度分层。</li>
+              <li>错误结局也应解释玩家采信了哪些传闻或遗漏了哪些强证据。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="content">
+        <h2>8. 内容规模</h2>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>范围</th>
+              <th>正式 Demo</th>
+              <th>完整正式版</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>人物</td>
+              <td>30-40 人</td>
+              <td>60-90 人</td>
+            </tr>
+            <tr>
+              <td>资料</td>
+              <td>70-90 份</td>
+              <td>160-220 份</td>
+            </tr>
+            <tr>
+              <td>关键关系</td>
+              <td>8-10 条</td>
+              <td>20-30 条</td>
+            </tr>
+            <tr>
+              <td>误导关系</td>
+              <td>6-8 条</td>
+              <td>10 条以上</td>
+            </tr>
+            <tr>
+              <td>走访地点</td>
+              <td>6-8 个</td>
+              <td>10-14 个</td>
+            </tr>
+            <tr>
+              <td>结局</td>
+              <td>3-4 个</td>
+              <td>6-8 个</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="data">
+        <h2>9. 数据与校验</h2>
+        <p>正式版必须把目前散在 <code>app.js</code> 中的核心数据拆到结构化内容包，否则人物和资料规模扩大后会变得很难维护。</p>
+        <div class="grid">
+          <article class="card">
+            <h3>数据文件建议</h3>
+            <ul>
+              <li><code>people.json</code>：人物、别名、阵营、发现条件。</li>
+              <li><code>documents.json</code>：资料正文、来源、可信度、关键词、用途、可见性层级。</li>
+              <li><code>relations.json</code>：关系谜题、必要证据、辅助证据、错误反馈。</li>
+              <li><code>discoveries.json</code>：节点解锁、资料解锁、关系状态变化、章节推进。</li>
+              <li><code>endings.json</code>：最终提交评分与结局文本。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>校验脚本</h3>
+            <ul>
+              <li>无孤儿人物：所有关系引用的人物必须存在。</li>
+              <li>无断链证据：关键节点必须有可发现路径。</li>
+              <li>无不可达结局：最终提交所需证据必须能被玩家获得。</li>
+              <li>无过早剧透：后段资料不能在开局或无前置关键词时被搜索到。</li>
+              <li>关键词可追踪：每份 keyword 层资料必须有至少一个前置资料提供入口词。</li>
+              <li>误导可解释：错误关系必须至少有一个反证或冲突资料。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="ui">
+        <h2>10. 界面规划</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>家谱页</h3>
+            <ul>
+              <li>顶部：动态家谱图。</li>
+              <li>中部：当前关系核验卡。</li>
+              <li>底部：人物档案池与证据链摘要。</li>
+              <li>人物多时默认只显示核心关系，旁支折叠到档案池。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>资料库页</h3>
+            <ul>
+              <li>左侧：搜索、筛选、结果列表。</li>
+              <li>右侧：文档阅读、证据加入、关键词提取。</li>
+              <li>正式版需要支持“从关系卡跳来的上下文搜索”。</li>
+              <li>未解锁但方向正确的关键词显示“需要先取得更多调查依据”，并推荐走访地点或待办。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>证据箱页</h3>
+            <ul>
+              <li>证据卡按用途分组。</li>
+              <li>显示被哪些关系引用。</li>
+              <li>允许玩家写备注和标记“强证据/辅助/误导”。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>提交页</h3>
+            <ul>
+              <li>先显示玩家整理出的证据链摘要。</li>
+              <li>再要求选择结论人物和证据。</li>
+              <li>提交后给出公证报告式反馈，而不是普通弹窗。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="production">
+        <h2>11. 制作阶段</h2>
+        <div class="timeline">
+          <div class="milestone">
+            <strong>阶段 1</strong>
+            <div>
+              <h3>正式版骨架重构</h3>
+              <p>拆分数据文件，建立 discovery state，保证家谱、资料、关系和提交都由结构化数据驱动。</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <strong>阶段 2</strong>
+            <div>
+              <h3>家谱与资料渐进解锁</h3>
+              <p>实现未知节点、疑似节点、实名节点、关系状态、资料可见性过滤和资料触发规则。</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <strong>阶段 3</strong>
+            <div>
+              <h3>证据系统正式化</h3>
+              <p>为资料声明用途，关系卡只展示相关证据，最终提交检查证据链完整度。</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <strong>阶段 4</strong>
+            <div>
+              <h3>内容扩写</h3>
+              <p>先补主线必要资料，再补误导与支线，最后补人物情绪材料和地方生活质感。</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <strong>阶段 5</strong>
+            <div>
+              <h3>测试与调参</h3>
+              <p>自动通关、错误路径、数据校验和真人试玩并行，重点观察玩家是否自然找到罗月珍线。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="next">
+        <h2>12. 下一步执行</h2>
+        <div class="callout">
+          <p><strong>建议立刻做：</strong>把现有家谱页和资料库一起改成正式版的渐进解锁系统。初始只显示公开宗家、公开资料和“未核验分支？”，罗月珍线与陈嘉东后段资料都必须根据资料阅读、走访和证据收藏逐步显名。</p>
+        </div>
+        <h3>第一轮实现清单</h3>
+        <ol>
+          <li>新增 <code>discoveryState</code>：记录人物是否发现、关系是否揭示、节点是否实名。</li>
+          <li>新增 <code>documentVisibility</code> 或等价字段：记录资料是 public、keyword、location、task、chain 还是 decoy。</li>
+          <li>把隐藏血脉节点改为未知节点，不在开局显示真实姓名。</li>
+          <li>把资料库搜索改成先过滤可见资料，再匹配关键词。</li>
+          <li>为关键资料增加解锁规则，尤其是陈嘉东、DNA、信托资格等后段资料。</li>
+          <li>让家谱图根据解锁状态渲染节点和线条。</li>
+          <li>更新自动测试：完整路径必须从公开家谱和公开资料逐步解锁到最终提交。</li>
+          <li>补一份正式版自检报告，说明每个隐藏节点和后段资料的触发条件。</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    《云山宗氏案》正式版本计划 · 2026-05-16
+  </footer>
+</body>
+</html>

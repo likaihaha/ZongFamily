@@ -1652,6 +1652,12 @@
       </div>
       <div class="relation-status ok"><strong>已确认：关系和证据均吻合</strong><p>公开报道确认宗世昌与李桂兰的婚姻及六名公开子女。</p></div>
       
+      
+      <details class="relation-reasoning">
+        <summary>为什么这些证据成立</summary>
+        <ul><li>官网资料是公开家庭的基准来源，只能证明李桂兰与六名公开子女。</li><li>它不能排除非公开血缘，因此后续仍要继续核验罗月珍、罗建宁和陈静线。</li></ul>
+      </details>
+    
     </article>
   </div>
           </section>
@@ -1958,6 +1964,19 @@
           <h3>开发更新日志</h3>
           <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
           <div id="update-log-list" class="update-log-list">
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-16</strong>
+        <span>关系证据解释</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>六条关键关系新增“为什么这些证据成立”展开说明</li><li>每条说明区分定案证据、辅助入口和不能单独排除的材料</li><li>保持原有关系答案和最终提交校验不变，只补强玩家理解路径</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game/app.js passed</li><li>npm.cmd run validate passed</li><li>tools/run_smoke.ps1 passed</li></ul>
+      </div>
+    </article>
+  
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-15</strong>

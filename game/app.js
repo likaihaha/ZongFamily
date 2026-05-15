@@ -643,6 +643,20 @@ const purposeFilterIds = new Set(purposeFilters.map((filter) => filter.id));
 
 const updateLogs = [
   {
+    date: "2026-05-16",
+    title: "关系证据解释",
+    changes: [
+      "六条关键关系新增“为什么这些证据成立”展开说明",
+      "每条说明区分定案证据、辅助入口和不能单独排除的材料",
+      "保持原有关系答案和最终提交校验不变，只补强玩家理解路径"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
     date: "2026-05-15",
     title: "关系证据卡片化",
     changes: [
@@ -1678,6 +1692,35 @@ function relationConclusion(rel) {
   }[rel.id] || "";
 }
 
+function relationReasoning(rel) {
+  return {
+    rel_public_family: [
+      "官网资料是公开家庭的基准来源，只能证明李桂兰与六名公开子女。",
+      "它不能排除非公开血缘，因此后续仍要继续核验罗月珍、罗建宁和陈静线。"
+    ],
+    rel_chen_jianfang: [
+      "人才窗口挂靠说明把陈静与教育系统的关系限定为短期档案挂靠。",
+      "妇联创业扶持记录写明宗建芳是转介帮扶干部，正好解释了外界误认母女的来源。"
+    ],
+    rel_zong_luo: [
+      "照片背注先给出“建宁”这个名字和罗月珍、宗世昌的早期交集。",
+      "旧户籍迁入登记把罗月珍和罗建宁带回黔中，补上孩子身份与离开云山的时间线。"
+    ],
+    rel_luo_chen: [
+      "出生记录直接固定罗建宁与陈静的母女关系。",
+      "DNA 记录证明陈静与宗世昌符合祖孙辈直系亲缘，能把罗建宁线接回宗世昌。"
+    ],
+    rel_chen_child: [
+      "学校信息表提供陈嘉东的正式姓名与监护人陈静。",
+      "家长会帖只能作为入口，但能帮助玩家把陈小东这个小名与陈嘉东对应起来。"
+    ],
+    rel_trust: [
+      "信托条款的关键点是不按姓氏、婚生状态或母亲身份排除血亲后代。",
+      "DNA 与陈嘉东身份资料用于证明这一支确实能沿陈静继续下传到现居后代。"
+    ]
+  }[rel.id] || [];
+}
+
 function evidenceTier(doc, rel) {
   if (rel.requiredEvidence.includes(doc.id)) return "required";
   if (doc.trust >= 4) return "strong";
@@ -1756,6 +1799,15 @@ function renderRelations() {
     : `<ul class="relation-feedback">${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>`;
   const searchHint = relationSearchHint(active);
   const evidenceHtml = renderEvidenceOptions(active, answer, searchHint);
+  const reasoning = relationReasoning(active);
+  const reasoningHtml = reasoning.length > 0
+    ? `
+      <details class="relation-reasoning">
+        <summary>为什么这些证据成立</summary>
+        <ul>${reasoning.map((item) => `<li>${item}</li>`).join("")}</ul>
+      </details>
+    `
+    : "";
 
   els.relationList.innerHTML = `
     <section class="relation-progress-card">
@@ -1801,6 +1853,7 @@ function renderRelations() {
       </div>
       ${status}
       ${feedbackHtml}
+      ${reasoningHtml}
     </article>
   `;
 

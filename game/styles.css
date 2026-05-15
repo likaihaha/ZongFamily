@@ -1575,6 +1575,27 @@ select {
   line-height: 1.65;
 }
 
+.relation-reasoning {
+  border: 1px solid rgba(36, 91, 125, 0.22);
+  border-radius: 7px;
+  padding: 9px 11px;
+  background: #f7fbfc;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.relation-reasoning summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.relation-reasoning ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  line-height: 1.65;
+}
+
 .evidence-card p {
   margin: 7px 0 0;
   color: var(--muted);

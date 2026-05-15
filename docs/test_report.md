@@ -1,6 +1,38 @@
 # 测试报告
 
-更新时间：2026-05-15 23:08 Asia/Shanghai
+更新时间：2026-05-16 00:19 Asia/Shanghai
+
+## 2026-05-16 00:19 Asia/Shanghai 正式版计划页检查
+
+命令：
+```powershell
+Select-String -Path yunshan_formal_version_plan.html -Pattern '<h1>','<h2>','建议立刻做','渐进解锁系统' -Encoding UTF8
+node --check game\app.js
+npm.cmd run validate
+```
+
+结果：
+- `yunshan_formal_version_plan.html` 存在《云山宗氏案》正式版本计划标题。
+- 页面包含产品愿景、首次游玩、设计原则、游戏结构、正式版家谱、资料库渐进解锁、核心系统、内容规模、数据与校验、界面规划、制作阶段和下一步执行 12 个主要章节。
+- 下一步执行段明确建议优先实现“家谱页 + 资料库”的渐进解锁系统。
+- `game/app.js` 语法检查和内容包校验通过。
+
+## 2026-05-16 00:01 Asia/Shanghai 关系证据解释回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+Select-String -Path docs\smoke-dom.html -Pattern '为什么这些证据成立|relation-reasoning|data-autotest="pass"' -Encoding UTF8
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查确认关系解释折叠块已渲染，且自动通关状态仍为 `data-autotest="pass"`。
+- in-app browser 视觉检查重试两次仍超时；本轮以 Edge headless 烟测和 DOM 检查作为验证依据。
 
 ## 2026-05-15 23:08 Asia/Shanghai 拟真侧栏导航回归
 

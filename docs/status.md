@@ -1,6 +1,20 @@
 # 开发状态
 
-更新时间：2026-05-15 23:08 Asia/Shanghai
+更新时间：2026-05-16 00:19 Asia/Shanghai
+
+## 2026-05-16 00:19 Asia/Shanghai 正式版计划页
+
+- 新增 `yunshan_formal_version_plan.html`，把 Demo 到正式版的产品愿景、首次游玩历程、渐进解锁、正式版家谱、数据结构和制作阶段整理成可浏览页面。
+- 计划页明确下一步优先做“家谱页 + 资料库”的渐进解锁系统：开局只显示公开宗家和公开资料，隐藏血脉、陈嘉东后段资料随搜索、走访和证据链逐步显名。
+- 该文档不改变当前 Demo 运行代码，但为后续从全量资料展示转向正式版调查状态机提供执行依据。
+- 验证：检查页面标题与 12 个主要章节均存在；`node --check game\app.js`、`npm.cmd run validate` 通过。
+
+## 2026-05-16 00:01 Asia/Shanghai 关系证据解释
+
+- 六条关键关系新增“为什么这些证据成立”展开说明，放在当前关系核验卡底部。
+- 每条说明明确区分定案证据、辅助入口和误导材料，避免玩家误以为系统只是在判下拉框答案。
+- 该改动不改变人物、资料、关系答案或最终提交校验，只补强家谱证据绑定的理解路径。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
 
 ## 2026-05-15 23:08 Asia/Shanghai 拟真侧栏导航
 
