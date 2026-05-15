@@ -21,7 +21,7 @@
         <button class="tab" data-view="search">资料库</button>
         <button class="tab" data-view="tree">家谱</button>
         <button class="tab" data-view="evidence">证据箱</button>
-        <button class="tab" data-view="notes">笔记</button>
+        <button class="tab" data-view="notes">备忘录</button>
         <button class="tab" data-view="updates">更新日志</button>
         <button class="tab" data-view="settings">设置</button>
         <button class="tab is-active" data-view="report">提交</button>
@@ -1679,6 +1679,137 @@
 
       <section id="notes-view" class="view">
         <div class="notes-layout">
+          <section class="panel memo-panel">
+            <h3>调查备忘录</h3>
+            <p class="hint">待办会按调查动作自动更新。点击条目可回到资料库、家谱或提交页继续推进。</p>
+            <div id="task-list" class="task-list">
+      <article class="task-group">
+        <header>
+          <h4>主线核验</h4>
+          <span>5 / 5</span>
+        </header>
+        <div class="task-items">
+          
+              <section class="task-item is-done ">
+                <div>
+                  <strong>建立公开家庭版本</strong>
+                  <p>先读公开报道，确认宗世昌被公开承认的家庭结构。</p>
+                </div>
+                <button data-task-view="search" data-task-query="宗世昌">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>固定继承规则</strong>
+                  <p>把信托条款加入证据箱，再判断姓氏是否决定资格。</p>
+                </div>
+                <button data-task-view="search" data-task-query="信托">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>补齐隐藏血脉链条</strong>
+                  <p>围绕罗月珍、陈静和陈嘉东收集强证据。</p>
+                </div>
+                <button data-task-view="search" data-task-query="罗月珍">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>完成家谱绑定</strong>
+                  <p>给关键关系选择人物，并绑定已收藏的强证据。</p>
+                </div>
+                <button data-task-view="tree">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>提交最终报告</strong>
+                  <p>提交第七支血脉和现居云山后代的判断。</p>
+                </div>
+                <button data-task-view="report">复查</button>
+              </section>
+            
+        </div>
+      </article>
+    
+      <article class="task-group">
+        <header>
+          <h4>支线排除</h4>
+          <span>3 / 3</span>
+        </header>
+        <div class="task-items">
+          
+              <section class="task-item is-done ">
+                <div>
+                  <strong>排除宗建芳误传</strong>
+                  <p>核对帮扶、档案挂靠和母女关系之间的差别。</p>
+                </div>
+                <button data-task-view="search" data-task-query="宗建芳">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>核实司机传闻</strong>
+                  <p>把交通背景和亲缘证据分开，不让低可信网帖带偏。</p>
+                </div>
+                <button data-task-view="search" data-task-query="钱树林">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>区分股权与信托</strong>
+                  <p>确认公司控制权文件不能直接替代受益人审查。</p>
+                </div>
+                <button data-task-view="search" data-task-query="股权">复查</button>
+              </section>
+            
+        </div>
+      </article>
+    
+      <article class="task-group">
+        <header>
+          <h4>调查教学</h4>
+          <span>3 / 4</span>
+        </header>
+        <div class="task-items">
+          
+              <section class="task-item is-done ">
+                <div>
+                  <strong>从走访进入资料库</strong>
+                  <p>任意选择一个走访地点或搜索关键词，打开第一份资料。</p>
+                </div>
+                <button data-task-view="visit">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>收藏第一份证据</strong>
+                  <p>打开资料后点击“加入证据箱”，让它可用于家谱绑定。</p>
+                </div>
+                <button data-task-view="search">复查</button>
+              </section>
+            
+              <section class="task-item is-done ">
+                <div>
+                  <strong>完成一条关系推理</strong>
+                  <p>在家谱页选人并绑定证据，观察冲突提示。</p>
+                </div>
+                <button data-task-view="tree">复查</button>
+              </section>
+            
+              <section class="task-item  is-current">
+                <div>
+                  <strong>用关键词回查</strong>
+                  <p>阅读资料后，在关键词区点击词条继续搜索。</p>
+                </div>
+                <button data-task-view="notes">看关键词</button>
+              </section>
+            
+        </div>
+      </article>
+    </div>
+          </section>
           <section class="panel">
             <h3>调查笔记</h3>
             <p class="hint">这里会自动保存。建议记录你认为可靠的证据链，而不是只摘录八卦。</p>
@@ -1697,6 +1828,19 @@
           <h3>开发更新日志</h3>
           <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
           <div id="update-log-list" class="update-log-list">
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>调查备忘录系统</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>笔记页升级为调查备忘录，新增主线核验、支线排除和调查教学三组待办</li><li>待办状态会根据阅读、收藏、关系绑定和最终提交自动更新</li><li>待办按钮可直接跳转到资料库、走访、家谱或提交页，并保留非剧透搜索提示</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game/app.js passed</li><li>npm.cmd run validate passed</li><li>tools/run_smoke.ps1 passed</li></ul>
+      </div>
+    </article>
+  
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-15</strong>

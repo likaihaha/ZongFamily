@@ -1,6 +1,15 @@
 # 开发状态
 
-更新时间：2026-05-15 19:58 Asia/Shanghai
+更新时间：2026-05-15 21:05 Asia/Shanghai
+
+## 2026-05-15 21:05 Asia/Shanghai 自动化推进
+
+- 已将“笔记”页升级为“调查备忘录”，接入主线核验、支线排除、调查教学三组待办。
+- 待办状态会根据资料阅读、证据收藏、关系绑定和最终提交状态自动刷新；待办按钮可跳转走访、资料库、家谱或提交页。
+- 新增 `reportSubmitted` 存档字段，确保“最终提交”必须实际提交成功后才算阶段完成。
+- 更新游戏内开发日志，记录本轮备忘录系统变更。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
+- 备注：尝试使用 in-app browser 做视觉确认时连接超时；已用 Edge headless 烟测和 DOM 检查确认备忘录节点、任务按钮与自动通关状态存在。
 
 ## 当前目标
 

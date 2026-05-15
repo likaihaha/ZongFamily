@@ -22,7 +22,7 @@
         <button class="tab" data-view="search">资料库</button>
         <button class="tab" data-view="tree">家谱</button>
         <button class="tab" data-view="evidence">证据箱</button>
-        <button class="tab" data-view="notes">笔记</button>
+        <button class="tab" data-view="notes">备忘录</button>
         <button class="tab" data-view="updates">更新日志</button>
         <button class="tab" data-view="settings">设置</button>
         <button class="tab" data-view="report">提交</button>
@@ -156,6 +156,11 @@
 
       <section id="notes-view" class="view">
         <div class="notes-layout">
+          <section class="panel memo-panel">
+            <h3>调查备忘录</h3>
+            <p class="hint">待办会按调查动作自动更新。点击条目可回到资料库、家谱或提交页继续推进。</p>
+            <div id="task-list" class="task-list"></div>
+          </section>
           <section class="panel">
             <h3>调查笔记</h3>
             <p class="hint">这里会自动保存。建议记录你认为可靠的证据链，而不是只摘录八卦。</p>

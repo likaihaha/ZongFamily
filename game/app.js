@@ -584,6 +584,20 @@ const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc
 const updateLogs = [
   {
     date: "2026-05-15",
+    title: "调查备忘录系统",
+    changes: [
+      "笔记页升级为调查备忘录，新增主线核验、支线排除和调查教学三组待办",
+      "待办状态会根据阅读、收藏、关系绑定和最终提交自动更新",
+      "待办按钮可直接跳转到资料库、走访、家谱或提交页，并保留非剧透搜索提示"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
     title: "宗家冲突内容扩充",
     changes: [
       "新增 4 份资料，补强宗家六子女内部冲突与陈静返乡后的地方关系网",
@@ -740,6 +754,7 @@ const state = {
   collected: new Set(),
   relationAnswers: {},
   report: { heir: "", descendant: "" },
+  reportSubmitted: false,
   sound: true,
   ambient: false,
   notes: ""
@@ -790,7 +805,115 @@ const phaseGoals = [
     prompt: "选择罗建宁与陈嘉东，提交第七支血脉和继承资格判断。",
     actionLabel: "打开提交",
     view: "report",
-    done: () => relationPrompts.every(isRelationCorrect) && state.report.heir === "luo_jianning" && state.report.descendant === "chen_jiadong"
+    done: () => state.reportSubmitted
+  }
+];
+
+const notebookTaskGroups = [
+  {
+    title: "主线核验",
+    items: [
+      {
+        title: "建立公开家庭版本",
+        detail: "先读公开报道，确认宗世昌被公开承认的家庭结构。",
+        actionLabel: "查宗世昌",
+        view: "search",
+        query: "宗世昌",
+        done: () => state.readDocs.has("doc_official_family")
+      },
+      {
+        title: "固定继承规则",
+        detail: "把信托条款加入证据箱，再判断姓氏是否决定资格。",
+        actionLabel: "查信托",
+        view: "search",
+        query: "信托",
+        done: () => state.collected.has("doc_trust_clause")
+      },
+      {
+        title: "补齐隐藏血脉链条",
+        detail: "围绕罗月珍、陈静和陈嘉东收集强证据。",
+        actionLabel: "查罗月珍",
+        view: "search",
+        query: "罗月珍",
+        done: () => ["doc_photo_back", "doc_luo_birth", "doc_chen_birth", "doc_jiadong_school", "doc_dna_record"].every((id) => state.collected.has(id))
+      },
+      {
+        title: "完成家谱绑定",
+        detail: "给关键关系选择人物，并绑定已收藏的强证据。",
+        actionLabel: "打开家谱",
+        view: "tree",
+        done: () => relationPrompts.every(isRelationCorrect)
+      },
+      {
+        title: "提交最终报告",
+        detail: "提交第七支血脉和现居云山后代的判断。",
+        actionLabel: "打开提交",
+        view: "report",
+        done: () => state.reportSubmitted
+      }
+    ]
+  },
+  {
+    title: "支线排除",
+    items: [
+      {
+        title: "排除宗建芳误传",
+        detail: "核对帮扶、档案挂靠和母女关系之间的差别。",
+        actionLabel: "查宗建芳",
+        view: "search",
+        query: "宗建芳",
+        done: () => state.readDocs.has("doc_women_fed") && state.readDocs.has("doc_talent_window")
+      },
+      {
+        title: "核实司机传闻",
+        detail: "把交通背景和亲缘证据分开，不让低可信网帖带偏。",
+        actionLabel: "查钱树林",
+        view: "search",
+        query: "钱树林",
+        done: () => state.readDocs.has("doc_false_qian") && state.readDocs.has("doc_yunqian_bus_line")
+      },
+      {
+        title: "区分股权与信托",
+        detail: "确认公司控制权文件不能直接替代受益人审查。",
+        actionLabel: "查股权",
+        view: "search",
+        query: "股权",
+        done: () => state.readDocs.has("doc_equity_draft_2005") && state.readDocs.has("doc_board_handover_2015")
+      }
+    ]
+  },
+  {
+    title: "调查教学",
+    items: [
+      {
+        title: "从走访进入资料库",
+        detail: "任意选择一个走访地点或搜索关键词，打开第一份资料。",
+        actionLabel: "去走访",
+        view: "visit",
+        done: () => state.readDocs.size > 0
+      },
+      {
+        title: "收藏第一份证据",
+        detail: "打开资料后点击“加入证据箱”，让它可用于家谱绑定。",
+        actionLabel: "去资料库",
+        view: "search",
+        done: () => state.collected.size > 0
+      },
+      {
+        title: "完成一条关系推理",
+        detail: "在家谱页选人并绑定证据，观察冲突提示。",
+        actionLabel: "打开家谱",
+        view: "tree",
+        done: () => relationPrompts.some(isRelationCorrect)
+      },
+      {
+        title: "用关键词回查",
+        detail: "阅读资料后，在关键词区点击词条继续搜索。",
+        actionLabel: "看关键词",
+        view: "notes",
+        done: () => discoveredKeywords().length > 0 && state.query.trim().length > 0
+      }
+    ]
   }
 ];
 
@@ -926,6 +1049,7 @@ function serializeState() {
     collected: [...state.collected],
     relationAnswers: state.relationAnswers,
     report: state.report,
+    reportSubmitted: state.reportSubmitted,
     sound: state.sound,
     ambient: state.ambient,
     notes: state.notes
@@ -949,6 +1073,7 @@ function loadState() {
     state.collected = new Set(parsed.collected || []);
     state.relationAnswers = parsed.relationAnswers || {};
     state.report = parsed.report || { heir: "", descendant: "" };
+    state.reportSubmitted = parsed.reportSubmitted === true;
     state.sound = parsed.sound !== false;
     state.ambient = parsed.ambient === true;
     state.notes = parsed.notes || "";
@@ -1423,6 +1548,38 @@ function renderNotes() {
     || `<p class="hint">阅读资料后会出现关键词。</p>`;
 }
 
+function renderNotebookTasks() {
+  if (!els.taskList) return;
+  els.taskList.innerHTML = notebookTaskGroups.map((group) => {
+    const completed = group.items.filter((item) => item.done()).length;
+    const firstOpen = group.items.find((item) => !item.done());
+    return `
+      <article class="task-group">
+        <header>
+          <h4>${group.title}</h4>
+          <span>${completed} / ${group.items.length}</span>
+        </header>
+        <div class="task-items">
+          ${group.items.map((item) => {
+            const done = item.done();
+            const current = !done && item === firstOpen;
+            const queryAttr = item.query ? ` data-task-query="${item.query}"` : "";
+            return `
+              <section class="task-item ${done ? "is-done" : ""} ${current ? "is-current" : ""}">
+                <div>
+                  <strong>${item.title}</strong>
+                  <p>${item.detail}</p>
+                </div>
+                <button data-task-view="${item.view}"${queryAttr}>${done ? "复查" : item.actionLabel}</button>
+              </section>
+            `;
+          }).join("")}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
 function renderUpdates() {
   if (!els.updateLogList) return;
   els.updateLogList.innerHTML = updateLogs.map((log) => `
@@ -1526,6 +1683,7 @@ function renderAll() {
   renderEvidence();
   renderReportOptions();
   renderNotes();
+  renderNotebookTasks();
   renderUpdates();
   renderSettings();
   renderCounters();
@@ -1538,7 +1696,7 @@ function switchView(viewName) {
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
-  $("view-title").textContent = { visit: "走访调查", search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u7b14\u8bb0", updates: "\u66f4\u65b0\u65e5\u5fd7", settings: "\u8bbe\u7f6e", report: "\u63d0\u4ea4" }[viewName];
+  $("view-title").textContent = { visit: "走访调查", search: "\u8d44\u6599\u5e93", tree: "\u5bb6\u8c31", evidence: "\u8bc1\u636e\u7bb1", notes: "\u8c03\u67e5\u5907\u5fd8\u5f55", updates: "\u66f4\u65b0\u65e5\u5fd7", settings: "\u8bbe\u7f6e", report: "\u63d0\u4ea4" }[viewName];
 }
 
 function toggleSound(enabled) {
@@ -1592,6 +1750,7 @@ function submitReport() {
   const result = $("report-result");
 
   if (relationOk && heirOk && descendantOk) {
+    state.reportSubmitted = true;
     result.className = "report-result success";
     result.innerHTML = `
       <strong>提交成功。</strong>
@@ -1609,6 +1768,7 @@ function submitReport() {
       </div>
     `;
   } else {
+    state.reportSubmitted = false;
     const missing = [];
     if (!relationOk) missing.push("关键关系或绑定证据仍有错误");
     if (!heirOk) missing.push("隐藏血脉第一代后代判断不正确");
@@ -1620,6 +1780,7 @@ function submitReport() {
       <p>提示：不要只看论坛传闻。信托条款、照片背注、户籍和 DNA 记录才是强证据。</p>
     `;
   }
+  saveState();
 }
 
 function runAutotest() {
@@ -1647,6 +1808,8 @@ function runAutotest() {
   switchView("report");
   renderAll();
   submitReport();
+  renderPhaseGoal();
+  renderNotebookTasks();
   document.body.dataset.autotest = $("report-result").classList.contains("success") ? "pass" : "fail";
 }
 
@@ -1730,16 +1893,19 @@ function bindEvents() {
       current.evidence = values;
     }
     state.relationAnswers[relId] = current;
+    state.reportSubmitted = false;
     const rel = relationPrompts.find((item) => item.id === relId);
     playSound(rel && isRelationCorrect(rel) ? "ok" : rel && hasRelationConflict(rel) ? "conflict" : "click");
     renderAll();
   });
   els.heirSelect.addEventListener("change", () => {
     state.report.heir = els.heirSelect.value;
+    state.reportSubmitted = false;
     saveState();
   });
   els.descendantSelect.addEventListener("change", () => {
     state.report.descendant = els.descendantSelect.value;
+    state.reportSubmitted = false;
     saveState();
   });
   els.notesInput.addEventListener("input", () => {
@@ -1754,9 +1920,25 @@ function bindEvents() {
     playSound("search");
     renderAll();
   });
+  els.taskList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-task-view]");
+    if (!button) return;
+    if (button.dataset.taskQuery) {
+      state.query = button.dataset.taskQuery;
+      state.source = "全部";
+      switchView("search");
+      playSound("search");
+    } else {
+      switchView(button.dataset.taskView);
+      playSound("click");
+    }
+    renderAll();
+  });
   $("submit-report").addEventListener("click", () => {
     submitReport();
     playSound($("report-result").classList.contains("success") ? "ok" : "conflict");
+    renderPhaseGoal();
+    renderNotebookTasks();
   });
   $("sound-btn").addEventListener("click", () => {
     toggleSound(!state.sound);
@@ -1820,6 +2002,7 @@ function init() {
     peopleList: $("people-list"),
     relationList: $("relation-list"),
     evidenceList: $("evidence-list"),
+    taskList: $("task-list"),
     notesInput: $("notes-input"),
     keywordList: $("keyword-list"),
     updateLogList: $("update-log-list"),

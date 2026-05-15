@@ -1,6 +1,22 @@
 # 测试报告
 
-更新时间：2026-05-15 19:58 Asia/Shanghai
+更新时间：2026-05-15 21:05 Asia/Shanghai
+
+## 2026-05-15 21:05 Asia/Shanghai 回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查确认 `data-autotest="pass"`、调查备忘录、主线/支线/教学待办和最终提交复查按钮均已渲染。
+- in-app browser 视觉检查连接超时，本轮未取得交互式截图；当前以 headless 烟测和 DOM 检查作为验证依据。
 
 ## 已执行
 
