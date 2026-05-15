@@ -1,6 +1,14 @@
 # 开发状态
 
-更新时间：2026-05-16 02:19 Asia/Shanghai
+更新时间：2026-05-16 03:06 Asia/Shanghai
+
+## 2026-05-16 03:06 Asia/Shanghai 搜索路径自检
+
+- 新增 `tools/validate_search_paths.mjs`，按玩家调查节奏模拟开局搜索、阅读公开家庭资料、继续追查罗月珍、罗建宁、陈静、陈嘉东和 DNA 强证据，验证渐进解锁没有把主线搜索链锁死。
+- 脚本同时检查六个走访入口：县档案馆、县医院、县一中、唱响 KTV、世昌集团、云山至黔中旧线，确认走访后使用地点默认关键词至少能显示一份本地取得资料。
+- 已接入 `npm run validate`，以后内容或解锁规则变更会同时回归内容包、提交答案、未来资产、基础游戏数据和搜索路径。
+- 修改文件：`tools/validate_search_paths.mjs`、`package.json`、`README.md`、`docs/status.md`、`docs/test_report.md`；烟测重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证：`node tools\validate_search_paths.mjs`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
 
 ## 2026-05-16 02:19 Asia/Shanghai 集团与公证设定补强
 

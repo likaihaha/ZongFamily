@@ -1,6 +1,20 @@
 # 测试报告
 
-更新时间：2026-05-16 02:19 Asia/Shanghai
+更新时间：2026-05-16 03:06 Asia/Shanghai
+
+## 2026-05-16 03:06 Asia/Shanghai 搜索路径自检回归
+
+命令：
+```powershell
+node tools\validate_search_paths.mjs
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 新增搜索路径自检通过，共覆盖 14 个检查点：开局公开入口、信托原文锁定、罗月珍强证据锁定、公开家庭后的罗月珍线、照片背注后的罗建宁线、罗建宁后的陈静线、陈静后的陈嘉东线、DNA 强证据，以及 6 个走访入口默认关键词。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、未来资产清单、基础游戏数据和搜索路径均无错误。
+- Edge headless 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`，页面仍输出 `data-autotest="pass"`。
 
 ## 2026-05-16 02:19 Asia/Shanghai 集团与公证设定回归
 

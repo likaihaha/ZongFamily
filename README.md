@@ -31,7 +31,13 @@
 运行数据自检：
 
 ```powershell
-node tools/validate_game.js
+npm.cmd run validate
+```
+
+该命令会检查内容包结构、最终提交答案一致性、未来资产清单、基础游戏数据和关键搜索路径。单独检查渐进解锁后的搜索链可运行：
+
+```powershell
+node tools/validate_search_paths.mjs
 ```
 
 生成占位音频：
