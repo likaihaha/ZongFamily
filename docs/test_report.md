@@ -1,8 +1,24 @@
 # 测试报告
 
-更新时间：2026-05-15 01:51 Asia/Shanghai
+更新时间：2026-05-15 14:49 Asia/Shanghai
 
 ## 已执行
+
+### 本轮回归
+
+命令：
+
+```powershell
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+
+- 内容包校验通过。
+- 提交答案一致性校验通过。
+- 游戏数据自检通过：17 名人物、27 条资料、6 条关键关系、0 错误、0 警告。
+- Edge headless 烟测通过，已生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
 
 ### 数据自检
 

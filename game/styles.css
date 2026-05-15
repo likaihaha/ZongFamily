@@ -180,6 +180,49 @@ button {
   color: var(--accent);
 }
 
+.phase-step {
+  display: grid;
+  gap: 8px;
+}
+
+.phase-step h3 {
+  margin: 0;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+.phase-step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.phase-progress {
+  height: 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #f0e5d4;
+  overflow: hidden;
+}
+
+.phase-progress span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+
+.phase-action {
+  justify-self: start;
+  border: 1px solid var(--blue);
+  border-radius: 7px;
+  padding: 7px 10px;
+  background: #f4f9fb;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .workspace {
   min-width: 0;
   padding: 24px;

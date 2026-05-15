@@ -356,8 +356,8 @@ const relationPrompts = [
     id: "rel_trust",
     title: "继承资格",
     prompt: "哪份文件证明不姓宗也可继承？",
-    slots: ["证明文件"],
-    correct: ["doc_trust_clause"],
+    slots: ["信托文件", "血缘证明", "现居后代"],
+    correct: ["doc_trust_clause", "doc_dna_record", "chen_jiadong"],
     requiredEvidence: ["doc_trust_clause"]
   }
 ];
@@ -365,6 +365,19 @@ const relationPrompts = [
 const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc.source)))];
 
 const updateLogs = [
+  {
+    date: "2026-05-15",
+    title: "阶段提示接入",
+    changes: [
+      "侧边栏新增动态阶段提示卡",
+      "阶段提示会根据阅读、证据收藏和关系完成度推荐下一步搜索或跳转",
+      "玩家可直接点击阶段按钮进入资料库、家谱或最终提交"
+    ],
+    checks: [
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
   {
     date: "2026-05-15",
     title: "关键证据图接入",
@@ -418,6 +431,55 @@ const state = {
   ambient: false,
   notes: ""
 };
+
+const phaseGoals = [
+  {
+    title: "建立公开版本",
+    prompt: "先读公开家庭资料，确认宗世昌与李桂兰的六名公开子女。",
+    actionLabel: "搜索宗世昌",
+    query: "宗世昌",
+    view: "search",
+    done: () => state.readDocs.has("doc_official_family")
+  },
+  {
+    title: "确认继承规则",
+    prompt: "找到信托条款，并把它加入证据箱，确认不姓宗也可能继承。",
+    actionLabel: "搜索信托",
+    query: "信托",
+    view: "search",
+    done: () => state.collected.has("doc_trust_clause")
+  },
+  {
+    title: "追踪罗月珍线",
+    prompt: "用知青、照片背注和户籍资料锁定罗月珍与罗建宁。",
+    actionLabel: "搜索罗月珍",
+    query: "罗月珍",
+    view: "search",
+    done: () => state.collected.has("doc_photo_back") && state.collected.has("doc_luo_birth")
+  },
+  {
+    title: "串起陈静母系",
+    prompt: "收集陈静出生记录、陈嘉东学籍和 DNA 记录，补齐现居后代链条。",
+    actionLabel: "搜索陈静",
+    query: "陈静",
+    view: "search",
+    done: () => state.collected.has("doc_chen_birth") && state.collected.has("doc_jiadong_school") && state.collected.has("doc_dna_record")
+  },
+  {
+    title: "绑定关键关系",
+    prompt: "回到家谱页，为六条关键关系选择人物并绑定强证据。",
+    actionLabel: "打开家谱",
+    view: "tree",
+    done: () => relationPrompts.every(isRelationCorrect)
+  },
+  {
+    title: "提交最终报告",
+    prompt: "选择罗建宁与陈嘉东，提交第七支血脉和继承资格判断。",
+    actionLabel: "打开提交",
+    view: "report",
+    done: () => relationPrompts.every(isRelationCorrect) && state.report.heir === "luo_jianning" && state.report.descendant === "chen_jiadong"
+  }
+];
 
 const els = {};
 const audio = {
@@ -794,6 +856,24 @@ function renderCounters() {
   $("ambient-btn").textContent = `环境音：${state.ambient ? "开" : "关"}`;
 }
 
+function renderPhaseGoal() {
+  if (!els.phaseGoalBody) return;
+  const completed = phaseGoals.filter((goal) => goal.done()).length;
+  const current = phaseGoals.find((goal) => !goal.done()) || phaseGoals[phaseGoals.length - 1];
+  const progress = Math.round((completed / phaseGoals.length) * 100);
+  const queryAttr = current.query ? ` data-phase-query="${current.query}"` : "";
+  els.phaseGoalBody.innerHTML = `
+    <div class="phase-step">
+      <div class="phase-progress" aria-label="阶段进度 ${completed}/${phaseGoals.length}">
+        <span style="width: ${progress}%"></span>
+      </div>
+      <h3>${current.title}</h3>
+      <p>${current.prompt}</p>
+      <button class="phase-action" data-phase-view="${current.view}"${queryAttr}>${current.actionLabel}</button>
+    </div>
+  `;
+}
+
 function renderLeads() {
   const leads = [
     {
@@ -837,6 +917,7 @@ function renderAll() {
   renderNotes();
   renderUpdates();
   renderCounters();
+  renderPhaseGoal();
   renderLeads();
   saveState();
 }
@@ -922,6 +1003,20 @@ function maybeRunAutotest() {
 
 function bindEvents() {
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
+  els.phaseGoalBody.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-phase-view]");
+    if (!button) return;
+    if (button.dataset.phaseQuery) {
+      state.query = button.dataset.phaseQuery;
+      state.source = "全部";
+      switchView("search");
+      playSound("search");
+    } else {
+      switchView(button.dataset.phaseView);
+      playSound("click");
+    }
+    renderAll();
+  });
   els.searchBtn.addEventListener("click", () => {
     state.query = els.query.value;
     playSound("search");
@@ -1050,6 +1145,7 @@ function init() {
     notesInput: $("notes-input"),
     keywordList: $("keyword-list"),
     updateLogList: $("update-log-list"),
+    phaseGoalBody: $("phase-goal-body"),
     heirSelect: $("heir-select"),
     descendantSelect: $("descendant-select")
   });
