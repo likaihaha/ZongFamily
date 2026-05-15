@@ -1,6 +1,36 @@
 # 开发状态
 
-更新时间：2026-05-15 22:00 Asia/Shanghai
+更新时间：2026-05-15 23:08 Asia/Shanghai
+
+## 2026-05-15 23:08 Asia/Shanghai 拟真侧栏导航
+
+- 将侧栏主导航从完整边框按钮改成卷宗索引条风格：纸纹底、浅压痕、小印章图标和当前项红色签条。
+- 当前导航项增加淡红“当前”章，强化所在栏目，但保留真文字和现有按钮语义，不使用整张 PNG 烘字。
+- 移动端导航项增加最小宽度，避免拟真图标和栏目名互相挤压。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
+
+## 2026-05-15 23:06 Asia/Shanghai 关系证据卡片化
+
+- 将关系核验里的证据绑定区从长复选框清单改成证据卡片。
+- 证据现在按“已绑定、必要证据、强证据、辅助材料、传闻误导”分组显示，弱来源会有轻微警示底色。
+- 文档类下拉使用短标题，避免长资料名撑开控件；关系确认后显示一句证据链小结。
+- 新增预览截图 `docs/relation-evidence-cards.png`，对应“误认关系澄清”的完成状态。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
+
+## 2026-05-15 23:00 Asia/Shanghai 人物档案筛选
+
+- 家谱页“人物档案”新增分组筛选：全部、公开宗家、隐藏血脉、集团旁支与传闻人物、证人与经手人。
+- 筛选状态写入本地存档，玩家离开家谱页再回来时会保留当前人物视角。
+- 该改动只压缩阅读路径，不改变人物、资料、关系谜题或最终提交答案。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过；`docs/smoke-dom.html` 包含 `people-filters`、`data-people-filter="hidden"` 和 `data-autotest="pass"`。
+
+## 2026-05-15 22:53 Asia/Shanghai 家谱界面改造
+
+- 家谱页新增“血脉关系图”，把公开宗家、公开婚姻、六名公开子女与隐藏血脉链条放到同一视野中。
+- 关键关系推理从一屏多张表单改为“当前关系核验”聚焦卡，并用步骤按钮切换六条关系。
+- 关系图节点可点击回资料库搜索对应人物；关系卡在缺证据时提供线索搜索入口。
+- 生成最终预览截图 `docs/tree-review-v3.png`，用于对照本轮视觉结果。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
 
 ## 2026-05-15 22:00 Asia/Shanghai 自动化推进
 

@@ -601,7 +601,89 @@ const relationPrompts = [
 
 const sourceLabels = ["全部", ...Array.from(new Set(documents.map((doc) => doc.source)))];
 
+const purposeFilters = [
+  {
+    id: "all",
+    label: "全部资料",
+    hint: "不限制材料范围",
+    match: () => true
+  },
+  {
+    id: "strong",
+    label: "找强证据",
+    hint: "档案、户籍、医院、DNA、信托、公证",
+    match: (doc) => doc.trust >= 5 || ["档案", "户籍", "医院", "DNA", "信托", "公证"].includes(doc.source)
+  },
+  {
+    id: "relation",
+    label: "查人物关系",
+    hint: "学校、社区、工商、教育局、妇联、访谈",
+    match: (doc) => ["学校", "社区", "工商", "教育局", "妇联", "访谈", "博客", "短视频", "私人收藏", "录音整理"].includes(doc.source)
+  },
+  {
+    id: "public",
+    label: "看公开说法",
+    hint: "报刊、官网、公告、县情资料、民俗",
+    match: (doc) => ["报刊", "官网", "公告", "县情资料", "民俗", "交通档案", "县志"].includes(doc.source)
+  },
+  {
+    id: "rumor",
+    label: "排除传闻",
+    hint: "论坛、八卦周刊、网页存档和低可信材料",
+    match: (doc) => doc.trust <= 2 || ["论坛", "八卦周刊", "网页存档"].includes(doc.source)
+  },
+  {
+    id: "corporate",
+    label: "查集团文件",
+    hint: "内部文件、财务档案、金融文件",
+    match: (doc) => ["内部文件", "财务档案", "金融文件"].includes(doc.source)
+  }
+];
+const purposeFilterIds = new Set(purposeFilters.map((filter) => filter.id));
+
 const updateLogs = [
+  {
+    date: "2026-05-15",
+    title: "关系证据卡片化",
+    changes: [
+      "关系核验的证据绑定从长复选框清单改为证据卡片",
+      "证据按已绑定、必要证据、强证据、辅助材料和传闻误导分组",
+      "文档类下拉使用短标题，确认后补充一句证据链小结"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
+    title: "人物档案筛选",
+    changes: [
+      "家谱页人物档案新增分组筛选，可只看公开宗家、隐藏血脉、旁支或证人",
+      "筛选状态写入本地存档，返回家谱页时保留当前人物视角",
+      "减少关系图下方长名单滚动，方便围绕当前关系核验查人"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-15",
+    title: "家谱界面可视化改造",
+    changes: [
+      "家谱页新增血脉关系图，将公开宗家和隐藏血脉链条并排呈现",
+      "关键关系推理改为单条聚焦卡，通过步骤导航切换六条关系",
+      "关系图和推理卡新增线索搜索入口，减少一屏多表单造成的压力"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
   {
     date: "2026-05-15",
     title: "搜索链补强",
@@ -782,11 +864,13 @@ const updateLogs = [
 
 const state = {
   query: "",
-  source: "全部",
+  filter: "all",
   selectedDoc: null,
   readDocs: new Set(),
   collected: new Set(),
   relationAnswers: {},
+  activeRelationId: "rel_public_family",
+  personFilter: "all",
   report: { heir: "", descendant: "" },
   reportSubmitted: false,
   sound: true,
@@ -1028,6 +1112,7 @@ const personGroups = [
     ids: ["he_guosheng", "zhou_meiying", "huang_yaling", "fang_renjie", "wei_xueqin", "ma_lihua"]
   }
 ];
+const personFilterIds = new Set(["all", ...personGroups.map((group) => group.tone)]);
 
 const personPortraits = {
   zong_shichang: "assets/images/future-assets/portraits/zong-shichang-old-portrait.png",
@@ -1077,11 +1162,13 @@ function $(id) {
 function serializeState() {
   return {
     query: state.query,
-    source: state.source,
+    filter: state.filter,
     selectedDoc: state.selectedDoc,
     readDocs: [...state.readDocs],
     collected: [...state.collected],
     relationAnswers: state.relationAnswers,
+    activeRelationId: state.activeRelationId,
+    personFilter: state.personFilter,
     report: state.report,
     reportSubmitted: state.reportSubmitted,
     sound: state.sound,
@@ -1101,11 +1188,13 @@ function loadState() {
   try {
     const parsed = JSON.parse(raw);
     state.query = parsed.query || "";
-    state.source = parsed.source || "全部";
+    state.filter = purposeFilterIds.has(parsed.filter) ? parsed.filter : "all";
     state.selectedDoc = parsed.selectedDoc || null;
     state.readDocs = new Set(parsed.readDocs || []);
     state.collected = new Set(parsed.collected || []);
     state.relationAnswers = parsed.relationAnswers || {};
+    state.activeRelationId = relationPrompts.some((rel) => rel.id === parsed.activeRelationId) ? parsed.activeRelationId : "rel_public_family";
+    state.personFilter = personFilterIds.has(parsed.personFilter) ? parsed.personFilter : "all";
     state.report = parsed.report || { heir: "", descendant: "" };
     state.reportSubmitted = parsed.reportSubmitted === true;
     state.sound = parsed.sound !== false;
@@ -1268,8 +1357,8 @@ function docImageFigure(doc, size = "full") {
 
 function docMatches(doc) {
   const query = state.query.trim().toLowerCase();
-  const sourceOk = state.source === "全部" || doc.source === state.source;
-  if (!sourceOk) return false;
+  const activeFilter = purposeFilters.find((filter) => filter.id === state.filter) || purposeFilters[0];
+  if (!activeFilter.match(doc)) return false;
   if (!query) return true;
   const haystack = [doc.title, doc.summary, doc.body, doc.source, String(doc.year), ...doc.keywords]
     .join(" ")
@@ -1278,9 +1367,14 @@ function docMatches(doc) {
 }
 
 function renderFilters() {
-  els.sourceFilters.innerHTML = sourceLabels.map((source) => {
-    const active = source === state.source ? "is-active" : "";
-    return `<button class="${active}" data-source="${source}">${source}</button>`;
+  els.sourceFilters.innerHTML = purposeFilters.map((filter) => {
+    const active = filter.id === state.filter ? "is-active" : "";
+    return `
+      <button class="${active}" data-filter="${filter.id}" title="${filter.hint}">
+        <strong>${filter.label}</strong>
+        <span>${filter.hint}</span>
+      </button>
+    `;
   }).join("");
 }
 
@@ -1305,7 +1399,7 @@ function renderResults() {
     .map((doc, index) => ({ doc, index }))
     .filter(({ doc }) => docMatches(doc))
     .sort((a, b) => {
-      if (!hasQuery && state.source === "全部") return a.index - b.index;
+      if (!hasQuery && state.filter === "all") return a.index - b.index;
       return b.doc.trust - a.doc.trust || b.doc.year - a.doc.year || a.index - b.index;
     })
     .map(({ doc }) => doc);
@@ -1328,7 +1422,7 @@ function renderResults() {
         </div>
       </button>
     `;
-  }).join("") || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或来源试试。</p></div>`;
+  }).join("") || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或调查目的试试。</p></div>`;
 }
 
 function renderDocument() {
@@ -1374,7 +1468,20 @@ function renderAvatar(person) {
 
 function renderPeople() {
   const byId = new Map(people.map((person) => [person.id, person]));
-  els.peopleList.innerHTML = personGroups.map((group) => `
+  const filters = [
+    { id: "all", label: "全部", count: people.length },
+    ...personGroups.map((group) => ({ id: group.tone, label: group.title, count: group.ids.length }))
+  ];
+  els.peopleFilters.innerHTML = filters.map((filter) => `
+    <button class="${state.personFilter === filter.id ? "is-active" : ""}" data-people-filter="${filter.id}" aria-pressed="${state.personFilter === filter.id}">
+      <strong>${filter.label}</strong>
+      <span>${filter.count}</span>
+    </button>
+  `).join("");
+  const visibleGroups = state.personFilter === "all"
+    ? personGroups
+    : personGroups.filter((group) => group.tone === state.personFilter);
+  els.peopleList.innerHTML = visibleGroups.map((group) => `
     <section class="person-group person-group-${group.tone}">
       <header>
         <h4>${group.title}</h4>
@@ -1401,9 +1508,101 @@ function renderPeople() {
   `).join("");
 }
 
+function relationNodeClass(relId) {
+  const rel = relationPrompts.find((item) => item.id === relId);
+  if (!rel) return "";
+  if (isRelationCorrect(rel)) return "is-confirmed";
+  if (hasRelationConflict(rel)) return "is-conflict";
+  return "";
+}
+
+function collectedBadge(docId) {
+  return state.collected.has(docId) ? "is-found" : "";
+}
+
+function renderFamilyNode(id, tone = "neutral", subtitle = "") {
+  const person = people.find((item) => item.id === id);
+  if (!person) return "";
+  return `
+    <button class="family-node family-node-${tone}" data-map-query="${person.name}">
+      <strong>${person.name}</strong>
+      <span>${subtitle || person.role}</span>
+    </button>
+  `;
+}
+
+function renderFamilyMap() {
+  if (!els.familyMap) return;
+  const correctCount = relationPrompts.filter(isRelationCorrect).length;
+  els.familyMap.innerHTML = `
+    <div class="family-map-main">
+      <section class="family-map-branch family-map-public ${relationNodeClass("rel_public_family")}">
+        <div class="family-pair">
+          ${renderFamilyNode("zong_shichang", "anchor", "世昌集团创始人")}
+          ${renderFamilyNode("li_guilan", "public", "公开妻子")}
+        </div>
+        <div class="family-line public-line">公开婚姻</div>
+        <div class="family-children">
+          ${["zong_jianguo", "zong_jianfang", "zong_jianmin", "zong_jianhong", "zong_jianping", "zong_jianli"].map((id) => renderFamilyNode(id, "public")).join("")}
+        </div>
+      </section>
+
+      <section class="family-map-branch family-map-hidden ${relationNodeClass("rel_zong_luo")} ${relationNodeClass("rel_luo_chen")} ${relationNodeClass("rel_chen_child")}">
+        <div class="family-chain">
+          ${renderFamilyNode("luo_yuezhen", "hidden", "贵州籍知青")}
+          <span class="family-link disputed">待证实</span>
+          ${renderFamilyNode("luo_jianning", "hidden", "隐藏血脉第一代")}
+          <span class="family-link">母女</span>
+          ${renderFamilyNode("chen_jing", "hidden", "返乡经营者")}
+          <span class="family-link">母女</span>
+          ${renderFamilyNode("chen_jiadong", "current", "2020 年现居云山")}
+        </div>
+      </section>
+    </div>
+
+    <aside class="family-map-dossier">
+      <div>
+        <span>关系闭环</span>
+        <strong>${correctCount} / ${relationPrompts.length}</strong>
+      </div>
+      <div class="family-evidence-strip">
+        <span class="${collectedBadge("doc_official_family")}">公开家庭</span>
+        <span class="${collectedBadge("doc_photo_back")}">照片背注</span>
+        <span class="${collectedBadge("doc_luo_birth")}">户籍</span>
+        <span class="${collectedBadge("doc_chen_birth")}">出生记录</span>
+        <span class="${collectedBadge("doc_dna_record")}">DNA</span>
+        <span class="${collectedBadge("doc_trust_clause")}">信托</span>
+      </div>
+    </aside>
+  `;
+}
+
+function compactDocTitle(doc) {
+  const aliases = {
+    doc_official_family: "1996 宗世昌专访",
+    doc_women_fed: "妇联创业帮扶记录",
+    doc_trust_clause: "香港家族信托节选",
+    doc_photo_back: "1969 春节合影背注",
+    doc_luo_birth: "黔中旧户籍登记",
+    doc_chen_birth: "陈静出生记录",
+    doc_dna_record: "疾控亲缘比对",
+    doc_jiadong_school: "县一中学生信息表",
+    doc_school_forum: "县一中家长会帖",
+    doc_talent_window: "人才窗口挂靠说明"
+  };
+  if (aliases[doc.id]) return aliases[doc.id];
+  const cleaned = doc.title
+    .replace(/[《》]/g, "")
+    .replace(/^云山县/, "")
+    .replace(/^云山/, "")
+    .replace(/^世昌集团/, "集团")
+    .replace(/^地方论坛/, "论坛");
+  return cleaned.length > 18 ? `${cleaned.slice(0, 17)}...` : cleaned;
+}
+
 function selectOptions(kind) {
   const personOptions = people.map((p) => `<option value="${p.id}">${p.name}（${p.birth}）</option>`).join("");
-  const docOptions = documents.map((d) => `<option value="${d.id}">${d.title}</option>`).join("");
+  const docOptions = documents.map((d) => `<option value="${d.id}">${compactDocTitle(d)}</option>`).join("");
   if (kind.includes("文件") || kind.includes("证明") || kind.includes("证据") || kind.includes("档案") || kind.includes("说明")) return docOptions;
   return personOptions;
 }
@@ -1468,57 +1667,146 @@ function hasRelationConflict(rel) {
   return hasRelationInput(answer) && !isRelationCorrect(rel);
 }
 
-function renderRelations() {
-  els.relationList.innerHTML = relationPrompts.map((rel) => {
-    const answer = state.relationAnswers[rel.id] || { slots: ["", "", ""], evidence: [] };
-    const complete = isRelationCorrect(rel);
-    const feedback = relationFeedback(rel, answer);
-    const status = complete
-      ? `<div class="relation-status ok">已确认：关系和证据均吻合</div>`
-      : `<div class="relation-status bad">待确认：请补充正确人物和必要证据</div>`;
-    const feedbackHtml = complete || feedback.length === 0
-      ? ""
-      : `<ul class="relation-feedback">${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+function relationConclusion(rel) {
+  return {
+    rel_public_family: "公开报道确认宗世昌与李桂兰的婚姻及六名公开子女。",
+    rel_chen_jianfang: "宗建芳只是帮扶干部；人才窗口挂靠说明与妇联记录共同排除母女关系。",
+    rel_zong_luo: "照片背注和旧户籍共同指向罗月珍、罗建宁与宗世昌的隐秘链条。",
+    rel_luo_chen: "陈静出生记录固定母女关系，DNA 记录补上宗世昌一侧的血缘证明。",
+    rel_chen_child: "学校信息表和家长会帖共同确认陈嘉东就是陈静之女陈小东。",
+    rel_trust: "信托条款说明直系血亲后代不因姓氏或婚生状态被排除。"
+  }[rel.id] || "";
+}
 
+function evidenceTier(doc, rel) {
+  if (rel.requiredEvidence.includes(doc.id)) return "required";
+  if (doc.trust >= 4) return "strong";
+  if (doc.trust === 3) return "support";
+  return "weak";
+}
+
+function evidenceChoice(doc, answer, rel) {
+  const checked = answer.evidence?.includes(doc.id) ? "checked" : "";
+  const tier = evidenceTier(doc, rel);
+  return `
+    <label class="evidence-choice evidence-choice-${tier} ${checked ? "is-checked" : ""}">
+      <input type="checkbox" value="${doc.id}" ${checked}>
+      <span>
+        <strong>${compactDocTitle(doc)}</strong>
+        <small>${doc.source} · 可信度 ${doc.trust}/5${tier === "required" ? " · 必要证据" : ""}</small>
+      </span>
+    </label>
+  `;
+}
+
+function renderEvidenceOptions(rel, answer, searchHint) {
+  const collectedDocs = [...state.collected]
+    .map((docId) => documents.find((item) => item.id === docId))
+    .filter(Boolean);
+
+  if (collectedDocs.length === 0) {
     return `
-      <article class="relation-card" data-relation-id="${rel.id}">
-        <div>
-          <h4>${rel.title}</h4>
-          <p>${rel.prompt}</p>
-        </div>
-        <div class="relation-grid">
-          ${rel.slots.map((slot, index) => `
-            <label>
-              <span class="field-label">${slot}</span>
-              <select data-slot-index="${index}">
-                <option value="">未选择</option>
-                ${selectOptions(slot)}
-              </select>
-            </label>
-          `).join("")}
-        </div>
-        <div>
-          <strong>绑定证据</strong>
-          <div class="evidence-options">
-            ${[...state.collected].map((docId) => {
-              const doc = documents.find((item) => item.id === docId);
-              const checked = answer.evidence?.includes(docId) ? "checked" : "";
-              return `<label><input type="checkbox" value="${docId}" ${checked}>${doc?.title || docId}</label>`;
-            }).join("") || '<p class="hint">证据箱为空。先去资料库收藏资料。</p>'}
-          </div>
-        </div>
-        ${status}
-        ${feedbackHtml}
-      </article>
+      <div class="empty-evidence-callout">
+        <p>证据箱为空。先去资料库收藏资料。</p>
+        ${searchHint ? `<button type="button" data-relation-search="${searchHint}">搜索 ${searchHint}</button>` : ""}
+      </div>
     `;
-  }).join("");
+  }
 
-  relationPrompts.forEach((rel) => {
-    const card = els.relationList.querySelector(`[data-relation-id="${rel.id}"]`);
-    const answer = state.relationAnswers[rel.id] || { slots: ["", "", ""], evidence: [] };
-    card.querySelectorAll("select").forEach((select, index) => {
-      select.value = answer.slots?.[index] || "";
-    });
+  const selectedDocs = collectedDocs.filter((doc) => answer.evidence?.includes(doc.id));
+  const groups = [
+    { id: "required", title: "必要证据", docs: collectedDocs.filter((doc) => evidenceTier(doc, rel) === "required") },
+    { id: "strong", title: "强证据", docs: collectedDocs.filter((doc) => evidenceTier(doc, rel) === "strong") },
+    { id: "support", title: "辅助材料", docs: collectedDocs.filter((doc) => evidenceTier(doc, rel) === "support") },
+    { id: "weak", title: "传闻误导", docs: collectedDocs.filter((doc) => evidenceTier(doc, rel) === "weak") }
+  ].filter((group) => group.docs.length > 0);
+
+  return `
+    <section class="bound-evidence">
+      <h5>已绑定</h5>
+      <div class="bound-evidence-list">
+        ${selectedDocs.map((doc) => `<span>${compactDocTitle(doc)}</span>`).join("") || "<p>还没有绑定证据。</p>"}
+      </div>
+    </section>
+    <div class="evidence-group-list">
+      ${groups.map((group) => `
+        <section class="evidence-group evidence-group-${group.id}">
+          <h5>${group.title}</h5>
+          <div>${group.docs.map((doc) => evidenceChoice(doc, answer, rel)).join("")}</div>
+        </section>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderRelations() {
+  const completed = relationPrompts.filter(isRelationCorrect).length;
+  const active = relationPrompts.find((rel) => rel.id === state.activeRelationId)
+    || relationPrompts.find((rel) => !isRelationCorrect(rel))
+    || relationPrompts[0];
+  state.activeRelationId = active.id;
+  const answer = state.relationAnswers[active.id] || { slots: ["", "", ""], evidence: [] };
+  const complete = isRelationCorrect(active);
+  const feedback = relationFeedback(active, answer);
+  const status = complete
+    ? `<div class="relation-status ok"><strong>已确认：关系和证据均吻合</strong><p>${relationConclusion(active)}</p></div>`
+    : `<div class="relation-status bad">待确认：请补充正确人物和必要证据</div>`;
+  const feedbackHtml = complete || feedback.length === 0
+    ? ""
+    : `<ul class="relation-feedback">${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+  const searchHint = relationSearchHint(active);
+  const evidenceHtml = renderEvidenceOptions(active, answer, searchHint);
+
+  els.relationList.innerHTML = `
+    <section class="relation-progress-card">
+      <div>
+        <span>当前关系核验</span>
+        <strong>${completed} / ${relationPrompts.length}</strong>
+      </div>
+      <nav class="relation-step-nav" aria-label="关系核验步骤">
+        ${relationPrompts.map((rel, index) => {
+          const done = isRelationCorrect(rel);
+          const conflict = hasRelationConflict(rel);
+          return `
+            <button class="${rel.id === active.id ? "is-active" : ""} ${done ? "is-done" : ""} ${conflict ? "has-conflict" : ""}" data-relation-focus="${rel.id}">
+              <span>${index + 1}</span>${rel.title}
+            </button>
+          `;
+        }).join("")}
+      </nav>
+    </section>
+
+    <article class="relation-card relation-card-focused" data-relation-id="${active.id}">
+      <header class="relation-card-head">
+        <div>
+          <h4>${active.title}</h4>
+          <p>${active.prompt}</p>
+        </div>
+        ${searchHint ? `<button type="button" data-relation-search="${searchHint}">查线索</button>` : ""}
+      </header>
+      <div class="relation-grid">
+        ${active.slots.map((slot, index) => `
+          <label>
+            <span class="field-label">${slot}</span>
+            <select data-slot-index="${index}">
+              <option value="">未选择</option>
+              ${selectOptions(slot)}
+            </select>
+          </label>
+        `).join("")}
+      </div>
+      <div>
+        <strong>绑定证据</strong>
+        <div class="evidence-options">${evidenceHtml}</div>
+      </div>
+      ${status}
+      ${feedbackHtml}
+    </article>
+  `;
+
+  const card = els.relationList.querySelector(`[data-relation-id="${active.id}"]`);
+  card.querySelectorAll("select").forEach((select, index) => {
+    select.value = answer.slots?.[index] || "";
   });
 }
 
@@ -1712,6 +2000,7 @@ function renderAll() {
   renderFilters();
   renderResults();
   renderDocument();
+  renderFamilyMap();
   renderPeople();
   renderRelations();
   renderEvidence();
@@ -1860,9 +2149,25 @@ function bindEvents() {
     const card = event.target.closest("[data-location-query]");
     if (!card) return;
     state.query = card.dataset.locationQuery;
-    state.source = "全部";
+    state.filter = "all";
     switchView("search");
     playSound("search");
+    renderAll();
+  });
+  els.familyMap.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-map-query]");
+    if (!button) return;
+    state.query = button.dataset.mapQuery;
+    state.filter = "all";
+    switchView("search");
+    playSound("search");
+    renderAll();
+  });
+  els.peopleFilters.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-people-filter]");
+    if (!button) return;
+    state.personFilter = personFilterIds.has(button.dataset.peopleFilter) ? button.dataset.peopleFilter : "all";
+    playSound("click");
     renderAll();
   });
   els.phaseGoalBody.addEventListener("click", (event) => {
@@ -1870,7 +2175,7 @@ function bindEvents() {
     if (!button) return;
     if (button.dataset.phaseQuery) {
       state.query = button.dataset.phaseQuery;
-      state.source = "全部";
+      state.filter = "all";
       switchView("search");
       playSound("search");
     } else {
@@ -1892,9 +2197,9 @@ function bindEvents() {
     }
   });
   els.sourceFilters.addEventListener("click", (event) => {
-    const button = event.target.closest("button[data-source]");
+    const button = event.target.closest("button[data-filter]");
     if (!button) return;
-    state.source = button.dataset.source;
+    state.filter = button.dataset.filter;
     playSound("click");
     renderAll();
   });
@@ -1932,6 +2237,22 @@ function bindEvents() {
     playSound(rel && isRelationCorrect(rel) ? "ok" : rel && hasRelationConflict(rel) ? "conflict" : "click");
     renderAll();
   });
+  els.relationList.addEventListener("click", (event) => {
+    const focus = event.target.closest("[data-relation-focus]");
+    if (focus) {
+      state.activeRelationId = focus.dataset.relationFocus;
+      playSound("click");
+      renderAll();
+      return;
+    }
+    const search = event.target.closest("[data-relation-search]");
+    if (!search) return;
+    state.query = search.dataset.relationSearch;
+    state.filter = "all";
+    switchView("search");
+    playSound("search");
+    renderAll();
+  });
   els.heirSelect.addEventListener("change", () => {
     state.report.heir = els.heirSelect.value;
     state.reportSubmitted = false;
@@ -1959,7 +2280,7 @@ function bindEvents() {
     if (!button) return;
     if (button.dataset.taskQuery) {
       state.query = button.dataset.taskQuery;
-      state.source = "全部";
+      state.filter = "all";
       switchView("search");
       playSound("search");
     } else {
@@ -2031,8 +2352,10 @@ function init() {
     sourceFilters: $("source-filters"),
     resultList: $("result-list"),
     locationList: $("location-list"),
+    familyMap: $("family-map"),
     documentEmpty: $("document-empty"),
     documentView: $("document-view"),
+    peopleFilters: $("people-filters"),
     peopleList: $("people-list"),
     relationList: $("relation-list"),
     evidenceList: $("evidence-list"),

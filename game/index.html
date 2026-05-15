@@ -18,14 +18,14 @@
       </div>
 
       <nav class="tabs" aria-label="主导航">
-        <button class="tab is-active" data-view="visit">走访</button>
-        <button class="tab" data-view="search">资料库</button>
-        <button class="tab" data-view="tree">家谱</button>
-        <button class="tab" data-view="evidence">证据箱</button>
-        <button class="tab" data-view="notes">备忘录</button>
-        <button class="tab" data-view="updates">更新日志</button>
-        <button class="tab" data-view="settings">设置</button>
-        <button class="tab" data-view="report">提交</button>
+        <button class="tab is-active" data-view="visit" data-icon="访">走访</button>
+        <button class="tab" data-view="search" data-icon="检">资料库</button>
+        <button class="tab" data-view="tree" data-icon="谱">家谱</button>
+        <button class="tab" data-view="evidence" data-icon="证">证据箱</button>
+        <button class="tab" data-view="notes" data-icon="记">备忘录</button>
+        <button class="tab" data-view="updates" data-icon="录">更新日志</button>
+        <button class="tab" data-view="settings" data-icon="设">设置</button>
+        <button class="tab" data-view="report" data-icon="交">提交</button>
       </nav>
 
       <section class="case-card">
@@ -103,8 +103,12 @@
           <section class="panel search-panel">
             <label class="search-label" for="query">关键词检索</label>
             <div class="search-row">
-              <input id="query" type="search" placeholder="试试：宗世昌、罗月珍、陈嘉东、信托、知青">
+              <input id="query" type="search" placeholder="搜人物、地点、年份或文件名">
               <button id="search-btn">搜索</button>
+            </div>
+            <div class="filter-heading">
+              <span>调查目的</span>
+              <small>先选你要解决的问题</small>
             </div>
             <div class="filter-row" id="source-filters"></div>
             <div id="result-list" class="result-list"></div>
@@ -122,9 +126,22 @@
       </section>
 
       <section id="tree-view" class="view">
+        <section class="panel family-map-panel">
+          <div class="section-heading">
+            <h3>血脉关系图</h3>
+            <p>公开家谱与待证实链条并排查看。</p>
+          </div>
+          <div id="family-map" class="family-map"></div>
+        </section>
         <div class="tree-layout">
           <section class="panel people-panel">
-            <h3>人物档案</h3>
+            <div class="section-heading people-heading">
+              <div>
+                <h3>人物档案</h3>
+                <p>公开宗家、隐藏血脉、旁支与证人。</p>
+              </div>
+            </div>
+            <div id="people-filters" class="people-filters" aria-label="人物档案筛选"></div>
             <div id="people-list" class="people-list"></div>
           </section>
           <section class="panel relation-panel">

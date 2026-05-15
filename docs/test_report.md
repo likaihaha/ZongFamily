@@ -1,6 +1,68 @@
 # 测试报告
 
-更新时间：2026-05-15 22:00 Asia/Shanghai
+更新时间：2026-05-15 23:08 Asia/Shanghai
+
+## 2026-05-15 23:08 Asia/Shanghai 拟真侧栏导航回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 人工查看烟测截图，侧栏导航已呈现纸纹索引条、红色当前签条和淡红“当前”章。
+
+## 2026-05-15 23:06 Asia/Shanghai 关系证据卡片回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 另生成 `docs/relation-evidence-cards.png`，确认“误认关系澄清”使用已绑定摘要和分组证据卡展示。
+
+## 2026-05-15 23:00 Asia/Shanghai 人物档案筛选回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+Select-String -Path docs\smoke-dom.html -Pattern 'people-filters|data-people-filter="hidden"|人物档案|data-autotest="pass"' -Encoding UTF8
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查确认人物档案筛选控件已渲染，且自动通关状态仍为 `data-autotest="pass"`。
+
+## 2026-05-15 22:53 Asia/Shanghai 家谱界面回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查包含 `血脉关系图`、`当前关系核验`、`relation-step-nav` 和 `data-autotest="pass"`。
+- 另生成家谱页人工观感截图 `docs/tree-review-v3.png`，确认隐藏血脉链条不再被压成竖排文本。
 
 ## 2026-05-15 22:00 Asia/Shanghai 回归
 
