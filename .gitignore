@@ -8,3 +8,5 @@ build/
 .vite/
 coverage/
 .tmp-edge-*/
+ig_*.png
+*.zip

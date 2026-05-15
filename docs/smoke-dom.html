@@ -1228,6 +1228,19 @@
         <ul><li>npm run validate passed</li><li>npm run smoke passed</li></ul>
       </div>
     </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-15</strong>
+        <span>未来美术清单校验</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>新增 future-assets 清单校验脚本，检查资产字段、重复 ID、重复路径和 PNG 文件存在性</li><li>校验覆盖背景、人物、旧照片、文档模板、网页界面、宣传图和 UI 参考图的最低数量</li><li>package.json validate 链已接入该脚本，防止后续移动或删图造成静默断链</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node tools/validate_future_assets.mjs passed</li><li>tools/run_smoke.ps1 passed</li></ul>
+      </div>
+    </article>
   </div>
         </section>
       </section>

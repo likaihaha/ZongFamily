@@ -416,6 +416,19 @@ const updateLogs = [
       "npm run validate passed",
       "npm run smoke passed"
     ]
+  },
+  {
+    date: "2026-05-15",
+    title: "未来美术清单校验",
+    changes: [
+      "新增 future-assets 清单校验脚本，检查资产字段、重复 ID、重复路径和 PNG 文件存在性",
+      "校验覆盖背景、人物、旧照片、文档模板、网页界面、宣传图和 UI 参考图的最低数量",
+      "package.json validate 链已接入该脚本，防止后续移动或删图造成静默断链"
+    ],
+    checks: [
+      "node tools/validate_future_assets.mjs passed",
+      "tools/run_smoke.ps1 passed"
+    ]
   }
 ];
 
@@ -600,6 +613,97 @@ function getDocImage(doc) {
   return doc.image || null;
 }
 
+const documentDetailImages = {
+  doc_trust_clause: [
+    {
+      src: "assets/images/future-assets/documents/trust-agreement-cover.png",
+      alt: "\u4fe1\u6258\u534f\u8bae\u9996\u9875\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u4fe1\u6258\u534f\u8bae\u9996\u9875\u5e95\u56fe\uff0c\u7528\u4e8e\u540e\u7eed\u7cbe\u4fee\u7248\u8bc1\u636e\u5c55\u793a\u3002"
+    }
+  ],
+  doc_photo_back: [
+    {
+      src: "assets/images/future-assets/documents/old-photo-back-template.png",
+      alt: "\u65e7\u7167\u7247\u80cc\u9762\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u65e7\u7167\u7247\u80cc\u9762\u5e95\u56fe\uff0c\u4fdd\u7559\u7ed9\u7ebf\u7d22\u6279\u6ce8\u53e0\u52a0\u4f7f\u7528\u3002"
+    }
+  ],
+  doc_dna_record: [
+    {
+      src: "assets/images/future-assets/documents/dna-report-template.png",
+      alt: "DNA\u62a5\u544a\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a2019 \u5e74 DNA \u62a5\u544a\u5e95\u56fe\uff0c\u540e\u7eed\u53ef\u53e0\u52a0\u7cbe\u786e\u6587\u5b57\u548c\u6807\u6ce8\u3002"
+    }
+  ],
+  doc_luo_birth: [
+    {
+      src: "assets/images/future-assets/documents/hukou-transfer-page.png",
+      alt: "\u6237\u53e3\u8fc1\u79fb\u9875\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u6237\u53e3\u8fc1\u79fb\u9875\u5e95\u56fe\uff0c\u7528\u4e8e\u5f3a\u5316\u7f57\u5efa\u5b81\u8eab\u4e16\u94fe\u6761\u3002"
+    }
+  ],
+  doc_chen_birth: [
+    {
+      src: "assets/images/future-assets/documents/birth-registration-form.png",
+      alt: "\u51fa\u751f\u767b\u8bb0\u8868\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u51fa\u751f\u767b\u8bb0\u8868\u5e95\u56fe\uff0c\u9002\u5408\u540e\u7eed\u53e0\u52a0\u9648\u9759\u6863\u6848\u4fe1\u606f\u3002"
+    }
+  ],
+  doc_women_fed: [
+    {
+      src: "assets/images/future-assets/documents/medical-record-cover.png",
+      alt: "\u6863\u6848\u8868\u5355\u6a21\u677f",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u6863\u6848\u8868\u5355\u5e95\u56fe\uff0c\u4e34\u65f6\u4f5c\u4e3a\u5987\u8054\u6276\u6301\u767b\u8bb0\u7c7b\u8d44\u6599\u7684\u89c6\u89c9\u53c2\u8003\u3002"
+    }
+  ],
+  doc_group_history: [
+    {
+      src: "assets/images/future-assets/web-ui/corporate-leadership-page.png",
+      alt: "\u4f01\u4e1a\u5b98\u7f51\u9886\u5bfc\u9875\u622a\u56fe",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u4f01\u4e1a\u5b98\u7f51\u9875\u9762\u53c2\u8003\uff0c\u7528\u4e8e\u540e\u7eed\u96c6\u56e2\u7ebf\u7d22\u89c6\u89c9\u5316\u3002"
+    }
+  ],
+  doc_school_forum: [
+    {
+      src: "assets/images/future-assets/web-ui/local-forum-2008.png",
+      alt: "\u5730\u65b9\u8bba\u575b\u622a\u56fe\u53c2\u8003",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u5730\u65b9\u8bba\u575b\u622a\u56fe\u53c2\u8003\uff0c\u4e0d\u4f5c\u4e3a\u6b63\u5f0f\u8bc1\u636e\u6587\u5b57\u6765\u6e90\u3002"
+    }
+  ],
+  doc_blog_chenjing: [
+    {
+      src: "assets/images/future-assets/web-ui/personal-blog-2014.png",
+      alt: "\u4e2a\u4eba\u535a\u5ba2\u622a\u56fe\u53c2\u8003",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a2014 \u5e74\u4e2a\u4eba\u535a\u5ba2\u622a\u56fe\u53c2\u8003\uff0c\u540e\u7eed\u53ef\u63a5\u6210\u4e92\u8054\u7f51\u7ebf\u7d22\u754c\u9762\u3002"
+    }
+  ],
+  doc_tiktok_chenjing: [
+    {
+      src: "assets/images/future-assets/web-ui/short-video-comments-2020.png",
+      alt: "\u77ed\u89c6\u9891\u8bc4\u8bba\u622a\u56fe\u53c2\u8003",
+      caption: "\u8865\u5145\u7f8e\u672f\uff1a\u77ed\u89c6\u9891\u8bc4\u8bba\u622a\u56fe\u53c2\u8003\uff0c\u540e\u7eed\u53ef\u7528\u4e8e\u793e\u4ea4\u5a92\u4f53\u7ebf\u7d22\u5c42\u3002"
+    }
+  ]
+};
+
+function docDetailImageFigures(doc) {
+  const images = documentDetailImages[doc.id] || [];
+  if (!images.length) return "";
+  return `
+    <section class="doc-detail-gallery" aria-label="\u8865\u5145\u7f8e\u672f\u8d44\u6e90">
+      <h4>\u8865\u5145\u7f8e\u672f\u8d44\u6e90</h4>
+      <div class="doc-detail-grid">
+        ${images.map((image) => `
+          <figure class="doc-image doc-image-detail">
+            <img src="${image.src}" alt="${image.alt}" loading="lazy">
+            <figcaption>${image.caption}</figcaption>
+          </figure>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function docImageFigure(doc, size = "full") {
   const image = getDocImage(doc);
   if (!image) return "";
@@ -682,6 +786,7 @@ function renderDocument() {
       </div>
     </header>
     ${docImageFigure(doc)}
+    ${docDetailImageFigures(doc)}
     <div class="document-body doc-kind-${sourceKind(doc.source)}">
       <span class="doc-watermark">${doc.source}</span>
       ${doc.body}

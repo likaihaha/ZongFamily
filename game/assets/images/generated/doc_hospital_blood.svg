@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f1e5"/>
+      <stop offset="100%" stop-color="#ece2cf"/>
+    </linearGradient>
+    <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="#000" opacity="0.07"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#paper)"/>
+  <rect width="1280" height="720" fill="url(#dots)" opacity="0.7"/>
+  <rect x="56" y="52" width="1168" height="616" rx="10" fill="#fcf8ee" stroke="#bba98e" stroke-width="3"/>
+  <rect x="84" y="94" width="1112" height="58" fill="#e8dbc4"/>
+  <text x="102" y="132" font-family="Georgia, serif" font-size="34" fill="#3d3428">Sample Retention Form</text>
+  <text x="102" y="168" font-family="Arial, sans-serif" font-size="21" fill="#5b5245">Hospital sample sheet</text>
+  <g opacity="0.32">
+    <line x1="96" y1="214" x2="1168" y2="214" stroke="#7b7061" stroke-width="1.5"/>
+    <line x1="96" y1="252" x2="1168" y2="252" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="290" x2="1168" y2="290" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="328" x2="1168" y2="328" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="366" x2="1168" y2="366" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="404" x2="1168" y2="404" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="442" x2="1168" y2="442" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="480" x2="1168" y2="480" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="518" x2="1168" y2="518" stroke="#7b7061" stroke-width="1"/>
+    <line x1="96" y1="556" x2="1168" y2="556" stroke="#7b7061" stroke-width="1"/>
+  </g>
+  <rect x="106" y="236" width="12" height="330" fill="#8d2d29" opacity="0.35"/>
+  <rect x="86" y="372" width="1094" height="24" fill="#bc4a3e" opacity="0.12"/>
+  <g transform="rotate(-8 933 473)">
+    <circle cx="933" cy="473" r="92" fill="none" stroke="#932d2b" stroke-width="7" opacity="0.6"/>
+    <circle cx="933" cy="473" r="69" fill="none" stroke="#932d2b" stroke-width="2" opacity="0.5"/>
+    <text x="877" y="483" font-family="Arial, sans-serif" font-size="28" fill="#932d2b" opacity="0.7">ARCHIVE</text>
+  </g>
+  <text x="96" y="636" font-family="Consolas, monospace" font-size="18" fill="#645d52" opacity="0.72">YUNSHAN CASE MATERIAL / GENERATED PLACEHOLDER</text>
+</svg>

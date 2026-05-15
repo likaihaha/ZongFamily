@@ -1,0 +1,357 @@
+{
+  "note": "Future-use raster art assets generated from yunshan_art_audio_prompts.html. These are intentionally not wired into current clue thumbnails unless a later feature needs them.",
+  "generatedAt": "2026-05-15T07:52:12.346Z",
+  "activeCluePolicy": "Current library clue images stay under game/assets/images/evidence; future scene/background/promo assets are separate.",
+  "assets": [
+    {
+      "id": "portrait-zong-shichang-old",
+      "path": "game/assets/images/future-assets/portraits/zong-shichang-old-portrait.png",
+      "category": "portrait",
+      "promptTitle": "Zong Shichang old portrait",
+      "intendedUse": "future character file, ending reveal, archive profile"
+    },
+    {
+      "id": "portrait-luo-yuezhen-youth",
+      "path": "game/assets/images/future-assets/portraits/luo-yuezhen-youth-photo.png",
+      "category": "portrait",
+      "promptTitle": "Luo Yuezhen youth photo",
+      "intendedUse": "future character file, 1960s clue chain, flashback evidence"
+    },
+    {
+      "id": "portrait-chen-jing",
+      "path": "game/assets/images/future-assets/portraits/chen-jing-portrait.png",
+      "category": "portrait",
+      "promptTitle": "Chen Jing portrait",
+      "intendedUse": "future character file, KTV/business-life storyline"
+    },
+    {
+      "id": "portrait-chen-jiadong-student",
+      "path": "game/assets/images/future-assets/portraits/chen-jiadong-student-photo.png",
+      "category": "portrait",
+      "promptTitle": "Chen Jiadong student photo",
+      "intendedUse": "future school-record storyline"
+    },
+    {
+      "id": "portrait-zong-shichang-young",
+      "path": "game/assets/images/future-assets/portraits/zong-shichang-young-photo.png",
+      "category": "portrait",
+      "promptTitle": "Zong Shichang young photo",
+      "intendedUse": "future 1960s flashback/profile clue"
+    },
+    {
+      "id": "portrait-li-guilan",
+      "path": "game/assets/images/future-assets/portraits/li-guilan-portrait.png",
+      "category": "portrait",
+      "promptTitle": "Li Guilan portrait",
+      "intendedUse": "future character file and family-tree reveal"
+    },
+    {
+      "id": "portrait-luo-jianning",
+      "path": "game/assets/images/future-assets/portraits/luo-jianning-file-photo.png",
+      "category": "portrait",
+      "promptTitle": "Luo Jianning file photo",
+      "intendedUse": "future character file and relationship clue"
+    },
+    {
+      "id": "portrait-zong-jianhong",
+      "path": "game/assets/images/future-assets/portraits/zong-jianhong-portrait.png",
+      "category": "portrait",
+      "promptTitle": "Zong Jianhong portrait",
+      "intendedUse": "future company/family branch profile"
+    },
+    {
+      "id": "portrait-zong-jianfang",
+      "path": "game/assets/images/future-assets/portraits/zong-jianfang-portrait.png",
+      "category": "portrait",
+      "promptTitle": "Zong Jianfang portrait",
+      "intendedUse": "future official/public-service branch profile"
+    },
+    {
+      "id": "portrait-anonymous-silhouette",
+      "path": "game/assets/images/future-assets/portraits/anonymous-silhouette.png",
+      "category": "portrait",
+      "promptTitle": "Anonymous silhouette",
+      "intendedUse": "future hidden-character dossier state"
+    },
+    {
+      "id": "old-photo-spring-festival-1969",
+      "path": "game/assets/images/future-assets/old-photos/spring-festival-group-1969.png",
+      "category": "old-photo",
+      "promptTitle": "1969 Spring Festival group photo",
+      "intendedUse": "future evidence detail and timeline reveal"
+    },
+    {
+      "id": "old-photo-shichang-store-1980s",
+      "path": "game/assets/images/future-assets/old-photos/shichang-store-1980s.png",
+      "category": "old-photo",
+      "promptTitle": "Shichang store old photo",
+      "intendedUse": "future company-history chapter"
+    },
+    {
+      "id": "old-photo-plaque-ceremony-1995",
+      "path": "game/assets/images/future-assets/old-photos/plaque-ceremony-1995.png",
+      "category": "old-photo",
+      "promptTitle": "1995 plaque ceremony",
+      "intendedUse": "future company-origin clue"
+    },
+    {
+      "id": "old-photo-chen-jing-ktv-opening-2015",
+      "path": "game/assets/images/future-assets/old-photos/chen-jing-ktv-opening-2015.png",
+      "category": "old-photo",
+      "promptTitle": "Chen Jing KTV opening photo",
+      "intendedUse": "future business-life clue"
+    },
+    {
+      "id": "old-photo-county-school-award",
+      "path": "game/assets/images/future-assets/old-photos/county-school-award.png",
+      "category": "old-photo",
+      "promptTitle": "County high-school award photo",
+      "intendedUse": "future school-record clue"
+    },
+    {
+      "id": "background-archive-room",
+      "path": "game/assets/images/photo-backgrounds/archive-room.png",
+      "category": "background",
+      "promptTitle": "Archive room background",
+      "intendedUse": "future scene background, archive-room view, main menu"
+    },
+    {
+      "id": "background-investigation-desk",
+      "path": "game/assets/images/photo-backgrounds/investigation-desk.png",
+      "category": "background",
+      "promptTitle": "Investigation desk background",
+      "intendedUse": "future scene background, evidence review"
+    },
+    {
+      "id": "background-hospital-corridor",
+      "path": "game/assets/images/photo-backgrounds/county-hospital-corridor.png",
+      "category": "background",
+      "promptTitle": "County hospital corridor",
+      "intendedUse": "future hospital chapter background"
+    },
+    {
+      "id": "background-school-gate",
+      "path": "game/assets/images/photo-backgrounds/county-school-gate.png",
+      "category": "background",
+      "promptTitle": "County school gate",
+      "intendedUse": "future school chapter background"
+    },
+    {
+      "id": "background-old-computer-room",
+      "path": "game/assets/images/photo-backgrounds/old-computer-room.png",
+      "category": "background",
+      "promptTitle": "Old computer room",
+      "intendedUse": "future old-internet clue browsing background"
+    },
+    {
+      "id": "background-county-ktv-room",
+      "path": "game/assets/images/photo-backgrounds/county-ktv-room.png",
+      "category": "background",
+      "promptTitle": "County KTV room",
+      "intendedUse": "future Chen Jing storyline background"
+    },
+    {
+      "id": "background-yunshan-street",
+      "path": "game/assets/images/photo-backgrounds/yunshan-street.png",
+      "category": "background",
+      "promptTitle": "Yunshan county street",
+      "intendedUse": "future county-town navigation/background"
+    },
+    {
+      "id": "background-shichang-group-building",
+      "path": "game/assets/images/photo-backgrounds/shichang-group-building.png",
+      "category": "background",
+      "promptTitle": "Shichang Group building",
+      "intendedUse": "future company chapter background"
+    },
+    {
+      "id": "document-genealogy-paper-page",
+      "path": "game/assets/images/future-assets/documents/genealogy-paper-page.png",
+      "category": "document-template",
+      "promptTitle": "Genealogy paper page",
+      "intendedUse": "future genealogy document backdrop"
+    },
+    {
+      "id": "document-birth-registration-form",
+      "path": "game/assets/images/future-assets/documents/birth-registration-form.png",
+      "category": "document-template",
+      "promptTitle": "Birth registration form",
+      "intendedUse": "future birth-record evidence backdrop"
+    },
+    {
+      "id": "document-hukou-transfer-page",
+      "path": "game/assets/images/future-assets/documents/hukou-transfer-page.png",
+      "category": "document-template",
+      "promptTitle": "Hukou transfer page",
+      "intendedUse": "future household-registration evidence backdrop"
+    },
+    {
+      "id": "document-trust-agreement-cover",
+      "path": "game/assets/images/future-assets/documents/trust-agreement-cover.png",
+      "category": "document-template",
+      "promptTitle": "Trust agreement cover",
+      "intendedUse": "future legal-document evidence backdrop"
+    },
+    {
+      "id": "document-dna-report-template",
+      "path": "game/assets/images/future-assets/documents/dna-report-template.png",
+      "category": "document-template",
+      "promptTitle": "DNA report template",
+      "intendedUse": "future DNA evidence backdrop"
+    },
+    {
+      "id": "document-medical-record-cover",
+      "path": "game/assets/images/future-assets/documents/medical-record-cover.png",
+      "category": "document-template",
+      "promptTitle": "Medical record cover",
+      "intendedUse": "future hospital-record evidence backdrop"
+    },
+    {
+      "id": "document-company-equity-chart",
+      "path": "game/assets/images/future-assets/documents/company-equity-chart.png",
+      "category": "document-template",
+      "promptTitle": "Company equity chart",
+      "intendedUse": "future ownership-structure evidence backdrop"
+    },
+    {
+      "id": "document-old-photo-back-template",
+      "path": "game/assets/images/future-assets/documents/old-photo-back-template.png",
+      "category": "document-template",
+      "promptTitle": "Old photo back template",
+      "intendedUse": "future photo-back clue backdrop"
+    },
+    {
+      "id": "web-local-forum-2008",
+      "path": "game/assets/images/future-assets/web-ui/local-forum-2008.png",
+      "category": "web-ui",
+      "promptTitle": "2008 local forum",
+      "intendedUse": "future old-internet clue screenshot"
+    },
+    {
+      "id": "web-personal-blog-2014",
+      "path": "game/assets/images/future-assets/web-ui/personal-blog-2014.png",
+      "category": "web-ui",
+      "promptTitle": "2014 personal blog",
+      "intendedUse": "future blog clue screenshot"
+    },
+    {
+      "id": "web-short-video-comments-2020",
+      "path": "game/assets/images/future-assets/web-ui/short-video-comments-2020.png",
+      "category": "web-ui",
+      "promptTitle": "2020 short-video comments",
+      "intendedUse": "future social clue screenshot"
+    },
+    {
+      "id": "web-corporate-leadership-page",
+      "path": "game/assets/images/future-assets/web-ui/corporate-leadership-page.png",
+      "category": "web-ui",
+      "promptTitle": "Corporate leadership page",
+      "intendedUse": "future company clue screenshot"
+    },
+    {
+      "id": "promo-steam-key-art",
+      "path": "game/assets/images/future-assets/promo/steam-key-art.png",
+      "category": "promo",
+      "promptTitle": "Steam key art",
+      "intendedUse": "future store key visual, needs final title overlay"
+    },
+    {
+      "id": "promo-store-capsule",
+      "path": "game/assets/images/future-assets/promo/store-capsule.png",
+      "category": "promo",
+      "promptTitle": "Store capsule",
+      "intendedUse": "future store capsule, needs final title overlay"
+    },
+    {
+      "id": "promo-demo-cover",
+      "path": "game/assets/images/future-assets/promo/demo-cover.png",
+      "category": "promo",
+      "promptTitle": "Demo cover",
+      "intendedUse": "future demo cover, needs final title overlay"
+    },
+    {
+      "id": "ui-icon-reference-sheet",
+      "path": "game/assets/images/future-assets/ui-reference/ui-icon-reference-sheet.png",
+      "category": "ui-reference",
+      "promptTitle": "UI icon reference sheet",
+      "intendedUse": "source reference sheet for split UI icon assets"
+    },
+    {
+      "id": "ui-genealogy-node-reference-sheet",
+      "path": "game/assets/images/future-assets/ui-reference/genealogy-node-reference-sheet.png",
+      "category": "ui-reference",
+      "promptTitle": "Genealogy node reference sheet",
+      "intendedUse": "source reference sheet for split genealogy node assets"
+    },
+    {
+      "id": "ui-icon-archive-search",
+      "path": "game/assets/images/future-assets/ui-icons/archive-search.png",
+      "category": "ui-icon",
+      "promptTitle": "Archive search icon",
+      "intendedUse": "production-ready split icon for search/navigation UI"
+    },
+    {
+      "id": "ui-icon-document-reading",
+      "path": "game/assets/images/future-assets/ui-icons/document-reading.png",
+      "category": "ui-icon",
+      "promptTitle": "Document reading icon",
+      "intendedUse": "production-ready split icon for document UI"
+    },
+    {
+      "id": "ui-icon-genealogy-tree",
+      "path": "game/assets/images/future-assets/ui-icons/genealogy-tree.png",
+      "category": "ui-icon",
+      "promptTitle": "Genealogy tree icon",
+      "intendedUse": "production-ready split icon for tree UI"
+    },
+    {
+      "id": "ui-icon-evidence-binding",
+      "path": "game/assets/images/future-assets/ui-icons/evidence-binding.png",
+      "category": "ui-icon",
+      "promptTitle": "Evidence binding icon",
+      "intendedUse": "production-ready split icon for relation/evidence UI"
+    },
+    {
+      "id": "ui-icon-final-submission",
+      "path": "game/assets/images/future-assets/ui-icons/final-submission.png",
+      "category": "ui-icon",
+      "promptTitle": "Final submission icon",
+      "intendedUse": "production-ready split icon for report UI"
+    },
+    {
+      "id": "genealogy-node-unknown-person",
+      "path": "game/assets/images/future-assets/genealogy-nodes/unknown-person.png",
+      "category": "genealogy-node",
+      "promptTitle": "Unknown person node",
+      "intendedUse": "production-ready split node state"
+    },
+    {
+      "id": "genealogy-node-confirmed-blood-relative",
+      "path": "game/assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "category": "genealogy-node",
+      "promptTitle": "Confirmed blood relative node",
+      "intendedUse": "production-ready split node state"
+    },
+    {
+      "id": "genealogy-node-legal-adoptive-relation",
+      "path": "game/assets/images/future-assets/genealogy-nodes/legal-adoptive-relation.png",
+      "category": "genealogy-node",
+      "promptTitle": "Legal/adoptive relation node",
+      "intendedUse": "production-ready split node state"
+    },
+    {
+      "id": "genealogy-node-disputed-relation",
+      "path": "game/assets/images/future-assets/genealogy-nodes/disputed-relation.png",
+      "category": "genealogy-node",
+      "promptTitle": "Disputed relation node",
+      "intendedUse": "production-ready split node state"
+    },
+    {
+      "id": "genealogy-node-deceased-person",
+      "path": "game/assets/images/future-assets/genealogy-nodes/deceased-person.png",
+      "category": "genealogy-node",
+      "promptTitle": "Deceased person node",
+      "intendedUse": "production-ready split node state"
+    }
+  ]
+}
