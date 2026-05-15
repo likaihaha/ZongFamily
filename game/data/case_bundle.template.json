@@ -1,0 +1,36 @@
+{
+  "caseId": "example-case-id",
+  "version": "0.0.0",
+  "locale": "zh-CN",
+  "title": "案件标题",
+  "truthTable": [
+    {
+      "id": "truth-example",
+      "statement": "需要玩家推导出的真相陈述。",
+      "required": true
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue-example",
+      "name": "线索名称",
+      "type": "archive",
+      "supportsTruthIds": ["truth-example"]
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc-example",
+      "title": "资料标题",
+      "category": "archive",
+      "body": "资料正文。"
+    }
+  ],
+  "familyMembers": [
+    {
+      "id": "person-example",
+      "name": "人物姓名",
+      "generation": "代际或身份"
+    }
+  ]
+}
