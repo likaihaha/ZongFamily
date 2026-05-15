@@ -1,5 +1,5 @@
 {
-  "note": "Future-use raster art assets generated from yunshan_art_audio_prompts.html. These are intentionally not wired into current clue thumbnails unless a later feature needs them.",
+  "note": "Future-use raster art assets generated from yunshan_art_audio_prompts.html. Prompt document now includes the updated Yunshan setting: a county shaped by Shichang Group's infrastructure, logistics, philanthropy, and local pressure, with old public archive systems still lagging. These assets are intentionally not wired into current clue thumbnails unless a later feature needs them.",
   "generatedAt": "2026-05-15T07:52:12.346Z",
   "activeCluePolicy": "Current library clue images stay under game/assets/images/evidence; future scene/background/promo assets are separate.",
   "assets": [

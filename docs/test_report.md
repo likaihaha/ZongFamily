@@ -1,6 +1,43 @@
 # 测试报告
 
-更新时间：2026-05-16 01:23 Asia/Shanghai
+更新时间：2026-05-16 02:19 Asia/Shanghai
+
+## 2026-05-16 02:19 Asia/Shanghai 集团与公证设定回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+Select-String -Path casebook\group_history.md -Pattern '42 亿元','未上市','港安信托','灰色边界' -Encoding UTF8
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 自动通关烟测通过，重新生成 `docs/smoke-dom.html`。
+- `casebook/group_history.md` 已记录集团规模、未上市口径、公益/政商关系和灰色边界；信托、公证入口与县域人口信息已同步到内容包和正式版文档。
+
+## 2026-05-16 02:08 Asia/Shanghai 备忘录手动整理回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+补充检查：
+```powershell
+Select-String -Path docs\smoke-dom.html -Pattern 'data-task-state|data-autotest="pass"' -Encoding UTF8
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查确认调查备忘录渲染“锁定 / 忽略”按钮，且自动通关状态仍为 `data-autotest="pass"`。
+- 应用内浏览器连接超时，本轮未取得交互式截图；以 Edge headless 烟测和 DOM 检查作为验证依据。
 
 ## 2026-05-16 01:22 Asia/Shanghai 渐进解锁回归
 

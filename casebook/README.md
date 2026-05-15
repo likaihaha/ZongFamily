@@ -21,6 +21,7 @@
 - `people_biographies.md`：所有当前人物的生平小传和案件功能。
 - `people_dossiers.md`：正式版人物深档，含第二代配偶、第三代、外貌、性格、成长经历和利害位置。
 - `relationship_conflicts.md`：人物关系网、姻亲/公司/旧事知情关系和可转化为玩法的冲突。
+- `group_history.md`：世昌集团发展史、规模定位、业务结构和权力交接。
 - `player_motivation.md`：玩家开局调查动机、调查中动力变化和结尾责任感。
 - `player_role_legal_basis.md`：玩家职业设定的现实语境、权限边界和文案建议。
 - `documents.md`：资料文案库索引、可见性、解锁条件。

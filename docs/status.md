@@ -1,6 +1,22 @@
 # 开发状态
 
-更新时间：2026-05-16 01:23 Asia/Shanghai
+更新时间：2026-05-16 02:19 Asia/Shanghai
+
+## 2026-05-16 02:19 Asia/Shanghai 集团与公证设定补强
+
+- 新增 `casebook/group_history.md`，明确世昌集团是县域龙头民营集团：约 42 亿营收、约 4200 名员工、未上市，压迫感来自就业、物流、公益和熟人网络，而不是全国级资本财阀或涉黑控制。
+- 补强公证事项入口：香港家族信托受托方要求补充死亡事实、亲属关系和受益人材料，宗家公开六名子女提交预审材料后因匿名信和“罗姓女知青 / 建宁”关键词触发资料核验。
+- 同步更新游戏资料、内容包、案卷设定库、正式版计划、项目文档和美术音频提示中的集团规模、信托用途、云山县人口、宗世昌供销系统出身与政商灰色边界。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过。
+
+## 2026-05-16 02:08 Asia/Shanghai 备忘录手动整理
+
+- 调查备忘录每条待办新增“锁定 / 忽略”手动状态，支持试玩时把主线证据链固定住，或暂时降低误导支线优先级。
+- 手动状态写入本地存档和导出存档；自动完成判定仍只看真实阅读、证据收藏、关系绑定和最终提交，避免手动标记绕过玩法校验。
+- 被忽略的未完成待办不会抢占当前任务高亮；设置页新增“备忘整理”统计，显示已锁定和已忽略数量。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；烟测重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1` 均通过；DOM 检查确认 `data-task-state` 按钮和 `data-autotest="pass"` 存在。
+- 注意：应用内浏览器连接本轮仍超时，已用 Edge headless 烟测和 DOM 检查兜底。
 
 ## 2026-05-16 01:22 Asia/Shanghai 资料与家谱渐进解锁
 

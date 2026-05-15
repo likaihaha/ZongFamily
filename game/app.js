@@ -44,7 +44,7 @@ const documents = [
     trust: 4,
     keywords: ["世昌集团", "宗建红", "宗明辉", "宗明军", "董事长", "集团历程"],
     summary: "列出世昌集团几次关键治理调整。",
-    body: "1982 年：世昌综合商店成立。\n1986 年：世昌贸易公司成立，承接供销系统外溢的仓储和批发业务。\n1997 年：世昌集团挂牌，宗世昌仍保留最终拍板权。\n2005 年：集团改制，宗建红以经营负责人身份接班，宗建民一支保留物流板块收益。\n2016 年春：外部融资尽调要求治理结构清晰化，宗明辉出任董事长，宗建红退到董事会背后控盘。\n2020 年 9 月：宗世昌病危期间，宗明军以代理董事长身份主持对外口径，正式公告被压到丧事之后。\n\n官网措辞谨慎，把家族妥协写成企业治理升级，没有提及家族信托纠纷。"
+    body: "1982 年：世昌综合商店成立，从日用百货、烟酒副食和小批发起步。\n1986 年：世昌贸易公司成立，承接供销系统外溢的仓储和批发业务。\n1992 年：租用旧仓库，进入建材市场、货运中转和乡镇配送。\n1997 年：世昌集团完成集团化工商登记并挂牌成立，宗世昌仍保留最终拍板权；该“挂牌”不是证券上市，也不是新三板挂牌。\n1998 年：宗世昌设立香港家族信托，隔离部分境外账户、香港投资权益和家族保障资产。\n2005 年：集团改制，宗建红以经营负责人身份接班，宗世昌退出日常经营，但保留重大资产处置、银行担保、核心人事和家族会议的最终意见。\n2008 至 2013 年：物流园、冷链配送和建材市场扩张，集团成为云山县重要民营用工平台。\n2014 至 2015 年：集团商业物业和租赁网络扩张，部分妇联帮扶、创业扶持和市场租赁关系交叉。\n2016 年春：外部融资尽调和上市辅导前期接触要求治理结构清晰化，宗明辉出任董事长，宗建红退到董事会背后控盘。后续因家族股权、关联交易和信托受益人风险未清，集团没有进入公开资本市场。\n2018 至 2020 年：世昌公益办公室持续捐助县一中奖学金、县人民医院设备、老街社区慰问和防疫物资。\n2020 年：集团官网称集团年营业收入约 42 亿元，员工约 4200 人，业务覆盖商贸批发、仓储物流、建材市场、冷链配送、县城商业物业和担保类配套服务。\n2020 年 9 月：宗世昌病危期间，宗明军以代理董事长身份主持对外口径，正式公告被压到丧事之后。\n\n官网措辞谨慎，把家族妥协写成企业治理升级，没有提及家族信托纠纷；但县里老人仍把宗世昌称作“宗老爷子”，重大事一般要听他点头。"
   },
   {
     id: "doc_yunshan_county_profile",
@@ -54,7 +54,7 @@ const documents = [
     trust: 4,
     keywords: ["云山县", "江南省", "黔中", "山地县城", "世昌集团", "县域概况"],
     summary: "确立云山县的地理位置、交通和产业背景。",
-    body: "云山县隶属江南省西南部，县城云山镇位于河谷盆地，西南方向经旧国道可达黔中山区。县域人口以本地商贸、外出务工、学校和机关事业单位为主要生活网络。\n\n1980 年代以前，县供销系统和仓储转运承担了大部分县城物资流通；1990 年代以后，世昌集团逐渐成为本地商贸和就业的核心企业。\n\n该页是调查员进入云山县前的基础背景，不直接证明宗氏血缘，但解释了供销社、黔中线路和世昌集团为什么都在同一张地方关系网里。"
+    body: "云山县隶属江南省西南部，县城云山镇位于河谷盆地，西南方向经旧国道可达黔中山区。2020 年户籍人口约 62 万，常住人口约 48 万，县城建成区常住约 18 万。县域人口以本地商贸、外出务工、学校、机关事业单位和物流就业为主要生活网络。\n\n1980 年代以前，县供销系统和仓储转运承担了大部分县城物资流通；1990 年代以后，世昌集团逐渐成为本地商贸和就业的核心企业。2000 年后外出务工明显，户籍和常住人口开始分离；2010 年后县城陪读、返乡创业和物流就业增加。\n\n该页是调查员进入云山县前的基础背景，不直接证明宗氏血缘，但解释了供销社、黔中线路、县一中、老街社区和世昌集团为什么都在同一张地方关系网里。"
   },
   {
     id: "doc_2020_county_notice",
@@ -82,14 +82,14 @@ const documents = [
     year: 1998,
     source: "信托",
     trust: 5,
-    keywords: ["香港信托", "血缘", "DNA", "受益人", "非婚生", "宗世昌"],
+    keywords: ["香港信托", "港安信托", "Harbour Reliance", "血缘", "DNA", "受益人", "非婚生", "宗世昌"],
     summary: "说明不姓宗也可能成为受益人。",
     image: {
       src: "assets/images/evidence/trust-clause-1998.jpg",
       alt: "1998 年香港家族信托文件扫描图",
-      caption: "扫描件节选：被遮盖的条款页、印章和签署区显示这是一份正式信托材料。"
+      caption: "扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。"
     },
-    body: "本人宗世昌确认，本信托项下的受益人包括：本人的直系血亲后代，以及能够通过 DNA 鉴定证明与本人存在血缘关系的其他个人。\n\n无论该等个人是否使用“宗”作为姓氏，无论其是否婚生或非婚生，无论其母亲或监护人的身份或婚姻状况如何，只要能够证明血缘关系，均有权享受本信托项下权益。"
+    body: "受托方：港安信托服务有限公司（Harbour Reliance Trust Services Limited）。\n\n设立背景摘要：委托人宗世昌拟将部分境外账户、香港投资权益、保单权益及以后可转入的家族保障资产交由受托方管理。该安排不等同于宗世昌全部遗产分配，也不直接处理世昌集团股权。\n\n本人宗世昌确认，本信托项下的受益人包括：本人的直系血亲后代，以及能够通过 DNA 鉴定证明与本人存在血缘关系的其他个人。\n\n无论该等个人是否使用“宗”作为姓氏，无论其是否婚生或非婚生，无论其母亲或监护人的身份或婚姻状况如何，只要能够证明血缘关系，均有权享受本信托项下权益。"
   },
   {
     id: "doc_anonymous_letter",
@@ -284,7 +284,7 @@ const documents = [
     trust: 4,
     keywords: ["公证处", "匿名信", "宗建红", "信托", "第七支", "罗建宁"],
     summary: "家族成员第一次正式面对第七支血脉。",
-    body: "2020 年 9 月，世昌集团方面就家族信托受益人范围向本处咨询。宗建红称匿名信内容“荒唐”，但同时要求查询 1968 至 1970 年间县供销系统知青档案。\n\n接待人员备注：来访人尤其关注“罗姓女知青”和“建宁”两个关键词。"
+    body: "2020 年 9 月，宗建红与集团法务魏雪琴代表世昌集团及公开六名子女，就港安信托服务有限公司要求补充的香港家族信托受益人范围材料向本处咨询，并提交宗世昌死亡事实、公开亲属关系和受益人候选范围预审材料。\n\n宗建红称匿名信内容“荒唐”，但同时要求查询 1968 至 1970 年间县供销系统知青档案。\n\n接待人员备注：来访人尤其关注“罗姓女知青”和“建宁”两个关键词。现有材料仅列公开六名子女，需补充核验后再判断能否出具相关公证材料。"
   },
   {
     id: "doc_supply_roster",
@@ -294,7 +294,7 @@ const documents = [
     trust: 5,
     keywords: ["供销系统", "仓储点", "宗世昌", "罗月珍", "临时工", "1969"],
     summary: "证明宗世昌与罗月珍曾在同一系统工作。",
-    body: "1969 年仓储点临时用工登记显示：宗世昌负责夜间值守与货物调拨，罗月珍负责出入库抄录。\n\n两人姓名在 1969 年 2 月至 8 月期间多次出现在同一值班表上。"
+    body: "1969 年仓储点临时用工登记显示：宗世昌负责夜间值守与货物调拨，罗月珍负责出入库抄录。\n\n宗世昌 1932 年生，当时 37 岁，已与李桂兰育有五名公开子女；罗月珍 1949 年生，是刚到云山不久的贵州籍知青。两人姓名在 1969 年 2 月至 8 月期间多次出现在同一值班表上。\n\n这份花名册不能证明血缘，但能把年龄差、工作交集、夜班环境和地方资源不对等放进同一条旧事线索里。"
   },
   {
     id: "doc_old_postcard",
@@ -424,7 +424,7 @@ const documents = [
     trust: 4,
     keywords: ["继承", "非婚生", "信托", "DNA", "陈嘉东", "直系血亲"],
     summary: "说明陈嘉东线需要同时核验血缘与信托条款。",
-    body: "咨询摘记：若仅按普通法定继承路径，非婚生子女和其后代仍需完成亲缘证明；若涉及境外家族信托，则以信托文本约定为优先审查材料之一。\n\n工作人员建议：先固定宗世昌留存血样来源，再核对陈静一支的母系出生记录。未成年人陈嘉东是否直接受益，还需看信托受益人层级是否覆盖直系后代。\n\n该摘记不是判决，但将 DNA、医院血样、出生记录和信托条款列为同组核验材料。"
+    body: "咨询摘记：普通遗产继承处理宗世昌死亡时仍在其名下的财产；境外家族信托处理已进入信托或按条款可纳入的资产，两者不能混为一谈。\n\n若仅按普通法定继承路径，非婚生子女和其后代仍需完成亲缘证明；若涉及境外家族信托，则以信托文本约定为优先审查材料之一。\n\n工作人员建议：先固定宗世昌留存血样来源，再核对陈静一支的母系出生记录。未成年人陈嘉东是否直接受益，还需看信托受益人层级是否覆盖直系后代。\n\n该摘记不是判决，但将 DNA、医院血样、出生记录和信托条款列为同组核验材料。"
   },
   {
     id: "doc_equity_draft_2005",
@@ -444,7 +444,7 @@ const documents = [
     trust: 3,
     keywords: ["魏雪琴", "宗明辉", "宗明军", "宗建红", "董事会", "换届"],
     summary: "宗家第二、三代围绕控制权已经出现裂痕。",
-    body: "治理调整备忘记载，外部融资方要求世昌集团明确董事会授权和家族成员任职边界。宗建红主张由宗明辉出任董事长，自己保留重大项目否决权；宗建民一支则要求物流板块收益和否决权写入附件。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，可说明董事长席位不等同于继承资格。"
+    body: "治理调整备忘记载，外部融资方要求世昌集团明确董事会授权和家族成员任职边界。宗建红主张由宗明辉出任董事长，自己保留重大项目否决权；宗建民一支则要求物流板块收益和否决权写入附件。\n\n附件备注：宗世昌虽不再担任日常经营职务，但对重大资产处置、银行担保、核心人事和家族信托材料仍保留事实影响力，融资方要求将“创始人特别意见”从正式授权链中剥离。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，可说明董事长席位不等同于继承资格。"
   },
   {
     id: "doc_jianfang_note",
@@ -721,6 +721,20 @@ const locationLabels = {
 const updateLogs = [
   {
     date: "2026-05-16",
+    title: "备忘录手动整理",
+    changes: [
+      "调查备忘录待办新增“锁定”和“忽略”手动状态，用于试玩时整理主线与误导线",
+      "手动状态写入本地存档和导出存档，自动完成判定仍以真实阅读、收藏、关系绑定和提交为准",
+      "被忽略的未完成待办不会抢占当前任务高亮，减少支线排除项干扰主线推进"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
+  {
+    date: "2026-05-16",
     title: "资料与家谱渐进解锁",
     changes: [
       "资料库新增 public/location/chain 可见性规则，未解锁资料不会直接出现在搜索结果里",
@@ -981,7 +995,8 @@ const state = {
   reportSubmitted: false,
   sound: true,
   ambient: false,
-  notes: ""
+  notes: "",
+  taskStates: {}
 };
 
 const phaseGoals = [
@@ -1038,6 +1053,7 @@ const notebookTaskGroups = [
     title: "主线核验",
     items: [
       {
+        id: "main_public_family",
         title: "建立公开家庭版本",
         detail: "先读公开报道，确认宗世昌被公开承认的家庭结构。",
         actionLabel: "查宗世昌",
@@ -1046,6 +1062,7 @@ const notebookTaskGroups = [
         done: () => state.readDocs.has("doc_official_family")
       },
       {
+        id: "main_trust_rule",
         title: "固定继承规则",
         detail: "把信托条款加入证据箱，再判断姓氏是否决定资格。",
         actionLabel: "查信托",
@@ -1054,6 +1071,7 @@ const notebookTaskGroups = [
         done: () => state.collected.has("doc_trust_clause")
       },
       {
+        id: "main_hidden_chain",
         title: "补齐隐藏血脉链条",
         detail: "围绕罗月珍、陈静和陈嘉东收集强证据。",
         actionLabel: "查罗月珍",
@@ -1062,6 +1080,7 @@ const notebookTaskGroups = [
         done: () => ["doc_photo_back", "doc_luo_birth", "doc_chen_birth", "doc_jiadong_school", "doc_dna_record"].every((id) => state.collected.has(id))
       },
       {
+        id: "main_relations",
         title: "完成家谱绑定",
         detail: "给关键关系选择人物，并绑定已收藏的强证据。",
         actionLabel: "打开家谱",
@@ -1069,6 +1088,7 @@ const notebookTaskGroups = [
         done: () => relationPrompts.every(isRelationCorrect)
       },
       {
+        id: "main_report",
         title: "提交最终报告",
         detail: "提交第七支血脉和现居云山后代的判断。",
         actionLabel: "打开提交",
@@ -1081,6 +1101,7 @@ const notebookTaskGroups = [
     title: "支线排除",
     items: [
       {
+        id: "side_zong_jianfang",
         title: "排除宗建芳误传",
         detail: "核对帮扶、档案挂靠和母女关系之间的差别。",
         actionLabel: "查宗建芳",
@@ -1089,6 +1110,7 @@ const notebookTaskGroups = [
         done: () => state.readDocs.has("doc_women_fed") && state.readDocs.has("doc_talent_window")
       },
       {
+        id: "side_qian_rumor",
         title: "核实司机传闻",
         detail: "把交通背景和亲缘证据分开，不让低可信网帖带偏。",
         actionLabel: "查钱树林",
@@ -1097,6 +1119,7 @@ const notebookTaskGroups = [
         done: () => state.readDocs.has("doc_false_qian") && state.readDocs.has("doc_yunqian_bus_line")
       },
       {
+        id: "side_equity_trust",
         title: "区分股权与信托",
         detail: "确认公司控制权文件不能直接替代受益人审查。",
         actionLabel: "查股权",
@@ -1110,6 +1133,7 @@ const notebookTaskGroups = [
     title: "调查教学",
     items: [
       {
+        id: "tutorial_visit",
         title: "从走访进入资料库",
         detail: "任意选择一个走访地点或搜索关键词，打开第一份资料。",
         actionLabel: "去走访",
@@ -1117,6 +1141,7 @@ const notebookTaskGroups = [
         done: () => state.readDocs.size > 0
       },
       {
+        id: "tutorial_collect",
         title: "收藏第一份证据",
         detail: "打开资料后点击“加入证据箱”，让它可用于家谱绑定。",
         actionLabel: "去资料库",
@@ -1124,6 +1149,7 @@ const notebookTaskGroups = [
         done: () => state.collected.size > 0
       },
       {
+        id: "tutorial_relation",
         title: "完成一条关系推理",
         detail: "在家谱页选人并绑定证据，观察冲突提示。",
         actionLabel: "打开家谱",
@@ -1131,6 +1157,7 @@ const notebookTaskGroups = [
         done: () => relationPrompts.some(isRelationCorrect)
       },
       {
+        id: "tutorial_keyword",
         title: "用关键词回查",
         detail: "阅读资料后，在关键词区点击词条继续搜索。",
         actionLabel: "看关键词",
@@ -1140,6 +1167,8 @@ const notebookTaskGroups = [
     ]
   }
 ];
+
+const notebookTaskIds = new Set(notebookTaskGroups.flatMap((group) => group.items.map((item) => item.id)));
 
 const visitLocations = [
   {
@@ -1280,7 +1309,8 @@ function serializeState() {
     reportSubmitted: state.reportSubmitted,
     sound: state.sound,
     ambient: state.ambient,
-    notes: state.notes
+    notes: state.notes,
+    taskStates: state.taskStates
   };
 }
 
@@ -1308,6 +1338,9 @@ function loadState() {
     state.sound = parsed.sound !== false;
     state.ambient = parsed.ambient === true;
     state.notes = parsed.notes || "";
+    state.taskStates = Object.fromEntries(
+      Object.entries(parsed.taskStates || {}).filter(([id, value]) => notebookTaskIds.has(id) && ["pinned", "ignored"].includes(value))
+    );
   } catch {
     localStorage.removeItem("yunshan-save");
   }
@@ -2153,11 +2186,23 @@ function renderNotes() {
     || `<p class="hint">阅读资料后会出现关键词。</p>`;
 }
 
+function taskManualState(taskId) {
+  return state.taskStates[taskId] || "";
+}
+
+function taskStatusLabel(done, current, manualState) {
+  if (done) return "已完成";
+  if (manualState === "pinned") return "已锁定";
+  if (manualState === "ignored") return "已忽略";
+  return current ? "当前" : "待查";
+}
+
 function renderNotebookTasks() {
   if (!els.taskList) return;
   els.taskList.innerHTML = notebookTaskGroups.map((group) => {
     const completed = group.items.filter((item) => item.done()).length;
-    const firstOpen = group.items.find((item) => !item.done());
+    const firstOpen = group.items.find((item) => !item.done() && taskManualState(item.id) !== "ignored")
+      || group.items.find((item) => !item.done());
     return `
       <article class="task-group">
         <header>
@@ -2168,14 +2213,24 @@ function renderNotebookTasks() {
           ${group.items.map((item) => {
             const done = item.done();
             const current = !done && item === firstOpen;
+            const manualState = taskManualState(item.id);
+            const statusLabel = taskStatusLabel(done, current, manualState);
+            const pinned = manualState === "pinned";
+            const ignored = manualState === "ignored";
             const queryAttr = item.query ? ` data-task-query="${item.query}"` : "";
             return `
-              <section class="task-item ${done ? "is-done" : ""} ${current ? "is-current" : ""}">
+              <section class="task-item ${done ? "is-done" : ""} ${current ? "is-current" : ""} ${pinned ? "is-pinned" : ""} ${ignored ? "is-ignored" : ""}">
                 <div>
-                  <strong>${item.title}</strong>
+                  <strong><span>${item.title}</span><em>${statusLabel}</em></strong>
                   <p>${item.detail}</p>
                 </div>
-                <button data-task-view="${item.view}"${queryAttr}>${done ? "复查" : item.actionLabel}</button>
+                <div class="task-actions">
+                  <button class="task-primary" data-task-view="${item.view}"${queryAttr}>${done ? "复查" : item.actionLabel}</button>
+                  <div class="task-state-actions" aria-label="${item.title}手动状态">
+                    <button data-task-state="${item.id}" data-task-state-value="pinned" aria-pressed="${pinned}">${pinned ? "取消锁定" : "锁定"}</button>
+                    <button data-task-state="${item.id}" data-task-state-value="ignored" aria-pressed="${ignored}">${ignored ? "取消忽略" : "忽略"}</button>
+                  </div>
+                </div>
               </section>
             `;
           }).join("")}
@@ -2207,6 +2262,8 @@ function renderSettings() {
   if (!els.saveSummary) return;
   const correctCount = relationPrompts.filter(isRelationCorrect).length;
   const notesChars = state.notes.trim().length;
+  const pinnedTasks = Object.values(state.taskStates).filter((value) => value === "pinned").length;
+  const ignoredTasks = Object.values(state.taskStates).filter((value) => value === "ignored").length;
   els.soundToggle.checked = state.sound;
   els.ambientToggle.checked = state.sound && state.ambient;
   els.ambientToggle.disabled = !state.sound;
@@ -2216,6 +2273,7 @@ function renderSettings() {
     <dt>已走访地点</dt><dd>${state.visitedLocations.size} / ${visitLocations.length}</dd>
     <dt>关系完成</dt><dd>${correctCount} / ${relationPrompts.length}</dd>
     <dt>调查笔记</dt><dd>${notesChars} 字</dd>
+    <dt>备忘整理</dt><dd>${pinnedTasks} 锁定 / ${ignoredTasks} 忽略</dd>
   `;
   els.settingsReset.disabled = els.resetConfirmInput.value.trim() !== "清空";
 }
@@ -2569,6 +2627,19 @@ function bindEvents() {
     renderAll();
   });
   els.taskList.addEventListener("click", (event) => {
+    const stateButton = event.target.closest("[data-task-state]");
+    if (stateButton) {
+      const taskId = stateButton.dataset.taskState;
+      const value = stateButton.dataset.taskStateValue;
+      if (!notebookTaskIds.has(taskId) || !["pinned", "ignored"].includes(value)) return;
+      if (state.taskStates[taskId] === value) delete state.taskStates[taskId];
+      else state.taskStates[taskId] = value;
+      saveState();
+      playSound("click");
+      renderNotebookTasks();
+      renderSettings();
+      return;
+    }
     const button = event.target.closest("[data-task-view]");
     if (!button) return;
     if (button.dataset.taskQuery) {
