@@ -78,6 +78,72 @@
       "name": "云山县疾控中心亲缘比对记录",
       "type": "dna",
       "supportsTruthIds": ["truth-luo-jianning", "truth-chen-line", "truth-trust"]
+    },
+    {
+      "id": "clue-midwife-register",
+      "name": "云山卫生院 1969 年冬接生登记摘页",
+      "type": "hospital",
+      "supportsTruthIds": ["truth-luo-jianning"]
+    },
+    {
+      "id": "clue-supply-advance",
+      "name": "供销社仓储点临时借支单",
+      "type": "archive",
+      "supportsTruthIds": ["truth-luo-yuezhen", "truth-luo-jianning"]
+    },
+    {
+      "id": "clue-remittance-stub",
+      "name": "黔中邮电所 1971 年汇款回执残联",
+      "type": "archive",
+      "supportsTruthIds": ["truth-luo-jianning"]
+    },
+    {
+      "id": "clue-teacher-visit",
+      "name": "县一中高二三班家访记录",
+      "type": "school",
+      "supportsTruthIds": ["truth-chen-line"]
+    },
+    {
+      "id": "clue-estate-law-note",
+      "name": "云山县司法所继承咨询摘记",
+      "type": "legal",
+      "supportsTruthIds": ["truth-trust", "truth-chen-line"]
+    },
+    {
+      "id": "clue-equity-draft-2005",
+      "name": "世昌集团 2005 年改制股权底稿",
+      "type": "finance",
+      "supportsTruthIds": ["truth-public-family", "truth-trust"]
+    },
+    {
+      "id": "clue-board-handover-2015",
+      "name": "世昌集团 2015 年董事会换届备忘",
+      "type": "corporate",
+      "supportsTruthIds": ["truth-trust"]
+    },
+    {
+      "id": "clue-jianfang-note",
+      "name": "宗建芳给妇联旧同事的便条",
+      "type": "private",
+      "supportsTruthIds": ["truth-chen-line"]
+    },
+    {
+      "id": "clue-ktv-lease-archive",
+      "name": "唱响 KTV 房屋租赁备案",
+      "type": "business",
+      "supportsTruthIds": ["truth-chen-line"]
+    },
+    {
+      "id": "clue-dinghui-due-diligence",
+      "name": "鼎辉基金受益人尽调函",
+      "type": "finance",
+      "supportsTruthIds": ["truth-trust"]
+    },
+    {
+      "id": "clue-neighborhood-visit",
+      "name": "老街社区 2016 年走访记录",
+      "type": "community",
+      "supportsTruthIds": ["truth-chen-line"]
     }
   ],
   "documents": [
@@ -86,6 +152,24 @@
       "title": "《云山商界》1996 年宗世昌专访",
       "category": "press",
       "body": "公开资料称宗世昌与李桂兰育有六名子女，未提及罗月珍与罗建宁。"
+    },
+    {
+      "id": "doc_yunshan_county_profile",
+      "title": "《云山县情概览》2020 年修订页",
+      "category": "county-profile",
+      "body": "云山县位于虚构江南省西南部，靠近黔中山区，旧国道和供销仓储体系把云山、黔中和世昌集团早期商贸网络连接起来。"
+    },
+    {
+      "id": "doc_2020_county_notice",
+      "title": "云山县 2020 年秋公共场所办事须知",
+      "category": "notice",
+      "body": "2020 年秋，云山县公共场所仍执行预约、测温、扫码和登记制度，调取档案、学籍、病历等材料需要单位介绍信或委托材料。"
+    },
+    {
+      "id": "doc_yunqian_bus_line",
+      "title": "云山至黔中旧客运线路备案",
+      "category": "traffic",
+      "body": "交通档案显示云山至黔中方向长期存在客运和邮电往来，可解释黔中汇款、明信片和司机误导线为何同时出现。"
     },
     {
       "id": "doc_photo_back",
@@ -138,6 +222,90 @@
         "alt": "2019 年亲缘比对记录扫描图"
       },
       "body": "陈静样本与宗世昌留存血样符合祖孙辈直系亲缘关系。"
+    },
+    {
+      "id": "doc_midwife_register",
+      "title": "云山卫生院 1969 年冬接生登记摘页",
+      "category": "hospital",
+      "body": "1969 年冬，罗月珍在云山卫生院生下一名女婴。助产员周美英备注婴儿乳名建宁，供销社何会计代付押金。"
+    },
+    {
+      "id": "doc_supply_advance",
+      "title": "供销社仓储点临时借支单",
+      "category": "archive",
+      "body": "宗世昌以夜班人员急用医药费为由借支，背面备注提到月珍住院和账目不宜写明。"
+    },
+    {
+      "id": "doc_remittance_stub",
+      "title": "黔中邮电所 1971 年汇款回执残联",
+      "category": "archive",
+      "body": "罗月珍离开云山后收到来自云山县邮电所的汇款，附言提到给建宁买奶粉。"
+    },
+    {
+      "id": "doc_li_guilan_letter",
+      "title": "李桂兰未寄出信稿",
+      "category": "private",
+      "body": "未寄出信稿提到月珍和孩子，暗示李桂兰知道罗月珍一事，但缺少邮戳和完整落款。"
+    },
+    {
+      "id": "doc_classmate_luo",
+      "title": "黔中中专同学访谈：罗建宁",
+      "category": "interview",
+      "body": "同学回忆罗建宁曾提到云山和照片背后的名字，但内容属于多年后转述，只能辅助追踪关键词。"
+    },
+    {
+      "id": "doc_teacher_visit",
+      "title": "县一中高二三班家访记录",
+      "category": "school",
+      "body": "班主任黄雅玲记录陈嘉东日常由母亲陈静照料，家庭住址与唱响 KTV 一致。"
+    },
+    {
+      "id": "doc_false_qian",
+      "title": "地方论坛《黔中旧事》：钱树林认父帖",
+      "category": "forum",
+      "body": "低可信论坛帖把钱树林写成罗建宁父亲，但出生地和时间线与县志、户籍和接生登记冲突。"
+    },
+    {
+      "id": "doc_estate_law_note",
+      "title": "云山县司法所继承咨询摘记",
+      "category": "legal",
+      "body": "继承咨询摘记提示玩家同时核对 DNA、医院血样、出生记录和信托条款，才能判断陈嘉东线的资格。"
+    },
+    {
+      "id": "doc_equity_draft_2005",
+      "title": "世昌集团 2005 年改制股权底稿",
+      "category": "finance",
+      "body": "改制股权底稿只列公开六名子女和管理层股权，能证明集团公开口径，但不能否定 1998 年家族信托里的血缘条款。"
+    },
+    {
+      "id": "doc_board_handover_2015",
+      "title": "世昌集团 2015 年董事会换届备忘",
+      "category": "corporate",
+      "body": "换届备忘显示宗家第二、三代围绕控制权已有裂痕，并提醒董事会决议不能替代信托受益人审查。"
+    },
+    {
+      "id": "doc_jianfang_note",
+      "title": "宗建芳给妇联旧同事的便条",
+      "category": "private",
+      "body": "便条说明宗建芳帮助陈静返乡，但明确称陈静不是自己的孩子，可用于澄清外界母女误认。"
+    },
+    {
+      "id": "doc_ktv_lease_archive",
+      "title": "唱响 KTV 房屋租赁备案",
+      "category": "business",
+      "body": "租赁备案记录陈静承租老电影院二楼经营 KTV，并携未成年子女居住，与学校和家访记录互相印证。"
+    },
+    {
+      "id": "doc_dinghui_due_diligence",
+      "title": "鼎辉基金受益人尽调函",
+      "category": "finance",
+      "body": "尽调函要求核实李强、李敏和李天赐的公开亲属关系，但没有 DNA 结论，也没有把李天赐列为新增受益人。"
+    },
+    {
+      "id": "doc_neighborhood_visit",
+      "title": "老街社区 2016 年走访记录",
+      "category": "community",
+      "body": "社区走访记录写明陈静独自抚养女儿陈嘉东，小名小东，可补强陈静与陈嘉东的长期共同生活事实。"
     }
   ],
   "familyMembers": [
@@ -146,7 +314,14 @@
     { "id": "luo_yuezhen", "name": "罗月珍", "generation": "隐藏母系" },
     { "id": "luo_jianning", "name": "罗建宁", "generation": "第二代" },
     { "id": "chen_jing", "name": "陈静", "generation": "第三代" },
-    { "id": "chen_jiadong", "name": "陈嘉东", "generation": "第四代" }
+    { "id": "chen_jiadong", "name": "陈嘉东", "generation": "第四代" },
+    { "id": "he_guosheng", "name": "何国生", "generation": "支线证人" },
+    { "id": "zhou_meiying", "name": "周美英", "generation": "支线证人" },
+    { "id": "qian_shulin", "name": "钱树林", "generation": "误导人物" },
+    { "id": "huang_yaling", "name": "黄雅玲", "generation": "支线证人" },
+    { "id": "fang_renjie", "name": "方仁杰", "generation": "集团证人" },
+    { "id": "wei_xueqin", "name": "魏雪琴", "generation": "集团证人" },
+    { "id": "ma_lihua", "name": "马丽华", "generation": "地方证人" }
   ],
   "submission": {
     "firstHiddenLineageAnswer": "luo_jianning",
