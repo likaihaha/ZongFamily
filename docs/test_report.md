@@ -1,6 +1,57 @@
 # 测试报告
 
-更新时间：2026-05-16 00:19 Asia/Shanghai
+更新时间：2026-05-16 01:23 Asia/Shanghai
+
+## 2026-05-16 01:22 Asia/Shanghai 渐进解锁回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+补充检查：
+```powershell
+# Edge headless 打开普通入口 game/index.html，生成 docs/progressive-unlock-dom.html 和 docs/progressive-unlock.png
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 普通入口 DOM 检查通过：包含“公开资料”、地点 `data-location-id="archives"` 和隐藏家谱“未核验”占位；普通入口未带 `data-autotest="pass"`。
+- 默认关系卡防剧透检查通过：关系核验下拉和说明文本未提前显示罗月珍、陈静或陈嘉东。
+
+## 2026-05-16 01:07 Asia/Shanghai 集团时间线回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- DOM 检查确认“世昌集团 2016 年春治理调整备忘”和“世昌集团代理董事长”已渲染。
+
+## 2026-05-16 00:52 Asia/Shanghai 拟物像素图标回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 内容包、提交答案一致性、未来资产清单和游戏数据校验通过。
+- Edge headless 烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 人工查看烟测截图，侧栏导航已从单字章升级为 CSS 像素物件图标，当前项状态正常。
 
 ## 2026-05-16 00:19 Asia/Shanghai 正式版计划页检查
 

@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《云山宗氏案》案卷设定库</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf7;
+      --ink: #24211c;
+      --muted: #6f6658;
+      --line: #d8cfbf;
+      --accent: #9b2f25;
+      --accent-soft: #f4ded9;
+      --blue: #245b7d;
+      --green: #3f6f52;
+      --gold: #8b6f35;
+      --shadow: 0 18px 50px rgba(38, 30, 19, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 253, 247, 0.76), rgba(255, 253, 247, 0.88)),
+        repeating-linear-gradient(0deg, rgba(36, 33, 28, 0.025) 0, rgba(36, 33, 28, 0.025) 1px, transparent 1px, transparent 6px),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.92);
+    }
+
+    .hero {
+      padding: 52px 0 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .pill,
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 11px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #51483d;
+      font-size: 13px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      gap: 24px;
+      padding: 32px 0 72px;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 253, 247, 0.86);
+      box-shadow: 0 10px 24px rgba(38, 30, 19, 0.06);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 7px 8px;
+      color: var(--blue);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: #eef4f6;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    section {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 26px;
+      background: rgba(255, 253, 247, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 22px 0 9px;
+      font-size: 19px;
+    }
+
+    h4 {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 15px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 12px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1e8da;
+      color: #40392f;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
+      background: #fffaf0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    .lead {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffaf0;
+    }
+
+    .callout {
+      border: 1px solid rgba(155, 47, 37, 0.28);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff7f3;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag.strong {
+      border-color: rgba(63, 111, 82, 0.42);
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .tag.warn {
+      border-color: rgba(155, 47, 37, 0.36);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 24px 0 40px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="eyebrow">Canon Bible / 案卷设定库</div>
+      <h1>《云山宗氏案》案卷设定库</h1>
+      <p class="subtitle">集中记录资料、证据、事实、地点、人物、误导线和叙事规则。这里区分“故事真相”和“玩家当前可见信息”，服务正式版渐进解锁设计。</p>
+      <div class="meta">
+        <span class="pill">版本：Casebook 1.0</span>
+        <span class="pill">日期：2026-05-16 Asia/Shanghai</span>
+        <span class="pill">核心：事实 / 人物深档 / 证据 / 可见性</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav aria-label="案卷目录">
+      <strong>案卷目录</strong>
+      <a href="#usage">0. 使用原则</a>
+      <a href="#motivation">0.1 玩家动机</a>
+      <a href="#canon">1. 核心事实</a>
+      <a href="#timeline">2. 时间线</a>
+      <a href="#people">3. 人物库</a>
+      <a href="#biographies">3.1 人物生平</a>
+      <a href="#dossiers">3.2 人物深档</a>
+      <a href="#conflicts">3.3 关系与利害</a>
+      <a href="#documents">4. 资料库</a>
+      <a href="#evidence">5. 证据库</a>
+      <a href="#locations">6. 地点库</a>
+      <a href="#relationships">7. 关系真相表</a>
+      <a href="#red-herrings">8. 误导线</a>
+      <a href="#narrative">9. 叙事规则</a>
+    </nav>
+
+    <div class="content">
+      <section id="usage">
+        <h2>0. 使用原则</h2>
+        <p class="lead">本案卷库记录“事实真相”和“设计约束”，不等同于玩家开局可见信息。</p>
+        <ul>
+          <li>修改真相链、关键证据、死亡路径、信托规则前，先更新本页。</li>
+          <li>正式版资料库、家谱、证据箱和最终提交都应从本页反向整理结构化数据。</li>
+          <li>误导材料也要记录，但必须注明它为什么看似合理、如何被排除。</li>
+          <li>玩家开局知道什么、资料何时可见、人物何时实名，必须单独记录。</li>
+          <li>配偶、第三代、姻亲、登记父母、公司关系和旧事知情人要和血缘关系分层记录。</li>
+        </ul>
+      </section>
+
+      <section id="motivation">
+        <h2>0.1 玩家调查动机</h2>
+        <p class="lead">玩家不是宗家亲属，也不是复仇者。更可信的身份不是“独立案卷调查员”，而是江南省明证档案与法律服务中心项目人员，受云山县公证处临时委托，担任宗世昌家族信托关系核验项目资料核验员。玩家在承办公证员授权范围内整理公开资料、旧档索引、走访记录和关系核验备忘。开局动力来自职业委托、提交期限和程序独立性；中后段动力来自玩家亲手发现的矛盾、具体人物的生活痕迹，以及最终报告的责任。</p>
+
+        <h3>玩家在哪里上班</h3>
+        <table>
+          <thead><tr><th>层级</th><th>身份</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td>雇佣单位</td><td>江南省明证档案与法律服务中心项目人员</td><td>解释玩家平时在哪上班、为什么懂档案整理、非诉材料核验和窗口回执。</td></tr>
+            <tr><td>项目委托</td><td>云山县公证处临时委托的外部核验人员</td><td>解释玩家为什么能拿委托材料去档案馆、社区、学校、医院窗口咨询。</td></tr>
+            <tr><td>案内职能</td><td>宗世昌家族信托关系核验项目资料核验员</td><td>解释玩家在本案中不是侦探，也不作正式公证结论，只提交关系核验备忘。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>学历、经历与证件</h3>
+        <table>
+          <thead><tr><th>项目</th><th>推荐设定</th><th>边界</th></tr></thead>
+          <tbody>
+            <tr><td>学历</td><td>31 岁左右，档案学本科，法学辅修；可设为法律硕士非全在读。</td><td>解释专业能力，不产生取证权。</td></tr>
+            <tr><td>工作经历</td><td>做过旧户籍数字化、公证材料预审、继承类亲属关系核验和政务窗口材料外包项目。</td><td>能整理资料和跑回执，不能替公证员作结论。</td></tr>
+            <tr><td>随身证件</td><td>明证中心工作证、公证处项目派驻函、保密承诺书回执、档案馆临时查阅登记卡。</td><td>用于窗口咨询和材料登记，不等于直接调取隐私材料。</td></tr>
+            <tr><td>可选资格</td><td>档案专业继续教育证明、档案数字化培训证、法律职业资格考试客观题合格或非诉材料核验培训证。</td><td>不设为执业律师、公证员、警察或法院调查令持有人。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>走访凭证与调档权限</h3>
+        <table>
+          <thead><tr><th>凭证</th><th>出具方</th><th>用途</th><th>游戏作用</th></tr></thead>
+          <tbody>
+            <tr><td>明证中心工作证</td><td>江南省明证档案与法律服务中心</td><td>证明玩家工作单位和项目人员身份。</td><td>能问路、登记、查公开信息。</td></tr>
+            <tr><td>项目派驻函</td><td>明证中心 + 云山县公证处</td><td>说明玩家被派驻到宗世昌案资料核验项目。</td><td>开启公证处、档案馆、社区等基础走访。</td></tr>
+            <tr><td>公证处介绍信</td><td>云山县公证处</td><td>说明具体走访对象、案由、承办公证员和联系方式。</td><td>提交调档申请，取得目录、回执和部分脱敏材料。</td></tr>
+            <tr><td>正式函询</td><td>承办公证员</td><td>向医院、学校、档案馆等单位正式核实。</td><td>解锁病案室回函、学籍事实回函等后段材料。</td></tr>
+            <tr><td>当事人/监护人授权</td><td>当事人、监护人或相关程序</td><td>允许核验更具体的个人材料。</td><td>解锁陈静、陈嘉东等隐私材料的脱敏版本。</td></tr>
+            <tr><td>专业鉴定委托</td><td>公证处或当事人委托专业机构</td><td>处理 DNA、血样、翻译等专业事项。</td><td>解锁后段强证据结果，不由玩家自行检测。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>权限原则：</strong>窗口人员不应因为玩家一句“我是调查员”就给材料。每份隐私材料都要有来源路径：介绍信、函询、授权、回执或鉴定委托。被拒绝也应有玩法价值，提示玩家缺少哪种凭证。
+        </div>
+
+        <h3>调查辛苦感如何转化为成就感</h3>
+        <table>
+          <thead><tr><th>阻力</th><th>好的玩法用法</th><th>成就感来源</th></tr></thead>
+          <tbody>
+            <tr><td>排队和值班</td><td>值班表改变当天可办事项，玩家要决定先查档案、医院还是社区。</td><td>玩家觉得自己在安排真实调查路线。</td></tr>
+            <tr><td>缺少凭证</td><td>窗口明确提示缺介绍信、正式函询、授权或鉴定委托。</td><td>补齐材料后重新打开一扇门，而不是盲目试错。</td></tr>
+            <tr><td>回执延迟</td><td>玩家可以先查旁证，回执回来时把线索扣上。</td><td>“终于对上了”的闭环感。</td></tr>
+            <tr><td>材料脱敏</td><td>遮掉隐私号码，保留年份、关系、单位和关键词。</td><td>玩家仍靠结构推理，而不是直接读答案。</td></tr>
+            <tr><td>窗口拒绝</td><td>拒绝本身记录原因：谁拒绝、为什么拒绝、需要谁签字。</td><td>失败也推进案卷，变成下一步任务。</td></tr>
+            <tr><td>多单位互证</td><td>档案给时间，医院给出生/样本，学校给监护，社区给生活连续性。</td><td>关键关系是玩家一块块拼出来的。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>开局直觉判断</h3>
+        <table>
+          <thead><tr><th>直觉来源</th><th>开局表现</th><th>可能引导的方向</th></tr></thead>
+          <tbody>
+            <tr><td>语气不对</td><td>匿名信用词含糊，但反复强调“仍在云山”。</td><td>先查本地近年学校、社区、工商资料。</td></tr>
+            <tr><td>时间不对</td><td>宗世昌去世、信托咨询、国庆假期窗口挤在一起。</td><td>先查公证处接待、医院转院和集团舆情反应。</td></tr>
+            <tr><td>家谱太整齐</td><td>公开六子女关系完整，却出现未知分支传闻。</td><td>先核公开家庭，再查旧知青和供销社。</td></tr>
+            <tr><td>人物回避</td><td>宗家材料避谈罗姓、建宁、旧照片。</td><td>搜索“罗”“建宁”“知青”“供销”。</td></tr>
+            <tr><td>来源不稳</td><td>论坛和八卦有名字，但称谓混乱。</td><td>把传闻当入口，不当证据。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>开局体验：</strong>玩家先凭直觉选择 2-3 个方向，系统用资料反馈校准直觉。直觉可以错，但错误方向也要教会玩家区分来源、时间和证明力。
+        </div>
+
+        <h3>多入口同收束</h3>
+        <table>
+          <thead><tr><th>开局方向</th><th>第一批反馈</th><th>中段转接</th><th>最终收束</th></tr></thead>
+          <tbody>
+            <tr><td>公开家谱 / 宗世昌</td><td>公开六子女、集团官网、宗家口径。</td><td>转向旧知青、信托或家族会议。</td><td>公开家庭是基准，不排除隐藏血脉。</td></tr>
+            <tr><td>旧档 / 知青</td><td>知青名册、供销社花名册、照片背注。</td><td>转向罗月珍、罗建宁、旧户籍和接生登记。</td><td>隐藏血脉第一代成立。</td></tr>
+            <tr><td>学校 / 陈小东</td><td>家长会帖、奖学金撤稿、学籍门槛。</td><td>转向陈静、社区、KTV 和监护关系。</td><td>陈嘉东是陈静之女。</td></tr>
+            <tr><td>社区 / KTV</td><td>租赁备案、复工检查、社区走访。</td><td>转向陈静返乡、宗建芳帮扶、陈嘉东同住。</td><td>陈静生活线和陈嘉东居住连续性成立。</td></tr>
+            <tr><td>集团 / 股权</td><td>股权底稿、治理调整、舆情草案。</td><td>转向信托条款、法务意见、宗家压制口径。</td><td>公司控制权不能替代血缘资格。</td></tr>
+            <tr><td>论坛 / 传闻</td><td>宗建芳误认、钱树林认父、李天赐传闻。</td><td>通过强证据排除，保留关键词入口。</td><td>回到真正需要证明的母系链。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>路线原则：</strong>玩家选择什么方向都能进行下去。每条路线都要在 10-15 分钟内给新关键词或新地点；错误方向必须能排除并导回主证据链；最终报告按玩家实际走过的路径回顾证据。
+        </div>
+
+        <h3>开局为什么查</h3>
+        <table>
+          <thead><tr><th>动机层</th><th>内容</th><th>游戏表现</th></tr></thead>
+          <tbody>
+            <tr><td>职业委托</td><td>宗世昌去世后，家族信托受益人范围出现争议，公证处通过临时项目委托玩家所在机构，派玩家协助核验直系血亲范围。</td><td>委托函、派驻函、案卷编号、提交期限、可走访单位清单。</td></tr>
+            <tr><td>程序压力</td><td>国庆中秋假期将至，机关值班有限，宗家要求尽快形成书面意见。</td><td>调查日程、今日可办事项、节前/假期/节后窗口。</td></tr>
+            <tr><td>独立性压力</td><td>宗家内部有人希望快速压下传闻，公证处不能只收宗家单方材料。</td><td>公证处接待笔录、集团舆情草案、匿名信。</td></tr>
+            <tr><td>初始疑点</td><td>公开家谱很完整，但匿名信说“仍有后代在云山”。</td><td>开局家谱只显示公开宗家和一个未核验缺口。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>公证处为什么聘请玩家</h3>
+        <table>
+          <thead><tr><th>原因</th><th>案内表现</th><th>玩家职责</th></tr></thead>
+          <tbody>
+            <tr><td>材料量异常大</td><td>公开家谱、集团官网、股权材料、匿名信、旧知青、户籍、医院、学校和社区资料同时出现。</td><td>建资料索引，标注来源、年份、人物和证明力。</td></tr>
+            <tr><td>单方材料不可靠</td><td>宗家急于压下“第七支”传闻，集团材料可能服务于内部口径。</td><td>把宗家材料与公开档案、社区记录、学校资料互相校对。</td></tr>
+            <tr><td>假期窗口紧</td><td>9 月 28 日接案后马上进入国庆中秋，窗口单位值班有限。</td><td>先跑可开放或可申请的窗口，整理回执和缺口清单。</td></tr>
+            <tr><td>县城熟人社会</td><td>宗家和本地机关、医院、学校都有关系，公证处过早直接出面容易被视为站队。</td><td>以前期资料核验身份整理材料，不作正式结论。</td></tr>
+            <tr><td>专业边界分工</td><td>DNA、血样、信托条款和亲属关系证明涉及不同专业。</td><td>玩家提交疑点和材料备忘，正式核实由公证处或专业机构处理。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>调查中动力如何变化</h3>
+        <table>
+          <thead><tr><th>阶段</th><th>玩家心理</th><th>推动材料</th><th>系统反馈</th></tr></thead>
+          <tbody>
+            <tr><td>接案</td><td>这是一份需要按程序完成的工作。</td><td>委托函、公开专访、集团官网。</td><td>备忘录给出确认公开家庭、阅读匿名信等简单任务。</td></tr>
+            <tr><td>起疑</td><td>公开说法看似完整，但资料里有缝。</td><td>匿名信、临终录音、会议纪要、旧照片背注。</td><td>家谱出现未知分支占位，搜索词扩到“知青”“建宁”。</td></tr>
+            <tr><td>主动</td><td>这是我自己顺出来的线，不是系统喂答案。</td><td>知青名册、供销社花名册、调档登记、旧户籍。</td><td>新地点、新人物、新资料逐步解锁。</td></tr>
+            <tr><td>介入</td><td>这不只是继承争议，被抹掉的人有具体生活。</td><td>未寄出信稿、旧明信片、社区走访、家访记录。</td><td>情绪材料进入证据箱，但标明不能单独定案。</td></tr>
+            <tr><td>压力</td><td>结论会影响宗家、证人、陈静和未成年人陈嘉东。</td><td>舆情草案、学校撤稿、司法咨询、法务意见。</td><td>最终提交前检查证据充分性、隐私和报告措辞。</td></tr>
+            <tr><td>收束</td><td>我不是替谁争产，而是给事实一个经得起质询的位置。</td><td>DNA、医院血样、信托条款、出生记录。</td><td>公证报告式结局，回顾证据链和排除路径。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>写作边界：</strong>不要把玩家动机写成金钱奖励、私人复仇或天然站队。玩家应站在证据和程序这边；情感投入来自调查过程中逐步看见具体的人，而不是开场强行煽情。
+        </div>
+      </section>
+
+      <section id="canon">
+        <h2>1. 核心事实</h2>
+        <h3>核心真相</h3>
+        <ol>
+          <li>公开资料只承认宗世昌与李桂兰的六名子女。</li>
+          <li>罗月珍曾在 1968 至 1970 年间到云山县供销系统工作，并与宗世昌有交集。</li>
+          <li>罗建宁是宗世昌与罗月珍的非婚生女。</li>
+          <li>陈静是罗建宁之女。</li>
+          <li>陈嘉东是陈静之女，2020 年仍在云山县生活和读书。</li>
+          <li>1998 年香港家族信托允许宗世昌直系血亲后代成为受益人，不限姓氏，不限婚生状态。</li>
+        </ol>
+
+        <h3>宗世昌死亡与医疗路径</h3>
+        <ol>
+          <li>2020 年 9 月中旬，宗世昌在江南省人民医院特需病区住院。</li>
+          <li>住院期间，家属申请保留外周血样，理由为遗产继承与家族信托审查。</li>
+          <li>2020 年 9 月 24 日左右，宗世昌因预后不佳转回云山县人民医院特需病房，家属对外称“落叶归根”。</li>
+          <li>2020 年 9 月 26 日夜间，宗世昌在云山县人民医院特需病房去世。</li>
+          <li>2020 年 9 月 28 日，公证处收到宗家关于信托受益人范围的咨询和匿名信线索，玩家接案。</li>
+        </ol>
+
+        <div class="callout">
+          <strong>不可开局暴露：</strong>罗建宁的父亲是宗世昌；陈静来自罗建宁一支；陈嘉东是隐藏血脉后段关键对象；DNA、医院血样和信托资格材料不能在开局直接搜索到。
+        </div>
+      </section>
+
+      <section id="timeline">
+        <h2>2. 时间线</h2>
+        <h3>历史时间线</h3>
+        <table>
+          <thead>
+            <tr><th>时间</th><th>事件</th><th>用途</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1932</td><td>宗世昌出生。</td><td>全案源头。</td></tr>
+            <tr><td>1968</td><td>罗月珍作为贵州籍知青到云山县。</td><td>隐藏血脉入口。</td></tr>
+            <tr><td>1969 冬</td><td>罗建宁出生。</td><td>隐藏血脉第一代。</td></tr>
+            <tr><td>1970</td><td>罗月珍携罗建宁迁回黔中。</td><td>户籍强证据。</td></tr>
+            <tr><td>1988</td><td>陈静出生，母亲为罗建宁。</td><td>母系承接。</td></tr>
+            <tr><td>1998</td><td>香港家族信托设立。</td><td>继承资格规则。</td></tr>
+            <tr><td>2004</td><td>陈嘉东出生。</td><td>现居后代。</td></tr>
+            <tr><td>2020-09</td><td>宗世昌病危、转院、去世，信托争议爆发。</td><td>主线调查触发。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>推荐调查日程</h3>
+        <table>
+          <thead>
+            <tr><th>日期</th><th>阶段</th><th>主要内容</th><th>资料开放倾向</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>09-28</td><td>接案</td><td>公证处委托、公开家谱、匿名信。</td><td>公开资料、模糊异常。</td></tr>
+            <tr><td>09-30</td><td>节前窗口</td><td>档案馆、医院、学校可提交正式申请。</td><td>旧档入口、调档登记。</td></tr>
+            <tr><td>10-01 至 10-03</td><td>国庆中秋</td><td>机关变慢，家族聚会和论坛舆论升温。</td><td>八卦、匿名电话、家族会议。</td></tr>
+            <tr><td>10-04 至 10-05</td><td>值班回流</td><td>医院、学校、社区可补材料。</td><td>学籍、病案、回执。</td></tr>
+            <tr><td>10-06</td><td>报告压力</td><td>整理证据链，提交公证报告。</td><td>最终提交。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="people">
+        <h2>3. 人物库</h2>
+        <h3>公开宗家</h3>
+        <table>
+          <thead><tr><th>人物</th><th>公开身份</th><th>真实用途</th><th>开局可见</th></tr></thead>
+          <tbody>
+            <tr><td>宗世昌</td><td>世昌集团创始人，1932-2020。</td><td>全案血缘源头。</td><td>是</td></tr>
+            <tr><td>李桂兰</td><td>宗世昌妻子，早期共同创业者。</td><td>公开家庭基准，也承载情绪真相。</td><td>是</td></tr>
+            <tr><td>宗建国 / 宗建芳 / 宗建民 / 宗建红 / 宗建平 / 宗建丽</td><td>六名公开子女。</td><td>公开家庭版本、误导和集团争议。</td><td>是</td></tr>
+          </tbody>
+        </table>
+
+        <h3>隐藏血脉</h3>
+        <table>
+          <thead><tr><th>人物</th><th>真实身份</th><th>玩家发现阶段</th><th>开局显示</th></tr></thead>
+          <tbody>
+            <tr><td>罗月珍</td><td>贵州籍女知青，罗建宁之母。</td><td>获得知青、供销社、照片背注线索后。</td><td>不显示真名。</td></tr>
+            <tr><td>罗建宁</td><td>宗世昌与罗月珍的非婚生女。</td><td>照片背注、接生登记、旧户籍互相印证后。</td><td>不显示。</td></tr>
+            <tr><td>陈静 / 陈明静</td><td>罗建宁之女，KTV 经营者。</td><td>陈静出生记录、妇联/KTV 资料后。</td><td>不显示。</td></tr>
+            <tr><td>陈嘉东 / 陈小东</td><td>陈静之女，2020 年县一中学生。</td><td>学籍、家访、社区资料后。</td><td>不显示。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>证人与经手人</h3>
+        <p>何国生、周美英、黄雅玲、方仁杰、魏雪琴、马丽华负责提供档案、医院、学校、集团和社区线索。证人与经手人进入人物档案池，不默认进入主血脉图。</p>
+      </section>
+
+      <section id="biographies">
+        <h2>3.1 人物生平设定</h2>
+        <p class="lead">本节记录正式版人物“为什么存在”：公开身份、人生轨迹、案件功能和玩家应在什么阶段理解他。家谱界面只显示已确认关系，人物生平则服务于资料文本、访谈口吻、误导线和最终推理。</p>
+
+        <h3>公开宗家</h3>
+        <table>
+          <thead><tr><th>人物</th><th>生平设定</th><th>案件功能</th><th>玩家认知</th></tr></thead>
+          <tbody>
+            <tr><td>宗世昌<br><small>1932-2020</small></td><td>云山县供销和商贸系统出身，改革开放后从世昌综合商店扩张为世昌集团。晚年以地方企业家、慈善捐助者和宗家大家长形象出现。</td><td>全案血缘源头；公开家庭、隐秘关系、信托条款和死亡医疗路径共同构成主案。</td><td>开局知道其死亡和公开六子女；隐藏血脉随证据逐步揭开。</td></tr>
+            <tr><td>李桂兰<br><small>1934-2010</small></td><td>宗世昌妻子，早期共同创业者。她可能知道罗月珍和孩子的存在，但选择沉默。</td><td>公开家庭基准；承载“家庭体面”和“被压住的情绪真相”。</td><td>开局可见；未寄出信稿等材料后补充复杂态度。</td></tr>
+            <tr><td>宗建国<br><small>1956</small></td><td>长子，计划经济局干部。成长于宗世昌事业起步前后，代表最早一代公开子女。</td><td>固定宗世昌与李桂兰的公开家庭版本。</td><td>开局可见。</td></tr>
+            <tr><td>宗建芳<br><small>1958</small></td><td>县妇联干部。2014 年帮助陈静返乡创业、办理手续和档案挂靠，因此被外界误认为陈静母亲。</td><td>核心误导线；训练玩家区分帮扶关系与血缘关系。</td><td>开局可见；误认关系需通过资料排除。</td></tr>
+            <tr><td>宗建民<br><small>1959</small></td><td>物资局干部，与旧物资、物流和集团改制线关系密切，其子宗明辉、宗明军参与后续集团控制权。</td><td>公开宗家旁支和集团控制权线。</td><td>开局可见。</td></tr>
+            <tr><td>宗建红<br><small>1962</small></td><td>世昌集团第二代掌门，主导集团扩张。面对第七支传闻时倾向压制和舆情管理。</td><td>推动集团反应、家族会议、舆情草案和信托争议。</td><td>开局可见；中后期通过集团资料看到其态度。</td></tr>
+            <tr><td>宗建平<br><small>1963</small></td><td>公安系统出身，带有地方权力和人情网络色彩。</td><td>公开六子女之一；可承接调档阻力或保护伞线。</td><td>开局可见。</td></tr>
+            <tr><td>宗建丽<br><small>1975</small></td><td>宗世昌幼女，供销社干部。年龄与兄姐差距较大，接触到部分旧档和父亲旧信。</td><td>旧供销系统回查入口，连接罗月珍、建宁和家族沉默。</td><td>开局可见；旧信清单和调档登记后变得重要。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>隐藏血脉</h3>
+        <table>
+          <thead><tr><th>人物</th><th>生平设定</th><th>案件功能</th><th>玩家认知</th></tr></thead>
+          <tbody>
+            <tr><td>罗月珍<br><small>1949</small></td><td>贵州籍女知青。1968 年到云山县供销系统仓储点劳动，1970 年携幼女罗建宁返回黔中。</td><td>隐藏血脉母亲；出生、户籍迁回和照片背注的核心人物。</td><td>开局不实名显示；通过知青、供销社、照片背注等资料解锁。</td></tr>
+            <tr><td>罗建宁<br><small>1969</small></td><td>出生于云山，幼年随母亲回黔中，名字中的“建”暗合宗家第二代字辈。成年后对云山身世保持回避。</td><td>真正的隐藏血脉第一代；最终提交中的关键关系节点。</td><td>开局不显示；照片背注、接生登记和户籍互证后解锁。</td></tr>
+            <tr><td>陈静 / 陈明静<br><small>1988</small></td><td>出生名陈明静，2014 年回云山县经营唱响 KTV。因宗建芳帮扶而被误认为宗建芳之女。</td><td>连接罗建宁和陈嘉东；陈静误认线核心人物。</td><td>中期通过妇联、博客、KTV、出生记录逐步出现。</td></tr>
+            <tr><td>陈嘉东 / 陈小东<br><small>2004</small></td><td>正式名陈嘉东，小名陈小东，2020 年在县一中读书，随母亲陈静在云山县生活。</td><td>2020 年现居云山且具继承资格的关键后代。</td><td>开局不显示；发现陈静和学校线后通过学籍、家访和论坛材料解锁。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>集团旁支与传闻人物</h3>
+        <table>
+          <thead><tr><th>人物</th><th>生平设定</th><th>案件功能</th><th>玩家认知</th></tr></thead>
+          <tbody>
+            <tr><td>宗明辉<br><small>1984</small></td><td>宗建民之子，2016 年春因外部融资尽调和治理结构调整出任董事长，处在宗家第二代与第三代权力交接中。</td><td>集团控制权线；帮助区分董事长席位和信托资格。</td><td>通过集团官网、改制文件和会议材料出现。</td></tr>
+            <tr><td>宗明军<br><small>1990</small></td><td>宗建民之子，2020 年 9 月宗世昌病危后临时主持集团对外口径，正式接班公告被压到丧事之后。</td><td>集团旁支和论坛误读线。</td><td>通过集团公告、家族会议和论坛材料出现。</td></tr>
+            <tr><td>李强<br><small>1986</small></td><td>宗建红之子，鼎辉基金合伙人，与外部金融尽调往来密切。</td><td>金融文件和李天赐传闻来源。</td><td>通过鼎辉基金受益人尽调材料出现。</td></tr>
+            <tr><td>李敏<br><small>1989</small></td><td>宗建红之女，世昌集团客服主管，李天赐之母。</td><td>李天赐八卦线入口。</td><td>通过集团通讯录、八卦周刊和亲属关系材料出现。</td></tr>
+            <tr><td>李天赐<br><small>2020</small></td><td>出生年份与宗世昌去世时间接近，因名字和尽调材料被八卦周刊牵入信托传闻。</td><td>低可信误导人物；无血缘强证据支持。</td><td>玩家应能用可信度和证据链排除。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>证人与经手人</h3>
+        <table>
+          <thead><tr><th>人物</th><th>生平设定</th><th>案件功能</th><th>玩家认知</th></tr></thead>
+          <tbody>
+            <tr><td>何国生<br><small>1944</small></td><td>供销社老会计，1969 年经手仓储点临时借支和汇款登记，知道供销系统旧事。</td><td>借支单、汇款和仓储点工作交集的证人。</td><td>中期随供销社旧档出现。</td></tr>
+            <tr><td>周美英<br><small>1939</small></td><td>云山卫生院助产员，1969 年冬在接生登记中留下罗月珍和女婴备注。</td><td>补强罗建宁出生时间和罗月珍分娩事实。</td><td>通过医院旧登记和访谈材料出现。</td></tr>
+            <tr><td>钱树林<br><small>1947</small></td><td>黔中汽车队司机，常跑云山至黔中旧线路，被地方论坛误写成罗建宁父亲。</td><td>红鲱鱼；交通往来背景不能证明亲缘关系。</td><td>玩家应通过证据可信度排除。</td></tr>
+            <tr><td>黄雅玲<br><small>1978</small></td><td>县一中班主任，留下陈嘉东家访记录。</td><td>确认陈嘉东和陈静实际生活关系。</td><td>后段学校线解锁。</td></tr>
+            <tr><td>方仁杰<br><small>1966</small></td><td>世昌集团改制会计，保管 2005 年集团股权改制底稿。</td><td>说明公司股权安排不能替代信托受益人审查。</td><td>集团文件线解锁。</td></tr>
+            <tr><td>魏雪琴<br><small>1974</small></td><td>世昌集团法务经理，2016 年治理调整前参与信托和受益人尽调。</td><td>区分集团控制权、法务意见和信托资格。</td><td>集团法务和信托资料线解锁。</td></tr>
+            <tr><td>马丽华<br><small>1969</small></td><td>云山老街社区主任，负责陈静返乡后的社区走访、租赁备案和经营场所协调。</td><td>陈静返乡生活网络和陈嘉东居住状态的证人。</td><td>社区走访线解锁。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>维护规则：</strong>新增人物时，先补本节和 <code>people_biographies.md</code>，再决定是否进入家谱图。不是所有人物都应该进血脉关系图；证人、经手人、误导人物应优先进入人物档案池。
+        </div>
+      </section>
+
+      <section id="dossiers">
+        <h2>3.2 人物深档</h2>
+        <p class="lead">正式版人物关系不能只靠“父母子女”撑住。宗家的配偶、第三代、姻亲、登记父、缺席父和公司同事都要先有设定，再决定哪些进入游戏界面。完整源稿见 <code>people_dossiers.md</code>。</p>
+
+        <h3>宗家六房正式结构</h3>
+        <table>
+          <thead><tr><th>房支</th><th>第二代与配偶</th><th>第三代 / 配偶</th><th>主要利害</th></tr></thead>
+          <tbody>
+            <tr><td>长房</td><td>宗建国 + 刘素珍</td><td>宗明礼 + 王晓芸；宗明霞 + 蒋越</td><td>体制内、重程序、怕舆论扩大；倾向用书面法律意见收束。</td></tr>
+            <tr><td>长女房</td><td>宗建芳 + 赵德胜</td><td>赵雨晴 + 郭晨</td><td>妇联帮扶和公共形象；陈静误认线集中在这一房。</td></tr>
+            <tr><td>二房</td><td>宗建民 + 彭秀琴</td><td>宗明辉 + 吴倩；宗明军 + 韩露</td><td>物流资产、董事长换届和集团实际控制力。</td></tr>
+            <tr><td>二女房</td><td>宗建红 + 李文斌</td><td>李强 + 林芸；李敏 + 杜鹏；李天赐</td><td>集团控盘、金融尽调、舆情压制和李天赐传闻。</td></tr>
+            <tr><td>三房</td><td>宗建平 + 高春梅</td><td>宗明安 + 张雪；宗明慧</td><td>公安、医院、学校等熟人系统边界，可能形成调档阻力。</td></tr>
+            <tr><td>幼女房</td><td>宗建丽 + 孙立成（分居）</td><td>孙晓宁</td><td>旧信、旧照片和供销系统入口；情感上最可能同情隐藏血脉。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>隐藏血脉补全</h3>
+        <table>
+          <thead><tr><th>人物</th><th>关系</th><th>设定用途</th><th>是否进入血脉主图</th></tr></thead>
+          <tbody>
+            <tr><td>陈启山</td><td>罗建宁前夫，陈静登记父亲</td><td>解释陈静姓陈；强化“登记父亲不能否定母系血缘”。</td><td>中期档案，不默认主图。</td></tr>
+            <tr><td>赵海</td><td>陈嘉东登记父亲，外地音响设备商</td><td>解释陈嘉东家庭结构和陈静独自抚养。</td><td>后段档案，不进入继承链。</td></tr>
+            <tr><td>孙晓宁</td><td>宗建丽之子</td><td>年轻一代保存扫描件、聊天记录或旧信照片的可能入口。</td><td>人物档案池。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>外貌、性格、成长经历写作维度</h3>
+        <table>
+          <thead><tr><th>维度</th><th>正式版要求</th><th>例子</th></tr></thead>
+          <tbody>
+            <tr><td>外貌气质</td><td>给美术、头像、访谈声音提供方向，不做脸谱化描写。</td><td>宗建红短发深色套装、压迫感强；陈静妆容鲜明、笑时热络沉默时很冷。</td></tr>
+            <tr><td>成长经历</td><td>解释人物为什么会采取当前立场。</td><td>宗建丽是宗世昌幼女，和父亲更像晚年陪伴关系，所以更容易接触旧信。</td></tr>
+            <tr><td>核心欲望</td><td>每个人都要有自保逻辑，不能只为线索服务。</td><td>陈嘉东想考出去，不想被成人争产改变别人看她的眼神。</td></tr>
+            <tr><td>恐惧和弱点</td><td>用于访谈破防、资料矛盾和节奏推进。</td><td>宗建芳怕帮扶记录毁掉公共形象；罗建宁怕女儿被旧账吞没。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="conflicts">
+        <h2>3.3 关系与利害冲突</h2>
+        <p class="lead">关系系统要分清血缘、婚姻、登记父母、帮扶、公司权力、旧事知情和传闻。完整源稿见 <code>relationship_conflicts.md</code>。</p>
+
+        <h3>关系分层</h3>
+        <table>
+          <thead><tr><th>关系类型</th><th>代表人物</th><th>游戏表现</th><th>判断原则</th></tr></thead>
+          <tbody>
+            <tr><td>血缘关系</td><td>宗世昌、罗建宁、陈静、陈嘉东</td><td>家谱图、最终提交、证据绑定</td><td>必须由强证据确认。</td></tr>
+            <tr><td>婚姻 / 姻亲</td><td>刘素珍、赵德胜、彭秀琴、李文斌、高春梅、孙立成、陈启山、赵海</td><td>人物档案、访谈、家庭会议</td><td>影响立场，不能替代血缘证据。</td></tr>
+            <tr><td>公司权力</td><td>宗建红、宗明辉、宗明军、李强、魏雪琴、方仁杰</td><td>集团文件、法务意见、治理调整备忘</td><td>董事长席位不等于信托受益资格。</td></tr>
+            <tr><td>旧事知情</td><td>何国生、周美英、宗建丽、赵德胜</td><td>走访、旧档、照片背注</td><td>知情材料需要互证，不能单条定案。</td></tr>
+            <tr><td>舆情人情</td><td>郭晨、韩露、马丽华、黄雅玲、钱树林</td><td>搜索入口、撤稿、社区记录、论坛传闻</td><td>先发现名字，再用可信度筛选。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>核心冲突表</h3>
+        <table>
+          <thead><tr><th>冲突</th><th>相关人物</th><th>表面说法</th><th>真实利害</th></tr></thead>
+          <tbody>
+            <tr><td>公开体面 vs 血缘事实</td><td>李桂兰、宗建国、宗建红、罗月珍、罗建宁</td><td>“旧事不要再翻。”</td><td>公开家庭的完整叙事会被隐藏血脉打破。</td></tr>
+            <tr><td>集团控制权 vs 信托资格</td><td>宗建红、宗建民、宗明辉、宗明军、魏雪琴</td><td>“集团没有新增继承人。”</td><td>集团股权和家族信托是两套规则，不能互相替代。</td></tr>
+            <tr><td>帮扶关系 vs 血缘误认</td><td>宗建芳、陈静、马丽华、赵雨晴</td><td>“只是妇联帮扶对象。”</td><td>帮扶记录太密，足以制造陈静母亲误认。</td></tr>
+            <tr><td>未成年人保护 vs 资格确认</td><td>陈嘉东、陈静、黄雅玲、宗家众人</td><td>“学生信息不能公开。”</td><td>陈嘉东是资格链终点，但资料开放必须后置。</td></tr>
+            <tr><td>旧档知情 vs 自我保护</td><td>何国生、周美英、方仁杰、宗建丽</td><td>“我只是经手过材料。”</td><td>他们掌握证据入口，也怕晚年被卷入作证责任。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>界面原则：</strong>正式版不要一开始铺满所有人。开局只给公开家庭；第三代和配偶按资料逐步进入人物档案；隐藏血脉先以未知占位出现；证人与经手人只进入档案池，除非玩家把证据绑定到关系节点。
+        </div>
+      </section>
+
+      <section id="documents">
+        <h2>4. 资料库</h2>
+        <h3>可见性层级</h3>
+        <div class="tag-row">
+          <span class="tag">public：开局可见</span>
+          <span class="tag">keyword：关键词发现</span>
+          <span class="tag">location：地点解锁</span>
+          <span class="tag">task：任务解锁</span>
+          <span class="tag strong">chain：证据链后段</span>
+          <span class="tag warn">decoy：低可信误导</span>
+        </div>
+
+        <h3>资料分类</h3>
+        <table>
+          <thead><tr><th>层级</th><th>代表资料</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td>开局可见</td><td>宗世昌专访、集团官网、县情概览、公共场所办事须知、匿名信。</td><td>建立案件背景和公开家庭版本。</td></tr>
+            <tr><td>关键词可发现</td><td>知青名册、供销社花名册、照片背注、明信片、汇款回执。</td><td>让玩家从线索推导下一步。</td></tr>
+            <tr><td>地点/任务解锁</td><td>旧户籍、学籍、家访、社区走访、集团会议、复工检查。</td><td>把资料取得和调查行动绑定。</td></tr>
+            <tr><td>证据链后段</td><td>DNA、医院血样、信托细则、司法咨询。</td><td>防止后段强证据过早剧透。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>禁止开局直接出现：</strong>县一中学生信息表、家访记录、疾控亲缘比对、司法所继承咨询、任何直接说明陈嘉东是最终关键对象的资料。
+        </div>
+      </section>
+
+      <section id="evidence">
+        <h2>5. 证据库</h2>
+        <table>
+          <thead><tr><th>事实</th><th>必要证据</th><th>辅助证据</th></tr></thead>
+          <tbody>
+            <tr><td>公开家庭版本</td><td>1996 宗世昌专访</td><td>集团官网、讣告、县情资料。</td></tr>
+            <tr><td>罗月珍在云山</td><td>知青名册、供销社花名册</td><td>旧客运线路、调档登记。</td></tr>
+            <tr><td>罗建宁是隐藏血脉第一代</td><td>照片背注、旧户籍迁入登记</td><td>接生登记、借支单、汇款回执、明信片。</td></tr>
+            <tr><td>陈静是罗建宁之女</td><td>陈静出生记录</td><td>陈静博客、妇联帮扶记录。</td></tr>
+            <tr><td>陈嘉东是陈静之女</td><td>县一中学生信息表</td><td>家访记录、短视频、论坛家长会帖。</td></tr>
+            <tr><td>陈静一支具备信托资格</td><td>DNA 记录、医院血样、信托条款</td><td>司法所咨询摘记。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="locations">
+        <h2>6. 地点库</h2>
+        <table>
+          <thead><tr><th>地点</th><th>初始开放</th><th>可获得资料</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>调查桌 / 公证处</td><td>是</td><td>委托函、匿名信、公开家谱、待办。</td><td>玩家起点。</td></tr>
+            <tr><td>县档案馆</td><td>节前开放，假期值班有限</td><td>县志、旧户籍、照片背注、调档登记。</td><td>正式档案核心地点。</td></tr>
+            <tr><td>云山县人民医院</td><td>可走访，病案室需申请</td><td>转院记录、病案、血样留存单。</td><td>连接死亡路径和 DNA。</td></tr>
+            <tr><td>县一中</td><td>需获得陈小东/陈嘉东线索后</td><td>学籍、家访、奖学金撤稿。</td><td>不应开局开放完整资料。</td></tr>
+            <tr><td>老街社区 / 唱响 KTV</td><td>中期开放</td><td>社区走访、租赁备案、复工检查。</td><td>陈静返乡生活线。</td></tr>
+            <tr><td>世昌集团</td><td>节前/节后开放，假期内部会议</td><td>家族会议、舆情草案、股权底稿、法务备忘。</td><td>控制权和信托冲突。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="relationships">
+        <h2>7. 关系真相表</h2>
+        <table>
+          <thead><tr><th>ID</th><th>问题</th><th>正确关系</th><th>必要证据</th></tr></thead>
+          <tbody>
+            <tr><td>rel_public_family</td><td>公开资料中宗世昌的妻子是谁？</td><td>宗世昌 - 李桂兰</td><td>1996 宗世昌专访</td></tr>
+            <tr><td>rel_chen_jianfang</td><td>陈静为什么会被误认为宗建芳的女儿？</td><td>宗建芳是帮扶干部。</td><td>人才窗口挂靠说明、妇联记录</td></tr>
+            <tr><td>rel_zong_luo</td><td>谁是宗世昌的非婚生女？</td><td>宗世昌 + 罗月珍 -> 罗建宁</td><td>照片背注、旧户籍</td></tr>
+            <tr><td>rel_luo_chen</td><td>陈静的母亲是谁？</td><td>罗建宁 -> 陈静</td><td>陈静出生记录、DNA</td></tr>
+            <tr><td>rel_chen_child</td><td>陈小东的正式身份是什么？</td><td>陈静 -> 陈嘉东</td><td>县一中学生信息表、家访/论坛辅助</td></tr>
+            <tr><td>rel_trust</td><td>哪份文件证明不姓宗也可继承？</td><td>信托条款 + DNA + 陈嘉东</td><td>香港家族信托文件节选</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="red-herrings">
+        <h2>8. 误导线</h2>
+        <div class="grid">
+          <article class="card"><h4>宗建芳误认</h4><p>帮扶、档案挂靠和创业手续让外界误以为宗建芳是陈静母亲。排除方式：人才窗口说明、妇联记录、陈静出生记录。</p></article>
+          <article class="card"><h4>钱树林认父</h4><p>黔中司机常跑云山线路，看似能解释罗月珍返乡。排除方式：县志、户籍、接生登记和照片背注冲突。</p></article>
+          <article class="card"><h4>李天赐传闻</h4><p>鼎辉尽调被误读为信托新增受益人。排除方式：无 DNA、无血缘证明、无受益人确认。</p></article>
+          <article class="card"><h4>股权文件混淆</h4><p>集团股权只覆盖公开六子女，但不能排除信托血缘后代。排除方式：信托条款和法务意见。</p></article>
+        </div>
+      </section>
+
+      <section id="narrative">
+        <h2>9. 叙事规则</h2>
+        <p class="lead">影视提供张力，系统提供参与。玩家不是被动观看反转，而是通过搜索、阅读、收藏、绑定证据和排除误导亲手完成反转。</p>
+        <table>
+          <thead><tr><th>手法</th><th>互动转译</th><th>本案示例</th></tr></thead>
+          <tbody>
+            <tr><td>冷开场</td><td>开局给几份互相不完整的材料。</td><td>委托函、匿名信、临终录音、公开讣告。</td></tr>
+            <tr><td>信息差</td><td>资料冲突，玩家用来源和证据链判断。</td><td>公开六子女口径 vs 第七支传闻。</td></tr>
+            <tr><td>红鲱鱼</td><td>错误方向可调查、可收藏、可绑定，但会被强证据排除。</td><td>宗建芳、钱树林、李天赐。</td></tr>
+            <tr><td>反转</td><td>关系核验后，家谱节点或证据链改变状态。</td><td>陈静不是宗建芳女儿。</td></tr>
+            <tr><td>情绪真相</td><td>情绪材料解释动机，不替代定案证据。</td><td>李桂兰未寄出信稿、旧明信片。</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    《云山宗氏案》案卷设定库 · 2026-05-16
+  </footer>
+</body>
+</html>

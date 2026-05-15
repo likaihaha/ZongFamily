@@ -11,8 +11,8 @@ const people = [
   { id: "luo_jianning", name: "罗建宁", aliases: ["建宁"], birth: 1969, role: "罗月珍之女", note: "名字中的“建”暗合宗家第二代字辈。" },
   { id: "chen_jing", name: "陈静", aliases: ["陈明静", "唱响KTV老板娘"], birth: 1988, role: "KTV经营者", note: "罗建宁之女，2014 年返乡创业。" },
   { id: "chen_jiadong", name: "陈嘉东", aliases: ["陈小东", "小东"], birth: 2004, role: "县一中学生", note: "陈静之女，正式名中的“嘉”对应宗家第四代字辈。" },
-  { id: "zong_minghui", name: "宗明辉", aliases: [], birth: 1984, role: "世昌集团第三任董事长", note: "宗建民之子，曾参与集团换届。" },
-  { id: "zong_mingjun", name: "宗明军", aliases: [], birth: 1990, role: "世昌集团第四任董事长", note: "宗建民之子，2020 年接任集团董事长。" },
+  { id: "zong_minghui", name: "宗明辉", aliases: [], birth: 1984, role: "世昌集团第三任董事长", note: "宗建民之子，2016 年在融资压力下接班。" },
+  { id: "zong_mingjun", name: "宗明军", aliases: [], birth: 1990, role: "世昌集团代理董事长", note: "宗建民之子，宗世昌病危后临时接手集团口径。" },
   { id: "li_qiang", name: "李强", aliases: [], birth: 1986, role: "鼎辉基金合伙人", note: "宗建红之子，参与鼎辉尽调往来。" },
   { id: "li_min", name: "李敏", aliases: [], birth: 1989, role: "世昌集团客服主管", note: "宗建红之女，李天赐之母。" },
   { id: "li_tianci", name: "李天赐", aliases: [], birth: 2020, role: "李敏之子", note: "八卦中被怀疑与信托有关，但证据不足。" },
@@ -21,7 +21,7 @@ const people = [
   { id: "qian_shulin", name: "钱树林", aliases: ["黔中钱师傅"], birth: 1947, role: "黔中汽车队司机", note: "被地方传闻误写成罗建宁父亲。" },
   { id: "huang_yaling", name: "黄雅玲", aliases: ["黄老师"], birth: 1978, role: "县一中班主任", note: "陈嘉东高二班主任，留下家访记录。" },
   { id: "fang_renjie", name: "方仁杰", aliases: ["方会计"], birth: 1966, role: "世昌集团改制会计", note: "保管过 2005 年集团股权改制底稿。" },
-  { id: "wei_xueqin", name: "魏雪琴", aliases: ["魏法务"], birth: 1974, role: "世昌集团法务经理", note: "2015 年换届前参与信托和受益人尽调。" },
+  { id: "wei_xueqin", name: "魏雪琴", aliases: ["魏法务"], birth: 1974, role: "世昌集团法务经理", note: "2016 年治理调整前参与信托和受益人尽调。" },
   { id: "ma_lihua", name: "马丽华", aliases: ["马主任"], birth: 1969, role: "云山老街社区主任", note: "陈静返乡后负责社区走访和租赁备案协调。" }
 ];
 
@@ -43,8 +43,8 @@ const documents = [
     source: "官网",
     trust: 4,
     keywords: ["世昌集团", "宗建红", "宗明辉", "宗明军", "董事长", "集团历程"],
-    summary: "列出世昌集团历任董事长更替。",
-    body: "1982 年：世昌综合商店成立。\n1985 年：世昌贸易公司成立。\n1995 年：世昌集团挂牌。\n2005 年：宗建红正式接任董事长。\n2015 年：宗明辉接任第三任董事长。\n2020 年：宗明军接任第四任董事长。\n\n官网措辞谨慎，没有提及家族信托纠纷。"
+    summary: "列出世昌集团几次关键治理调整。",
+    body: "1982 年：世昌综合商店成立。\n1986 年：世昌贸易公司成立，承接供销系统外溢的仓储和批发业务。\n1997 年：世昌集团挂牌，宗世昌仍保留最终拍板权。\n2005 年：集团改制，宗建红以经营负责人身份接班，宗建民一支保留物流板块收益。\n2016 年春：外部融资尽调要求治理结构清晰化，宗明辉出任董事长，宗建红退到董事会背后控盘。\n2020 年 9 月：宗世昌病危期间，宗明军以代理董事长身份主持对外口径，正式公告被压到丧事之后。\n\n官网措辞谨慎，把家族妥协写成企业治理升级，没有提及家族信托纠纷。"
   },
   {
     id: "doc_yunshan_county_profile",
@@ -438,13 +438,13 @@ const documents = [
   },
   {
     id: "doc_board_handover_2015",
-    title: "世昌集团 2015 年董事会换届备忘",
-    year: 2015,
+    title: "世昌集团 2016 年春治理调整备忘",
+    year: 2016,
     source: "内部文件",
     trust: 3,
     keywords: ["魏雪琴", "宗明辉", "宗明军", "宗建红", "董事会", "换届"],
     summary: "宗家第二、三代围绕控制权已经出现裂痕。",
-    body: "换届备忘记载，宗建红主张由宗明辉接任第三任董事长，宗建民一支则要求保留物流板块否决权。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，可说明董事长席位不等同于继承资格。"
+    body: "治理调整备忘记载，外部融资方要求世昌集团明确董事会授权和家族成员任职边界。宗建红主张由宗明辉出任董事长，自己保留重大项目否决权；宗建民一支则要求物流板块收益和否决权写入附件。\n\n魏雪琴在法务意见中提醒：“集团股权安排不能替代家族信托受益人审查，尤其不能以董事会决议排除血缘后代。”\n\n这份备忘把公司控制权冲突和信托资格审查区分开来，可说明董事长席位不等同于继承资格。"
   },
   {
     id: "doc_jianfang_note",
@@ -641,7 +641,98 @@ const purposeFilters = [
 ];
 const purposeFilterIds = new Set(purposeFilters.map((filter) => filter.id));
 
+const publicDocumentIds = new Set([
+  "doc_official_family",
+  "doc_group_history",
+  "doc_yunshan_county_profile",
+  "doc_2020_county_notice",
+  "doc_anonymous_letter",
+  "doc_naming_rule",
+  "doc_school_forum",
+  "doc_tiktok_chenjing",
+  "doc_gossip_wrong_mother",
+  "doc_gossip_li_tianci",
+  "doc_gossip_mingjun"
+]);
+
+const locationDocumentIds = {
+  archives: [
+    "doc_educated_youth",
+    "doc_photo_back",
+    "doc_luo_birth",
+    "doc_supply_roster",
+    "doc_midwife_register",
+    "doc_supply_advance",
+    "doc_archive_request_log"
+  ],
+  hospital: [
+    "doc_dna_record",
+    "doc_hospital_blood",
+    "doc_chen_birth",
+    "doc_midwife_register"
+  ],
+  school: [
+    "doc_jiadong_school",
+    "doc_teacher_visit",
+    "doc_scholarship_notice",
+    "doc_school_forum"
+  ],
+  ktv: [
+    "doc_women_fed",
+    "doc_blog_chenjing",
+    "doc_ktv_license",
+    "doc_talent_window",
+    "doc_ktv_lease_archive",
+    "doc_neighborhood_visit",
+    "doc_ktv_reopen_check"
+  ],
+  group: [
+    "doc_trust_clause",
+    "doc_notary_meeting",
+    "doc_estate_law_note",
+    "doc_equity_draft_2005",
+    "doc_board_handover_2015",
+    "doc_dinghui_due_diligence",
+    "doc_sibling_meeting_2020",
+    "doc_jianhong_pr_plan",
+    "doc_family_meeting"
+  ],
+  yunqian: [
+    "doc_yunqian_bus_line",
+    "doc_old_postcard",
+    "doc_classmate_luo",
+    "doc_false_qian",
+    "doc_false_peng",
+    "doc_li_guilan_letter",
+    "doc_jianli_old_letters",
+    "doc_remittance_stub"
+  ]
+};
+
+const locationLabels = {
+  archives: "县档案馆",
+  hospital: "县医院",
+  school: "县一中",
+  ktv: "唱响 KTV",
+  group: "世昌集团",
+  yunqian: "云山至黔中旧线"
+};
+
 const updateLogs = [
+  {
+    date: "2026-05-16",
+    title: "资料与家谱渐进解锁",
+    changes: [
+      "资料库新增 public/location/chain 可见性规则，未解锁资料不会直接出现在搜索结果里",
+      "走访地点会写入本地进度，并解锁对应地点可取得的档案、访谈、工商、学校和集团资料",
+      "家谱隐藏血脉节点和人物档案会按已读资料逐步显名，开局保留未核验分支占位"
+    ],
+    checks: [
+      "node --check game/app.js passed",
+      "npm.cmd run validate passed",
+      "tools/run_smoke.ps1 passed"
+    ]
+  },
   {
     date: "2026-05-16",
     title: "关系证据解释",
@@ -759,7 +850,7 @@ const updateLogs = [
     title: "内容扩充第二轮起步",
     changes: [
       "新增 3 名地方与集团支线人物：改制会计、集团法务和老街社区主任",
-      "新增 6 份资料，覆盖 2005 股权改制、2015 董事会换届、宗建芳便条、KTV 租赁、鼎辉尽调和社区走访",
+      "新增 6 份资料，覆盖 2005 股权改制、2016 治理调整、宗建芳便条、KTV 租赁、鼎辉尽调和社区走访",
       "新增资料把公司股权、信托资格和陈静返乡后的生活网络拆开，便于区分股权控制与继承资格"
     ],
     checks: [
@@ -885,6 +976,7 @@ const state = {
   relationAnswers: {},
   activeRelationId: "rel_public_family",
   personFilter: "all",
+  visitedLocations: new Set(),
   report: { heir: "", descendant: "" },
   reportSubmitted: false,
   sound: true,
@@ -1183,6 +1275,7 @@ function serializeState() {
     relationAnswers: state.relationAnswers,
     activeRelationId: state.activeRelationId,
     personFilter: state.personFilter,
+    visitedLocations: [...state.visitedLocations],
     report: state.report,
     reportSubmitted: state.reportSubmitted,
     sound: state.sound,
@@ -1209,6 +1302,7 @@ function loadState() {
     state.relationAnswers = parsed.relationAnswers || {};
     state.activeRelationId = relationPrompts.some((rel) => rel.id === parsed.activeRelationId) ? parsed.activeRelationId : "rel_public_family";
     state.personFilter = personFilterIds.has(parsed.personFilter) ? parsed.personFilter : "all";
+    state.visitedLocations = new Set((parsed.visitedLocations || []).filter((id) => locationLabels[id]));
     state.report = parsed.report || { heir: "", descendant: "" };
     state.reportSubmitted = parsed.reportSubmitted === true;
     state.sound = parsed.sound !== false;
@@ -1369,6 +1463,77 @@ function docImageFigure(doc, size = "full") {
   `;
 }
 
+function hasReadOrCollected(ids) {
+  return ids.some((id) => state.readDocs.has(id) || state.collected.has(id));
+}
+
+function locationForDocument(docId) {
+  return Object.entries(locationDocumentIds).find(([, ids]) => ids.includes(docId))?.[0] || null;
+}
+
+function chainUnlockState(docId) {
+  const groups = [
+    {
+      ids: ["doc_trust_clause", "doc_notary_meeting", "doc_estate_law_note"],
+      label: "继承规则",
+      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("group"),
+      hint: "先读公开家庭资料，或走访世昌集团。"
+    },
+    {
+      ids: ["doc_educated_youth", "doc_photo_back", "doc_supply_roster", "doc_supply_advance", "doc_midwife_register"],
+      label: "罗月珍线索",
+      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("archives"),
+      hint: "先确认公开家庭版本，再走访县档案馆。"
+    },
+    {
+      ids: ["doc_luo_birth", "doc_old_postcard", "doc_remittance_stub", "doc_li_guilan_letter", "doc_classmate_luo"],
+      label: "罗建宁线索",
+      unlocked: () => hasReadOrCollected(["doc_photo_back", "doc_educated_youth", "doc_midwife_register"]) || state.visitedLocations.has("yunqian"),
+      hint: "先核对罗月珍、照片背注或知青名册。"
+    },
+    {
+      ids: ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_ktv_license", "doc_talent_window", "doc_ktv_lease_archive", "doc_neighborhood_visit", "doc_ktv_reopen_check"],
+      label: "陈静线索",
+      unlocked: () => hasReadOrCollected(["doc_luo_birth", "doc_classmate_luo"]) || state.visitedLocations.has("ktv"),
+      hint: "先固定罗建宁身份，或走访唱响 KTV。"
+    },
+    {
+      ids: ["doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_dna_record", "doc_hospital_blood"],
+      label: "陈嘉东后段",
+      unlocked: () => hasReadOrCollected(["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed"]) || state.visitedLocations.has("school") || state.visitedLocations.has("hospital"),
+      hint: "先串起陈静母系，再走访县一中或县医院。"
+    }
+  ];
+  return groups.find((group) => group.ids.includes(docId)) || null;
+}
+
+function documentUnlockState(doc) {
+  if (state.readDocs.has(doc.id) || state.collected.has(doc.id)) {
+    return { unlocked: true, label: "已入卷" };
+  }
+  if (publicDocumentIds.has(doc.id)) {
+    return { unlocked: true, label: "公开资料" };
+  }
+  const locationId = locationForDocument(doc.id);
+  if (locationId && state.visitedLocations.has(locationId)) {
+    return { unlocked: true, label: `${locationLabels[locationId]}取得` };
+  }
+  const chain = chainUnlockState(doc.id);
+  if (chain?.unlocked()) {
+    return { unlocked: true, label: chain.label };
+  }
+  const locationHint = locationId ? `也可走访${locationLabels[locationId]}。` : "";
+  return {
+    unlocked: false,
+    label: "未入卷",
+    hint: chain?.hint || `这份资料还没有进入当前卷宗。${locationHint}`
+  };
+}
+
+function isDocumentUnlocked(doc) {
+  return documentUnlockState(doc).unlocked;
+}
+
 function docMatches(doc) {
   const query = state.query.trim().toLowerCase();
   const activeFilter = purposeFilters.find((filter) => filter.id === state.filter) || purposeFilters[0];
@@ -1395,13 +1560,14 @@ function renderFilters() {
 function renderVisitLocations() {
   if (!els.locationList) return;
   els.locationList.innerHTML = visitLocations.map((location) => `
-    <button class="location-card" data-location-query="${location.query}" aria-label="前往${location.title}">
+    <button class="location-card ${state.visitedLocations.has(location.id) ? "is-visited" : ""}" data-location-id="${location.id}" data-location-query="${location.query}" aria-label="前往${location.title}">
       <img src="${location.image}" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">${location.meta}</span>
         <strong>${location.title}</strong>
         <span>${location.text}</span>
+        ${state.visitedLocations.has(location.id) ? '<em>已走访</em>' : ""}
       </span>
     </button>
   `).join("");
@@ -1409,18 +1575,29 @@ function renderVisitLocations() {
 
 function renderResults() {
   const hasQuery = Boolean(state.query.trim());
-  const results = documents
+  const matched = documents
     .map((doc, index) => ({ doc, index }))
-    .filter(({ doc }) => docMatches(doc))
+    .filter(({ doc }) => docMatches(doc));
+  const lockedMatches = matched.filter(({ doc }) => !isDocumentUnlocked(doc)).map(({ doc }) => doc);
+  const results = matched
+    .filter(({ doc }) => isDocumentUnlocked(doc))
     .sort((a, b) => {
       if (!hasQuery && state.filter === "all") return a.index - b.index;
       return b.doc.trust - a.doc.trust || b.doc.year - a.doc.year || a.index - b.index;
     })
     .map(({ doc }) => doc);
+  const lockedCallout = lockedMatches.length > 0 ? `
+    <div class="unlock-callout">
+      <strong>有 ${lockedMatches.length} 份相关资料尚未入卷</strong>
+      <p>${[...new Set(lockedMatches.map((doc) => documentUnlockState(doc).hint))].slice(0, 2).join(" ")}</p>
+      <button type="button" data-unlock-view="visit">回到走访</button>
+    </div>
+  ` : "";
   els.resultList.innerHTML = results.map((doc) => {
     const read = state.readDocs.has(doc.id) ? "is-read" : "";
     const imageData = getDocImage(doc);
     const image = imageData ? `<img class="result-thumb" src="${imageData.src}" alt="" loading="lazy">` : "";
+    const unlock = documentUnlockState(doc);
     return `
       <button class="result-card ${read} ${imageData ? "has-image" : ""}" data-doc-id="${doc.id}">
         ${image}
@@ -1429,6 +1606,7 @@ function renderResults() {
           <div class="meta-line">
             <span class="badge">${doc.year}</span>
             <span class="badge">${doc.source}</span>
+            <span class="badge unlock-badge">${unlock.label}</span>
             ${trustBadge(doc)}
             ${state.collected.has(doc.id) ? '<span class="badge high">已收藏</span>' : ""}
           </div>
@@ -1436,7 +1614,7 @@ function renderResults() {
         </div>
       </button>
     `;
-  }).join("") || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或调查目的试试。</p></div>`;
+  }).join("") + lockedCallout || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或调查目的试试。</p></div>`;
 }
 
 function renderDocument() {
@@ -1447,6 +1625,16 @@ function renderDocument() {
   }
   const doc = documents.find((item) => item.id === state.selectedDoc);
   if (!doc) return;
+  const unlock = documentUnlockState(doc);
+  if (!unlock.unlocked) {
+    els.documentEmpty.hidden = false;
+    els.documentView.hidden = true;
+    els.documentEmpty.innerHTML = `
+      <h3>这份资料还没有进入当前卷宗</h3>
+      <p>${unlock.hint}</p>
+    `;
+    return;
+  }
   state.readDocs.add(doc.id);
   els.documentEmpty.hidden = true;
   els.documentView.hidden = false;
@@ -1484,8 +1672,9 @@ function renderPeople() {
   const byId = new Map(people.map((person) => [person.id, person]));
   const filters = [
     { id: "all", label: "全部", count: people.length },
-    ...personGroups.map((group) => ({ id: group.tone, label: group.title, count: group.ids.length }))
+    ...personGroups.map((group) => ({ id: group.tone, label: group.title, count: visiblePersonIds(group).length }))
   ];
+  filters[0].count = personGroups.reduce((total, group) => total + visiblePersonIds(group).length, 0);
   els.peopleFilters.innerHTML = filters.map((filter) => `
     <button class="${state.personFilter === filter.id ? "is-active" : ""}" data-people-filter="${filter.id}" aria-pressed="${state.personFilter === filter.id}">
       <strong>${filter.label}</strong>
@@ -1502,7 +1691,7 @@ function renderPeople() {
         <p>${group.hint}</p>
       </header>
       <div class="person-group-list">
-        ${group.ids.map((id) => byId.get(id)).filter(Boolean).map((person) => `
+        ${visiblePersonIds(group).map((id) => byId.get(id)).filter(Boolean).map((person) => `
           <article class="person-card">
             <div class="person-head">
               ${renderAvatar(person)}
@@ -1516,7 +1705,7 @@ function renderPeople() {
             </div>
             <p>${person.note}</p>
           </article>
-        `).join("")}
+        `).join("") || `<div class="person-locked">隐藏血脉档案尚未入卷。先走访县档案馆或阅读公开家庭资料。</div>`}
       </div>
     </section>
   `).join("");
@@ -1534,6 +1723,32 @@ function collectedBadge(docId) {
   return state.collected.has(docId) ? "is-found" : "";
 }
 
+function isPersonDiscovered(id) {
+  if (personGroups.find((group) => group.tone === "official")?.ids.includes(id)) return true;
+  if (id === "luo_yuezhen") {
+    return state.visitedLocations.has("archives")
+      || hasReadOrCollected(["doc_educated_youth", "doc_photo_back", "doc_supply_roster", "doc_midwife_register"]);
+  }
+  if (id === "luo_jianning") {
+    return hasReadOrCollected(["doc_photo_back", "doc_luo_birth", "doc_midwife_register", "doc_classmate_luo"])
+      || isRelationCorrect(relationPrompts.find((rel) => rel.id === "rel_zong_luo"));
+  }
+  if (id === "chen_jing") {
+    return state.visitedLocations.has("ktv")
+      || hasReadOrCollected(["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_dna_record"]);
+  }
+  if (id === "chen_jiadong") {
+    return state.visitedLocations.has("school")
+      || hasReadOrCollected(["doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_tiktok_chenjing"]);
+  }
+  return true;
+}
+
+function visiblePersonIds(group) {
+  if (group.tone !== "hidden") return group.ids;
+  return group.ids.filter(isPersonDiscovered);
+}
+
 function renderFamilyNode(id, tone = "neutral", subtitle = "") {
   const person = people.find((item) => item.id === id);
   if (!person) return "";
@@ -1542,6 +1757,16 @@ function renderFamilyNode(id, tone = "neutral", subtitle = "") {
       <strong>${person.name}</strong>
       <span>${subtitle || person.role}</span>
     </button>
+  `;
+}
+
+function renderDiscoveredFamilyNode(id, tone, subtitle, placeholder) {
+  if (isPersonDiscovered(id)) return renderFamilyNode(id, tone, subtitle);
+  return `
+    <div class="family-node family-node-locked">
+      <strong>${placeholder}</strong>
+      <span>继续走访或阅读资料后显名</span>
+    </div>
   `;
 }
 
@@ -1563,13 +1788,13 @@ function renderFamilyMap() {
 
       <section class="family-map-branch family-map-hidden ${relationNodeClass("rel_zong_luo")} ${relationNodeClass("rel_luo_chen")} ${relationNodeClass("rel_chen_child")}">
         <div class="family-chain">
-          ${renderFamilyNode("luo_yuezhen", "hidden", "贵州籍知青")}
+          ${renderDiscoveredFamilyNode("luo_yuezhen", "hidden", "贵州籍知青", "贵州籍知青？")}
           <span class="family-link disputed">待证实</span>
-          ${renderFamilyNode("luo_jianning", "hidden", "隐藏血脉第一代")}
+          ${renderDiscoveredFamilyNode("luo_jianning", "hidden", "隐藏血脉第一代", "未核验子女？")}
           <span class="family-link">母女</span>
-          ${renderFamilyNode("chen_jing", "hidden", "返乡经营者")}
+          ${renderDiscoveredFamilyNode("chen_jing", "hidden", "返乡经营者", "返乡后代？")}
           <span class="family-link">母女</span>
-          ${renderFamilyNode("chen_jiadong", "current", "2020 年现居云山")}
+          ${renderDiscoveredFamilyNode("chen_jiadong", "current", "2020 年现居云山", "现居后代？")}
         </div>
       </section>
     </div>
@@ -1614,11 +1839,15 @@ function compactDocTitle(doc) {
   return cleaned.length > 18 ? `${cleaned.slice(0, 17)}...` : cleaned;
 }
 
-function selectOptions(kind) {
-  const personOptions = people.map((p) => `<option value="${p.id}">${p.name}（${p.birth}）</option>`).join("");
-  const docOptions = documents.map((d) => `<option value="${d.id}">${compactDocTitle(d)}</option>`).join("");
-  if (kind.includes("文件") || kind.includes("证明") || kind.includes("证据") || kind.includes("档案") || kind.includes("说明")) return docOptions;
-  return personOptions;
+function selectOptions(kind, selectedValue = "") {
+  const isDocSlot = kind.includes("文件") || kind.includes("证明") || kind.includes("证据") || kind.includes("档案") || kind.includes("说明");
+  if (isDocSlot) {
+    const docs = documents.filter((doc) => state.readDocs.has(doc.id) || state.collected.has(doc.id) || doc.id === selectedValue);
+    return docs.map((doc) => `<option value="${doc.id}">${compactDocTitle(doc)}</option>`).join("");
+  }
+
+  const visiblePeople = people.filter((person) => isPersonDiscovered(person.id) || person.id === selectedValue);
+  return visiblePeople.map((person) => `<option value="${person.id}">${person.name}（${person.birth}）</option>`).join("");
 }
 
 function itemLabel(id) {
@@ -1696,7 +1925,7 @@ function relationReasoning(rel) {
   return {
     rel_public_family: [
       "官网资料是公开家庭的基准来源，只能证明李桂兰与六名公开子女。",
-      "它不能排除非公开血缘，因此后续仍要继续核验罗月珍、罗建宁和陈静线。"
+      "它不能排除非公开血缘，因此后续仍要继续核验匿名信、旧档和走访材料中出现的旁支线索。"
     ],
     rel_chen_jianfang: [
       "人才窗口挂靠说明把陈静与教育系统的关系限定为短期档案挂靠。",
@@ -1842,7 +2071,7 @@ function renderRelations() {
             <span class="field-label">${slot}</span>
             <select data-slot-index="${index}">
               <option value="">未选择</option>
-              ${selectOptions(slot)}
+              ${selectOptions(slot, answer.slots?.[index] || "")}
             </select>
           </label>
         `).join("")}
@@ -1864,6 +2093,7 @@ function renderRelations() {
 }
 
 function isRelationCorrect(rel) {
+  if (!rel) return false;
   const answer = state.relationAnswers[rel.id];
   if (!answer) return false;
   const slotsOk = rel.correct.every((value, index) => answer.slots?.[index] === value);
@@ -1983,6 +2213,7 @@ function renderSettings() {
   els.saveSummary.innerHTML = `
     <dt>资料阅读</dt><dd>${state.readDocs.size} / ${documents.length}</dd>
     <dt>证据收藏</dt><dd>${state.collected.size}</dd>
+    <dt>已走访地点</dt><dd>${state.visitedLocations.size} / ${visitLocations.length}</dd>
     <dt>关系完成</dt><dd>${correctCount} / ${relationPrompts.length}</dd>
     <dt>调查笔记</dt><dd>${notesChars} 字</dd>
   `;
@@ -2160,6 +2391,7 @@ function submitReport() {
 }
 
 function runAutotest() {
+  state.visitedLocations = new Set(visitLocations.map((location) => location.id));
   state.readDocs = new Set(documents.map((doc) => doc.id));
   state.collected = new Set([
     "doc_photo_back",
@@ -2201,6 +2433,7 @@ function bindEvents() {
   els.locationList.addEventListener("click", (event) => {
     const card = event.target.closest("[data-location-query]");
     if (!card) return;
+    if (card.dataset.locationId) state.visitedLocations.add(card.dataset.locationId);
     state.query = card.dataset.locationQuery;
     state.filter = "all";
     switchView("search");
@@ -2257,6 +2490,13 @@ function bindEvents() {
     renderAll();
   });
   els.resultList.addEventListener("click", (event) => {
+    const unlock = event.target.closest("[data-unlock-view]");
+    if (unlock) {
+      switchView(unlock.dataset.unlockView);
+      playSound("click");
+      renderAll();
+      return;
+    }
     const card = event.target.closest("[data-doc-id]");
     if (!card) return;
     state.selectedDoc = card.dataset.docId;
