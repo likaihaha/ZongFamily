@@ -1,6 +1,37 @@
 # 开发状态
 
-更新时间：2026-05-16 23:53 Asia/Shanghai
+更新时间：2026-05-17 02:39 Asia/Shanghai
+
+## 2026-05-17 02:39 Asia/Shanghai 走访结果引导与补救
+
+- 延续走访时间系统，本轮补上办理后的非剧透反馈：每个地点成功取件后都会显示“下一步建议”、建议搜索词和可追问对象，避免玩家拿到入口材料后不知道回资料库查什么。
+- 错过办事窗口时，走访结果会显示“补救路线”，提供仍可办理的备选地点入口、建议关键词和“次日补办”按钮；次日补办会把时间重排到 09:00 并重新计算路程与窗口。
+- 调查备忘录新增“补办错过窗口”任务，只在有地点处于 `missed` 状态时出现，直到玩家重新排期或消除错过状态。
+- `tools/validate_unlock_matrix.mjs` 新增 `visitFollowUps` 覆盖检查，要求六个走访地点都有成功反馈、错过反馈、建议关键词和可追问对象；`docs/unlock_self_check.md` 同步记录该规则。
+- 修改文件：`game/app.js`、`game/styles.css`、`tools/validate_unlock_matrix.mjs`、`docs/unlock_self_check.md`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_unlock_matrix.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。应用内浏览器直接打开 `file://` 和 `http://127.0.0.1:8765` 均被安全策略拒绝，本轮以 headless 回归和 DOM 断言兜底。
+
+## 2026-05-17 00:39 Asia/Shanghai 走访时间与角色交互
+
+- 按反馈把地点状态从单一“已走访”扩展为当前位置、坐标、办事窗口、路程时间、办理耗时、交互人物和取件结果。
+- 走访页新增地点详情面板：显示当前时间、当前位置、目的地坐标、预计抵达/办理/结束时间、交互对象、入口材料和进度条。
+- 点击地点现在只选中地点；必须点击“递交委托函并办理”才会推进时钟、记录当前位置并尝试取件。错过窗口会记录“已错过”，不会取得材料。
+- 资料解锁从“走访地点整包解锁”改为 `obtainedDocuments`：成功交互只取得入口材料，入口材料被阅读后才推进后续资料链。
+- 为地点和资料补齐经手人物，优先复用已有角色：何国生、周美英、黄雅玲、马丽华、魏雪琴、方仁杰、钱树林；暂未新增角色。
+- 修改文件：`game/app.js`、`game/index.html`、`game/styles.css`、`tools/validate_search_paths.mjs`、`tools/validate_unlock_matrix.mjs`、`docs/unlock_self_check.md`、`docs/status.md`、`docs/test_report.md`；回归重新生成试玩与烟测产物。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`node --check tools\validate_unlock_matrix.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过；浏览器普通入口确认走访页有 6 个地点、办理按钮、进度条、联系人和时间/坐标信息，办理世昌集团后只显示信托入口，不显示鼎辉尽调等后续资料。
+
+## 2026-05-17 00:35 Asia/Shanghai 解锁回归校验修复
+
+- 先读取自动化记忆并检查工作区，发现已有 23:40/23:53 的开局防剧透收缩和界面回归未提交成果，未覆盖这些既有改动。
+- 当前 `npm.cmd run validate` 失败点在两个回归脚本的常量解析：`app.js` 在 `locationEntryDocumentIds` 与 `locationLabels` 之间新增了调查日程常量，旧脚本按“下一个 const 名称”截取导致解析范围误入中间配置。
+- 修复 `tools/validate_unlock_matrix.mjs` 和 `tools/validate_search_paths.mjs` 的常量提取逻辑，改为扫描字符串与括号深度直到顶层分号，后续新增中间常量不会误伤校验。
+- 同步收紧搜索路线模型：`validate_search_paths.mjs` 现在按当前游戏规则模拟“走访取得入口资料，再由入口资料推进后续链条”，不再把走访地点直接当整包链条解锁。
+- 重新生成 `docs/search_route_review.md`；集团走访取得信托入口后只推进继承规则小链，家族会议、股权底稿、尽调函等后续集团资料仍保持锁定。
+- 修改文件：`game/app.js`、`tools/validate_unlock_matrix.mjs`、`tools/validate_search_paths.mjs`、`docs/search_route_review.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证：`node --check tools\validate_unlock_matrix.mjs`、`node tools\validate_unlock_matrix.mjs`、`node --check tools\validate_search_paths.mjs`、`node tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run review:search`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 注意：`playtest` 后立刻串行运行 `smoke` 时 Edge 截图阶段遇到一次文件占用；单独重跑 `npm.cmd run smoke` 后通过，延续此前不要把两个浏览器回归贴得太近的经验。
+- 下一步建议：安排真人试玩观察“走访取得入口资料，再由入口资料推进链条”是否会让玩家觉得信息过少；如果卡顿明显，再给走访结果面板增加更明确的“下一份该搜什么”提示。
 
 ## 2026-05-16 23:53 Asia/Shanghai 开局剧透界面收紧
 

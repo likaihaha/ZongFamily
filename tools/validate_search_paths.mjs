@@ -9,23 +9,49 @@ const app = fs.readFileSync(appPath, "utf8");
 const reportPath = path.join(root, "docs", "search_route_review.md");
 const shouldWriteReport = process.argv.includes("--write");
 
-function extractConstExpression(name, nextName) {
+function extractConstExpression(name) {
   const startToken = `const ${name} = `;
   const start = app.indexOf(startToken);
   if (start === -1) throw new Error(`Missing const ${name}`);
   const valueStart = start + startToken.length;
-  const endToken = `const ${nextName} = `;
-  const end = app.indexOf(endToken, valueStart);
-  if (end === -1) throw new Error(`Missing end token after const ${name}`);
+  let end = -1;
+  let depth = 0;
+  let quote = "";
+  let escaped = false;
+  for (let index = valueStart; index < app.length; index += 1) {
+    const char = app[index];
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === quote) {
+        quote = "";
+      }
+      continue;
+    }
+    if (char === "\"" || char === "'" || char === "`") {
+      quote = char;
+      continue;
+    }
+    if (char === "[" || char === "{" || char === "(") depth += 1;
+    else if (char === "]" || char === "}" || char === ")") depth -= 1;
+    else if (char === ";" && depth === 0) {
+      end = index;
+      break;
+    }
+  }
+  if (end === -1) throw new Error(`Missing semicolon after const ${name}`);
   const source = app.slice(valueStart, end).trim().replace(/;\s*$/, "");
   return vm.runInNewContext(`(${source})`, { Set });
 }
 
-const documents = extractConstExpression("documents", "relationPrompts");
-const publicDocumentIds = extractConstExpression("publicDocumentIds", "locationDocumentIds");
-const locationDocumentIds = extractConstExpression("locationDocumentIds", "locationLabels");
-const locationLabels = extractConstExpression("locationLabels", "updateLogs");
-const visitLocations = extractConstExpression("visitLocations", "personGroups");
+const documents = extractConstExpression("documents");
+const publicDocumentIds = extractConstExpression("publicDocumentIds");
+const locationDocumentIds = extractConstExpression("locationDocumentIds");
+const locationEntryDocumentIds = extractConstExpression("locationEntryDocumentIds");
+const locationLabels = extractConstExpression("locationLabels");
+const visitLocations = extractConstExpression("visitLocations");
 const documentById = new Map(documents.map((doc) => [doc.id, doc]));
 
 const errors = [];
@@ -35,6 +61,7 @@ function createState() {
   return {
     readDocs: new Set(),
     collected: new Set(),
+    obtainedDocuments: new Set(),
     visitedLocations: new Set()
   };
 }
@@ -43,41 +70,47 @@ function hasReadOrCollected(state, ids) {
   return ids.some((id) => state.readDocs.has(id) || state.collected.has(id));
 }
 
+function hasObtainedOrRead(state, ids) {
+  return ids.some((id) => state.obtainedDocuments.has(id) || state.readDocs.has(id) || state.collected.has(id));
+}
+
 function locationForDocument(docId) {
   return Object.entries(locationDocumentIds).find(([, ids]) => ids.includes(docId))?.[0] || null;
+}
+
+function isLocationEntryDocument(locationId, docId) {
+  return Boolean(locationEntryDocumentIds[locationId]?.includes(docId));
 }
 
 function chainUnlockState(state, docId) {
   const groups = [
     {
       ids: ["doc_trust_clause", "doc_notary_meeting", "doc_estate_law_note"],
-      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("group")
+      unlocked: () => state.readDocs.has("doc_official_family") || hasReadOrCollected(state, ["doc_trust_clause"])
     },
     {
       ids: ["doc_educated_youth", "doc_photo_back", "doc_supply_roster", "doc_supply_advance", "doc_midwife_register"],
-      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("archives")
+      unlocked: () => state.readDocs.has("doc_official_family") || hasReadOrCollected(state, ["doc_educated_youth", "doc_photo_back"])
     },
     {
       ids: ["doc_luo_birth", "doc_old_postcard", "doc_remittance_stub", "doc_li_guilan_letter", "doc_classmate_luo"],
-      unlocked: () => hasReadOrCollected(state, ["doc_photo_back", "doc_educated_youth", "doc_midwife_register"]) || state.visitedLocations.has("yunqian")
+      unlocked: () => hasReadOrCollected(state, ["doc_photo_back", "doc_educated_youth", "doc_midwife_register", "doc_yunqian_bus_line", "doc_old_postcard"])
     },
     {
       ids: ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_ktv_license", "doc_talent_window", "doc_ktv_lease_archive", "doc_neighborhood_visit", "doc_ktv_reopen_check"],
-      unlocked: () => hasReadOrCollected(state, ["doc_luo_birth", "doc_classmate_luo"]) || state.visitedLocations.has("ktv")
+      unlocked: () => hasReadOrCollected(state, ["doc_luo_birth", "doc_classmate_luo", "doc_ktv_license", "doc_women_fed"])
     },
     {
       ids: ["doc_school_forum", "doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_dna_record", "doc_hospital_blood"],
-      unlocked: () => hasReadOrCollected(state, ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed"]) || state.visitedLocations.has("school") || state.visitedLocations.has("hospital")
+      unlocked: () => hasReadOrCollected(state, ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_school_forum", "doc_jiadong_school", "doc_hospital_blood"])
     }
   ];
   return groups.find((group) => group.ids.includes(docId)) || null;
 }
 
 function isDocumentUnlocked(state, doc) {
-  if (state.readDocs.has(doc.id) || state.collected.has(doc.id)) return true;
+  if (state.obtainedDocuments.has(doc.id) || state.readDocs.has(doc.id) || state.collected.has(doc.id)) return true;
   if (publicDocumentIds.has(doc.id)) return true;
-  const locationId = locationForDocument(doc.id);
-  if (locationId && state.visitedLocations.has(locationId)) return true;
   return Boolean(chainUnlockState(state, doc.id)?.unlocked());
 }
 
@@ -173,6 +206,12 @@ assertLocked(main, "罗月珍", ["doc_educated_youth", "doc_photo_back"], "开�
 assertSuggestedLocations(main, "信托", ["group"], "开局信托锁定提示");
 assertSuggestedLocations(main, "罗月珍", ["archives"], "开局罗月珍锁定提示");
 
+const groupVisit = createState();
+groupVisit.visitedLocations.add("group");
+for (const docId of locationEntryDocumentIds.group) groupVisit.obtainedDocuments.add(docId);
+assertVisible(groupVisit, "信托", ["doc_trust_clause"], "世昌集团走访只开放信托入口");
+assertLocked(groupVisit, "信托", ["doc_family_meeting", "doc_equity_draft_2005", "doc_dinghui_due_diligence"], "世昌集团走访不整包解锁");
+
 readVisible(main, "doc_official_family", "阅读公开家庭资料");
 assertVisible(main, "罗月珍", ["doc_educated_youth", "doc_photo_back", "doc_supply_roster"], "公开家庭后进入罗月珍线");
 
@@ -189,6 +228,7 @@ assertVisible(main, "DNA", ["doc_dna_record", "doc_hospital_blood", "doc_trust_c
 for (const location of visitLocations) {
   const state = createState();
   state.visitedLocations.add(location.id);
+  for (const docId of locationEntryDocumentIds[location.id] || []) state.obtainedDocuments.add(docId);
   const result = search(state, location.query);
   const locationDocs = new Set(locationDocumentIds[location.id] || []);
   const visibleLocationDocs = result.visible.filter((doc) => locationDocs.has(doc.id));

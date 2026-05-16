@@ -13,14 +13,39 @@ function fail(message) {
   errors.push(message);
 }
 
-function extractConstExpression(appSource, name, nextName) {
+function extractConstExpression(appSource, name) {
   const startToken = `const ${name} = `;
   const start = appSource.indexOf(startToken);
   if (start === -1) throw new Error(`Missing const ${name}`);
   const valueStart = start + startToken.length;
-  const endToken = `const ${nextName} = `;
-  const end = appSource.indexOf(endToken, valueStart);
-  if (end === -1) throw new Error(`Missing end token after const ${name}`);
+  let end = -1;
+  let depth = 0;
+  let quote = "";
+  let escaped = false;
+  for (let index = valueStart; index < appSource.length; index += 1) {
+    const char = appSource[index];
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === quote) {
+        quote = "";
+      }
+      continue;
+    }
+    if (char === "\"" || char === "'" || char === "`") {
+      quote = char;
+      continue;
+    }
+    if (char === "[" || char === "{" || char === "(") depth += 1;
+    else if (char === "]" || char === "}" || char === ")") depth -= 1;
+    else if (char === ";" && depth === 0) {
+      end = index;
+      break;
+    }
+  }
+  if (end === -1) throw new Error(`Missing semicolon after const ${name}`);
   const source = appSource.slice(valueStart, end).trim().replace(/;\s*$/, "");
   return vm.runInNewContext(`(${source})`, { Set });
 }
@@ -49,8 +74,13 @@ let documents = [];
 let people = [];
 let publicDocumentIds = new Set();
 let locationDocumentIds = {};
+let locationEntryDocumentIds = {};
+let locationCoordinates = {};
+let locationContacts = {};
+let documentContactPeople = {};
 let locationLabels = {};
 let visitLocations = [];
+let visitFollowUps = {};
 let personGroups = [];
 let chainFunction = "";
 let discoveryFunction = "";
@@ -59,13 +89,18 @@ if (!errors.length) {
   try {
     app = fs.readFileSync(appPath, "utf8");
     matrixDoc = fs.readFileSync(matrixDocPath, "utf8");
-    people = extractConstExpression(app, "people", "documents");
-    documents = extractConstExpression(app, "documents", "relationPrompts");
-    publicDocumentIds = extractConstExpression(app, "publicDocumentIds", "locationDocumentIds");
-    locationDocumentIds = extractConstExpression(app, "locationDocumentIds", "locationLabels");
-    locationLabels = extractConstExpression(app, "locationLabels", "updateLogs");
-    visitLocations = extractConstExpression(app, "visitLocations", "personGroups");
-    personGroups = extractConstExpression(app, "personGroups", "personFilterIds");
+    people = extractConstExpression(app, "people");
+    documents = extractConstExpression(app, "documents");
+    publicDocumentIds = extractConstExpression(app, "publicDocumentIds");
+    locationDocumentIds = extractConstExpression(app, "locationDocumentIds");
+    locationEntryDocumentIds = extractConstExpression(app, "locationEntryDocumentIds");
+    locationCoordinates = extractConstExpression(app, "locationCoordinates");
+    locationContacts = extractConstExpression(app, "locationContacts");
+    documentContactPeople = extractConstExpression(app, "documentContactPeople");
+    locationLabels = extractConstExpression(app, "locationLabels");
+    visitLocations = extractConstExpression(app, "visitLocations");
+    visitFollowUps = extractConstExpression(app, "visitFollowUps");
+    personGroups = extractConstExpression(app, "personGroups");
     chainFunction = extractFunctionBody(app, "chainUnlockState", "documentUnlockState");
     discoveryFunction = extractFunctionBody(app, "isPersonDiscovered", "visiblePersonIds");
   } catch (error) {
@@ -146,7 +181,12 @@ for (const person of hiddenPeople) {
   assertContains(matrixDoc, person.id, `unlock_self_check.md must mention hidden person ${person.id}`);
   for (const location of person.locations || []) {
     if (!locationIds.has(location)) fail(`Hidden person ${person.id} references unknown location ${location}`);
-    assertContains(discoveryFunction, `visitedLocations.has("${location}")`, `Missing location trigger ${location} for ${person.id}`);
+    const entryDocs = locationEntryDocumentIds[location] || [];
+    const hasDirectLocationTrigger = discoveryFunction.includes(`visitedLocations.has("${location}")`);
+    const hasEntryDocumentTrigger = entryDocs.some((docId) => discoveryFunction.includes(docId));
+    if (!hasDirectLocationTrigger && !hasEntryDocumentTrigger) {
+      fail(`Missing location trigger ${location} or its entry documents for ${person.id}`);
+    }
     assertContains(matrixDoc, location, `unlock_self_check.md must mention location trigger ${location}`);
   }
   for (const relation of person.relations || []) {
@@ -175,18 +215,43 @@ for (const group of chainGroups) {
   }
   for (const location of group.triggerLocations) {
     if (!locationIds.has(location)) fail(`Chain group ${group.id} references unknown trigger location ${location}`);
-    assertContains(chainFunction, `visitedLocations.has("${location}")`, `Missing trigger location ${location} for ${group.id}`);
+    const entryDocs = locationEntryDocumentIds[location] || [];
+    const hasDirectLocationTrigger = chainFunction.includes(`visitedLocations.has("${location}")`);
+    const hasEntryDocumentTrigger = entryDocs.some((docId) => chainFunction.includes(docId));
+    if (!hasDirectLocationTrigger && !hasEntryDocumentTrigger) {
+      fail(`Missing trigger location ${location} or its entry documents for ${group.id}`);
+    }
     assertContains(matrixDoc, location, `unlock_self_check.md must mention trigger location ${location}`);
   }
 }
 
 for (const location of visitLocations) {
   if (!locationLabels[location.id]) fail(`Missing label for visit location: ${location.id}`);
+  if (!locationCoordinates[location.id]) fail(`Missing coordinate for visit location: ${location.id}`);
+  if (!locationContacts[location.id]?.length) fail(`Missing contact people for visit location: ${location.id}`);
+  if (!visitFollowUps[location.id]) fail(`Missing visit follow-up guidance: ${location.id}`);
+  else {
+    for (const field of ["obtained", "missed", "query", "ask"]) {
+      if (!visitFollowUps[location.id][field]) fail(`Visit follow-up ${location.id} missing ${field}`);
+    }
+  }
   const locationDocs = locationDocumentIds[location.id] || [];
+  const entryDocs = locationEntryDocumentIds[location.id] || [];
   if (!locationDocs.length) fail(`Visit location has no unlock documents: ${location.id}`);
+  if (!entryDocs.length) fail(`Visit location has no entry documents: ${location.id}`);
   assertContains(matrixDoc, location.id, `unlock_self_check.md must mention visit location ${location.id}`);
   for (const docId of locationDocs) {
     if (!docIds.has(docId)) fail(`Location ${location.id} references unknown document ${docId}`);
+    const contacts = documentContactPeople[docId] || [];
+    if (!contacts.length) fail(`Location document has no contact person: ${docId}`);
+    for (const personId of contacts) {
+      if (!peopleIds.has(personId)) fail(`Document ${docId} references unknown contact person ${personId}`);
+    }
+  }
+  for (const docId of entryDocs) {
+    if (!docIds.has(docId)) fail(`Location entry ${location.id} references unknown document ${docId}`);
+    if (!locationDocs.includes(docId)) fail(`Location entry ${location.id} is not in full location list: ${docId}`);
+    assertContains(matrixDoc, docId, `unlock_self_check.md must mention entry document ${docId}`);
   }
 }
 

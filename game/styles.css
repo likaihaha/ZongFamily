@@ -1201,6 +1201,11 @@ select {
   border-color: rgba(63, 111, 82, 0.72);
 }
 
+.location-card.is-active {
+  outline: 3px solid rgba(31, 90, 122, 0.72);
+  outline-offset: 2px;
+}
+
 .location-copy em {
   justify-self: start;
   border: 1px solid rgba(255, 255, 255, 0.48);
@@ -1210,6 +1215,136 @@ select {
   font-size: 12px;
   font-style: normal;
   font-weight: 800;
+}
+
+.visit-detail {
+  margin-top: 14px;
+}
+
+.visit-detail-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--paper);
+}
+
+.visit-detail-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+}
+
+.visit-detail-card header span,
+.visit-detail-card .hint,
+.visit-doc-preview small,
+.visit-contact span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.visit-detail-card h4 {
+  margin: 2px 0 0;
+  font-size: 20px;
+}
+
+.visit-detail-card header > strong {
+  border: 1px solid rgba(31, 90, 122, 0.24);
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #f4f9fb;
+  color: var(--blue);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.visit-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.visit-metrics span,
+.visit-contact,
+.visit-doc-preview,
+.visit-result {
+  border: 1px solid rgba(212, 200, 183, 0.86);
+  border-radius: 7px;
+  padding: 9px;
+  background: #fffdf8;
+}
+
+.visit-contact p,
+.visit-doc-preview p,
+.visit-result p {
+  margin: 4px 0;
+}
+
+.visit-progress {
+  height: 9px;
+  border: 1px solid rgba(212, 200, 183, 0.9);
+  border-radius: 999px;
+  overflow: hidden;
+  background: #efe3cf;
+}
+
+.visit-progress span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  transition: width 180ms ease;
+}
+
+.visit-result-obtained {
+  border-color: rgba(63, 111, 82, 0.36);
+  background: #f4f8f1;
+}
+
+.visit-result-missed {
+  border-color: rgba(143, 49, 41, 0.32);
+  background: #fff7f3;
+}
+
+.visit-result-rescheduled {
+  border-color: rgba(31, 90, 122, 0.3);
+  background: #f4f9fb;
+}
+
+.visit-next-step {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(212, 200, 183, 0.76);
+  padding-top: 10px;
+}
+
+.visit-next-step span {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.visit-next-step small {
+  color: var(--muted);
+}
+
+.visit-next-step div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.visit-next-step .ghost-btn {
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
+.visit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .result-list,

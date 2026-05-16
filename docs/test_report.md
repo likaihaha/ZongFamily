@@ -1,6 +1,67 @@
 # 测试报告
 
-更新时间：2026-05-16 23:53 Asia/Shanghai
+更新时间：2026-05-17 02:39 Asia/Shanghai
+
+## 2026-05-17 02:39 Asia/Shanghai 走访结果引导回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- 语法检查通过。
+- `npm.cmd run validate` 通过；解锁矩阵校验新增 `visitFollowUps` 覆盖断言，确认六个走访地点都有成功反馈、错过反馈、建议关键词和可追问对象。
+- `npm.cmd run playtest` 通过；普通试玩新增断言确认世昌集团取件后出现“下一步建议”和“搜索信托”，县一中错过窗口后出现“次日补办”，备忘录出现“补办错过窗口”任务。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交。
+- 应用内浏览器视觉抽查受限：直接打开 `file://` 被浏览器策略拒绝；改用 `http://127.0.0.1:8765` 也被策略拒绝。本轮未继续绕过，使用 Edge headless 产物和 DOM 断言作为验证依据。
+
+## 2026-05-17 00:39 Asia/Shanghai 走访时间与角色交互回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- 语法检查通过。
+- `npm.cmd run validate` 通过；解锁矩阵新增地点坐标、地点联系人、资料经手人校验。
+- `npm.cmd run playtest` 通过；普通路径仍可完成开局防剧透、渐进搜索、关系核验和最终提交。
+- `npm.cmd run smoke` 通过；自动通关仍成功。
+- 浏览器普通入口检查通过：走访页渲染 6 个地点、1 个办理按钮、进度条、联系人和时间/坐标信息；办理世昌集团后搜索“信托”只显示入口信托和公开资料，不显示鼎辉尽调等后续集团资料。
+
+## 2026-05-17 00:35 Asia/Shanghai 解锁校验脚本回归
+
+命令：
+```powershell
+node --check tools\validate_unlock_matrix.mjs
+node tools\validate_unlock_matrix.mjs
+node --check tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run review:search
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `validate_unlock_matrix.mjs` 语法检查与独立执行通过，输出 hiddenPeople=4、chainGroups=5、gatedDocuments=27、visitLocations=6。
+- `validate_search_paths.mjs` 语法检查与独立执行通过，搜索路线模型已与当前“走访取得入口资料，再由入口资料推进后续链条”的规则一致。
+- 首次 `npm.cmd run validate` 失败于旧常量截取逻辑；修复两个脚本后重新运行通过。
+- `npm.cmd run review:search` 通过并重写 `docs/search_route_review.md`；集团走访取得 `doc_trust_clause` 后只推进继承规则小链，家族会议、股权底稿、尽调函等后续集团资料仍保持锁定。
+- `npm.cmd run playtest` 通过并重写 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`。
+- `playtest` 后立刻串行运行 `smoke` 时 Edge 截图阶段遇到一次文件占用；单独重跑 `npm.cmd run smoke` 后通过并重写 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-16 23:53 Asia/Shanghai 开局剧透界面回归
 

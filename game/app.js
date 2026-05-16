@@ -708,6 +708,83 @@ const locationDocumentIds = {
   ]
 };
 
+const locationEntryDocumentIds = {
+  archives: ["doc_educated_youth", "doc_photo_back", "doc_luo_birth"],
+  hospital: ["doc_hospital_blood"],
+  school: ["doc_school_forum", "doc_jiadong_school"],
+  ktv: ["doc_ktv_license", "doc_women_fed"],
+  group: ["doc_trust_clause"],
+  yunqian: ["doc_yunqian_bus_line", "doc_old_postcard"]
+};
+
+const locationCoordinates = {
+  office: { x: 0, y: 0, label: "公证处临时办公室" },
+  group: { x: 1.4, y: 0.8, label: "世昌集团" },
+  archives: { x: 2.2, y: 1.9, label: "县档案馆" },
+  hospital: { x: 3.7, y: 1.3, label: "县医院" },
+  school: { x: 5.1, y: 2.6, label: "县一中" },
+  ktv: { x: 2.9, y: 3.5, label: "唱响 KTV" },
+  yunqian: { x: 6.3, y: 4.2, label: "云山至黔中旧线" }
+};
+
+const locationContacts = {
+  archives: ["he_guosheng"],
+  hospital: ["zhou_meiying"],
+  school: ["huang_yaling"],
+  ktv: ["ma_lihua"],
+  group: ["wei_xueqin", "fang_renjie"],
+  yunqian: ["qian_shulin"]
+};
+
+const documentContactPeople = {
+  doc_trust_clause: ["wei_xueqin"],
+  doc_notary_meeting: ["wei_xueqin"],
+  doc_estate_law_note: ["wei_xueqin"],
+  doc_equity_draft_2005: ["fang_renjie"],
+  doc_board_handover_2015: ["fang_renjie"],
+  doc_dinghui_due_diligence: ["fang_renjie"],
+  doc_sibling_meeting_2020: ["wei_xueqin"],
+  doc_jianhong_pr_plan: ["wei_xueqin"],
+  doc_family_meeting: ["wei_xueqin"],
+  doc_gossip_li_tianci: ["wei_xueqin"],
+  doc_gossip_mingjun: ["wei_xueqin"],
+  doc_educated_youth: ["he_guosheng"],
+  doc_photo_back: ["he_guosheng"],
+  doc_luo_birth: ["he_guosheng"],
+  doc_supply_roster: ["he_guosheng"],
+  doc_midwife_register: ["zhou_meiying"],
+  doc_supply_advance: ["he_guosheng"],
+  doc_archive_request_log: ["he_guosheng"],
+  doc_dna_record: ["zhou_meiying"],
+  doc_hospital_blood: ["zhou_meiying"],
+  doc_chen_birth: ["zhou_meiying"],
+  doc_jiadong_school: ["huang_yaling"],
+  doc_teacher_visit: ["huang_yaling"],
+  doc_scholarship_notice: ["huang_yaling"],
+  doc_school_forum: ["huang_yaling"],
+  doc_women_fed: ["ma_lihua"],
+  doc_blog_chenjing: ["ma_lihua"],
+  doc_tiktok_chenjing: ["ma_lihua"],
+  doc_gossip_wrong_mother: ["ma_lihua"],
+  doc_ktv_license: ["ma_lihua"],
+  doc_talent_window: ["ma_lihua"],
+  doc_ktv_lease_archive: ["ma_lihua"],
+  doc_neighborhood_visit: ["ma_lihua"],
+  doc_ktv_reopen_check: ["ma_lihua"],
+  doc_yunqian_bus_line: ["qian_shulin"],
+  doc_old_postcard: ["qian_shulin"],
+  doc_classmate_luo: ["qian_shulin"],
+  doc_false_qian: ["qian_shulin"],
+  doc_false_peng: ["qian_shulin"],
+  doc_li_guilan_letter: ["qian_shulin"],
+  doc_jianli_old_letters: ["qian_shulin"],
+  doc_remittance_stub: ["qian_shulin"]
+};
+
+const investigationDay = "2020-09-28";
+const dayStartMinutes = 9 * 60;
+const dayEndMinutes = 18 * 60;
+
 const locationLabels = {
   archives: "县档案馆",
   hospital: "县医院",
@@ -718,6 +795,36 @@ const locationLabels = {
 };
 
 const updateLogs = [
+  {
+    date: "2026-05-17",
+    title: "走访结果引导与补救",
+    changes: [
+      "每个走访地点补充成功取件后的下一步建议、建议搜索词和可追问对象",
+      "错过窗口后显示补救路线、可转去地点和次日补办按钮",
+      "调查备忘录新增只在错过窗口时出现的补办任务，避免取件失败后无处整理"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "\u89e3\u9501\u56de\u5f52\u6821\u9a8c\u4fee\u590d",
+    changes: [
+      "\u4fee\u590d validate_unlock_matrix \u548c validate_search_paths \u7684\u5e38\u91cf\u89e3\u6790\uff0c\u907f\u514d\u65b0\u589e\u914d\u7f6e\u5e38\u91cf\u540e\u8bef\u5224\u5931\u8d25",
+      "\u641c\u7d22\u8def\u5f84\u6821\u9a8c\u540c\u6b65\u5f53\u524d\u5206\u5c42\u8d70\u8bbf\u89c4\u5219\uff1a\u8d70\u8bbf\u53d6\u5f97\u5165\u53e3\u8d44\u6599\uff0c\u518d\u7531\u5165\u53e3\u8d44\u6599\u63a8\u8fdb\u540e\u7eed\u94fe\u6761",
+      "\u91cd\u65b0\u751f\u6210\u641c\u7d22\u8def\u7ebf\u590d\u76d8\uff0c\u96c6\u56e2\u8d70\u8bbf\u7b49\u5165\u53e3\u73b0\u5728\u6309\u771f\u5b9e\u53ef\u89c1\u8d44\u6599\u8ba1\u6570"
+    ],
+    checks: [
+      "node --check tools\\validate_unlock_matrix.mjs passed",
+      "node --check tools\\validate_search_paths.mjs passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run review:search passed"
+    ]
+  },
   {
     date: "2026-05-16",
     title: "侧栏 UI 图标资产接入",
@@ -1184,10 +1291,16 @@ const state = {
   selectedDoc: null,
   readDocs: new Set(),
   collected: new Set(),
+  obtainedDocuments: new Set(),
   relationAnswers: {},
   activeRelationId: "rel_public_family",
   personFilter: "all",
   visitedLocations: new Set(),
+  locationVisits: {},
+  activeVisitId: "group",
+  lastVisitResult: null,
+  currentLocationId: "office",
+  clockMinutes: 9 * 60,
   report: { heir: "", descendant: "" },
   reportSubmitted: false,
   sound: true,
@@ -1336,6 +1449,14 @@ const notebookTaskGroups = [
         done: () => state.readDocs.size > 0
       },
       {
+        id: "visit_missed_recovery",
+        title: "补办错过窗口",
+        detail: "有走访地点因抵达过晚未取到材料，回走访页重新排期或转去仍可办理的地点。",
+        actionLabel: "看补救",
+        view: "visit",
+        done: () => missedVisitLocations().length === 0
+      },
+      {
         id: "tutorial_collect",
         title: "收藏第一份证据",
         detail: "打开资料后点击“加入证据箱”，让它可用于家谱绑定。",
@@ -1372,7 +1493,13 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/archive-room.png",
     query: "旧户籍",
     meta: "户籍 · 知青 · 旧报刊",
-    text: "调阅迁入登记、知青名册和早年公开报道，核对旧年往来与身份登记。"
+    text: "调阅迁入登记、知青名册和早年公开报道，核对旧年往来与身份登记。",
+    contact: "何国生",
+    interaction: "递交公证处委托函，说明需要查迁入登记和旧照片索引。",
+    windowStart: 9 * 60,
+    windowEnd: 16 * 60 + 30,
+    entryCutoff: 15 * 60,
+    duration: 90
   },
   {
     id: "hospital",
@@ -1380,7 +1507,13 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/county-hospital-corridor.png",
     query: "血样",
     meta: "血样 · 出生 · 病历",
-    text: "复核出生记录、留存血样和亲缘比对来源，确认材料来源是否可靠。"
+    text: "复核出生记录、留存血样和亲缘比对来源，确认材料来源是否可靠。",
+    contact: "周美英",
+    interaction: "请退休助产员核对登记簿影印件，再到病案窗口补登记。",
+    windowStart: 9 * 60,
+    windowEnd: 16 * 60,
+    entryCutoff: 14 * 60 + 30,
+    duration: 80
   },
   {
     id: "school",
@@ -1388,7 +1521,13 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/county-school-gate.png",
     query: "县一中",
     meta: "学籍 · 家访 · 未成年人",
-    text: "查验学籍、班主任家访和监护人信息，核实未成年人身份材料。"
+    text: "查验学籍、班主任家访和监护人信息，核实未成年人身份材料。",
+    contact: "黄雅玲",
+    interaction: "等班主任课间空档，出示委托函后核对学生信息表。",
+    windowStart: 14 * 60,
+    windowEnd: 17 * 60,
+    entryCutoff: 16 * 60,
+    duration: 70
   },
   {
     id: "ktv",
@@ -1396,7 +1535,13 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/county-ktv-room.png",
     query: "KTV",
     meta: "租赁 · 社区 · 复工检查",
-    text: "核对返乡经营登记、租住人口记录和社区走访材料。"
+    text: "核对返乡经营登记、租住人口记录和社区走访材料。",
+    contact: "马丽华",
+    interaction: "通过社区主任核对租住人口和复工检查留痕。",
+    windowStart: 11 * 60,
+    windowEnd: 22 * 60,
+    entryCutoff: 21 * 60,
+    duration: 60
   },
   {
     id: "group",
@@ -1404,7 +1549,13 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/shichang-group-building.png",
     query: "信托",
     meta: "股权 · 董事会 · 信托",
-    text: "区分公司控制权、公开子女口径和家族信托受益人审查。"
+    text: "区分公司控制权、公开子女口径和家族信托受益人审查。",
+    contact: "魏雪琴 / 方仁杰",
+    interaction: "先约集团法务魏雪琴，必要时再向改制会计方仁杰追问旧股权材料。",
+    windowStart: 9 * 60 + 30,
+    windowEnd: 17 * 60,
+    entryCutoff: 15 * 60 + 30,
+    duration: 75
   },
   {
     id: "yunqian",
@@ -1412,9 +1563,54 @@ const visitLocations = [
     image: "assets/images/photo-backgrounds/yunshan-street.png",
     query: "黔中",
     meta: "客运 · 邮电 · 传闻",
-    text: "核对两地长期往来的交通背景，排除司机认父等低可信传闻。"
+    text: "核对两地长期往来的交通背景，排除司机认父等低可信传闻。",
+    contact: "钱树林",
+    interaction: "在旧线客运点核对车队口述和线路备案，不把传闻当强证据。",
+    windowStart: 10 * 60,
+    windowEnd: 17 * 60 + 30,
+    entryCutoff: 16 * 60,
+    duration: 95
   }
 ];
+
+const visitFollowUps = {
+  archives: {
+    obtained: "先读照片背注和旧户籍，再回资料库搜“罗建宁”，把罗月珍与孩子的档案链连起来。",
+    missed: "档案馆闭窗后不要空等，先转去云山至黔中旧线核对交通与邮电材料，次日再补办旧户籍。",
+    query: "罗建宁",
+    ask: "何国生"
+  },
+  hospital: {
+    obtained: "先读血样留存单，再搜“DNA”，把亲缘比对记录和医院样本来源并排核对。",
+    missed: "医院病案窗口错过后，先去县一中或唱响 KTV 取得陈嘉东与陈静的身份入口，再次日补血样。",
+    query: "DNA",
+    ask: "周美英"
+  },
+  school: {
+    obtained: "先读学生信息表和家访记录，再搜“陈嘉东”，确认监护人与学籍材料是否一致。",
+    missed: "县一中放学后窗口收档，先转去唱响 KTV 查陈静经营线，次日午后再回学校补学籍。",
+    query: "陈嘉东",
+    ask: "黄雅玲"
+  },
+  ktv: {
+    obtained: "先读妇联帮扶和 KTV 登记，再搜“陈静”，把返乡经营、档案挂靠和母女线索分开。",
+    missed: "KTV 夜间仍可办理，若错过就先回资料库整理陈静相关材料，次日上午补社区记录。",
+    query: "陈静",
+    ask: "马丽华"
+  },
+  group: {
+    obtained: "先读信托条款，再搜“信托”，只沿继承规则小链查公证与司法材料，不把集团资料整包展开。",
+    missed: "集团法务窗口过点后，先查公开宗家和县档案馆旧档，次日上午再补信托入口材料。",
+    query: "信托",
+    ask: "魏雪琴 / 方仁杰"
+  },
+  yunqian: {
+    obtained: "先读旧线备案和明信片残片，再搜“黔中”，区分交通背景与钱树林传闻。",
+    missed: "旧线客运点收摊后，先回档案馆或资料库核对罗月珍，次日再补邮电与车队口述。",
+    query: "黔中",
+    ask: "钱树林"
+  }
+};
 
 const personGroups = [
   {
@@ -1505,10 +1701,16 @@ function serializeState() {
     selectedDoc: state.selectedDoc,
     readDocs: [...state.readDocs],
     collected: [...state.collected],
+    obtainedDocuments: [...state.obtainedDocuments],
     relationAnswers: state.relationAnswers,
     activeRelationId: state.activeRelationId,
     personFilter: state.personFilter,
     visitedLocations: [...state.visitedLocations],
+    locationVisits: state.locationVisits,
+    activeVisitId: state.activeVisitId,
+    lastVisitResult: state.lastVisitResult,
+    currentLocationId: state.currentLocationId,
+    clockMinutes: state.clockMinutes,
     report: state.report,
     reportSubmitted: state.reportSubmitted,
     sound: state.sound,
@@ -1533,10 +1735,18 @@ function loadState() {
     state.selectedDoc = parsed.selectedDoc || null;
     state.readDocs = new Set(parsed.readDocs || []);
     state.collected = new Set(parsed.collected || []);
+    state.obtainedDocuments = new Set((parsed.obtainedDocuments || []).filter((id) => documents.some((doc) => doc.id === id)));
     state.relationAnswers = parsed.relationAnswers || {};
     state.activeRelationId = relationPrompts.some((rel) => rel.id === parsed.activeRelationId) ? parsed.activeRelationId : "rel_public_family";
     state.personFilter = personFilterIds.has(parsed.personFilter) ? parsed.personFilter : "all";
     state.visitedLocations = new Set((parsed.visitedLocations || []).filter((id) => locationLabels[id]));
+    state.locationVisits = Object.fromEntries(
+      Object.entries(parsed.locationVisits || {}).filter(([id]) => locationLabels[id])
+    );
+    state.activeVisitId = locationLabels[parsed.activeVisitId] ? parsed.activeVisitId : "group";
+    state.lastVisitResult = parsed.lastVisitResult || null;
+    state.currentLocationId = parsed.currentLocationId === "office" || locationLabels[parsed.currentLocationId] ? parsed.currentLocationId : "office";
+    state.clockMinutes = Number.isFinite(parsed.clockMinutes) ? Math.max(dayStartMinutes, parsed.clockMinutes) : dayStartMinutes;
     state.report = parsed.report || { heir: "", descendant: "" };
     state.reportSubmitted = parsed.reportSubmitted === true;
     state.sound = parsed.sound !== false;
@@ -1887,8 +2097,16 @@ function hasReadOrCollected(ids) {
   return ids.some((id) => state.readDocs.has(id) || state.collected.has(id));
 }
 
+function hasObtainedOrRead(ids) {
+  return ids.some((id) => state.obtainedDocuments.has(id) || state.readDocs.has(id) || state.collected.has(id));
+}
+
 function locationForDocument(docId) {
   return Object.entries(locationDocumentIds).find(([, ids]) => ids.includes(docId))?.[0] || null;
+}
+
+function isLocationEntryDocument(locationId, docId) {
+  return Boolean(locationEntryDocumentIds[locationId]?.includes(docId));
 }
 
 function chainUnlockState(docId) {
@@ -1896,31 +2114,31 @@ function chainUnlockState(docId) {
     {
       ids: ["doc_trust_clause", "doc_notary_meeting", "doc_estate_law_note"],
       label: "继承规则",
-      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("group"),
-      hint: "先读公开家庭资料，或走访世昌集团。"
+      unlocked: () => state.readDocs.has("doc_official_family") || hasReadOrCollected(["doc_trust_clause"]),
+      hint: "先读公开家庭资料，或在世昌集团窗口取得信托入口材料。"
     },
     {
       ids: ["doc_educated_youth", "doc_photo_back", "doc_supply_roster", "doc_supply_advance", "doc_midwife_register"],
       label: "罗月珍线索",
-      unlocked: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("archives"),
-      hint: "先确认公开家庭版本，再走访县档案馆。"
+      unlocked: () => state.readDocs.has("doc_official_family") || hasReadOrCollected(["doc_educated_youth", "doc_photo_back"]),
+      hint: "先确认公开家庭版本，或在县档案馆窗口取得旧档入口。"
     },
     {
       ids: ["doc_luo_birth", "doc_old_postcard", "doc_remittance_stub", "doc_li_guilan_letter", "doc_classmate_luo"],
       label: "罗建宁线索",
-      unlocked: () => hasReadOrCollected(["doc_photo_back", "doc_educated_youth", "doc_midwife_register"]) || state.visitedLocations.has("yunqian"),
+      unlocked: () => hasReadOrCollected(["doc_photo_back", "doc_educated_youth", "doc_midwife_register", "doc_yunqian_bus_line", "doc_old_postcard"]),
       hint: "先核对罗月珍、照片背注或知青名册。"
     },
     {
       ids: ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_ktv_license", "doc_talent_window", "doc_ktv_lease_archive", "doc_neighborhood_visit", "doc_ktv_reopen_check"],
       label: "陈静线索",
-      unlocked: () => hasReadOrCollected(["doc_luo_birth", "doc_classmate_luo"]) || state.visitedLocations.has("ktv"),
+      unlocked: () => hasReadOrCollected(["doc_luo_birth", "doc_classmate_luo", "doc_ktv_license", "doc_women_fed"]),
       hint: "先固定罗建宁身份，或走访唱响 KTV。"
     },
     {
       ids: ["doc_school_forum", "doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_dna_record", "doc_hospital_blood"],
       label: "陈嘉东后段",
-      unlocked: () => hasReadOrCollected(["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed"]) || state.visitedLocations.has("school") || state.visitedLocations.has("hospital"),
+      unlocked: () => hasReadOrCollected(["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_school_forum", "doc_jiadong_school", "doc_hospital_blood"]),
       hint: "先串起陈静母系，再走访县一中或县医院。"
     }
   ];
@@ -1928,16 +2146,13 @@ function chainUnlockState(docId) {
 }
 
 function documentUnlockState(doc) {
-  if (state.readDocs.has(doc.id) || state.collected.has(doc.id)) {
+  if (state.obtainedDocuments.has(doc.id) || state.readDocs.has(doc.id) || state.collected.has(doc.id)) {
     return { unlocked: true, label: "已入卷" };
   }
   if (publicDocumentIds.has(doc.id)) {
     return { unlocked: true, label: "公开资料" };
   }
   const locationId = locationForDocument(doc.id);
-  if (locationId && state.visitedLocations.has(locationId)) {
-    return { unlocked: true, label: `${locationLabels[locationId]}取得` };
-  }
   const chain = chainUnlockState(doc.id);
   if (chain?.unlocked()) {
     return { unlocked: true, label: chain.label };
@@ -1959,7 +2174,7 @@ function suggestedLocationsForLockedDocs(docs) {
   const seen = new Set();
   for (const doc of docs) {
     const locationId = locationForDocument(doc.id);
-    if (!locationId || state.visitedLocations.has(locationId) || seen.has(locationId)) continue;
+    if (!locationId || state.locationVisits[locationId]?.status === "obtained" || seen.has(locationId)) continue;
     const location = visitLocations.find((item) => item.id === locationId);
     if (!location) continue;
     locations.push(location);
@@ -1991,20 +2206,235 @@ function renderFilters() {
   }).join("");
 }
 
+function formatClock(minutes) {
+  const bounded = Math.max(0, Math.round(minutes));
+  const hour = Math.floor(bounded / 60);
+  const minute = bounded % 60;
+  return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+}
+
+function locationById(id) {
+  return visitLocations.find((location) => location.id === id);
+}
+
+function personName(id) {
+  return people.find((person) => person.id === id)?.name || id;
+}
+
+function contactNamesForLocation(locationId) {
+  return (locationContacts[locationId] || []).map(personName).join(" / ");
+}
+
+function contactNamesForDocs(docIds) {
+  const ids = [...new Set(docIds.flatMap((docId) => documentContactPeople[docId] || []))];
+  return ids.map(personName).join(" / ");
+}
+
+function travelMinutes(fromId, toId) {
+  const from = locationCoordinates[fromId] || locationCoordinates.office;
+  const to = locationCoordinates[toId] || locationCoordinates.office;
+  const distance = Math.hypot(to.x - from.x, to.y - from.y);
+  return Math.max(10, Math.round(distance * 14));
+}
+
+function visitTiming(location) {
+  const depart = state.clockMinutes;
+  const travel = travelMinutes(state.currentLocationId, location.id);
+  const arrive = depart + travel;
+  const serviceStart = Math.max(arrive, location.windowStart);
+  const finish = serviceStart + location.duration;
+  const open = serviceStart <= location.entryCutoff && finish <= location.windowEnd;
+  return { depart, travel, arrive, wait: Math.max(0, location.windowStart - arrive), serviceStart, finish, open };
+}
+
+function visitStatus(location) {
+  const visit = state.locationVisits[location.id];
+  if (visit?.status === "obtained") return "已取件";
+  if (visit?.status === "missed") return "已错过";
+  const timing = visitTiming(location);
+  if (timing.arrive > location.entryCutoff) return "窗口将过";
+  if (state.clockMinutes < location.windowStart) return "未开窗";
+  if (state.clockMinutes > location.entryCutoff) return "赶不上";
+  return "可办理";
+}
+
+function missedVisitLocations() {
+  return visitLocations.filter((location) => state.locationVisits[location.id]?.status === "missed");
+}
+
+function availableVisitFallback(excludeId) {
+  return visitLocations
+    .filter((location) => location.id !== excludeId && state.locationVisits[location.id]?.status !== "obtained")
+    .map((location) => ({ location, timing: visitTiming(location) }))
+    .filter(({ timing }) => timing.open)
+    .sort((left, right) => left.timing.finish - right.timing.finish)[0]?.location || null;
+}
+
+function visitFollowUp(location, status) {
+  const rule = visitFollowUps[location.id] || {};
+  if (status === "obtained") {
+    return {
+      title: "下一步建议",
+      text: rule.obtained || `先阅读取得的入口材料，再用“${location.query}”回资料库复查。`,
+      query: rule.query || location.query,
+      ask: rule.ask || contactNamesForLocation(location.id) || location.contact
+    };
+  }
+  const fallback = availableVisitFallback(location.id);
+  return {
+    title: "补救路线",
+    text: rule.missed || `本地点窗口已过，先转去${fallback?.title || "仍可办理的地点"}，次日再补办${location.title}。`,
+    query: fallback?.query || location.query,
+    fallbackId: fallback?.id || "",
+    fallbackLabel: fallback?.title || "",
+    ask: rule.ask || contactNamesForLocation(location.id) || location.contact
+  };
+}
+
+function rescheduleMissedVisit(locationId) {
+  const location = locationById(locationId);
+  if (!location || state.locationVisits[location.id]?.status !== "missed") return;
+  delete state.locationVisits[location.id];
+  state.clockMinutes = 9 * 60;
+  state.currentLocationId = "office";
+  state.activeVisitId = location.id;
+  state.lastVisitResult = {
+    locationId: location.id,
+    status: "rescheduled",
+    title: `${location.title}已排到次日`,
+    text: `已回到 09:00 从公证处出发，重新计算${location.title}窗口和路程。`,
+    documents: []
+  };
+}
+
+function acquiredDocTitles(ids) {
+  return ids.map((id) => documents.find((doc) => doc.id === id)?.title || id);
+}
+
+function performLocationVisit(locationId) {
+  const location = locationById(locationId);
+  if (!location) return;
+  const timing = visitTiming(location);
+  state.visitedLocations.add(location.id);
+  state.currentLocationId = location.id;
+  state.clockMinutes = timing.finish;
+
+  const entryDocs = locationEntryDocumentIds[location.id] || [];
+  if (timing.open) {
+    entryDocs.forEach((docId) => state.obtainedDocuments.add(docId));
+    state.locationVisits[location.id] = {
+      status: "obtained",
+      at: state.clockMinutes,
+      documents: entryDocs,
+      contactIds: locationContacts[location.id] || []
+    };
+    state.lastVisitResult = {
+      locationId: location.id,
+      status: "obtained",
+      title: `${location.title}取件完成`,
+      text: `${contactNamesForLocation(location.id) || location.contact}核验委托函后，交出${entryDocs.length}份入口材料。`,
+      documents: entryDocs
+    };
+  } else {
+    state.locationVisits[location.id] = {
+      status: "missed",
+      at: state.clockMinutes,
+      documents: [],
+      contactIds: locationContacts[location.id] || []
+    };
+    state.lastVisitResult = {
+      locationId: location.id,
+      status: "missed",
+      title: `${location.title}窗口已过`,
+      text: `抵达时已错过可办理窗口，${contactNamesForLocation(location.id) || location.contact}无法当天调出材料。`,
+      documents: []
+    };
+  }
+
+  state.activeVisitId = location.id;
+}
+
 function renderVisitLocations() {
   if (!els.locationList) return;
   els.locationList.innerHTML = visitLocations.map((location) => `
-    <button class="location-card ${state.visitedLocations.has(location.id) ? "is-visited" : ""}" data-location-id="${location.id}" data-location-query="${location.query}" aria-label="前往${location.title}">
+    <button class="location-card ${state.activeVisitId === location.id ? "is-active" : ""} ${state.visitedLocations.has(location.id) ? "is-visited" : ""}" data-location-id="${location.id}" aria-label="查看${location.title}">
       <img src="${location.image}" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
-        <span class="location-meta">${location.meta}</span>
+        <span class="location-meta">${location.meta} · ${formatClock(location.windowStart)}-${formatClock(location.windowEnd)}</span>
         <strong>${location.title}</strong>
         <span>${location.text}</span>
-        ${state.visitedLocations.has(location.id) ? '<em>已走访</em>' : ""}
+        <em>${visitStatus(location)}</em>
       </span>
     </button>
   `).join("");
+  renderVisitDetail();
+}
+
+function renderVisitDetail() {
+  if (!els.visitDetail) return;
+  const location = locationById(state.activeVisitId) || visitLocations[0];
+  const timing = visitTiming(location);
+  const fromLabel = locationCoordinates[state.currentLocationId]?.label || "当前位置";
+  const progress = state.locationVisits[location.id] ? 100 : 0;
+  const entryDocs = locationEntryDocumentIds[location.id] || [];
+  const result = state.lastVisitResult?.locationId === location.id ? state.lastVisitResult : null;
+  const alreadyObtained = state.locationVisits[location.id]?.status === "obtained";
+  const followUp = result && ["obtained", "missed"].includes(result.status) ? visitFollowUp(location, result.status) : null;
+  els.visitDetail.innerHTML = `
+    <article class="visit-detail-card">
+      <header>
+        <div>
+          <span>当前位置：${fromLabel} · 当前时间 ${formatClock(state.clockMinutes)}</span>
+          <h4>${location.title}</h4>
+        </div>
+        <strong>${visitStatus(location)}</strong>
+      </header>
+      <div class="visit-metrics">
+        <span>坐标 ${locationCoordinates[location.id].x.toFixed(1)}, ${locationCoordinates[location.id].y.toFixed(1)}</span>
+        <span>路程 ${timing.travel} 分钟</span>
+        <span>窗口 ${formatClock(location.windowStart)}-${formatClock(location.windowEnd)}</span>
+        <span>办理 ${location.duration} 分钟</span>
+      </div>
+      <div class="visit-contact">
+        <strong>交互对象</strong>
+        <p>${contactNamesForLocation(location.id) || location.contact}</p>
+        <span>${location.interaction}</span>
+      </div>
+      <div class="visit-progress" aria-label="走访进度 ${progress}%">
+        <span style="width: ${progress}%"></span>
+      </div>
+      <p class="hint">预计 ${formatClock(timing.depart)} 出发，${formatClock(timing.arrive)} 抵达，${formatClock(timing.serviceStart)} 开始办理，${formatClock(timing.finish)} 结束。</p>
+      <div class="visit-doc-preview">
+        <strong>可争取入口材料</strong>
+        <p>${acquiredDocTitles(entryDocs).join("、")}</p>
+        <small>关联人员：${contactNamesForDocs(entryDocs) || contactNamesForLocation(location.id)}</small>
+      </div>
+      ${result ? `
+        <div class="visit-result visit-result-${result.status}">
+          <strong>${result.title}</strong>
+          <p>${result.text}</p>
+          ${result.documents.length ? `<small>已入卷：${acquiredDocTitles(result.documents).join("、")}</small>` : ""}
+          ${followUp ? `
+            <div class="visit-next-step">
+              <span>${followUp.title}</span>
+              <p>${followUp.text}</p>
+              <small>可追问：${followUp.ask}</small>
+              <div>
+                <button type="button" class="ghost-btn" data-visit-search="${followUp.query}">搜索“${followUp.query}”</button>
+                ${followUp.fallbackId ? `<button type="button" class="ghost-btn" data-visit-focus="${followUp.fallbackId}">转去${followUp.fallbackLabel}</button>` : ""}
+                ${result.status === "missed" ? `<button type="button" class="ghost-btn" data-visit-reschedule="${location.id}">次日补办</button>` : ""}
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      ` : ""}
+      <div class="visit-actions">
+        <button type="button" class="primary-action" data-visit-action="${location.id}" ${alreadyObtained ? "disabled" : ""}>${alreadyObtained ? "入口材料已取得" : "递交委托函并办理"}</button>
+        <button type="button" class="ghost-btn" data-visit-search="${location.query}">用地点关键词检索</button>
+      </div>
+    </article>
+  `;
 }
 
 function renderResults() {
@@ -2188,8 +2618,9 @@ function collectedBadge(docId) {
 
 function isPersonDiscovered(id) {
   if (personGroups.find((group) => group.tone === "official")?.ids.includes(id)) return true;
+  if (Object.values(state.locationVisits).some((visit) => visit.contactIds?.includes(id))) return true;
   if (id === "luo_yuezhen") {
-    return state.visitedLocations.has("archives")
+    return hasObtainedOrRead(["doc_educated_youth", "doc_photo_back"])
       || hasReadOrCollected(["doc_educated_youth", "doc_photo_back", "doc_supply_roster", "doc_midwife_register"]);
   }
   if (id === "luo_jianning") {
@@ -2197,26 +2628,26 @@ function isPersonDiscovered(id) {
       || isRelationCorrect(relationPrompts.find((rel) => rel.id === "rel_zong_luo"));
   }
   if (id === "chen_jing") {
-    return state.visitedLocations.has("ktv")
+    return hasObtainedOrRead(["doc_ktv_license", "doc_women_fed"])
       || hasReadOrCollected(["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed", "doc_dna_record"]);
   }
   if (id === "chen_jiadong") {
-    return state.visitedLocations.has("school")
+    return hasObtainedOrRead(["doc_school_forum", "doc_jiadong_school"])
       || hasReadOrCollected(["doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_tiktok_chenjing"]);
   }
   const rules = {
-    zong_minghui: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_board_handover_2015", "doc_group_history"]),
-    zong_mingjun: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_sibling_meeting_2020", "doc_gossip_mingjun"]),
-    li_qiang: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_dinghui_due_diligence"]),
-    li_min: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_gossip_li_tianci"]),
-    li_tianci: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_gossip_li_tianci"]),
-    qian_shulin: () => state.visitedLocations.has("yunqian") || hasReadOrCollected(["doc_false_qian", "doc_yunqian_bus_line"]),
-    he_guosheng: () => state.visitedLocations.has("archives") || hasReadOrCollected(["doc_supply_advance", "doc_supply_roster"]),
-    zhou_meiying: () => state.visitedLocations.has("hospital") || hasReadOrCollected(["doc_midwife_register", "doc_hospital_blood"]),
-    huang_yaling: () => state.visitedLocations.has("school") || hasReadOrCollected(["doc_teacher_visit", "doc_jiadong_school"]),
-    fang_renjie: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_equity_draft_2005"]),
-    wei_xueqin: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_notary_meeting", "doc_family_meeting"]),
-    ma_lihua: () => state.visitedLocations.has("ktv") || hasReadOrCollected(["doc_neighborhood_visit", "doc_ktv_reopen_check"])
+    zong_minghui: () => hasReadOrCollected(["doc_board_handover_2015", "doc_group_history"]),
+    zong_mingjun: () => hasReadOrCollected(["doc_sibling_meeting_2020", "doc_gossip_mingjun"]),
+    li_qiang: () => hasReadOrCollected(["doc_dinghui_due_diligence"]),
+    li_min: () => hasReadOrCollected(["doc_gossip_li_tianci"]),
+    li_tianci: () => hasReadOrCollected(["doc_gossip_li_tianci"]),
+    qian_shulin: () => hasObtainedOrRead(["doc_yunqian_bus_line", "doc_old_postcard"]) || hasReadOrCollected(["doc_false_qian", "doc_yunqian_bus_line"]),
+    he_guosheng: () => hasObtainedOrRead(["doc_educated_youth", "doc_photo_back"]) || hasReadOrCollected(["doc_supply_advance", "doc_supply_roster"]),
+    zhou_meiying: () => hasObtainedOrRead(["doc_hospital_blood"]) || hasReadOrCollected(["doc_midwife_register", "doc_hospital_blood"]),
+    huang_yaling: () => hasObtainedOrRead(["doc_school_forum", "doc_jiadong_school"]) || hasReadOrCollected(["doc_teacher_visit", "doc_jiadong_school"]),
+    fang_renjie: () => hasReadOrCollected(["doc_equity_draft_2005"]),
+    wei_xueqin: () => hasReadOrCollected(["doc_notary_meeting", "doc_family_meeting"]),
+    ma_lihua: () => hasObtainedOrRead(["doc_ktv_license", "doc_women_fed"]) || hasReadOrCollected(["doc_neighborhood_visit", "doc_ktv_reopen_check"])
   };
   return Boolean(rules[id]?.());
 }
@@ -2764,13 +3195,14 @@ function taskStatusLabel(done, current, manualState) {
 
 function isNotebookTaskAvailable(item) {
   const rules = {
-    main_trust_rule: () => state.readDocs.has("doc_official_family") || state.visitedLocations.has("group"),
+    main_trust_rule: () => state.readDocs.has("doc_official_family") || hasObtainedOrRead(["doc_trust_clause"]),
     main_hidden_chain: () => state.collected.has("doc_trust_clause") || isPersonDiscovered("luo_yuezhen"),
     main_relations: () => availableRelationPrompts().length > 0,
     main_report: () => availableRelationPrompts().length === relationPrompts.length || state.reportSubmitted,
     side_zong_jianfang: () => isPersonDiscovered("chen_jing") || hasReadOrCollected(["doc_women_fed", "doc_talent_window"]),
-    side_qian_rumor: () => state.visitedLocations.has("yunqian") || hasReadOrCollected(["doc_false_qian", "doc_yunqian_bus_line"]),
-    side_equity_trust: () => state.visitedLocations.has("group") || hasReadOrCollected(["doc_equity_draft_2005", "doc_board_handover_2015"])
+    side_qian_rumor: () => hasObtainedOrRead(["doc_yunqian_bus_line"]) || hasReadOrCollected(["doc_false_qian", "doc_yunqian_bus_line"]),
+    side_equity_trust: () => hasReadOrCollected(["doc_equity_draft_2005", "doc_board_handover_2015"]),
+    visit_missed_recovery: () => missedVisitLocations().length > 0
   };
   return rules[item.id] ? rules[item.id]() : true;
 }
@@ -2916,7 +3348,7 @@ function renderLeads() {
     },
     {
       done: state.collected.has("doc_trust_clause"),
-      text: state.readDocs.has("doc_official_family") || state.visitedLocations.has("group")
+      text: state.readDocs.has("doc_official_family") || hasObtainedOrRead(["doc_trust_clause"])
         ? "找到规则文件，确认资格审查看哪些条件。"
         : "先把公开家庭版本建起来，再查规则文件。"
     }
@@ -3082,6 +3514,7 @@ function runAutotest() {
     "doc_talent_window",
     "doc_women_fed"
   ]);
+  state.obtainedDocuments = new Set(documents.map((doc) => doc.id));
   state.relationAnswers = {};
   for (const rel of relationPrompts) {
     state.relationAnswers[rel.id] = {
@@ -3104,6 +3537,7 @@ function resetProgressForHiddenTest() {
   state.selectedDoc = null;
   state.readDocs = new Set();
   state.collected = new Set();
+  state.obtainedDocuments = new Set();
   state.relationAnswers = {};
   state.report = { heir: "", descendant: "" };
   state.notes = "";
@@ -3111,6 +3545,11 @@ function resetProgressForHiddenTest() {
   state.sound = false;
   state.ambient = false;
   state.visitedLocations = new Set();
+  state.locationVisits = {};
+  state.activeVisitId = "group";
+  state.lastVisitResult = null;
+  state.currentLocationId = "office";
+  state.clockMinutes = dayStartMinutes;
   state.taskStates = {};
   state.reportSubmitted = false;
   localStorage.removeItem("yunshan-save");
@@ -3185,6 +3624,29 @@ function runGuidedPlaytest() {
     readCounter: $("read-count").textContent,
     relationCounter: $("relation-count").textContent
   });
+  resetProgressForHiddenTest();
+  switchView("visit");
+  performLocationVisit("group");
+  renderAll();
+  assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  search("信托", ["doc_trust_clause"], ["doc_family_meeting", "doc_equity_draft_2005", "doc_dinghui_due_diligence"]);
+  const groupVisible = visibleResultIds();
+  const groupLocationDocs = locationDocumentIds.group.filter((id) => groupVisible.includes(id));
+  assert(groupLocationDocs.length < locationDocumentIds.group.length, "visiting Shichang Group should not unlock every group document at once");
+  record("世昌集团走访分层", { visibleGroupDocs: groupLocationDocs });
+  resetProgressForHiddenTest();
+  state.clockMinutes = 17 * 60;
+  switchView("visit");
+  performLocationVisit("school");
+  renderAll();
+  assert(state.locationVisits.school?.status === "missed", "late school visit should record a missed window");
+  assert(Boolean(els.visitDetail.querySelector("[data-visit-reschedule='school']")), "missed visit should offer next-day rescheduling");
+  switchView("notes");
+  renderAll();
+  assert(els.taskList.textContent.includes("补办错过窗口"), "missed visit should create a notebook recovery task");
+  record("走访错过补救", { missed: "school" });
+  resetProgressForHiddenTest();
 
   search("宗世昌", ["doc_official_family"]);
   search("信托", [], ["doc_trust_clause"]);
@@ -3271,6 +3733,7 @@ function runDocumentLayoutAudit() {
 
   resetProgressForHiddenTest();
   state.visitedLocations = new Set(visitLocations.map((location) => location.id));
+  state.obtainedDocuments = new Set(documents.map((doc) => doc.id));
   state.readDocs = new Set(documents.map((doc) => doc.id));
   switchView("search");
   renderAll();
@@ -3336,6 +3799,7 @@ function runVisualAssetAudit() {
   state.visitedLocations = new Set(visitLocations.map((location) => location.id));
   state.readDocs = new Set(documents.map((doc) => doc.id));
   state.collected = new Set(documents.map((doc) => doc.id));
+  state.obtainedDocuments = new Set(documents.map((doc) => doc.id));
   state.personFilter = "all";
   state.relationAnswers = {};
   for (const rel of relationPrompts) {
@@ -3419,10 +3883,37 @@ function maybeRunHiddenTests() {
 function bindEvents() {
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
   els.locationList.addEventListener("click", (event) => {
-    const card = event.target.closest("[data-location-query]");
+    const card = event.target.closest("[data-location-id]");
     if (!card) return;
-    if (card.dataset.locationId) state.visitedLocations.add(card.dataset.locationId);
-    state.query = card.dataset.locationQuery;
+    state.activeVisitId = card.dataset.locationId;
+    playSound("click");
+    renderAll();
+  });
+  els.visitDetail.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-visit-action]");
+    if (action) {
+      performLocationVisit(action.dataset.visitAction);
+      playSound(state.lastVisitResult?.status === "obtained" ? "evidence" : "conflict");
+      renderAll();
+      return;
+    }
+    const focus = event.target.closest("[data-visit-focus]");
+    if (focus) {
+      state.activeVisitId = focus.dataset.visitFocus;
+      playSound("click");
+      renderAll();
+      return;
+    }
+    const reschedule = event.target.closest("[data-visit-reschedule]");
+    if (reschedule) {
+      rescheduleMissedVisit(reschedule.dataset.visitReschedule);
+      playSound("click");
+      renderAll();
+      return;
+    }
+    const search = event.target.closest("[data-visit-search]");
+    if (!search) return;
+    state.query = search.dataset.visitSearch;
     state.filter = "all";
     switchView("search");
     playSound("search");
@@ -3488,7 +3979,7 @@ function bindEvents() {
     }
     const locationButton = event.target.closest("[data-unlock-location]");
     if (locationButton) {
-      state.visitedLocations.add(locationButton.dataset.unlockLocation);
+      performLocationVisit(locationButton.dataset.unlockLocation);
       state.query = locationButton.dataset.locationQuery || "";
       state.filter = "all";
       switchView("search");
@@ -3665,6 +4156,7 @@ function init() {
     sourceFilters: $("source-filters"),
     resultList: $("result-list"),
     locationList: $("location-list"),
+    visitDetail: $("visit-detail"),
     familyMap: $("family-map"),
     documentEmpty: $("document-empty"),
     documentView: $("document-view"),
