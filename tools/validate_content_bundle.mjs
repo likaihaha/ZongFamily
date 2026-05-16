@@ -55,6 +55,9 @@ if (!Array.isArray(data.documents)) {
 if (!Array.isArray(data.familyMembers)) {
   fail("familyMembers must be an array");
 }
+if ("relationPrompts" in data && !Array.isArray(data.relationPrompts)) {
+  fail("relationPrompts must be an array when present");
+}
 
 function validateIdArray(items, label) {
   if (!Array.isArray(items)) {
@@ -82,9 +85,12 @@ validateIdArray(data.truthTable, "truthTable");
 validateIdArray(data.clues, "clues");
 validateIdArray(data.documents, "documents");
 validateIdArray(data.familyMembers, "familyMembers");
+validateIdArray(data.relationPrompts || [], "relationPrompts");
 
 const truthIds = new Set((data.truthTable || []).map((item) => item.id));
 const familyMemberIds = new Set((data.familyMembers || []).map((item) => item.id));
+const documentIds = new Set((data.documents || []).map((item) => item.id));
+const supportingDocumentIdsByTruthId = new Map();
 
 for (const [index, clue] of data.clues.entries()) {
   if (typeof clue.name !== "string" || !clue.name.trim()) {
@@ -100,9 +106,31 @@ for (const [index, clue] of data.clues.entries()) {
   if (clue.supportsTruthIds.length === 0) {
     fail(`clues[${index}].supportsTruthIds must not be empty`);
   }
+  if (!Array.isArray(clue.documentIds) || clue.documentIds.length === 0) {
+    fail(`clues[${index}].documentIds must be a non-empty array`);
+  } else {
+    const clueDocumentIds = new Set();
+    for (const docId of clue.documentIds) {
+      if (typeof docId !== "string" || !docId.trim()) {
+        fail(`clues[${index}].documentIds contains a non-string id`);
+      } else if (!documentIds.has(docId)) {
+        fail(`clues[${index}] references missing document id: ${docId}`);
+      } else if (clueDocumentIds.has(docId)) {
+        fail(`clues[${index}] repeats document id: ${docId}`);
+      }
+      clueDocumentIds.add(docId);
+    }
+  }
   for (const truthId of clue.supportsTruthIds) {
     if (!truthIds.has(truthId)) {
       fail(`clues[${index}] references missing truth id: ${truthId}`);
+      continue;
+    }
+    if (!supportingDocumentIdsByTruthId.has(truthId)) {
+      supportingDocumentIdsByTruthId.set(truthId, new Set());
+    }
+    for (const docId of clue.documentIds || []) {
+      supportingDocumentIdsByTruthId.get(truthId).add(docId);
     }
   }
 }
@@ -117,11 +145,75 @@ for (const [index, doc] of data.documents.entries()) {
   if (typeof doc.title !== "string" || !doc.title.trim()) {
     fail(`documents[${index}].title must be a non-empty string`);
   }
+  if (typeof doc.year !== "number") {
+    fail(`documents[${index}].year must be a number`);
+  }
+  if (typeof doc.source !== "string" || !doc.source.trim()) {
+    fail(`documents[${index}].source must be a non-empty string`);
+  }
+  if (typeof doc.trust !== "number" || doc.trust < 1 || doc.trust > 5) {
+    fail(`documents[${index}].trust must be a number from 1 to 5`);
+  }
+  if (!Array.isArray(doc.keywords) || doc.keywords.length === 0) {
+    fail(`documents[${index}].keywords must be a non-empty array`);
+  }
+  if (typeof doc.summary !== "string" || !doc.summary.trim()) {
+    fail(`documents[${index}].summary must be a non-empty string`);
+  }
   if (typeof doc.category !== "string" || !doc.category.trim()) {
     fail(`documents[${index}].category must be a non-empty string`);
   }
   if (typeof doc.body !== "string" || doc.body.trim().length < 10) {
     fail(`documents[${index}].body must be at least 10 characters`);
+  }
+}
+
+for (const [index, person] of data.familyMembers.entries()) {
+  if (typeof person.name !== "string" || !person.name.trim()) {
+    fail(`familyMembers[${index}].name must be a non-empty string`);
+  }
+  if (!Array.isArray(person.aliases)) {
+    fail(`familyMembers[${index}].aliases must be an array`);
+  }
+  if (person.birth !== undefined && person.birth !== null && typeof person.birth !== "number") {
+    fail(`familyMembers[${index}].birth must be a number or null`);
+  }
+  if (person.death !== undefined && person.death !== null && typeof person.death !== "number") {
+    fail(`familyMembers[${index}].death must be a number or null`);
+  }
+  if (typeof person.role !== "string" || !person.role.trim()) {
+    fail(`familyMembers[${index}].role must be a non-empty string`);
+  }
+  if (typeof person.note !== "string" || !person.note.trim()) {
+    fail(`familyMembers[${index}].note must be a non-empty string`);
+  }
+}
+
+for (const [index, relation] of (data.relationPrompts || []).entries()) {
+  if (typeof relation.title !== "string" || !relation.title.trim()) {
+    fail(`relationPrompts[${index}].title must be a non-empty string`);
+  }
+  if (typeof relation.prompt !== "string" || !relation.prompt.trim()) {
+    fail(`relationPrompts[${index}].prompt must be a non-empty string`);
+  }
+  if (!Array.isArray(relation.slots) || relation.slots.length === 0) {
+    fail(`relationPrompts[${index}].slots must be a non-empty array`);
+  }
+  if (!Array.isArray(relation.correct) || relation.correct.length === 0) {
+    fail(`relationPrompts[${index}].correct must be a non-empty array`);
+  }
+  if (!Array.isArray(relation.requiredEvidence) || relation.requiredEvidence.length === 0) {
+    fail(`relationPrompts[${index}].requiredEvidence must be a non-empty array`);
+  }
+  for (const value of relation.correct || []) {
+    if (!familyMemberIds.has(value) && !documentIds.has(value)) {
+      fail(`relationPrompts[${index}] references unknown correct value: ${value}`);
+    }
+  }
+  for (const docId of relation.requiredEvidence || []) {
+    if (!documentIds.has(docId)) {
+      fail(`relationPrompts[${index}] references missing evidence document: ${docId}`);
+    }
   }
 }
 
@@ -132,6 +224,10 @@ for (const truthId of requiredTruthIds) {
   const covered = data.clues.some((clue) => clue.supportsTruthIds?.includes(truthId));
   if (!covered) {
     fail(`Required truth is not supported by any clue: ${truthId}`);
+  }
+  const supportingDocumentCount = supportingDocumentIdsByTruthId.get(truthId)?.size || 0;
+  if (supportingDocumentCount < 2) {
+    fail(`Required truth needs at least two source documents: ${truthId}`);
   }
 }
 

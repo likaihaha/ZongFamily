@@ -1,0 +1,16 @@
+﻿[
+    {
+        "viewport":  "desktop",
+        "size":  "1365,900",
+        "documents":  50,
+        "checkedNodes":  50,
+        "status":  "pass"
+    },
+    {
+        "viewport":  "mobile",
+        "size":  "390,900",
+        "documents":  50,
+        "checkedNodes":  50,
+        "status":  "pass"
+    }
+]

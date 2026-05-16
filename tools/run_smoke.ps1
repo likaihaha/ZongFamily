@@ -44,6 +44,13 @@ $domFile = Get-Item $domOut
 if ($domFile.Length -le 0) {
   throw "Smoke test failed: docs\\smoke-dom.html is empty (see docs\\smoke-edge.err.log)"
 }
+if (-not (Test-Path $shotOut)) {
+  throw "Smoke test failed: docs\\smoke-autotest.png was not generated"
+}
+$shotFile = Get-Item $shotOut
+if ($shotFile.Length -le 0) {
+  throw "Smoke test failed: docs\\smoke-autotest.png is empty (see docs\\smoke-edge.err.log)"
+}
 
 $dom = Get-Content -Raw -Encoding UTF8 $domOut
 if ($dom -notmatch 'data-autotest="pass"') {

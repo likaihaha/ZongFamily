@@ -5,7 +5,7 @@
   <title>云山宗氏案 MVP</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-autotest="pass">
+<body data-playtest="pass">
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
@@ -29,13 +29,13 @@
 
       <section class="case-card">
         <h2>当前目标</h2>
-        <ol id="current-goal-list"><li>复核公开家庭资料中的已知成员。</li><li>继续收藏能直接支撑关系的资料。</li><li>为当前已开放的 6 条关系绑定证据。</li><li>完成关系核验后提交最终报告。</li></ol>
+        <ol id="current-goal-list"><li>复核公开家庭资料中的已知成员。</li><li>继续收藏能直接支撑关系的资料。</li><li>为当前已开放的 6 条关系绑定证据。</li><li>最终报告已提交，可复盘证据链。</li></ol>
       </section>
 
       <section class="meter-card">
         <div>
           <span>资料阅读</span>
-          <strong id="read-count">50 已读</strong>
+          <strong id="read-count">10 已读</strong>
         </div>
         <div>
           <span>证据收藏</span>
@@ -99,7 +99,7 @@
           <h2 id="view-title">提交</h2>
         </div>
         <div class="top-actions">
-          <button id="sound-btn" class="ghost-btn">声音：开</button>
+          <button id="sound-btn" class="ghost-btn">声音：关</button>
           <button id="ambient-btn" class="ghost-btn">环境音：关</button>
           <button id="save-btn" class="ghost-btn">保存</button>
           <button id="reset-btn" class="ghost-btn danger">重置进度</button>
@@ -122,69 +122,69 @@
               <p>选择地点，调阅该处可取得的案卷和线索。</p>
             </div>
             <div id="location-list" class="location-grid">
-    <button class="location-card is-visited" data-location-id="archives" data-location-query="旧户籍" aria-label="前往县档案馆">
+    <button class="location-card " data-location-id="archives" data-location-query="旧户籍" aria-label="前往县档案馆">
       <img src="assets/images/photo-backgrounds/archive-room.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">户籍 · 知青 · 旧报刊</span>
         <strong>县档案馆</strong>
         <span>调阅迁入登记、知青名册和早年公开报道，核对旧年往来与身份登记。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   
-    <button class="location-card is-visited" data-location-id="hospital" data-location-query="血样" aria-label="前往县医院">
+    <button class="location-card " data-location-id="hospital" data-location-query="血样" aria-label="前往县医院">
       <img src="assets/images/photo-backgrounds/county-hospital-corridor.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">血样 · 出生 · 病历</span>
         <strong>县医院</strong>
         <span>复核出生记录、留存血样和亲缘比对来源，确认材料来源是否可靠。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   
-    <button class="location-card is-visited" data-location-id="school" data-location-query="县一中" aria-label="前往县一中">
+    <button class="location-card " data-location-id="school" data-location-query="县一中" aria-label="前往县一中">
       <img src="assets/images/photo-backgrounds/county-school-gate.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">学籍 · 家访 · 未成年人</span>
         <strong>县一中</strong>
         <span>查验学籍、班主任家访和监护人信息，核实未成年人身份材料。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   
-    <button class="location-card is-visited" data-location-id="ktv" data-location-query="KTV" aria-label="前往唱响 KTV 后巷">
+    <button class="location-card " data-location-id="ktv" data-location-query="KTV" aria-label="前往唱响 KTV 后巷">
       <img src="assets/images/photo-backgrounds/county-ktv-room.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">租赁 · 社区 · 复工检查</span>
         <strong>唱响 KTV 后巷</strong>
         <span>核对返乡经营登记、租住人口记录和社区走访材料。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   
-    <button class="location-card is-visited" data-location-id="group" data-location-query="信托" aria-label="前往世昌集团">
+    <button class="location-card " data-location-id="group" data-location-query="信托" aria-label="前往世昌集团">
       <img src="assets/images/photo-backgrounds/shichang-group-building.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">股权 · 董事会 · 信托</span>
         <strong>世昌集团</strong>
         <span>区分公司控制权、公开子女口径和家族信托受益人审查。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   
-    <button class="location-card is-visited" data-location-id="yunqian" data-location-query="黔中" aria-label="前往云山至黔中旧线">
+    <button class="location-card " data-location-id="yunqian" data-location-query="黔中" aria-label="前往云山至黔中旧线">
       <img src="assets/images/photo-backgrounds/yunshan-street.png" alt="" loading="lazy">
       <span class="location-shade"></span>
       <span class="location-copy">
         <span class="location-meta">客运 · 邮电 · 传闻</span>
         <strong>云山至黔中旧线</strong>
         <span>核对两地长期往来的交通背景，排除司机认父等低可信传闻。</span>
-        <em>已走访</em>
+        
       </span>
     </button>
   </div>
@@ -236,28 +236,148 @@
       </button>
     </div>
             <div id="result-list" class="result-list">
-      <div class="empty-state search-start-state">
-        <div>
-          <h3>输入关键词后调阅资料</h3>
-          <p>资料库不会在开局直接摊开全部入卷材料。先从公开人物、地点或文件类型查起。</p>
-          <div class="start-query-grid" aria-label="开局检索入口">
-            <button type="button" data-start-query="宗世昌">宗世昌</button>
-            <button type="button" data-start-query="世昌集团">世昌集团</button>
-            <button type="button" data-start-query="云山县">云山县</button>
-            <button type="button" data-start-query="匿名信">匿名信</button>
+      <button class="result-card  " data-doc-id="doc_hospital_blood">
+        
+        <div class="result-copy">
+          <h4>云山县人民医院住院样本留存单</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">医院</span>
+            <span class="badge unlock-badge">陈嘉东后段</span>
+            <span class="badge high">可信度高</span>
+            
           </div>
+          <p class="doc-summary">解释 DNA 记录中的宗世昌血样来源。</p>
         </div>
-      </div>
+      </button>
+    
+      <button class="result-card is-read has-image" data-doc-id="doc_dna_record">
+        <img class="result-thumb" src="assets/images/evidence/dna-record-2019.jpg" alt="" loading="lazy">
+        <div class="result-copy">
+          <h4>云山县疾控中心亲缘比对记录</h4>
+          <div class="meta-line">
+            <span class="badge">2019</span>
+            <span class="badge">DNA</span>
+            <span class="badge unlock-badge">已入卷</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
+        </div>
+      </button>
+    
+      <button class="result-card is-read has-image" data-doc-id="doc_trust_clause">
+        <img class="result-thumb" src="assets/images/evidence/trust-clause-1998.jpg" alt="" loading="lazy">
+        <div class="result-copy">
+          <h4>香港家族信托文件节选</h4>
+          <div class="meta-line">
+            <span class="badge">1998</span>
+            <span class="badge">信托</span>
+            <span class="badge unlock-badge">已入卷</span>
+            <span class="badge high">可信度高</span>
+            <span class="badge high">已收藏</span>
+          </div>
+          <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
+        </div>
+      </button>
+    
+      <button class="result-card  " data-doc-id="doc_estate_law_note">
+        
+        <div class="result-copy">
+          <h4>云山县司法所继承咨询摘记</h4>
+          <div class="meta-line">
+            <span class="badge">2020</span>
+            <span class="badge">司法所</span>
+            <span class="badge unlock-badge">继承规则</span>
+            <span class="badge warn">需交叉验证</span>
+            
+          </div>
+          <p class="doc-summary">说明陈嘉东线需要同时核验血缘与信托条款。</p>
+        </div>
+      </button>
+    
+    <div class="unlock-callout">
+      <strong>有 2 份相关资料尚未入卷</strong>
+      <p>这份资料还没有进入当前卷宗。也可走访世昌集团。</p>
+      
+    <div class="unlock-actions" aria-label="建议走访地点">
+      
+        <button type="button" class="unlock-location-btn" data-unlock-location="group" data-location-query="信托">
+          走访世昌集团
+        </button>
+      
     </div>
+  
+      <button type="button" data-unlock-view="visit">查看全部走访地点</button>
+    </div>
+  </div>
           </section>
 
           <article class="panel document-panel">
-            <div id="document-empty" class="empty-state">
+            <div id="document-empty" class="empty-state" hidden="">
               <img src="assets/images/style-ui-sample.png" alt="云山宗氏案风格样张">
               <h3>选择一份资料开始调查</h3>
               <p>资料来源可信度不同。档案、户籍、信托、DNA 报告通常比论坛八卦更可靠。</p>
             </div>
-            <div id="document-view" class="document-view" hidden=""></div>
+            <div id="document-view" class="document-view">
+    <header>
+      <h3>云山县疾控中心亲缘比对记录</h3>
+      <div class="meta-line">
+        <span class="badge">2019</span>
+        <span class="badge">DNA</span>
+        <span class="badge high">可信度高</span>
+      </div>
+    </header>
+    
+    <figure class="doc-image doc-image-full">
+      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
+      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
+    </figure>
+  
+    
+    <section class="doc-detail-gallery" aria-label="补充美术资源">
+      <h4>补充美术资源</h4>
+      <div class="doc-detail-grid">
+        
+          <figure class="doc-image doc-image-detail">
+            <img src="assets/images/future-assets/documents/dna-report-template.png" alt="DNA报告模板" loading="lazy">
+            <figcaption>补充美术：2019 年 DNA 报告底图，后续可叠加精确文字和标注。</figcaption>
+          </figure>
+        
+      </div>
+    </section>
+  
+    <div class="document-body doc-kind-legal">
+      <span class="doc-watermark">DNA</span>
+      <div class="doc-text">
+      <article class="original-page original-legal">
+        <div class="original-sheet-head">
+          <span>DNA文件节选</span>
+          <span>鉴定记录 / 摘录页</span>
+        </div>
+        <h4>云山县疾控中心亲缘比对记录</h4>
+        
+      <section class="original-clause">
+        <span>01</span>
+        <p>样本 A：陈明静，女，1988 年生。
+样本 B：宗世昌住院期间留存血样。</p>
+      </section>
+    
+      <section class="original-clause">
+        <span>02</span>
+        <p>鉴定意见：样本 A 与样本 B 符合祖孙辈直系亲缘关系，不排除样本 A 之母为样本 B 亲生子女的可能性。</p>
+      </section>
+    
+      </article>
+    </div>
+    </div>
+    <div class="doc-actions">
+      <button id="collect-doc" class="is-collected">
+        已加入证据箱
+      </button>
+      <button id="copy-keywords">查看关键词：陈静 / 宗世昌 / DNA / 亲缘 / 直系血缘</button>
+    </div>
+  </div>
           </article>
         </div>
       </section>
@@ -455,7 +575,7 @@
             <div id="people-filters" class="people-filters" aria-label="人物档案筛选">
     <button class="is-active" data-people-filter="all" aria-pressed="true">
       <strong>全部</strong>
-      <span>24</span>
+      <span>13</span>
     </button>
   
     <button class="" data-people-filter="official" aria-pressed="false">
@@ -468,14 +588,9 @@
       <span>4</span>
     </button>
   
-    <button class="" data-people-filter="related" aria-pressed="false">
-      <strong>集团旁支与传闻人物</strong>
-      <span>6</span>
-    </button>
-  
     <button class="" data-people-filter="witness" aria-pressed="false">
       <strong>证人与经手人</strong>
-      <span>6</span>
+      <span>1</span>
     </button>
   </div>
             <div id="people-list" class="people-list">
@@ -667,134 +782,12 @@
       </div>
     </section>
   
-    <section class="person-group person-group-related">
-      <header>
-        <h4>集团旁支与传闻人物</h4>
-        <p>与股权、尽调或坊间传闻有关，继承资格需另行核验。</p>
-      </header>
-      <div class="person-group-list">
-        
-          <article class="person-card" data-person-id="zong_minghui">
-            <div class="person-head">
-              <div class="avatar">宗</div>
-              <div>
-                <h4>宗明辉</h4>
-                <div class="person-meta">
-                  <span class="badge">1984</span>
-                  <span class="badge">世昌集团第三任董事长</span>
-                </div>
-              </div>
-            </div>
-            <p>宗建民之子，2016 年在融资压力下接班。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="zong_mingjun">
-            <div class="person-head">
-              <div class="avatar">宗</div>
-              <div>
-                <h4>宗明军</h4>
-                <div class="person-meta">
-                  <span class="badge">1990</span>
-                  <span class="badge">世昌集团代理董事长</span>
-                </div>
-              </div>
-            </div>
-            <p>宗建民之子，宗世昌病危后临时接手集团口径。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="li_qiang">
-            <div class="person-head">
-              <div class="avatar">李</div>
-              <div>
-                <h4>李强</h4>
-                <div class="person-meta">
-                  <span class="badge">1986</span>
-                  <span class="badge">鼎辉基金合伙人</span>
-                </div>
-              </div>
-            </div>
-            <p>宗建红之子，参与鼎辉尽调往来。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="li_min">
-            <div class="person-head">
-              <div class="avatar">李</div>
-              <div>
-                <h4>李敏</h4>
-                <div class="person-meta">
-                  <span class="badge">1989</span>
-                  <span class="badge">世昌集团客服主管</span>
-                </div>
-              </div>
-            </div>
-            <p>宗建红之女，李天赐之母。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="li_tianci">
-            <div class="person-head">
-              <div class="avatar">李</div>
-              <div>
-                <h4>李天赐</h4>
-                <div class="person-meta">
-                  <span class="badge">2020</span>
-                  <span class="badge">李敏之子</span>
-                </div>
-              </div>
-            </div>
-            <p>八卦中被怀疑与信托有关，但证据不足。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="qian_shulin">
-            <div class="person-head">
-              <div class="avatar">钱</div>
-              <div>
-                <h4>钱树林</h4>
-                <div class="person-meta">
-                  <span class="badge">1947</span>
-                  <span class="badge">黔中汽车队司机</span>
-                </div>
-              </div>
-            </div>
-            <p>被地方传闻误写成罗建宁父亲。</p>
-          </article>
-        
-      </div>
-    </section>
-  
     <section class="person-group person-group-witness">
       <header>
         <h4>证人与经手人</h4>
         <p>提供档案、访谈或手续来源的人。</p>
       </header>
       <div class="person-group-list">
-        
-          <article class="person-card" data-person-id="he_guosheng">
-            <div class="person-head">
-              <div class="avatar">何</div>
-              <div>
-                <h4>何国生</h4>
-                <div class="person-meta">
-                  <span class="badge">1944</span>
-                  <span class="badge">供销社老会计</span>
-                </div>
-              </div>
-            </div>
-            <p>1969 年经手仓储点临时借支和汇款登记。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="zhou_meiying">
-            <div class="person-head">
-              <div class="avatar">周</div>
-              <div>
-                <h4>周美英</h4>
-                <div class="person-meta">
-                  <span class="badge">1939</span>
-                  <span class="badge">云山卫生院助产员</span>
-                </div>
-              </div>
-            </div>
-            <p>曾在接生登记里留下罗月珍相关备注。</p>
-          </article>
         
           <article class="person-card" data-person-id="huang_yaling">
             <div class="person-head">
@@ -808,48 +801,6 @@
               </div>
             </div>
             <p>陈嘉东高二班主任，留下家访记录。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="fang_renjie">
-            <div class="person-head">
-              <div class="avatar">方</div>
-              <div>
-                <h4>方仁杰</h4>
-                <div class="person-meta">
-                  <span class="badge">1966</span>
-                  <span class="badge">世昌集团改制会计</span>
-                </div>
-              </div>
-            </div>
-            <p>保管过 2005 年集团股权改制底稿。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="wei_xueqin">
-            <div class="person-head">
-              <div class="avatar">魏</div>
-              <div>
-                <h4>魏雪琴</h4>
-                <div class="person-meta">
-                  <span class="badge">1974</span>
-                  <span class="badge">世昌集团法务经理</span>
-                </div>
-              </div>
-            </div>
-            <p>2016 年治理调整前参与信托和受益人尽调。</p>
-          </article>
-        
-          <article class="person-card" data-person-id="ma_lihua">
-            <div class="person-head">
-              <div class="avatar">马</div>
-              <div>
-                <h4>马丽华</h4>
-                <div class="person-meta">
-                  <span class="badge">1969</span>
-                  <span class="badge">云山老街社区主任</span>
-                </div>
-              </div>
-            </div>
-            <p>陈静返乡后负责社区走访和租赁备案协调。</p>
           </article>
         
       </div>
@@ -908,7 +859,7 @@
             <span class="field-label">丈夫</span>
             <select data-slot-index="0">
               <option value="">未选择</option>
-              <option value="zong_shichang">宗世昌（1932）</option><option value="li_guilan">李桂兰（1934）</option><option value="zong_jianguo">宗建国（1956）</option><option value="zong_jianfang">宗建芳（1958）</option><option value="zong_jianmin">宗建民（1959）</option><option value="zong_jianhong">宗建红（1962）</option><option value="zong_jianping">宗建平（1963）</option><option value="zong_jianli">宗建丽（1975）</option><option value="luo_yuezhen">罗月珍（1949）</option><option value="luo_jianning">罗建宁（1969）</option><option value="chen_jing">陈静（1988）</option><option value="chen_jiadong">陈嘉东（2004）</option><option value="zong_minghui">宗明辉（1984）</option><option value="zong_mingjun">宗明军（1990）</option><option value="li_qiang">李强（1986）</option><option value="li_min">李敏（1989）</option><option value="li_tianci">李天赐（2020）</option><option value="he_guosheng">何国生（1944）</option><option value="zhou_meiying">周美英（1939）</option><option value="qian_shulin">钱树林（1947）</option><option value="huang_yaling">黄雅玲（1978）</option><option value="fang_renjie">方仁杰（1966）</option><option value="wei_xueqin">魏雪琴（1974）</option><option value="ma_lihua">马丽华（1969）</option>
+              <option value="zong_shichang">宗世昌（1932）</option><option value="li_guilan">李桂兰（1934）</option><option value="zong_jianguo">宗建国（1956）</option><option value="zong_jianfang">宗建芳（1958）</option><option value="zong_jianmin">宗建民（1959）</option><option value="zong_jianhong">宗建红（1962）</option><option value="zong_jianping">宗建平（1963）</option><option value="zong_jianli">宗建丽（1975）</option><option value="luo_yuezhen">罗月珍（1949）</option><option value="luo_jianning">罗建宁（1969）</option><option value="chen_jing">陈静（1988）</option><option value="chen_jiadong">陈嘉东（2004）</option><option value="huang_yaling">黄雅玲（1978）</option>
             </select>
           </label>
         
@@ -916,7 +867,7 @@
             <span class="field-label">妻子</span>
             <select data-slot-index="1">
               <option value="">未选择</option>
-              <option value="zong_shichang">宗世昌（1932）</option><option value="li_guilan">李桂兰（1934）</option><option value="zong_jianguo">宗建国（1956）</option><option value="zong_jianfang">宗建芳（1958）</option><option value="zong_jianmin">宗建民（1959）</option><option value="zong_jianhong">宗建红（1962）</option><option value="zong_jianping">宗建平（1963）</option><option value="zong_jianli">宗建丽（1975）</option><option value="luo_yuezhen">罗月珍（1949）</option><option value="luo_jianning">罗建宁（1969）</option><option value="chen_jing">陈静（1988）</option><option value="chen_jiadong">陈嘉东（2004）</option><option value="zong_minghui">宗明辉（1984）</option><option value="zong_mingjun">宗明军（1990）</option><option value="li_qiang">李强（1986）</option><option value="li_min">李敏（1989）</option><option value="li_tianci">李天赐（2020）</option><option value="he_guosheng">何国生（1944）</option><option value="zhou_meiying">周美英（1939）</option><option value="qian_shulin">钱树林（1947）</option><option value="huang_yaling">黄雅玲（1978）</option><option value="fang_renjie">方仁杰（1966）</option><option value="wei_xueqin">魏雪琴（1974）</option><option value="ma_lihua">马丽华（1969）</option>
+              <option value="zong_shichang">宗世昌（1932）</option><option value="li_guilan">李桂兰（1934）</option><option value="zong_jianguo">宗建国（1956）</option><option value="zong_jianfang">宗建芳（1958）</option><option value="zong_jianmin">宗建民（1959）</option><option value="zong_jianhong">宗建红（1962）</option><option value="zong_jianping">宗建平（1963）</option><option value="zong_jianli">宗建丽（1975）</option><option value="luo_yuezhen">罗月珍（1949）</option><option value="luo_jianning">罗建宁（1969）</option><option value="chen_jing">陈静（1988）</option><option value="chen_jiadong">陈嘉东（2004）</option><option value="huang_yaling">黄雅玲（1978）</option>
             </select>
           </label>
         
@@ -924,7 +875,7 @@
             <span class="field-label">证据</span>
             <select data-slot-index="2">
               <option value="">未选择</option>
-              <option value="doc_official_family">1996 宗世昌专访</option><option value="doc_group_history">集团官网集团历程</option><option value="doc_yunshan_county_profile">情概览2020 年修订页</option><option value="doc_2020_county_notice"> 2020 年秋公共场所办事须知</option><option value="doc_yunqian_bus_line">至黔中旧客运线路备案</option><option value="doc_trust_clause">香港家族信托节选</option><option value="doc_anonymous_letter">集团匿名信</option><option value="doc_educated_youth">志1995 年卷：知青名册节选</option><option value="doc_photo_back">1969 春节合影背注</option><option value="doc_naming_rule">民俗：宗氏家族字辈观察</option><option value="doc_women_fed">妇联创业帮扶记录</option><option value="doc_blog_chenjing">陈静博客：2014 年 3 月 1...</option><option value="doc_school_forum">县一中家长会帖</option><option value="doc_tiktok_chenjing">陈静短视频我的乖女儿转写</option><option value="doc_dna_record">疾控亲缘比对</option><option value="doc_luo_birth">黔中旧户籍登记</option><option value="doc_chen_birth">陈静出生记录</option><option value="doc_jiadong_school">县一中学生信息表</option><option value="doc_gossip_wrong_mother">论坛云山茶馆：陈静身世帖</option><option value="doc_gossip_li_tianci">八卦周刊：李天赐疑云</option><option value="doc_gossip_mingjun">论坛云山商界八卦：宗明军绯闻</option><option value="doc_zong_deathbed">宗世昌临终录音整理</option><option value="doc_hospital_blood">人民医院住院样本留存单</option><option value="doc_notary_meeting">公证处接待笔录</option><option value="doc_supply_roster">县供销系统仓储点临时工花名册</option><option value="doc_old_postcard">旧明信片残片</option><option value="doc_ktv_license">唱响 KTV 个体工商登记</option><option value="doc_talent_window">人才窗口挂靠说明</option><option value="doc_family_meeting">集团家族会议纪要节选</option><option value="doc_false_peng">论坛云山茶馆：贵州男友误认帖</option><option value="doc_midwife_register">卫生院 1969 年冬接生登记摘页</option><option value="doc_supply_advance">供销社仓储点临时借支单</option><option value="doc_remittance_stub">黔中邮电所 1971 年汇款回执残联</option><option value="doc_li_guilan_letter">李桂兰未寄出信稿</option><option value="doc_classmate_luo">黔中中专同学访谈：罗建宁</option><option value="doc_teacher_visit">县一中高二三班家访记录</option><option value="doc_false_qian">论坛黔中旧事：钱树林认父帖</option><option value="doc_estate_law_note">司法所继承咨询摘记</option><option value="doc_equity_draft_2005">集团 2005 年改制股权底稿</option><option value="doc_board_handover_2015">集团 2016 年春治理调整备忘</option><option value="doc_jianfang_note">宗建芳给妇联旧同事的便条</option><option value="doc_ktv_lease_archive">唱响 KTV 房屋租赁备案</option><option value="doc_dinghui_due_diligence">鼎辉基金受益人尽调函</option><option value="doc_neighborhood_visit">老街社区 2016 年走访记录</option><option value="doc_sibling_meeting_2020">宗家六子女临时会谈纪要</option><option value="doc_jianhong_pr_plan">集团舆情应对草案</option><option value="doc_ktv_reopen_check">唱响 KTV 2020 年复工检查表</option><option value="doc_jianli_old_letters">宗建丽整理父亲旧信清单</option><option value="doc_archive_request_log">档案馆 2020 年调档登记簿</option><option value="doc_scholarship_notice">县一中 2020 年秋奖学金公示撤...</option>
+              <option value="doc_official_family">1996 宗世昌专访</option><option value="doc_trust_clause">香港家族信托节选</option><option value="doc_photo_back">1969 春节合影背注</option><option value="doc_women_fed">妇联创业帮扶记录</option><option value="doc_school_forum">县一中家长会帖</option><option value="doc_dna_record">疾控亲缘比对</option><option value="doc_luo_birth">黔中旧户籍登记</option><option value="doc_chen_birth">陈静出生记录</option><option value="doc_jiadong_school">县一中学生信息表</option><option value="doc_talent_window">人才窗口挂靠说明</option>
             </select>
           </label>
         
@@ -957,6 +908,14 @@
           <h5>强证据</h5>
           <div>
     <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_trust_clause">
+      <span>
+        <strong>香港家族信托节选</strong>
+        <small>信托 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
       <input type="checkbox" value="doc_photo_back">
       <span>
         <strong>1969 春节合影背注</strong>
@@ -973,34 +932,10 @@
     </label>
   
     <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_chen_birth">
+      <input type="checkbox" value="doc_women_fed">
       <span>
-        <strong>陈静出生记录</strong>
+        <strong>妇联创业帮扶记录</strong>
         <small>档案 · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_dna_record">
-      <span>
-        <strong>疾控亲缘比对</strong>
-        <small>DNA · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_jiadong_school">
-      <span>
-        <strong>县一中学生信息表</strong>
-        <small>学校 · 可信度 4/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_trust_clause">
-      <span>
-        <strong>香港家族信托节选</strong>
-        <small>信托 · 可信度 5/5</small>
       </span>
     </label>
   
@@ -1013,10 +948,26 @@
     </label>
   
     <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_women_fed">
+      <input type="checkbox" value="doc_chen_birth">
       <span>
-        <strong>妇联创业帮扶记录</strong>
+        <strong>陈静出生记录</strong>
         <small>档案 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_jiadong_school">
+      <span>
+        <strong>县一中学生信息表</strong>
+        <small>学校 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_dna_record">
+      <span>
+        <strong>疾控亲缘比对</strong>
+        <small>DNA · 可信度 5/5</small>
       </span>
     </label>
   </div>
@@ -1060,6 +1011,33 @@
             <div id="evidence-list" class="evidence-list">
       <article class="evidence-card">
         
+        <h4>《云山商界》1996 年宗世昌专访</h4>
+        <div class="meta-line">
+          <span class="badge">1996</span>
+          <span class="badge">报刊</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">建立宗世昌公开家庭版本。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
+      <figcaption>扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
+    </figure>
+  
+        <h4>香港家族信托文件节选</h4>
+        <div class="meta-line">
+          <span class="badge">1998</span>
+          <span class="badge">信托</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
     <figure class="doc-image doc-image-card">
       <img src="assets/images/evidence/photo-back-1969.jpg" alt="1969 年春节合影与照片背注扫描图" loading="lazy">
       <figcaption>档案馆影像：合影与背注同档保存，提示宗世昌、罗月珍和“建宁”之间存在早期交集。</figcaption>
@@ -1092,6 +1070,28 @@
     
       <article class="evidence-card">
         
+        <h4>云山县妇联创业帮扶登记表</h4>
+        <div class="meta-line">
+          <span class="badge">2014</span>
+          <span class="badge">档案</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">解释陈静与宗建芳的关系不是母女。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县教育局人才窗口档案挂靠说明</h4>
+        <div class="meta-line">
+          <span class="badge">2014</span>
+          <span class="badge">教育局</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">解释为什么外界误以为陈静在教育局上班。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
         <h4>陈静出生医学记录复印件</h4>
         <div class="meta-line">
           <span class="badge">1988</span>
@@ -1099,22 +1099,6 @@
           <span class="badge high">可信度高</span>
         </div>
         <p class="doc-summary">确认陈静是罗建宁之女。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
-      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
-    </figure>
-  
-        <h4>云山县疾控中心亲缘比对记录</h4>
-        <div class="meta-line">
-          <span class="badge">2019</span>
-          <span class="badge">DNA</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
       </article>
     
       <article class="evidence-card">
@@ -1142,50 +1126,17 @@
       <article class="evidence-card">
         
     <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
-      <figcaption>扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
+      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
+      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
     </figure>
   
-        <h4>香港家族信托文件节选</h4>
+        <h4>云山县疾控中心亲缘比对记录</h4>
         <div class="meta-line">
-          <span class="badge">1998</span>
-          <span class="badge">信托</span>
+          <span class="badge">2019</span>
+          <span class="badge">DNA</span>
           <span class="badge high">可信度高</span>
         </div>
-        <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>《云山商界》1996 年宗世昌专访</h4>
-        <div class="meta-line">
-          <span class="badge">1996</span>
-          <span class="badge">报刊</span>
-          <span class="badge warn">需交叉验证</span>
-        </div>
-        <p class="doc-summary">建立宗世昌公开家庭版本。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山县教育局人才窗口档案挂靠说明</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">教育局</span>
-          <span class="badge warn">需交叉验证</span>
-        </div>
-        <p class="doc-summary">解释为什么外界误以为陈静在教育局上班。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山县妇联创业帮扶登记表</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">解释陈静与宗建芳的关系不是母女。</p>
+        <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
       </article>
     </div>
           </section>
@@ -1290,7 +1241,7 @@
       <article class="task-group">
         <header>
           <h4>支线排除</h4>
-          <span>3 / 3</span>
+          <span>1 / 1</span>
         </header>
         <div class="task-items">
           
@@ -1308,41 +1259,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
-                <div>
-                  <strong><span>核实司机传闻</span><em>已完成</em></strong>
-                  <p>把交通背景和亲缘证据分开，不让低可信网帖带偏。</p>
-                </div>
-                <div class="task-actions">
-                  <button class="task-primary" data-task-view="search" data-task-query="钱树林">复查</button>
-                  <div class="task-state-actions" aria-label="核实司机传闻手动状态">
-                    <button data-task-state="side_qian_rumor" data-task-state-value="pinned" aria-pressed="false">锁定</button>
-                    <button data-task-state="side_qian_rumor" data-task-state-value="ignored" aria-pressed="false">忽略</button>
-                  </div>
-                </div>
-              </section>
-            
-              <section class="task-item is-done   ">
-                <div>
-                  <strong><span>区分股权与信托</span><em>已完成</em></strong>
-                  <p>确认公司控制权文件不能直接替代受益人审查。</p>
-                </div>
-                <div class="task-actions">
-                  <button class="task-primary" data-task-view="search" data-task-query="股权">复查</button>
-                  <div class="task-state-actions" aria-label="区分股权与信托手动状态">
-                    <button data-task-state="side_equity_trust" data-task-state-value="pinned" aria-pressed="false">锁定</button>
-                    <button data-task-state="side_equity_trust" data-task-state-value="ignored" aria-pressed="false">忽略</button>
-                  </div>
-                </div>
-              </section>
-            
         </div>
       </article>
     
       <article class="task-group">
         <header>
           <h4>调查教学</h4>
-          <span>3 / 4</span>
+          <span>4 / 4</span>
         </header>
         <div class="task-items">
           
@@ -1388,13 +1311,13 @@
                 </div>
               </section>
             
-              <section class="task-item  is-current  ">
+              <section class="task-item is-done   ">
                 <div>
-                  <strong><span>用关键词回查</span><em>当前</em></strong>
+                  <strong><span>用关键词回查</span><em>已完成</em></strong>
                   <p>阅读资料后，在关键词区点击词条继续搜索。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="notes">看关键词</button>
+                  <button class="task-primary" data-task-view="notes">复查</button>
                   <div class="task-state-actions" aria-label="用关键词回查手动状态">
                     <button data-task-state="tutorial_keyword" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="tutorial_keyword" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1414,7 +1337,7 @@
           <section class="panel">
             <h3>已发现关键词</h3>
             <p class="hint">关键词来自已阅读资料，可点击回到资料库继续搜索。</p>
-            <div id="keyword-list" class="keyword-list"><button data-keyword="陈静">陈静</button><button data-keyword="罗月珍">罗月珍</button><button data-keyword="宗世昌">宗世昌</button><button data-keyword="建宁">建宁</button><button data-keyword="陈嘉东">陈嘉东</button><button data-keyword="宗建芳">宗建芳</button><button data-keyword="宗建红">宗建红</button><button data-keyword="陈小东">陈小东</button><button data-keyword="罗建宁">罗建宁</button><button data-keyword="信托">信托</button><button data-keyword="DNA">DNA</button><button data-keyword="贵州">贵州</button><button data-keyword="KTV">KTV</button><button data-keyword="李桂兰">李桂兰</button><button data-keyword="宗建丽">宗建丽</button><button data-keyword="1969">1969</button><button data-keyword="唱响KTV">唱响KTV</button><button data-keyword="陈明静">陈明静</button><button data-keyword="第七支">第七支</button><button data-keyword="马丽华">马丽华</button><button data-keyword="母亲">母亲</button><button data-keyword="匿名信">匿名信</button><button data-keyword="黔中">黔中</button><button data-keyword="世昌集团">世昌集团</button><button data-keyword="县一中">县一中</button><button data-keyword="云山">云山</button><button data-keyword="宗建民">宗建民</button><button data-keyword="宗明军">宗明军</button><button data-keyword="档案馆">档案馆</button><button data-keyword="第七个继承人">第七个继承人</button><button data-keyword="非婚生">非婚生</button><button data-keyword="高二">高二</button><button data-keyword="供销系统">供销系统</button><button data-keyword="健康码">健康码</button><button data-keyword="教育局">教育局</button><button data-keyword="李天赐">李天赐</button></div>
+            <div id="keyword-list" class="keyword-list"><button data-keyword="陈静">陈静</button><button data-keyword="宗世昌">宗世昌</button><button data-keyword="罗建宁">罗建宁</button><button data-keyword="宗建芳">宗建芳</button><button data-keyword="陈嘉东">陈嘉东</button><button data-keyword="陈小东">陈小东</button><button data-keyword="建宁">建宁</button><button data-keyword="罗月珍">罗月珍</button><button data-keyword="母亲">母亲</button><button data-keyword="县一中">县一中</button><button data-keyword="DNA">DNA</button><button data-keyword="1969">1969</button><button data-keyword="1970">1970</button><button data-keyword="2004">2004</button><button data-keyword="陈明静">陈明静</button><button data-keyword="出生记录">出生记录</button><button data-keyword="创业帮扶">创业帮扶</button><button data-keyword="档案挂靠">档案挂靠</button><button data-keyword="非婚生">非婚生</button><button data-keyword="港安信托">港安信托</button><button data-keyword="高二">高二</button><button data-keyword="贵州">贵州</button><button data-keyword="贵州知青">贵州知青</button><button data-keyword="教育局">教育局</button><button data-keyword="李桂兰">李桂兰</button><button data-keyword="六个子女">六个子女</button><button data-keyword="满月">满月</button><button data-keyword="年级前十">年级前十</button><button data-keyword="迁入">迁入</button><button data-keyword="亲缘">亲缘</button><button data-keyword="受益人">受益人</button><button data-keyword="外婆">外婆</button><button data-keyword="误传">误传</button><button data-keyword="香港信托">香港信托</button><button data-keyword="血缘">血缘</button><button data-keyword="照片背面">照片背面</button></div>
           </section>
         </div>
       </section>
@@ -1867,7 +1790,7 @@
                 <span>界面音效与录音播放</span>
               </label>
               <label class="toggle-row">
-                <input id="ambient-toggle" type="checkbox">
+                <input id="ambient-toggle" type="checkbox" disabled="">
                 <span>档案室环境音</span>
               </label>
             </article>
@@ -1875,9 +1798,9 @@
             <article class="settings-card">
               <h4>本地进度</h4>
               <dl id="save-summary" class="save-summary">
-    <dt>资料阅读</dt><dd>50 已读</dd>
+    <dt>资料阅读</dt><dd>10 已读</dd>
     <dt>证据收藏</dt><dd>10</dd>
-    <dt>已走访地点</dt><dd>6 / 6</dd>
+    <dt>已走访地点</dt><dd>0 / 6</dd>
     <dt>关系完成</dt><dd>6 / 6 已开放</dd>
     <dt>调查笔记</dt><dd>0 字</dd>
     <dt>备忘整理</dt><dd>0 锁定 / 0 忽略</dd>
@@ -1904,10 +1827,10 @@
           <p>请提交你对当前卷宗继承资格的判断。系统会检查关键关系、证据绑定和规则适用。</p>
 
           <label class="field-label" for="heir-select">已核实的旁支第一代后代是谁？</label>
-          <select id="heir-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="zong_minghui">宗明辉（世昌集团第三任董事长）</option><option value="zong_mingjun">宗明军（世昌集团代理董事长）</option><option value="li_qiang">李强（鼎辉基金合伙人）</option><option value="li_min">李敏（世昌集团客服主管）</option><option value="li_tianci">李天赐（李敏之子）</option><option value="he_guosheng">何国生（供销社老会计）</option><option value="zhou_meiying">周美英（云山卫生院助产员）</option><option value="qian_shulin">钱树林（黔中汽车队司机）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option><option value="fang_renjie">方仁杰（世昌集团改制会计）</option><option value="wei_xueqin">魏雪琴（世昌集团法务经理）</option><option value="ma_lihua">马丽华（云山老街社区主任）</option></select>
+          <select id="heir-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option></select>
 
           <label class="field-label" for="descendant-select">当前卷宗中仍需提交资格判断的后代是谁？</label>
-          <select id="descendant-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="zong_minghui">宗明辉（世昌集团第三任董事长）</option><option value="zong_mingjun">宗明军（世昌集团代理董事长）</option><option value="li_qiang">李强（鼎辉基金合伙人）</option><option value="li_min">李敏（世昌集团客服主管）</option><option value="li_tianci">李天赐（李敏之子）</option><option value="he_guosheng">何国生（供销社老会计）</option><option value="zhou_meiying">周美英（云山卫生院助产员）</option><option value="qian_shulin">钱树林（黔中汽车队司机）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option><option value="fang_renjie">方仁杰（世昌集团改制会计）</option><option value="wei_xueqin">魏雪琴（世昌集团法务经理）</option><option value="ma_lihua">马丽华（云山老街社区主任）</option></select>
+          <select id="descendant-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option></select>
 
           <button id="submit-report" class="primary-action">提交报告</button>
           <div id="report-result" class="report-result success" aria-live="polite">
@@ -1930,7 +1853,123 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js"></script><pre id="guided-playtest-report">{
+  "status": "pass",
+  "checkpoints": [
+    {
+      "label": "开局资料库空检索",
+      "visible": 0
+    },
+    {
+      "label": "开局家谱与侧栏显隐",
+      "people": 8,
+      "relations": 1,
+      "readCounter": "0 已读",
+      "relationCounter": "0 / 1 已开放"
+    },
+    {
+      "label": "搜索：宗世昌",
+      "visible": 2
+    },
+    {
+      "label": "Guidance: 信托",
+      "suggestedLocations": [
+        "group"
+      ],
+      "hasVisitFallback": true
+    },
+    {
+      "label": "搜索：信托",
+      "visible": 2
+    },
+    {
+      "label": "Guidance: 罗月珍",
+      "suggestedLocations": [
+        "yunqian",
+        "archives",
+        "group"
+      ],
+      "hasVisitFallback": true
+    },
+    {
+      "label": "搜索：罗月珍",
+      "visible": 0
+    },
+    {
+      "label": "阅读并收藏：《云山商界》1996 年宗世昌专访",
+      "docId": "doc_official_family"
+    },
+    {
+      "label": "搜索：信托",
+      "visible": 5
+    },
+    {
+      "label": "阅读并收藏：香港家族信托文件节选",
+      "docId": "doc_trust_clause"
+    },
+    {
+      "label": "搜索：罗月珍",
+      "visible": 5
+    },
+    {
+      "label": "阅读并收藏：云山县档案馆：1969 年春节合影背注",
+      "docId": "doc_photo_back"
+    },
+    {
+      "label": "搜索：罗建宁",
+      "visible": 4
+    },
+    {
+      "label": "阅读并收藏：黔中地区旧户籍迁入登记",
+      "docId": "doc_luo_birth"
+    },
+    {
+      "label": "搜索：陈静",
+      "visible": 9
+    },
+    {
+      "label": "阅读并收藏：云山县妇联创业帮扶登记表",
+      "docId": "doc_women_fed"
+    },
+    {
+      "label": "阅读并收藏：云山县教育局人才窗口档案挂靠说明",
+      "docId": "doc_talent_window"
+    },
+    {
+      "label": "阅读并收藏：陈静出生医学记录复印件",
+      "docId": "doc_chen_birth"
+    },
+    {
+      "label": "搜索：陈嘉东",
+      "visible": 8
+    },
+    {
+      "label": "阅读并收藏：云山家长汇论坛：县一中家长会",
+      "docId": "doc_school_forum"
+    },
+    {
+      "label": "阅读并收藏：云山县第一中学学生信息表",
+      "docId": "doc_jiadong_school"
+    },
+    {
+      "label": "搜索：DNA",
+      "visible": 4
+    },
+    {
+      "label": "阅读并收藏：云山县疾控中心亲缘比对记录",
+      "docId": "doc_dna_record"
+    },
+    {
+      "label": "关系核验",
+      "passed": 6
+    },
+    {
+      "label": "最终提交",
+      "submitted": true
+    }
+  ],
+  "errors": []
+}</pre>
 
 
 </body></html>

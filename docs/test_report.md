@@ -1,6 +1,472 @@
 # 测试报告
 
-更新时间：2026-05-16 03:06 Asia/Shanghai
+更新时间：2026-05-16 23:53 Asia/Shanghai
+
+## 2026-05-16 23:53 Asia/Shanghai 开局剧透界面回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、资产、资料视觉、解锁矩阵、游戏数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩新增断言确认开局资料库空检索、人物档案、家谱关系、右侧目标和线索板都不提前泄露后段姓名或最终真相措辞。
+- `npm.cmd run smoke` 通过；自动通关路径仍可提交成功。
+- 应用内浏览器普通入口检查通过：`resultCards=0`、`peopleCards=8`、`relationButtons=1`、`readCounter="0 已读"`、`relationCounter="0 / 1 已开放"`、`hiddenMapNames=0`、`leadLeaks=false`、`goalLeaks=false`。
+
+## 2026-05-16 23:40 Asia/Shanghai 资料库开局暴露回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+npm.cmd run review:search
+```
+
+结果：
+- `game\app.js`、`tools\validate_search_paths.mjs`、`tools\validate_unlock_matrix.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；解锁矩阵显示隐藏人物 4 个、后段资料组 5 个、受控资料 27 份、走访地点 6 个。
+- `npm.cmd run playtest` 通过；普通试玩新增断言确认开局空检索不渲染资料卡。
+- `npm.cmd run smoke` 通过；自动通关路径仍成功。
+- `npm.cmd run review:search` 通过并重写 `docs/search_route_review.md`；开局搜索 `陈嘉东`、`陈静`、`罗月珍`、`DNA` 不再由公开资料直接暴露结果。
+- Edge headless 普通入口检查生成 `docs/archive-start-dom.html` 和 `docs/archive-start.png`，确认开局 `data-doc-id` 数量为 0，并显示“输入关键词后调阅资料”。
+
+## 2026-05-16 23:31 Asia/Shanghai 未来美术审计报告修复回归
+
+命令：
+```powershell
+node --check tools\audit_future_asset_usage.mjs
+npm.cmd run audit:assets
+npm.cmd run validate
+```
+
+结果：
+- `tools\audit_future_asset_usage.mjs` 语法检查通过。
+- `npm.cmd run audit:assets` 通过，重新生成 `docs/future_asset_usage.md`；报告正文恢复为可读中文。
+- 资产审计结果保持不变：50 个未来美术素材中，人物头像 8/10、背景 7/8、资料模板 8/8、旧照片 5/5、网页界面 4/4、UI 图标 5/5、家谱节点 5/5 已满足当前玩法阈值；宣传图 0/3 和 UI 参考图 0/2 仍保持未接入。
+- `npm.cmd run validate` 通过，完整数据、资产、解锁矩阵和搜索路径校验链无错误。
+
+## 2026-05-16 22:31 Asia/Shanghai 内容包结构化同步回归
+
+命令：
+```powershell
+node --check tools\sync_case_bundle_from_app.mjs
+node --check tools\validate_content_bundle.mjs
+node --check tools\validate_content_sync.mjs
+npm.cmd run sync:bundle
+node tools\validate_content_bundle.mjs game\data\case_bundle.json
+node tools\validate_content_sync.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\sync_case_bundle_from_app.mjs`、`tools\validate_content_bundle.mjs`、`tools\validate_content_sync.mjs` 语法检查通过。
+- `npm.cmd run sync:bundle` 通过，输出 24 名人物、50 份资料、6 条关系谜题已同步。
+- 内容包结构校验通过；资料字段现在要求年份、来源、可信度、关键词、摘要和正文，人物字段要求别名数组、角色与说明，关系谜题要求答案和强证据引用真实人物/资料。
+- 内容同步校验通过；运行时与内容包的人物、资料和关系谜题关键字段一致。
+- `npm.cmd run validate` 通过，完整数据、资产、解锁矩阵和搜索路径校验链无错误。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 首次并行执行 `playtest` 与 `smoke` 时，烟测 Edge 截图阶段因文件占用失败；单独重跑 `npm.cmd run smoke` 后通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 21:28 Asia/Shanghai 搜索路线试玩复盘回归
+
+命令：
+```powershell
+node --check tools\validate_search_paths.mjs
+npm.cmd run review:search
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run review:search` 通过，生成 `docs/search_route_review.md`。
+- 搜索路线复盘报告显示 10 个主线路线检查点、6 个走访入口检查点、0 个错误；覆盖开局公开入口、信托/罗月珍锁定提示、罗月珍到陈嘉东的阅读解锁链和 DNA 后段强证据。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料页补充美术、解锁矩阵、基础游戏数据和搜索路径均无错误。
+- `npm.cmd run playtest` 和 `npm.cmd run smoke` 均通过，重新生成普通路径试玩和自动通关烟测产物。
+
+## 2026-05-16 20:24 Asia/Shanghai 未来美术接入审计回归
+
+命令：
+```powershell
+node --check tools\audit_future_asset_usage.mjs
+npm.cmd run audit:assets
+npm.cmd run validate
+npm.cmd run visual:assets
+npm.cmd run smoke
+```
+
+结果：
+- `tools\audit_future_asset_usage.mjs` 语法检查通过。
+- `npm.cmd run audit:assets` 通过，生成 `docs/future_asset_usage.md`。
+- 审计覆盖 `asset-manifest.json` 的 50 个未来美术素材，并与当前运行时引用交叉比对。
+- 当前生产级素材接入状态：UI 图标 5/5、家谱节点 5/5、资料模板 8/8、旧照片 5/5、网页界面 4/4、人物头像 8/10、背景 7/8；宣传图和 UI 参考图保持未接入。
+- `npm.cmd run validate`、`npm.cmd run visual:assets`、`npm.cmd run smoke` 均通过，说明新增审计没有影响数据、视觉资产和自动通关路径。
+
+## 2026-05-16 18:43 Asia/Shanghai 侧栏 UI 图标资产回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run visual:assets
+npm.cmd run smoke
+Select-String -Path docs\visual-assets-dom.html -Pattern '"navIcons"|"navIconAssets"|data-visualtest="pass"' -Context 0,2
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过，运行时资产引用数从 55 增至 60，说明新接入的 5 个 UI 图标路径已被资产校验覆盖。
+- `npm.cmd run visual:assets` 通过，重新生成 `docs/visual-assets-dom.html` 和 `docs/visual-assets.png`。
+- 视觉报告确认 `data-visualtest="pass"`、`navIcons: 8`、`navIconAssets: 5`，首屏侧栏导航图标已真实渲染。
+- `npm.cmd run smoke` 通过，自动通关与最终提交路径未受导航图标变更影响。
+
+## 2026-05-16 18:25 Asia/Shanghai 资料页美术映射校验回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_document_visuals.mjs
+node tools\validate_document_visuals.mjs
+npm.cmd run validate
+npm.cmd run visual:assets
+npm.cmd run layout:documents
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 和 `tools\validate_document_visuals.mjs` 语法检查通过。
+- `node tools\validate_document_visuals.mjs` 通过：运行时 50 份资料、4 份直接证据图资料、15 份补充美术资料、17 张补充美术图片均通过校验；分类覆盖为 8 张文档模板、5 张旧照片、4 张网页界面。
+- `npm.cmd run validate` 通过，已包含资料页补充美术映射校验；运行时资产引用数更新为 55。
+- `npm.cmd run visual:assets` 通过，重新生成 `docs/visual-assets-dom.html` 和 `docs/visual-assets.png`。
+- `npm.cmd run layout:documents` 通过，补接两张资料图后桌面与手机视口仍无横向溢出。
+- `tools\run_smoke.ps1` 通过，自动通关路径不受资料页补充美术变更影响。
+
+## 2026-05-16 17:21 Asia/Shanghai 资料页旧照片素材回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run visual:assets
+npm.cmd run validate
+npm.cmd run layout:documents
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run visual:assets` 通过，重新生成 `docs/visual-assets-dom.html` 和 `docs/visual-assets.png`。
+- 页面内 `visual-assets-report` 为 `pass`：检查到 8 张人物头像、17 个家谱节点/图例图标、15 张资料页补充美术、40 个图片节点；所有被检查图片均使用本地 `assets/images/` 路径且具有可见尺寸。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据和搜索路径均通过；运行时资产引用数为 53。
+- `npm.cmd run layout:documents` 通过，桌面与手机视口下 50 份资料阅读页仍无横向溢出。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 16:21 Asia/Shanghai 人物与家谱视觉资产回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run visual:assets
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run visual:assets` 通过，重新生成 `docs/visual-assets-dom.html` 和 `docs/visual-assets.png`。
+- 页面内 `visual-assets-report` 为 `pass`：检查到 8 张人物头像、17 个家谱节点/图例图标、25 个图片节点；所有被检查图片均使用本地 `assets/images/` 路径且具有可见尺寸。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据和搜索路径均通过。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 15:21 Asia/Shanghai 内容包全量同步回归
+
+命令：
+```powershell
+node --check tools\validate_content_sync.mjs
+node tools\validate_content_sync.mjs
+npm.cmd run audit:originals
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `tools/validate_content_sync.mjs` 语法检查通过。
+- 内容同步校验通过：内容包与运行时同为 24 名人物、50 份资料；关系核验仍覆盖 7 名人物引用和 10 份证据资料引用。
+- 原件感审计通过，重新生成 `docs/original_material_audit.md`；运行时资料 50/50、内容包正文 50/50 均判定为基本像原件，需改写 0 份。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、双向内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据和搜索路径均通过。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 13:35 Asia/Shanghai 试玩引导断言加固回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run playtest
+npm.cmd run validate
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 普通试玩报告新增 2 个 `Guidance:*` 检查点：开局搜索“信托”建议 `group`，开局搜索“罗月珍”建议 `yunqian`、`archives`、`group`，且两个提示都包含走访地点兜底入口。
+- `tools/run_playtest.ps1` 已强制校验引导检查点数量、走访兜底和县档案馆建议；后续若锁定提示断链，试玩回归会失败。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据和搜索路径均通过。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 13:20 Asia/Shanghai 资料阅读版式回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run layout:documents
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run layout:documents` 通过，桌面 1365x900 与手机 390x900 两个视口均检查 50 份资料，未发现资料阅读面板横向溢出。
+- 版式审计重新生成 `docs/document-layout-desktop.html`、`docs/document-layout-mobile.html`、`docs/document-layout-desktop.png`、`docs/document-layout-mobile.png` 和 `docs/document-layout-report.json`。
+- `npm.cmd run validate` 通过：内容包、提交答案、内容同步、未来资产、运行时资产、解锁矩阵、基础数据和搜索路径均通过。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 12:15 Asia/Shanghai 内容包原件感审计覆盖回归
+
+命令：
+```powershell
+node --check tools\audit_original_documents.mjs
+npm.cmd run audit:originals
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `tools/audit_original_documents.mjs` 语法检查通过。
+- `npm.cmd run audit:originals` 通过，重新生成 `docs/original_material_audit.md`。
+- 审计结果：游戏内资料 50/50 基本像原件，内容包已有正文资料 34/34 基本像原件，需改写 0 份。
+- 内容包资料缺少 `source` 字段时会按资料 ID 继承运行时资料来源，避免误判字段型档案。
+- `npm.cmd run validate` 通过：内容包 34 份资料、19 名人物；运行时资产 47 个引用；搜索路径与锁定资料走访建议均通过。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `tools\run_smoke.ps1` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 11:58 Asia/Shanghai 资料正文原件化改写回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\rewrite_original_bodies.mjs
+npm.cmd run audit:originals
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 与批量改写脚本语法检查通过。
+- `npm.cmd run audit:originals` 通过并更新 `docs/original_material_audit.md`：50 份资料中 50 份基本像原件，0 份需改写。
+- 已同步 `game/data/case_bundle.json` 中同 ID 资料正文，`npm.cmd run validate` 确认内容包仍通过。
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、未来资产、运行时资产、解锁矩阵、基础数据和搜索路径均无错误。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 11:46 Asia/Shanghai 资料原件感审计
+
+命令：
+```powershell
+node --check tools\audit_original_documents.mjs
+npm.cmd run audit:originals
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 审计脚本语法检查通过。
+- `npm.cmd run audit:originals` 通过并生成 `docs/original_material_audit.md`。
+- 审计结果：50 份资料中 18 份基本像原件，32 份需改写；《云山商界》1996 年宗世昌专访因“公开资料称 / 文章没有提及”这类转述口吻被列入需改写。
+- `npm.cmd run validate`、普通路径试玩回归和自动通关烟测均通过。
+
+## 2026-05-16 11:35 Asia/Shanghai 资料原件视图回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过，资料阅读模板未改变内容包、提交答案、解锁矩阵、运行时资产或搜索路径。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮改动只影响资料阅读页的呈现层：报刊、档案、法律/信托、网页和私藏材料会使用不同原件式版面。
+
+## 2026-05-16 11:15 Asia/Shanghai 锁定资料走访建议回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- 搜索路径自检新增锁定提示检查并通过：开局搜索“信托”建议世昌集团，开局搜索“罗月珍”建议云山至黔中旧线、县档案馆和世昌集团，其中县档案馆满足主线推进要求。
+- `npm.cmd run validate` 通过，继续覆盖内容包、提交答案一致性、内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据、搜索路径和锁定资料走访建议。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 10:15 Asia/Shanghai 渐进解锁矩阵自检回归
+
+命令：
+```powershell
+node --check tools\validate_unlock_matrix.mjs
+node --check game\app.js
+node tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 新增解锁矩阵校验脚本语法检查通过，`game/app.js` 语法检查通过。
+- `node tools\validate_unlock_matrix.mjs` 通过：覆盖 4 个隐藏血脉节点、5 个后段资料组、26 份受控资料和 6 个走访地点。
+- `npm.cmd run validate` 通过：内容包、提交答案一致性、内容同步、未来资产、运行时资产、解锁矩阵、基础游戏数据和搜索路径全部无错误。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 09:13 Asia/Shanghai 家谱节点状态图回归
+
+命令：
+```powershell
+node --check game\app.js
+node tools\validate_runtime_assets.mjs
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+Select-String -Path docs\smoke-dom.html -Pattern 'family-node-legend|data-node-state="confirmed"|data-node-state="deceased"|genealogy-nodes|data-autotest="pass"' -Encoding UTF8
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- 运行时资产校验通过，实际引用资产从 42 个增至 47 个，新增 5 个家谱节点 PNG 图标均存在且非空。
+- `npm.cmd run validate` 通过，覆盖内容包、提交答案一致性、内容同步、未来资产、运行时资产、基础游戏数据和搜索路径。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`；DOM 检查确认家谱图例、节点状态属性和 `data-autotest="pass"` 均存在。
+
+## 2026-05-16 08:04 Asia/Shanghai 内容包线索来源校验
+命令：
+```powershell
+node --check tools\validate_content_bundle.mjs
+node --check game\app.js
+node tools\validate_content_bundle.mjs game\data\case_bundle.json
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 内容包结构校验通过：28 条线索均绑定 `documentIds`，34 份结构化资料均可被引用。
+- 新增校验确认每条线索来源资料存在且不重复；6 条必需真相均至少由两份来源资料支撑。
+- `npm.cmd run validate` 通过，覆盖内容包、提交答案一致性、内容同步、未来资产、运行时资产、基础游戏数据和搜索路径。
+- 普通路径试玩回归和自动通关烟测均通过，并重新生成 `docs/playtest-dom.html`、`docs/playtest-guided.png`、`docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 07:09 Asia/Shanghai 运行时资产引用校验
+
+命令：
+```powershell
+node --check tools\validate_runtime_assets.mjs
+node --check game\app.js
+node tools\validate_runtime_assets.mjs
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 新增运行时资产校验通过：扫描 `game/index.html`、`game/app.js` 和 `game/styles.css`，确认 42 个实际引用的图片/音频资产存在且非空。
+- `npm.cmd run validate` 通过，已覆盖内容包、提交答案、内容同步、未来资产清单、运行时资产、基础游戏数据和关键搜索路径。
+- 普通路径试玩回归通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- 自动通关烟测通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 06:09 Asia/Shanghai 回归脚本断言加固
+
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、未来资产、基础游戏数据和搜索路径均无错误。
+- 普通路径试玩回归通过；脚本确认 `data-playtest="pass"`、解析 `guided-playtest-report` JSON 成功、错误数组为空、关键节点数量满足下限，并确认截图非空。
+- 自动通关烟测通过；脚本确认 `data-autotest="pass"`、最终报告成功状态存在，并确认截图非空。
+- 重新生成 `docs/playtest-dom.html`、`docs/playtest-guided.png`、`docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 05:10 Asia/Shanghai 内容包同步校验
+
+命令：
+```powershell
+node --check tools\validate_content_sync.mjs
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- 新增内容包同步校验通过：`case_bundle.json` 中 19 名人物和 33 份资料均能在 `game/app.js` 中找到对应条目，标题/姓名一致。
+- 六条关系核验引用的 7 名人物和 10 份证据资料均已纳入内容包，避免关系卡证据只存在于游戏内硬编码。
+- `npm.cmd run validate` 通过：内容包结构、提交答案一致性、内容包同步、未来资产清单、基础游戏数据和搜索路径均无错误。
+- 普通路径试玩回归和自动通关烟测均通过，并重新生成 `docs/playtest-dom.html`、`docs/playtest-guided.png`、`docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-16 04:08 Asia/Shanghai 普通路径试玩回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+powershell -ExecutionPolicy Bypass -File tools\run_smoke.ps1
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过：内容包结构、提交答案一致性、未来资产清单、基础游戏数据和搜索路径均无错误。
+- 普通路径试玩回归通过：Edge headless 打开 `game/index.html?playtest=1`，按最小主线搜索、阅读、收藏、关系核验和最终提交路径执行，生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`。
+- DOM 检查确认 `data-playtest="pass"` 和 `guided-playtest-report` 存在，说明渐进解锁没有阻断普通主线闭环。
+- 自动通关烟测仍通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`，页面输出 `data-autotest="pass"`。
 
 ## 2026-05-16 03:06 Asia/Shanghai 搜索路径自检回归
 

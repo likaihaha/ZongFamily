@@ -34,11 +34,73 @@
 npm.cmd run validate
 ```
 
-该命令会检查内容包结构、最终提交答案一致性、未来资产清单、基础游戏数据和关键搜索路径。单独检查渐进解锁后的搜索链可运行：
+该命令会检查内容包结构、线索来源资料映射、最终提交答案一致性、内容包与游戏内人物/资料/关系谜题的双向同步、未来资产清单、运行时图片/音频引用、资料页补充美术映射、基础游戏数据、关键搜索路径和锁定资料的走访建议。内容包校验要求每条线索绑定至少一份来源资料，并要求每条必需真相至少有两份来源资料覆盖。当前 `case_bundle.json` 已覆盖运行时 24 名人物、50 份资料和 6 条关系谜题；后续若只改 `game/app.js` 而漏同步内容包，校验会失败。
+
+从运行时数据同步内容包结构字段：
+
+```powershell
+npm.cmd run sync:bundle
+```
+
+该命令会把 `game/app.js` 中的人物别名、生卒年、角色说明、资料年份、来源、可信度、关键词、摘要、图片和关系谜题字段写回 `game/data/case_bundle.json`。同步后仍需运行 `npm.cmd run validate`。
+
+单独检查资料页补充美术映射可运行：
+
+```powershell
+node tools/validate_document_visuals.mjs
+```
+
+该脚本会确认补充美术只绑定到真实资料 ID、图片存在且非空、路径没有越出 `game/`，并要求文档模板、旧照片和网页界面三类素材都进入资料阅读页。单独检查渐进解锁后的搜索链可运行：
 
 ```powershell
 node tools/validate_search_paths.mjs
 ```
+
+生成可读的搜索路线试玩复盘：
+
+```powershell
+npm.cmd run review:search
+```
+
+该命令会生成 `docs/search_route_review.md`，把开局公开入口、锁定提示、阅读解锁、后段强证据和 6 个走访入口整理成表格，便于人工试玩前先确认主线搜索链没有断点。
+
+单独检查渐进解锁矩阵与自检报告：
+
+```powershell
+node tools/validate_unlock_matrix.mjs
+```
+
+审计资料是否像原始材料而不是知识提炼：
+
+```powershell
+npm.cmd run audit:originals
+```
+
+该命令会生成 `docs/original_material_audit.md`，逐条标记游戏内 50 份资料和 `case_bundle.json` 中 50 份结构化资料是否混入调查员结论口吻、是否缺少档案字段、条款、论坛楼层或原话痕迹；若有条目需改写，命令会返回失败。
+
+检查原件式资料页是否在桌面和手机宽度下横向溢出：
+
+```powershell
+npm.cmd run layout:documents
+```
+
+该命令会用 Edge headless 批量打开 50 份资料，生成 `docs/document-layout-desktop.html`、`docs/document-layout-mobile.html`、对应截图和 `docs/document-layout-report.json`。若长字段、条款、论坛楼层或网页快照撑破阅读面板，命令会返回失败。
+
+检查人物头像和家谱节点图标是否实际渲染：
+
+```powershell
+npm.cmd run visual:assets
+```
+
+该命令会用 Edge headless 打开 `game/index.html?visualtest=1`，确认侧栏导航 UI 图标、人物档案画像、家谱节点图标、图例图标和资料页补充美术进入 DOM 并具备可见尺寸，生成 `docs/visual-assets-dom.html` 和 `docs/visual-assets.png`。
+
+审计未来美术素材的当前接入状态：
+
+```powershell
+npm.cmd run audit:assets
+```
+
+该命令会生成 `docs/future_asset_usage.md`，把 `asset-manifest.json` 的 50 个素材与当前运行时引用做交叉检查。生产级 UI 图标、家谱节点、资料模板、旧照片和网页界面素材若低于当前玩法阈值会失败；宣传图和参考图则应保持未接入，避免污染可玩版本。
 
 生成占位音频：
 
@@ -59,6 +121,14 @@ powershell -ExecutionPolicy Bypass -File tools/generate_edge_tts.ps1
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1
 ```
+
+运行普通路径试玩回归：
+
+```powershell
+npm.cmd run playtest
+```
+
+该脚本用 Edge headless 打开 `game/index.html?playtest=1`，按最小主线调查路径逐步搜索、阅读、收藏、核验关系并提交报告，生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。脚本会解析页面内 JSON 报告、确认截图非空，并检查锁定资料是否显示非剧透走访引导，避免只凭 DOM 标记误判通过。
 
 用 Edge 打开游戏：
 

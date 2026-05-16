@@ -6,6 +6,8 @@ import vm from "node:vm";
 const root = path.resolve(import.meta.dirname, "..");
 const appPath = path.join(root, "game", "app.js");
 const app = fs.readFileSync(appPath, "utf8");
+const reportPath = path.join(root, "docs", "search_route_review.md");
+const shouldWriteReport = process.argv.includes("--write");
 
 function extractConstExpression(name, nextName) {
   const startToken = `const ${name} = `;
@@ -64,7 +66,7 @@ function chainUnlockState(state, docId) {
       unlocked: () => hasReadOrCollected(state, ["doc_luo_birth", "doc_classmate_luo"]) || state.visitedLocations.has("ktv")
     },
     {
-      ids: ["doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_dna_record", "doc_hospital_blood"],
+      ids: ["doc_school_forum", "doc_jiadong_school", "doc_teacher_visit", "doc_scholarship_notice", "doc_dna_record", "doc_hospital_blood"],
       unlocked: () => hasReadOrCollected(state, ["doc_chen_birth", "doc_blog_chenjing", "doc_women_fed"]) || state.visitedLocations.has("school") || state.visitedLocations.has("hospital")
     }
   ];
@@ -95,6 +97,12 @@ function search(state, query) {
   };
 }
 
+function suggestedLocationIdsForLockedDocs(state, docs) {
+  return [...new Set(docs
+    .map((doc) => locationForDocument(doc.id))
+    .filter((id) => id && !state.visitedLocations.has(id)))];
+}
+
 function record(label, detail = {}) {
   checkpoints.push({ label, ...detail });
 }
@@ -109,7 +117,14 @@ function assertVisible(state, query, expectedIds, label) {
   for (const id of expectedIds) {
     assert(visibleIds.has(id), `${label}: searching "${query}" should show ${id}`);
   }
-  record(label, { query, visible: result.visible.length, locked: result.locked.length });
+  record(label, {
+    query,
+    expected: expectedIds,
+    visible: result.visible.length,
+    locked: result.locked.length,
+    visibleIds: result.visible.map((doc) => doc.id),
+    lockedIds: result.locked.map((doc) => doc.id)
+  });
 }
 
 function assertLocked(state, query, expectedIds, label) {
@@ -118,7 +133,29 @@ function assertLocked(state, query, expectedIds, label) {
   for (const id of expectedIds) {
     assert(lockedIds.has(id), `${label}: searching "${query}" should keep ${id} locked until a clue unlocks it`);
   }
-  record(label, { query, visible: result.visible.length, locked: result.locked.length });
+  record(label, {
+    query,
+    expectedLocked: expectedIds,
+    visible: result.visible.length,
+    locked: result.locked.length,
+    visibleIds: result.visible.map((doc) => doc.id),
+    lockedIds: result.locked.map((doc) => doc.id)
+  });
+}
+
+function assertSuggestedLocations(state, query, expectedLocationIds, label) {
+  const result = search(state, query);
+  const suggestedLocationIds = suggestedLocationIdsForLockedDocs(state, result.locked);
+  for (const id of expectedLocationIds) {
+    assert(suggestedLocationIds.includes(id), `${label}: locked results for "${query}" should suggest visiting ${locationLabels[id] || id}`);
+  }
+  record(label, {
+    query,
+    expectedLocations: expectedLocationIds,
+    suggestedLocationIds,
+    suggestedLocations: suggestedLocationIds.map((id) => locationLabels[id] || id),
+    lockedIds: result.locked.map((doc) => doc.id)
+  });
 }
 
 function readVisible(state, docId, label) {
@@ -133,6 +170,8 @@ const main = createState();
 assertVisible(main, "宗世昌", ["doc_official_family"], "开局公开宗家入口");
 assertLocked(main, "信托", ["doc_trust_clause"], "开局信托原文未提前暴露");
 assertLocked(main, "罗月珍", ["doc_educated_youth", "doc_photo_back"], "开局罗月珍强证据未提前暴露");
+assertSuggestedLocations(main, "信托", ["group"], "开局信托锁定提示");
+assertSuggestedLocations(main, "罗月珍", ["archives"], "开局罗月珍锁定提示");
 
 readVisible(main, "doc_official_family", "阅读公开家庭资料");
 assertVisible(main, "罗月珍", ["doc_educated_youth", "doc_photo_back", "doc_supply_roster"], "公开家庭后进入罗月珍线");
@@ -157,9 +196,86 @@ for (const location of visitLocations) {
   record(`走访入口：${location.title}`, {
     query: location.query,
     visible: result.visible.length,
-    localVisible: visibleLocationDocs.length
+    localVisible: visibleLocationDocs.length,
+    visibleIds: result.visible.map((doc) => doc.id),
+    localVisibleIds: visibleLocationDocs.map((doc) => doc.id)
   });
 }
 
-console.log(JSON.stringify({ checkpoints, errors }, null, 2));
+function docTitle(id) {
+  return documentById.get(id)?.title || id;
+}
+
+function formatDocList(ids = []) {
+  if (!ids.length) return "无";
+  return ids.map((id) => `${docTitle(id)}（${id}）`).join("、");
+}
+
+function formatMarkdownReport() {
+  const timestamp = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(new Date()).replaceAll("/", "-");
+  const mainRows = checkpoints.filter((checkpoint) => !checkpoint.label.startsWith("走访入口："));
+  const visitRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("走访入口："));
+
+  return `# 搜索路线试玩复盘
+
+更新时间：${timestamp} Asia/Shanghai
+
+该报告由 \`node tools/validate_search_paths.mjs --write\` 生成，用来把渐进解锁后的主线搜索链转成可读台账。它不能替代真人试玩，但可以确认公开入口、锁定提示、阅读解锁和走访兜底没有断链。
+
+## 结论
+
+- 状态：${errors.length ? "失败" : "通过"}
+- 主线路线检查点：${mainRows.length}
+- 走访入口检查点：${visitRows.length}
+- 错误数量：${errors.length}
+
+## 主线搜索链
+
+| 步骤 | 搜索词 | 应出现/应锁定 | 可见资料数 | 锁定资料数 | 备注 |
+| --- | --- | --- | ---: | ---: | --- |
+${mainRows.map((checkpoint) => {
+  const expected = checkpoint.expected
+    ? `应出现：${formatDocList(checkpoint.expected)}`
+    : checkpoint.expectedLocked
+      ? `应锁定：${formatDocList(checkpoint.expectedLocked)}`
+      : checkpoint.expectedLocations
+        ? `建议走访：${checkpoint.suggestedLocations.join("、") || "无"}`
+        : "记录";
+  const note = checkpoint.lockedIds?.length
+    ? `锁定命中：${formatDocList(checkpoint.lockedIds)}`
+    : "无锁定命中";
+  return `| ${checkpoint.label} | ${checkpoint.query || ""} | ${expected} | ${checkpoint.visible ?? ""} | ${checkpoint.locked ?? ""} | ${note} |`;
+}).join("\n")}
+
+## 走访兜底
+
+| 入口 | 默认搜索词 | 本地资料命中 | 可见资料 |
+| --- | --- | ---: | --- |
+${visitRows.map((checkpoint) => `| ${checkpoint.label.replace("走访入口：", "")} | ${checkpoint.query} | ${checkpoint.localVisible} | ${formatDocList(checkpoint.localVisibleIds)} |`).join("\n")}
+
+## 剩余风险
+
+- 自动脚本只能确认“能搜到”和“不会提前剧透”，不能判断玩家是否会自然想到这些关键词。
+- 若后续新增资料或改写正文，应继续让报告覆盖新增关键词，并安排真人试玩观察停顿点。
+${errors.length ? `\n## 错误\n\n${errors.map((error) => `- ${error}`).join("\n")}\n` : ""}`;
+}
+
+if (shouldWriteReport && !errors.length) {
+  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
+  fs.writeFileSync(reportPath, formatMarkdownReport(), "utf8");
+}
+
+console.log(JSON.stringify({
+  checkpoints,
+  errors,
+  report: shouldWriteReport && !errors.length ? path.relative(root, reportPath) : null
+}, null, 2));
 if (errors.length) process.exit(1);

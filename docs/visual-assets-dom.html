@@ -5,7 +5,7 @@
   <title>云山宗氏案 MVP</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-autotest="pass">
+<body data-visualtest="pass">
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
@@ -18,13 +18,13 @@
 
       <nav class="tabs" aria-label="主导航">
         <button class="tab" data-view="visit"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">走访</span></button>
-        <button class="tab" data-view="search"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">资料库</span></button>
+        <button class="tab is-active" data-view="search"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">资料库</span></button>
         <button class="tab" data-view="tree"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/genealogy-tree.png" alt=""></span><span class="tab-label">家谱</span></button>
         <button class="tab" data-view="evidence"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">证据箱</span></button>
         <button class="tab" data-view="notes"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">备忘录</span></button>
         <button class="tab" data-view="updates"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">更新日志</span></button>
         <button class="tab" data-view="settings"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">设置</span></button>
-        <button class="tab is-active" data-view="report"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/final-submission.png" alt=""></span><span class="tab-label">提交</span></button>
+        <button class="tab" data-view="report"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/final-submission.png" alt=""></span><span class="tab-label">提交</span></button>
       </nav>
 
       <section class="case-card">
@@ -39,7 +39,7 @@
         </div>
         <div>
           <span>证据收藏</span>
-          <strong id="evidence-count">10</strong>
+          <strong id="evidence-count">50</strong>
         </div>
         <div>
           <span>关系完成</span>
@@ -51,8 +51,8 @@
         <h2>阶段提示</h2>
         <div id="phase-goal-body">
     <div class="phase-step">
-      <div class="phase-progress" aria-label="阶段进度 6/6">
-        <span style="width: 100%"></span>
+      <div class="phase-progress" aria-label="阶段进度 5/6">
+        <span style="width: 83%"></span>
       </div>
       <h3>提交最终报告</h3>
       <p>当关键关系全部核验后，再提交继承资格判断。</p>
@@ -96,10 +96,10 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">云山县公证处委托案</p>
-          <h2 id="view-title">提交</h2>
+          <h2 id="view-title">资料库</h2>
         </div>
         <div class="top-actions">
-          <button id="sound-btn" class="ghost-btn">声音：开</button>
+          <button id="sound-btn" class="ghost-btn">声音：关</button>
           <button id="ambient-btn" class="ghost-btn">环境音：关</button>
           <button id="save-btn" class="ghost-btn">保存</button>
           <button id="reset-btn" class="ghost-btn danger">重置进度</button>
@@ -192,7 +192,7 @@
         </div>
       </section>
 
-      <section id="search-view" class="view">
+      <section id="search-view" class="view is-active">
         <div class="search-layout">
           <section class="panel search-panel">
             <label class="search-label" for="query">关键词检索</label>
@@ -252,12 +252,60 @@
           </section>
 
           <article class="panel document-panel">
-            <div id="document-empty" class="empty-state">
+            <div id="document-empty" class="empty-state" hidden="">
               <img src="assets/images/style-ui-sample.png" alt="云山宗氏案风格样张">
               <h3>选择一份资料开始调查</h3>
               <p>资料来源可信度不同。档案、户籍、信托、DNA 报告通常比论坛八卦更可靠。</p>
             </div>
-            <div id="document-view" class="document-view" hidden=""></div>
+            <div id="document-view" class="document-view">
+    <header>
+      <h3>县一中 2020 年秋奖学金公示撤稿截图</h3>
+      <div class="meta-line">
+        <span class="badge">2020</span>
+        <span class="badge">网页存档</span>
+        <span class="badge low">低可信</span>
+      </div>
+    </header>
+    
+    
+    <section class="doc-detail-gallery" aria-label="补充美术资源">
+      <h4>补充美术资源</h4>
+      <div class="doc-detail-grid">
+        
+          <figure class="doc-image doc-image-detail">
+            <img src="assets/images/future-assets/old-photos/county-school-award.png" alt="县一中奖学金公示照片参考" loading="lazy">
+            <figcaption>补充美术：县一中公示栏照片参考，用于强化陈嘉东姓名在学校线索中出现的现场感。</figcaption>
+          </figure>
+        
+      </div>
+    </section>
+  
+    <div class="document-body doc-kind-press">
+      <span class="doc-watermark">网页存档</span>
+      <div class="doc-text">
+      <article class="original-page original-press">
+        <div class="original-masthead">
+          <strong>县一中 2020 年秋奖学金公示撤稿截图</strong>
+          <span>2020 年 / 网页存档</span>
+        </div>
+        <h4>县一中 2020 年秋奖学金公示撤稿截图</h4>
+        <div class="original-byline">本报记者整理 / 云山县地方资料索引 / 关键词：陈嘉东 / 陈小东 / 奖学金 / 县一中</div>
+        <div class="original-columns"><p class="">页面标题：县一中 2020 年秋奖学金公示撤稿截图。
+网页路径：archive://yunshan-school/notice/2020-scholarship-draft。
+截取时间：2020 年 9 月。</p><p class="">名单残行：高二三班  陈嘉东。
+手写标注：小东，唱响 KTV 陈静女儿。</p><p class="">评论 17：是不是宗家照顾的那个孩子？
+评论 18：学校说涉及未成年人，名单撤了。
+页面状态：已撤稿。</p></div>
+      </article>
+    </div>
+    </div>
+    <div class="doc-actions">
+      <button id="collect-doc" class="is-collected">
+        已加入证据箱
+      </button>
+      <button id="copy-keywords">查看关键词：陈嘉东 / 陈小东 / 奖学金 / 县一中 / 陈静</button>
+    </div>
+  </div>
           </article>
         </div>
       </section>
@@ -957,10 +1005,66 @@
           <h5>强证据</h5>
           <div>
     <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_group_history">
+      <span>
+        <strong>集团官网集团历程</strong>
+        <small>官网 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_yunshan_county_profile">
+      <span>
+        <strong>情概览2020 年修订页</strong>
+        <small>县情资料 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_2020_county_notice">
+      <span>
+        <strong> 2020 年秋公共场所办事须知</strong>
+        <small>公告 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_trust_clause">
+      <span>
+        <strong>香港家族信托节选</strong>
+        <small>信托 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_educated_youth">
+      <span>
+        <strong>志1995 年卷：知青名册节选</strong>
+        <small>县志 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
       <input type="checkbox" value="doc_photo_back">
       <span>
         <strong>1969 春节合影背注</strong>
         <small>档案 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_women_fed">
+      <span>
+        <strong>妇联创业帮扶记录</strong>
+        <small>档案 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_dna_record">
+      <span>
+        <strong>疾控亲缘比对</strong>
+        <small>DNA · 可信度 5/5</small>
       </span>
     </label>
   
@@ -981,14 +1085,6 @@
     </label>
   
     <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_dna_record">
-      <span>
-        <strong>疾控亲缘比对</strong>
-        <small>DNA · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
       <input type="checkbox" value="doc_jiadong_school">
       <span>
         <strong>县一中学生信息表</strong>
@@ -997,10 +1093,34 @@
     </label>
   
     <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_trust_clause">
+      <input type="checkbox" value="doc_hospital_blood">
       <span>
-        <strong>香港家族信托节选</strong>
-        <small>信托 · 可信度 5/5</small>
+        <strong>人民医院住院样本留存单</strong>
+        <small>医院 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_notary_meeting">
+      <span>
+        <strong>公证处接待笔录</strong>
+        <small>公证 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_supply_roster">
+      <span>
+        <strong>县供销系统仓储点临时工花名册</strong>
+        <small>档案 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_ktv_license">
+      <span>
+        <strong>唱响 KTV 个体工商登记</strong>
+        <small>工商 · 可信度 5/5</small>
       </span>
     </label>
   
@@ -1013,10 +1133,199 @@
     </label>
   
     <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_women_fed">
+      <input type="checkbox" value="doc_midwife_register">
       <span>
-        <strong>妇联创业帮扶记录</strong>
+        <strong>卫生院 1969 年冬接生登记摘页</strong>
+        <small>医院 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_supply_advance">
+      <span>
+        <strong>供销社仓储点临时借支单</strong>
         <small>档案 · 可信度 5/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_remittance_stub">
+      <span>
+        <strong>黔中邮电所 1971 年汇款回执残联</strong>
+        <small>档案 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_teacher_visit">
+      <span>
+        <strong>县一中高二三班家访记录</strong>
+        <small>学校 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_estate_law_note">
+      <span>
+        <strong>司法所继承咨询摘记</strong>
+        <small>司法所 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_equity_draft_2005">
+      <span>
+        <strong>集团 2005 年改制股权底稿</strong>
+        <small>财务档案 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_ktv_lease_archive">
+      <span>
+        <strong>唱响 KTV 房屋租赁备案</strong>
+        <small>工商 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_dinghui_due_diligence">
+      <span>
+        <strong>鼎辉基金受益人尽调函</strong>
+        <small>金融文件 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_neighborhood_visit">
+      <span>
+        <strong>老街社区 2016 年走访记录</strong>
+        <small>社区 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_ktv_reopen_check">
+      <span>
+        <strong>唱响 KTV 2020 年复工检查表</strong>
+        <small>社区 · 可信度 4/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-strong ">
+      <input type="checkbox" value="doc_archive_request_log">
+      <span>
+        <strong>档案馆 2020 年调档登记簿</strong>
+        <small>档案 · 可信度 4/5</small>
+      </span>
+    </label>
+  </div>
+        </section>
+      
+        <section class="evidence-group evidence-group-support">
+          <h5>辅助材料</h5>
+          <div>
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_yunqian_bus_line">
+      <span>
+        <strong>至黔中旧客运线路备案</strong>
+        <small>交通档案 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_anonymous_letter">
+      <span>
+        <strong>集团匿名信</strong>
+        <small>内部文件 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_naming_rule">
+      <span>
+        <strong>民俗：宗氏家族字辈观察</strong>
+        <small>民俗 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_blog_chenjing">
+      <span>
+        <strong>陈静博客：2014 年 3 月 1...</strong>
+        <small>博客 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_zong_deathbed">
+      <span>
+        <strong>宗世昌临终录音整理</strong>
+        <small>录音整理 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_old_postcard">
+      <span>
+        <strong>旧明信片残片</strong>
+        <small>私人收藏 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_family_meeting">
+      <span>
+        <strong>集团家族会议纪要节选</strong>
+        <small>内部文件 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_li_guilan_letter">
+      <span>
+        <strong>李桂兰未寄出信稿</strong>
+        <small>私人收藏 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_classmate_luo">
+      <span>
+        <strong>黔中中专同学访谈：罗建宁</strong>
+        <small>访谈 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_board_handover_2015">
+      <span>
+        <strong>集团 2016 年春治理调整备忘</strong>
+        <small>内部文件 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_jianfang_note">
+      <span>
+        <strong>宗建芳给妇联旧同事的便条</strong>
+        <small>私人收藏 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_sibling_meeting_2020">
+      <span>
+        <strong>宗家六子女临时会谈纪要</strong>
+        <small>内部文件 · 可信度 3/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-support ">
+      <input type="checkbox" value="doc_jianli_old_letters">
+      <span>
+        <strong>宗建丽整理父亲旧信清单</strong>
+        <small>私人收藏 · 可信度 3/5</small>
       </span>
     </label>
   </div>
@@ -1030,6 +1339,70 @@
       <span>
         <strong>县一中家长会帖</strong>
         <small>论坛 · 可信度 2/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_tiktok_chenjing">
+      <span>
+        <strong>陈静短视频我的乖女儿转写</strong>
+        <small>短视频 · 可信度 2/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_gossip_wrong_mother">
+      <span>
+        <strong>论坛云山茶馆：陈静身世帖</strong>
+        <small>论坛 · 可信度 1/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_gossip_li_tianci">
+      <span>
+        <strong>八卦周刊：李天赐疑云</strong>
+        <small>八卦周刊 · 可信度 1/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_gossip_mingjun">
+      <span>
+        <strong>论坛云山商界八卦：宗明军绯闻</strong>
+        <small>论坛 · 可信度 1/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_false_peng">
+      <span>
+        <strong>论坛云山茶馆：贵州男友误认帖</strong>
+        <small>论坛 · 可信度 1/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_false_qian">
+      <span>
+        <strong>论坛黔中旧事：钱树林认父帖</strong>
+        <small>论坛 · 可信度 1/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_jianhong_pr_plan">
+      <span>
+        <strong>集团舆情应对草案</strong>
+        <small>内部文件 · 可信度 2/5</small>
+      </span>
+    </label>
+  
+    <label class="evidence-choice evidence-choice-weak ">
+      <input type="checkbox" value="doc_scholarship_notice">
+      <span>
+        <strong>县一中 2020 年秋奖学金公示撤...</strong>
+        <small>网页存档 · 可信度 2/5</small>
       </span>
     </label>
   </div>
@@ -1060,6 +1433,99 @@
             <div id="evidence-list" class="evidence-list">
       <article class="evidence-card">
         
+        <h4>《云山商界》1996 年宗世昌专访</h4>
+        <div class="meta-line">
+          <span class="badge">1996</span>
+          <span class="badge">报刊</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">建立宗世昌公开家庭版本。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>世昌集团官网《集团历程》</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">官网</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">列出世昌集团几次关键治理调整。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>《云山县情概览》2020 年修订页</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">县情资料</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">确立云山县的地理位置、交通和产业背景。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县 2020 年秋公共场所办事须知</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">公告</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">说明 2020 年秋走访调查的现实阻力。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山至黔中旧客运线路备案</h4>
+        <div class="meta-line">
+          <span class="badge">1987</span>
+          <span class="badge">交通档案</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">补充云山和黔中之间长期往来的交通背景。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
+      <figcaption>扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
+    </figure>
+  
+        <h4>香港家族信托文件节选</h4>
+        <div class="meta-line">
+          <span class="badge">1998</span>
+          <span class="badge">信托</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>世昌集团匿名信</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">内部文件</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">提示第七支血脉的后代仍在云山。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>《云山县志》1995 年卷：知青名册节选</h4>
+        <div class="meta-line">
+          <span class="badge">1995</span>
+          <span class="badge">县志</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">证明罗月珍曾在云山。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
     <figure class="doc-image doc-image-card">
       <img src="assets/images/evidence/photo-back-1969.jpg" alt="1969 年春节合影与照片背注扫描图" loading="lazy">
       <figcaption>档案馆影像：合影与背注同档保存，提示宗世昌、罗月珍和“建宁”之间存在早期交集。</figcaption>
@@ -1072,6 +1538,77 @@
           <span class="badge high">可信度高</span>
         </div>
         <p class="doc-summary">照片背面出现“建宁”关键字。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>《云山民俗》：宗氏家族字辈观察</h4>
+        <div class="meta-line">
+          <span class="badge">2015</span>
+          <span class="badge">民俗</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">说明宗家字辈规律。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县妇联创业帮扶登记表</h4>
+        <div class="meta-line">
+          <span class="badge">2014</span>
+          <span class="badge">档案</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">解释陈静与宗建芳的关系不是母女。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>陈静博客：2014 年 3 月 15 日</h4>
+        <div class="meta-line">
+          <span class="badge">2014</span>
+          <span class="badge">博客</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">陈静私人日记暗示母系秘密。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山家长汇论坛：县一中家长会</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">论坛</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">确认陈小东正式名为陈嘉东。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>陈静短视频《我的乖女儿》转写</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">短视频</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">强化陈静与陈小东母女关系。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+    <figure class="doc-image doc-image-card">
+      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
+      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
+    </figure>
+  
+        <h4>云山县疾控中心亲缘比对记录</h4>
+        <div class="meta-line">
+          <span class="badge">2019</span>
+          <span class="badge">DNA</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
       </article>
     
       <article class="evidence-card">
@@ -1103,33 +1640,6 @@
     
       <article class="evidence-card">
         
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
-      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
-    </figure>
-  
-        <h4>云山县疾控中心亲缘比对记录</h4>
-        <div class="meta-line">
-          <span class="badge">2019</span>
-          <span class="badge">DNA</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山家长汇论坛：县一中家长会</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-        </div>
-        <p class="doc-summary">确认陈小东正式名为陈嘉东。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
         <h4>云山县第一中学学生信息表</h4>
         <div class="meta-line">
           <span class="badge">2020</span>
@@ -1141,29 +1651,101 @@
     
       <article class="evidence-card">
         
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
-      <figcaption>扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
-    </figure>
-  
-        <h4>香港家族信托文件节选</h4>
+        <h4>地方论坛《云山茶馆》：陈静身世帖</h4>
         <div class="meta-line">
-          <span class="badge">1998</span>
-          <span class="badge">信托</span>
-          <span class="badge high">可信度高</span>
+          <span class="badge">2020</span>
+          <span class="badge">论坛</span>
+          <span class="badge low">低可信</span>
         </div>
-        <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
+        <p class="doc-summary">网帖把宗建芳写成陈静母亲，但缺少原始材料。</p>
       </article>
     
       <article class="evidence-card">
         
-        <h4>《云山商界》1996 年宗世昌专访</h4>
+        <h4>《云山八卦周刊》：李天赐疑云</h4>
         <div class="meta-line">
-          <span class="badge">1996</span>
-          <span class="badge">报刊</span>
+          <span class="badge">2020</span>
+          <span class="badge">八卦周刊</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">传闻称李天赐与信托有关。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>地方论坛《云山商界八卦》：宗明军绯闻</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">论坛</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">网帖牵扯宗明军绯闻，但人物称谓多处错乱。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>宗世昌临终录音整理</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">录音整理</span>
           <span class="badge warn">需交叉验证</span>
         </div>
-        <p class="doc-summary">建立宗世昌公开家庭版本。</p>
+        <p class="doc-summary">宗世昌临终提到外面的孩子，但没有说完。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县人民医院住院样本留存单</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">医院</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">解释 DNA 记录中的宗世昌血样来源。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县公证处接待笔录</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">公证</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">家族成员第一次正式面对第七支血脉。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>县供销系统仓储点临时工花名册</h4>
+        <div class="meta-line">
+          <span class="badge">1969</span>
+          <span class="badge">档案</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">证明宗世昌与罗月珍曾在同一系统工作。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>旧明信片残片</h4>
+        <div class="meta-line">
+          <span class="badge">1971</span>
+          <span class="badge">私人收藏</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">私人收藏，不能单独定案，但与强证据互相印证。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>唱响 KTV 个体工商登记</h4>
+        <div class="meta-line">
+          <span class="badge">2015</span>
+          <span class="badge">工商</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">确认陈静曾用名与创业时间。</p>
       </article>
     
       <article class="evidence-card">
@@ -1179,13 +1761,244 @@
     
       <article class="evidence-card">
         
-        <h4>云山县妇联创业帮扶登记表</h4>
+        <h4>世昌集团家族会议纪要节选</h4>
         <div class="meta-line">
-          <span class="badge">2014</span>
+          <span class="badge">2020</span>
+          <span class="badge">内部文件</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">家族内部有人知道罗月珍的名字。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>地方论坛《云山茶馆》：贵州男友误认帖</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">论坛</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">网帖把陈静早年男友牵到无关人物。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山卫生院 1969 年冬接生登记摘页</h4>
+        <div class="meta-line">
+          <span class="badge">1969</span>
+          <span class="badge">医院</span>
+          <span class="badge high">可信度高</span>
+        </div>
+        <p class="doc-summary">从医疗登记侧面补强罗建宁出生时间。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>供销社仓储点临时借支单</h4>
+        <div class="meta-line">
+          <span class="badge">1969</span>
           <span class="badge">档案</span>
           <span class="badge high">可信度高</span>
         </div>
-        <p class="doc-summary">解释陈静与宗建芳的关系不是母女。</p>
+        <p class="doc-summary">解释罗月珍分娩费用和宗世昌之间的账目交集。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>黔中邮电所 1971 年汇款回执残联</h4>
+        <div class="meta-line">
+          <span class="badge">1971</span>
+          <span class="badge">档案</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">罗月珍离开云山后仍收到来自云山的款项。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>李桂兰未寄出信稿</h4>
+        <div class="meta-line">
+          <span class="badge">1970</span>
+          <span class="badge">私人收藏</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">说明李桂兰在 1970 年前后至少确认孩子存在。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>黔中中专同学访谈：罗建宁</h4>
+        <div class="meta-line">
+          <span class="badge">2008</span>
+          <span class="badge">访谈</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">罗建宁成年后仍回避云山身世。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>县一中高二三班家访记录</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">学校</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">从学校侧确认陈嘉东与陈静的实际生活关系。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>地方论坛《黔中旧事》：钱树林认父帖</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">论坛</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">网帖把黔中司机钱树林写成罗建宁父亲。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县司法所继承咨询摘记</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">司法所</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">说明陈嘉东线需要同时核验血缘与信托条款。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>世昌集团 2005 年改制股权底稿</h4>
+        <div class="meta-line">
+          <span class="badge">2005</span>
+          <span class="badge">财务档案</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">公司股权只覆盖公开六子女，并不等同于信托受益范围。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>世昌集团 2016 年春治理调整备忘</h4>
+        <div class="meta-line">
+          <span class="badge">2016</span>
+          <span class="badge">内部文件</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">宗家第二、三代围绕控制权已经出现裂痕。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>宗建芳给妇联旧同事的便条</h4>
+        <div class="meta-line">
+          <span class="badge">2014</span>
+          <span class="badge">私人收藏</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">宗建芳帮助陈静返乡，但明确否认母女关系。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>唱响 KTV 房屋租赁备案</h4>
+        <div class="meta-line">
+          <span class="badge">2015</span>
+          <span class="badge">工商</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">陈静返乡后的落脚点和经营关系更清晰。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>鼎辉基金受益人尽调函</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">金融文件</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">说明李强和李天赐被卷入传闻的文件来源。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>老街社区 2016 年走访记录</h4>
+        <div class="meta-line">
+          <span class="badge">2016</span>
+          <span class="badge">社区</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">社区记录补强陈静与陈嘉东的长期共同生活事实。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>宗家六子女临时会谈纪要</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">内部文件</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">宗家六子女对第七支传闻的态度并不一致。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>世昌集团舆情应对草案</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">内部文件</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">宗建红试图把继承问题包装成网络谣言。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>唱响 KTV 2020 年复工检查表</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">社区</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">陈静返乡后的经营和居住状态在 2020 年仍可核验。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>宗建丽整理父亲旧信清单</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">私人收藏</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">宗建丽保留旧信，为李桂兰信稿和照片背注提供搜索入口。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>云山县档案馆 2020 年调档登记簿</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">档案</span>
+          <span class="badge warn">需交叉验证</span>
+        </div>
+        <p class="doc-summary">宗家内部曾回查供销社旧档与照片背注。</p>
+      </article>
+    
+      <article class="evidence-card">
+        
+        <h4>县一中 2020 年秋奖学金公示撤稿截图</h4>
+        <div class="meta-line">
+          <span class="badge">2020</span>
+          <span class="badge">网页存档</span>
+          <span class="badge low">低可信</span>
+        </div>
+        <p class="doc-summary">撤稿截图出现陈嘉东姓名，也混入宗家传闻。</p>
       </article>
     </div>
           </section>
@@ -1210,7 +2023,7 @@
       <article class="task-group">
         <header>
           <h4>主线核验</h4>
-          <span>5 / 5</span>
+          <span>4 / 5</span>
         </header>
         <div class="task-items">
           
@@ -1270,13 +2083,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item  is-current  ">
                 <div>
-                  <strong><span>提交最终报告</span><em>已完成</em></strong>
+                  <strong><span>提交最终报告</span><em>当前</em></strong>
                   <p>在关键关系全部核验后提交继承资格判断。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="report">复查</button>
+                  <button class="task-primary" data-task-view="report">打开提交</button>
                   <div class="task-state-actions" aria-label="提交最终报告手动状态">
                     <button data-task-state="main_report" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="main_report" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1867,7 +2680,7 @@
                 <span>界面音效与录音播放</span>
               </label>
               <label class="toggle-row">
-                <input id="ambient-toggle" type="checkbox">
+                <input id="ambient-toggle" type="checkbox" disabled="">
                 <span>档案室环境音</span>
               </label>
             </article>
@@ -1876,7 +2689,7 @@
               <h4>本地进度</h4>
               <dl id="save-summary" class="save-summary">
     <dt>资料阅读</dt><dd>50 已读</dd>
-    <dt>证据收藏</dt><dd>10</dd>
+    <dt>证据收藏</dt><dd>50</dd>
     <dt>已走访地点</dt><dd>6 / 6</dd>
     <dt>关系完成</dt><dd>6 / 6 已开放</dd>
     <dt>调查笔记</dt><dd>0 字</dd>
@@ -1898,7 +2711,7 @@
         </section>
       </section>
 
-      <section id="report-view" class="view is-active">
+      <section id="report-view" class="view">
         <section class="panel report-panel">
           <h3>最终提交</h3>
           <p>请提交你对当前卷宗继承资格的判断。系统会检查关键关系、证据绑定和规则适用。</p>
@@ -1910,27 +2723,324 @@
           <select id="descendant-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="zong_minghui">宗明辉（世昌集团第三任董事长）</option><option value="zong_mingjun">宗明军（世昌集团代理董事长）</option><option value="li_qiang">李强（鼎辉基金合伙人）</option><option value="li_min">李敏（世昌集团客服主管）</option><option value="li_tianci">李天赐（李敏之子）</option><option value="he_guosheng">何国生（供销社老会计）</option><option value="zhou_meiying">周美英（云山卫生院助产员）</option><option value="qian_shulin">钱树林（黔中汽车队司机）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option><option value="fang_renjie">方仁杰（世昌集团改制会计）</option><option value="wei_xueqin">魏雪琴（世昌集团法务经理）</option><option value="ma_lihua">马丽华（云山老街社区主任）</option></select>
 
           <button id="submit-report" class="primary-action">提交报告</button>
-          <div id="report-result" class="report-result success" aria-live="polite">
-      <strong>提交成功。</strong>
-      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，按 1998 年香港家族信托条款同样具备继承资格；陈嘉东为陈静之女，虽不姓宗，仍是 2020 年现居云山且具继承资格的后代。</p>
-      <div class="chain-review">
-        <h4>证据链回顾</h4>
-        <ol>
-          <li>公开版本只承认宗世昌与李桂兰的六名子女。</li>
-          <li>知青名册和供销系统花名册证明罗月珍曾与宗世昌在云山有交集。</li>
-          <li>1969 年照片背注和旧户籍共同指向罗建宁。</li>
-          <li>陈静出生记录确认其母为罗建宁。</li>
-          <li>陈嘉东学籍确认其为陈静之女。</li>
-          <li>DNA 亲缘比对和信托条款共同确认陈静一支的继承资格。</li>
-        </ol>
-      </div>
-    </div>
+          <div id="report-result" class="report-result" aria-live="polite"></div>
         </section>
       </section>
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js"></script><pre id="visual-assets-report">{
+  "status": "pass",
+  "portraits": 8,
+  "navIcons": 8,
+  "navIconAssets": 5,
+  "familyNodeIcons": 17,
+  "documentDetailImages": 17,
+  "checkedImages": 50,
+  "samples": [
+    {
+      "label": "nav-icon:1",
+      "src": "assets/images/future-assets/ui-icons/archive-search.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:2",
+      "src": "assets/images/future-assets/ui-icons/document-reading.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:3",
+      "src": "assets/images/future-assets/ui-icons/genealogy-tree.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:4",
+      "src": "assets/images/future-assets/ui-icons/evidence-binding.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:5",
+      "src": "assets/images/future-assets/ui-icons/document-reading.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:6",
+      "src": "assets/images/future-assets/ui-icons/archive-search.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:7",
+      "src": "assets/images/future-assets/ui-icons/evidence-binding.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "nav-icon:8",
+      "src": "assets/images/future-assets/ui-icons/final-submission.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "label": "portrait:zong_shichang",
+      "src": "assets/images/future-assets/portraits/zong-shichang-old-portrait.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:li_guilan",
+      "src": "assets/images/future-assets/portraits/li-guilan-portrait.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:zong_jianfang",
+      "src": "assets/images/future-assets/portraits/zong-jianfang-portrait.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:zong_jianhong",
+      "src": "assets/images/future-assets/portraits/zong-jianhong-portrait.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:luo_yuezhen",
+      "src": "assets/images/future-assets/portraits/luo-yuezhen-youth-photo.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:luo_jianning",
+      "src": "assets/images/future-assets/portraits/luo-jianning-file-photo.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:chen_jing",
+      "src": "assets/images/future-assets/portraits/chen-jing-portrait.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "portrait:chen_jiadong",
+      "src": "assets/images/future-assets/portraits/chen-jiadong-student-photo.png",
+      "width": 42,
+      "height": 42
+    },
+    {
+      "label": "family-node-icon:1",
+      "src": "assets/images/future-assets/genealogy-nodes/deceased-person.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:2",
+      "src": "assets/images/future-assets/genealogy-nodes/legal-adoptive-relation.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:3",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:4",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:5",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:6",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:7",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:8",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:9",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:10",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:11",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:12",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "label": "family-node-icon:13",
+      "src": "assets/images/future-assets/genealogy-nodes/unknown-person.png",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "label": "family-node-icon:14",
+      "src": "assets/images/future-assets/genealogy-nodes/disputed-relation.png",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "label": "family-node-icon:15",
+      "src": "assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "label": "family-node-icon:16",
+      "src": "assets/images/future-assets/genealogy-nodes/legal-adoptive-relation.png",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "label": "family-node-icon:17",
+      "src": "assets/images/future-assets/genealogy-nodes/deceased-person.png",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "label": "doc-detail:doc_official_family:1",
+      "src": "assets/images/future-assets/old-photos/shichang-store-1980s.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_trust_clause:1",
+      "src": "assets/images/future-assets/documents/trust-agreement-cover.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_photo_back:1",
+      "src": "assets/images/future-assets/documents/old-photo-back-template.png",
+      "width": 311,
+      "height": 233
+    },
+    {
+      "label": "doc-detail:doc_photo_back:2",
+      "src": "assets/images/future-assets/old-photos/spring-festival-group-1969.png",
+      "width": 311,
+      "height": 233
+    },
+    {
+      "label": "doc-detail:doc_dna_record:1",
+      "src": "assets/images/future-assets/documents/dna-report-template.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_luo_birth:1",
+      "src": "assets/images/future-assets/documents/hukou-transfer-page.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_chen_birth:1",
+      "src": "assets/images/future-assets/documents/birth-registration-form.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_women_fed:1",
+      "src": "assets/images/future-assets/documents/medical-record-cover.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_naming_rule:1",
+      "src": "assets/images/future-assets/documents/genealogy-paper-page.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_equity_draft_2005:1",
+      "src": "assets/images/future-assets/documents/company-equity-chart.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_group_history:1",
+      "src": "assets/images/future-assets/web-ui/corporate-leadership-page.png",
+      "width": 311,
+      "height": 233
+    },
+    {
+      "label": "doc-detail:doc_group_history:2",
+      "src": "assets/images/future-assets/old-photos/plaque-ceremony-1995.png",
+      "width": 311,
+      "height": 233
+    },
+    {
+      "label": "doc-detail:doc_school_forum:1",
+      "src": "assets/images/future-assets/web-ui/local-forum-2008.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_blog_chenjing:1",
+      "src": "assets/images/future-assets/web-ui/personal-blog-2014.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_tiktok_chenjing:1",
+      "src": "assets/images/future-assets/web-ui/short-video-comments-2020.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_ktv_reopen_check:1",
+      "src": "assets/images/future-assets/old-photos/chen-jing-ktv-opening-2015.png",
+      "width": 635,
+      "height": 476
+    },
+    {
+      "label": "doc-detail:doc_scholarship_notice:1",
+      "src": "assets/images/future-assets/old-photos/county-school-award.png",
+      "width": 635,
+      "height": 476
+    }
+  ],
+  "failures": []
+}</pre>
 
 
 </body></html>

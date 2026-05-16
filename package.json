@@ -1,8 +1,15 @@
 {
   "scripts": {
     "tts:edge": "node tools/generate_edge_tts.mjs",
-    "validate": "node tools/validate_content_bundle.mjs game/data/case_bundle.json && node tools/validate_submission_consistency.mjs && node tools/validate_future_assets.mjs && node tools/validate_game.js && node tools/validate_search_paths.mjs",
-    "smoke": "powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1"
+    "validate": "node tools/validate_content_bundle.mjs game/data/case_bundle.json && node tools/validate_submission_consistency.mjs && node tools/validate_content_sync.mjs && node tools/validate_future_assets.mjs && node tools/validate_runtime_assets.mjs && node tools/validate_document_visuals.mjs && node tools/validate_unlock_matrix.mjs && node tools/validate_game.js && node tools/validate_search_paths.mjs",
+    "audit:originals": "node tools/audit_original_documents.mjs",
+    "layout:documents": "powershell -ExecutionPolicy Bypass -File tools/run_document_layout.ps1",
+    "visual:assets": "powershell -ExecutionPolicy Bypass -File tools/run_visual_assets.ps1",
+    "audit:assets": "node tools/audit_future_asset_usage.mjs --write",
+    "sync:bundle": "node tools/sync_case_bundle_from_app.mjs",
+    "review:search": "node tools/validate_search_paths.mjs --write",
+    "smoke": "powershell -ExecutionPolicy Bypass -File tools/run_smoke.ps1",
+    "playtest": "powershell -ExecutionPolicy Bypass -File tools/run_playtest.ps1"
   },
   "devDependencies": {
     "edge-tts-universal": "^1.4.0"

@@ -5,7 +5,7 @@
   <title>云山宗氏案 MVP</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-autotest="pass">
+<body data-layouttest="pass">
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
@@ -18,18 +18,18 @@
 
       <nav class="tabs" aria-label="主导航">
         <button class="tab" data-view="visit"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">走访</span></button>
-        <button class="tab" data-view="search"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">资料库</span></button>
+        <button class="tab is-active" data-view="search"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">资料库</span></button>
         <button class="tab" data-view="tree"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/genealogy-tree.png" alt=""></span><span class="tab-label">家谱</span></button>
         <button class="tab" data-view="evidence"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">证据箱</span></button>
         <button class="tab" data-view="notes"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">备忘录</span></button>
         <button class="tab" data-view="updates"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">更新日志</span></button>
         <button class="tab" data-view="settings"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">设置</span></button>
-        <button class="tab is-active" data-view="report"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/final-submission.png" alt=""></span><span class="tab-label">提交</span></button>
+        <button class="tab" data-view="report"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/final-submission.png" alt=""></span><span class="tab-label">提交</span></button>
       </nav>
 
       <section class="case-card">
         <h2>当前目标</h2>
-        <ol id="current-goal-list"><li>复核公开家庭资料中的已知成员。</li><li>继续收藏能直接支撑关系的资料。</li><li>为当前已开放的 6 条关系绑定证据。</li><li>完成关系核验后提交最终报告。</li></ol>
+        <ol id="current-goal-list"><li>复核公开家庭资料中的已知成员。</li><li>阅读并收藏可验证资料。</li><li>为当前已开放的 6 条关系绑定证据。</li><li>完成关系核验后提交最终报告。</li></ol>
       </section>
 
       <section class="meter-card">
@@ -39,11 +39,11 @@
         </div>
         <div>
           <span>证据收藏</span>
-          <strong id="evidence-count">10</strong>
+          <strong id="evidence-count">0</strong>
         </div>
         <div>
           <span>关系完成</span>
-          <strong id="relation-count">6 / 6 已开放</strong>
+          <strong id="relation-count">0 / 6 已开放</strong>
         </div>
       </section>
 
@@ -51,12 +51,12 @@
         <h2>阶段提示</h2>
         <div id="phase-goal-body">
     <div class="phase-step">
-      <div class="phase-progress" aria-label="阶段进度 6/6">
-        <span style="width: 100%"></span>
+      <div class="phase-progress" aria-label="阶段进度 2/6">
+        <span style="width: 33%"></span>
       </div>
-      <h3>提交最终报告</h3>
-      <p>当关键关系全部核验后，再提交继承资格判断。</p>
-      <button class="phase-action" data-phase-view="report">打开提交</button>
+      <h3>确认审查规则</h3>
+      <p>找到并收藏继承规则材料，再判断哪些事实会影响资格。</p>
+      <button class="phase-action" data-phase-view="search" data-phase-query="信托">搜索信托</button>
     </div>
   </div>
       </section>
@@ -69,8 +69,8 @@
       <span>先确认公开六子女，不要急着相信论坛。</span>
     </div>
   
-    <div class="lead-item done">
-      <span>✓</span>
+    <div class="lead-item ">
+      <span>□</span>
       <span>找到规则文件，确认资格审查看哪些条件。</span>
     </div>
   
@@ -84,8 +84,8 @@
       <span>后段人物已经显名，继续用正式身份资料核验。</span>
     </div>
   
-    <div class="lead-item done">
-      <span>✓</span>
+    <div class="lead-item ">
+      <span>□</span>
       <span>把当前开放的 6 条关系绑定强证据。</span>
     </div>
   </div>
@@ -96,10 +96,10 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">云山县公证处委托案</p>
-          <h2 id="view-title">提交</h2>
+          <h2 id="view-title">资料库</h2>
         </div>
         <div class="top-actions">
-          <button id="sound-btn" class="ghost-btn">声音：开</button>
+          <button id="sound-btn" class="ghost-btn">声音：关</button>
           <button id="ambient-btn" class="ghost-btn">环境音：关</button>
           <button id="save-btn" class="ghost-btn">保存</button>
           <button id="reset-btn" class="ghost-btn danger">重置进度</button>
@@ -192,7 +192,7 @@
         </div>
       </section>
 
-      <section id="search-view" class="view">
+      <section id="search-view" class="view is-active">
         <div class="search-layout">
           <section class="panel search-panel">
             <label class="search-label" for="query">关键词检索</label>
@@ -252,12 +252,60 @@
           </section>
 
           <article class="panel document-panel">
-            <div id="document-empty" class="empty-state">
+            <div id="document-empty" class="empty-state" hidden="">
               <img src="assets/images/style-ui-sample.png" alt="云山宗氏案风格样张">
               <h3>选择一份资料开始调查</h3>
               <p>资料来源可信度不同。档案、户籍、信托、DNA 报告通常比论坛八卦更可靠。</p>
             </div>
-            <div id="document-view" class="document-view" hidden=""></div>
+            <div id="document-view" class="document-view">
+    <header>
+      <h3>县一中 2020 年秋奖学金公示撤稿截图</h3>
+      <div class="meta-line">
+        <span class="badge">2020</span>
+        <span class="badge">网页存档</span>
+        <span class="badge low">低可信</span>
+      </div>
+    </header>
+    
+    
+    <section class="doc-detail-gallery" aria-label="补充美术资源">
+      <h4>补充美术资源</h4>
+      <div class="doc-detail-grid">
+        
+          <figure class="doc-image doc-image-detail">
+            <img src="assets/images/future-assets/old-photos/county-school-award.png" alt="县一中奖学金公示照片参考" loading="lazy">
+            <figcaption>补充美术：县一中公示栏照片参考，用于强化陈嘉东姓名在学校线索中出现的现场感。</figcaption>
+          </figure>
+        
+      </div>
+    </section>
+  
+    <div class="document-body doc-kind-press">
+      <span class="doc-watermark">网页存档</span>
+      <div class="doc-text">
+      <article class="original-page original-press">
+        <div class="original-masthead">
+          <strong>县一中 2020 年秋奖学金公示撤稿截图</strong>
+          <span>2020 年 / 网页存档</span>
+        </div>
+        <h4>县一中 2020 年秋奖学金公示撤稿截图</h4>
+        <div class="original-byline">本报记者整理 / 云山县地方资料索引 / 关键词：陈嘉东 / 陈小东 / 奖学金 / 县一中</div>
+        <div class="original-columns"><p class="">页面标题：县一中 2020 年秋奖学金公示撤稿截图。
+网页路径：archive://yunshan-school/notice/2020-scholarship-draft。
+截取时间：2020 年 9 月。</p><p class="">名单残行：高二三班  陈嘉东。
+手写标注：小东，唱响 KTV 陈静女儿。</p><p class="">评论 17：是不是宗家照顾的那个孩子？
+评论 18：学校说涉及未成年人，名单撤了。
+页面状态：已撤稿。</p></div>
+      </article>
+    </div>
+    </div>
+    <div class="doc-actions">
+      <button id="collect-doc" class="">
+        加入证据箱
+      </button>
+      <button id="copy-keywords">查看关键词：陈嘉东 / 陈小东 / 奖学金 / 县一中 / 陈静</button>
+    </div>
+  </div>
           </article>
         </div>
       </section>
@@ -270,7 +318,7 @@
           </div>
           <div id="family-map" class="family-map">
     <div class="family-map-main">
-      <section class="family-map-branch family-map-public is-confirmed">
+      <section class="family-map-branch family-map-public ">
         <div class="family-pair">
           
     <button class="family-node family-node-anchor" data-map-query="宗世昌" data-node-state="deceased">
@@ -346,13 +394,13 @@
       </section>
 
       
-    <section class="family-map-branch family-map-hidden is-confirmed is-confirmed is-confirmed">
+    <section class="family-map-branch family-map-hidden   ">
       <div class="family-chain">
         
           
           
-    <button class="family-node family-node-hidden" data-map-query="罗月珍" data-node-state="confirmed">
-      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
+    <button class="family-node family-node-hidden" data-map-query="罗月珍" data-node-state="disputed">
+      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/disputed-relation.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
       <span class="family-node-copy">
         <strong>罗月珍</strong>
         <span>已发现旧档人物</span>
@@ -360,10 +408,10 @@
     </button>
   
         
-          <span class="family-link ">已核验</span>
+          <span class="family-link disputed">待证实</span>
           
-    <button class="family-node family-node-hidden" data-map-query="罗建宁" data-node-state="confirmed">
-      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
+    <button class="family-node family-node-hidden" data-map-query="罗建宁" data-node-state="disputed">
+      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/disputed-relation.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
       <span class="family-node-copy">
         <strong>罗建宁</strong>
         <span>已发现旁支人物</span>
@@ -371,10 +419,10 @@
     </button>
   
         
-          <span class="family-link ">已核验</span>
+          <span class="family-link disputed">待证实</span>
           
-    <button class="family-node family-node-hidden" data-map-query="陈静" data-node-state="confirmed">
-      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
+    <button class="family-node family-node-hidden" data-map-query="陈静" data-node-state="disputed">
+      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/disputed-relation.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
       <span class="family-node-copy">
         <strong>陈静</strong>
         <span>已发现后代线索</span>
@@ -382,10 +430,10 @@
     </button>
   
         
-          <span class="family-link ">已核验</span>
+          <span class="family-link disputed">待证实</span>
           
-    <button class="family-node family-node-current" data-map-query="陈嘉东" data-node-state="confirmed">
-      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/confirmed-blood-relative.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
+    <button class="family-node family-node-current" data-map-query="陈嘉东" data-node-state="disputed">
+      <img class="family-node-icon" src="assets/images/future-assets/genealogy-nodes/disputed-relation.png" alt="" aria-hidden="true" loading="lazy"><span class="sr-only">家谱节点状态</span>
       <span class="family-node-copy">
         <strong>陈嘉东</strong>
         <span>已发现现居后代</span>
@@ -401,15 +449,15 @@
     <aside class="family-map-dossier">
       <div>
         <span>已开放关系</span>
-        <strong>6 / 6</strong>
+        <strong>0 / 6</strong>
       </div>
       <div class="family-evidence-strip">
-        <span class="is-found">公开家庭</span>
-        <span class="is-found">照片背注</span>
-        <span class="is-found">户籍</span>
-        <span class="is-found">出生记录</span>
-        <span class="is-found">DNA</span>
-        <span class="is-found">信托</span>
+        <span class="">公开家庭</span>
+        <span class="">照片背注</span>
+        <span class="">户籍</span>
+        <span class="">出生记录</span>
+        <span class="">DNA</span>
+        <span class="">信托</span>
       </div>
       
     <div class="family-node-legend" aria-label="家谱节点图例">
@@ -863,31 +911,31 @@
     <section class="relation-progress-card">
       <div>
         <span>当前关系核验</span>
-        <strong>6 / 6</strong>
+        <strong>0 / 6</strong>
       </div>
       <nav class="relation-step-nav" aria-label="关系核验步骤">
         
-            <button class="is-active is-done " data-relation-focus="rel_public_family">
+            <button class="is-active  " data-relation-focus="rel_public_family">
               <span>1</span>公开家庭核验
             </button>
           
-            <button class=" is-done " data-relation-focus="rel_chen_jianfang">
+            <button class="  " data-relation-focus="rel_chen_jianfang">
               <span>2</span>误认关系澄清
             </button>
           
-            <button class=" is-done " data-relation-focus="rel_zong_luo">
+            <button class="  " data-relation-focus="rel_zong_luo">
               <span>3</span>隐藏血脉第一代
             </button>
           
-            <button class=" is-done " data-relation-focus="rel_luo_chen">
+            <button class="  " data-relation-focus="rel_luo_chen">
               <span>4</span>第二代承接
             </button>
           
-            <button class=" is-done " data-relation-focus="rel_chen_child">
+            <button class="  " data-relation-focus="rel_chen_child">
               <span>5</span>云山现居后代
             </button>
           
-            <button class=" is-done " data-relation-focus="rel_trust">
+            <button class="  " data-relation-focus="rel_trust">
               <span>6</span>继承资格
             </button>
           
@@ -932,113 +980,13 @@
       <div>
         <strong>绑定证据</strong>
         <div class="evidence-options">
-    <section class="bound-evidence">
-      <h5>已绑定</h5>
-      <div class="bound-evidence-list">
-        <span>1996 宗世昌专访</span>
+      <div class="empty-evidence-callout">
+        <p>证据箱为空。先去资料库收藏资料。</p>
+        <button type="button" data-relation-search="宗世昌">搜索 宗世昌</button>
       </div>
-    </section>
-    <div class="evidence-group-list">
-      
-        <section class="evidence-group evidence-group-required">
-          <h5>必要证据</h5>
-          <div>
-    <label class="evidence-choice evidence-choice-required is-checked">
-      <input type="checkbox" value="doc_official_family" checked="">
-      <span>
-        <strong>1996 宗世昌专访</strong>
-        <small>报刊 · 可信度 4/5 · 必要证据</small>
-      </span>
-    </label>
-  </div>
-        </section>
-      
-        <section class="evidence-group evidence-group-strong">
-          <h5>强证据</h5>
-          <div>
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_photo_back">
-      <span>
-        <strong>1969 春节合影背注</strong>
-        <small>档案 · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_luo_birth">
-      <span>
-        <strong>黔中旧户籍登记</strong>
-        <small>户籍 · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_chen_birth">
-      <span>
-        <strong>陈静出生记录</strong>
-        <small>档案 · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_dna_record">
-      <span>
-        <strong>疾控亲缘比对</strong>
-        <small>DNA · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_jiadong_school">
-      <span>
-        <strong>县一中学生信息表</strong>
-        <small>学校 · 可信度 4/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_trust_clause">
-      <span>
-        <strong>香港家族信托节选</strong>
-        <small>信托 · 可信度 5/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_talent_window">
-      <span>
-        <strong>人才窗口挂靠说明</strong>
-        <small>教育局 · 可信度 4/5</small>
-      </span>
-    </label>
-  
-    <label class="evidence-choice evidence-choice-strong ">
-      <input type="checkbox" value="doc_women_fed">
-      <span>
-        <strong>妇联创业帮扶记录</strong>
-        <small>档案 · 可信度 5/5</small>
-      </span>
-    </label>
-  </div>
-        </section>
-      
-        <section class="evidence-group evidence-group-weak">
-          <h5>传闻误导</h5>
-          <div>
-    <label class="evidence-choice evidence-choice-weak ">
-      <input type="checkbox" value="doc_school_forum">
-      <span>
-        <strong>县一中家长会帖</strong>
-        <small>论坛 · 可信度 2/5</small>
-      </span>
-    </label>
-  </div>
-        </section>
-      
     </div>
-  </div>
       </div>
-      <div class="relation-status ok"><strong>已确认：关系和证据均吻合</strong><p>公开报道确认宗世昌与李桂兰的婚姻及六名公开子女。</p></div>
+      <div class="relation-status bad">待确认：请补充正确人物和必要证据</div>
       
       
       <details class="relation-reasoning">
@@ -1057,137 +1005,7 @@
           <section class="panel">
             <h3>证据箱</h3>
             <p class="hint">收藏过的资料会出现在这里。关键关系需要绑定强证据，而不是只凭八卦。</p>
-            <div id="evidence-list" class="evidence-list">
-      <article class="evidence-card">
-        
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/photo-back-1969.jpg" alt="1969 年春节合影与照片背注扫描图" loading="lazy">
-      <figcaption>档案馆影像：合影与背注同档保存，提示宗世昌、罗月珍和“建宁”之间存在早期交集。</figcaption>
-    </figure>
-  
-        <h4>云山县档案馆：1969 年春节合影背注</h4>
-        <div class="meta-line">
-          <span class="badge">1969</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">照片背面出现“建宁”关键字。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/hukou-1970.jpg" alt="1970 年旧户籍迁入登记扫描图" loading="lazy">
-      <figcaption>户籍册影像：随迁婴儿登记和空缺父亲栏，是罗建宁身世链条的关键物证。</figcaption>
-    </figure>
-  
-        <h4>黔中地区旧户籍迁入登记</h4>
-        <div class="meta-line">
-          <span class="badge">1970</span>
-          <span class="badge">户籍</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">证明罗月珍带着罗建宁回贵州。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>陈静出生医学记录复印件</h4>
-        <div class="meta-line">
-          <span class="badge">1988</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">确认陈静是罗建宁之女。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/dna-record-2019.jpg" alt="2019 年亲缘比对记录扫描图" loading="lazy">
-      <figcaption>检测材料影像：比对页、样本袋和实验室标记共同指向正式亲缘鉴定。</figcaption>
-    </figure>
-  
-        <h4>云山县疾控中心亲缘比对记录</h4>
-        <div class="meta-line">
-          <span class="badge">2019</span>
-          <span class="badge">DNA</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">最终确认陈静与宗世昌存在直系血缘。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山家长汇论坛：县一中家长会</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">论坛</span>
-          <span class="badge low">低可信</span>
-        </div>
-        <p class="doc-summary">确认陈小东正式名为陈嘉东。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山县第一中学学生信息表</h4>
-        <div class="meta-line">
-          <span class="badge">2020</span>
-          <span class="badge">学校</span>
-          <span class="badge warn">需交叉验证</span>
-        </div>
-        <p class="doc-summary">确认陈嘉东是陈静之女。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-    <figure class="doc-image doc-image-card">
-      <img src="assets/images/evidence/trust-clause-1998.jpg" alt="1998 年香港家族信托文件扫描图" loading="lazy">
-      <figcaption>扫描件节选：港安信托服务有限公司抬头、被遮盖的条款页、印章和签署区显示这是一份正式信托材料。</figcaption>
-    </figure>
-  
-        <h4>香港家族信托文件节选</h4>
-        <div class="meta-line">
-          <span class="badge">1998</span>
-          <span class="badge">信托</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">说明不姓宗也可能成为受益人。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>《云山商界》1996 年宗世昌专访</h4>
-        <div class="meta-line">
-          <span class="badge">1996</span>
-          <span class="badge">报刊</span>
-          <span class="badge warn">需交叉验证</span>
-        </div>
-        <p class="doc-summary">建立宗世昌公开家庭版本。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山县教育局人才窗口档案挂靠说明</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">教育局</span>
-          <span class="badge warn">需交叉验证</span>
-        </div>
-        <p class="doc-summary">解释为什么外界误以为陈静在教育局上班。</p>
-      </article>
-    
-      <article class="evidence-card">
-        
-        <h4>云山县妇联创业帮扶登记表</h4>
-        <div class="meta-line">
-          <span class="badge">2014</span>
-          <span class="badge">档案</span>
-          <span class="badge high">可信度高</span>
-        </div>
-        <p class="doc-summary">解释陈静与宗建芳的关系不是母女。</p>
-      </article>
-    </div>
+            <div id="evidence-list" class="evidence-list"><div class="empty-state"><h3>证据箱为空</h3><p>打开资料后点击“加入证据箱”。</p></div></div>
           </section>
           <section class="panel">
             <h3>录音资料</h3>
@@ -1210,7 +1028,7 @@
       <article class="task-group">
         <header>
           <h4>主线核验</h4>
-          <span>5 / 5</span>
+          <span>1 / 5</span>
         </header>
         <div class="task-items">
           
@@ -1228,13 +1046,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item  is-current  ">
                 <div>
-                  <strong><span>固定继承规则</span><em>已完成</em></strong>
+                  <strong><span>固定继承规则</span><em>当前</em></strong>
                   <p>把信托条款加入证据箱，再判断姓氏是否决定资格。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="search" data-task-query="信托">复查</button>
+                  <button class="task-primary" data-task-view="search" data-task-query="信托">查信托</button>
                   <div class="task-state-actions" aria-label="固定继承规则手动状态">
                     <button data-task-state="main_trust_rule" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="main_trust_rule" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1242,13 +1060,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item    ">
                 <div>
-                  <strong><span>补齐旁支身份链条</span><em>已完成</em></strong>
+                  <strong><span>补齐旁支身份链条</span><em>待查</em></strong>
                   <p>围绕已经显名的人物继续找强证据，不提前假定结论。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="search" data-task-query="旧档">复查</button>
+                  <button class="task-primary" data-task-view="search" data-task-query="旧档">回查旧档</button>
                   <div class="task-state-actions" aria-label="补齐旁支身份链条手动状态">
                     <button data-task-state="main_hidden_chain" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="main_hidden_chain" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1256,13 +1074,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item    ">
                 <div>
-                  <strong><span>完成家谱绑定</span><em>已完成</em></strong>
+                  <strong><span>完成家谱绑定</span><em>待查</em></strong>
                   <p>给关键关系选择人物，并绑定已收藏的强证据。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="tree">复查</button>
+                  <button class="task-primary" data-task-view="tree">打开家谱</button>
                   <div class="task-state-actions" aria-label="完成家谱绑定手动状态">
                     <button data-task-state="main_relations" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="main_relations" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1270,13 +1088,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item    ">
                 <div>
-                  <strong><span>提交最终报告</span><em>已完成</em></strong>
+                  <strong><span>提交最终报告</span><em>待查</em></strong>
                   <p>在关键关系全部核验后提交继承资格判断。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="report">复查</button>
+                  <button class="task-primary" data-task-view="report">打开提交</button>
                   <div class="task-state-actions" aria-label="提交最终报告手动状态">
                     <button data-task-state="main_report" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="main_report" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1342,7 +1160,7 @@
       <article class="task-group">
         <header>
           <h4>调查教学</h4>
-          <span>3 / 4</span>
+          <span>1 / 4</span>
         </header>
         <div class="task-items">
           
@@ -1360,13 +1178,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item  is-current  ">
                 <div>
-                  <strong><span>收藏第一份证据</span><em>已完成</em></strong>
+                  <strong><span>收藏第一份证据</span><em>当前</em></strong>
                   <p>打开资料后点击“加入证据箱”，让它可用于家谱绑定。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="search">复查</button>
+                  <button class="task-primary" data-task-view="search">去资料库</button>
                   <div class="task-state-actions" aria-label="收藏第一份证据手动状态">
                     <button data-task-state="tutorial_collect" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="tutorial_collect" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1374,13 +1192,13 @@
                 </div>
               </section>
             
-              <section class="task-item is-done   ">
+              <section class="task-item    ">
                 <div>
-                  <strong><span>完成一条关系推理</span><em>已完成</em></strong>
+                  <strong><span>完成一条关系推理</span><em>待查</em></strong>
                   <p>在家谱页选人并绑定证据，观察冲突提示。</p>
                 </div>
                 <div class="task-actions">
-                  <button class="task-primary" data-task-view="tree">复查</button>
+                  <button class="task-primary" data-task-view="tree">打开家谱</button>
                   <div class="task-state-actions" aria-label="完成一条关系推理手动状态">
                     <button data-task-state="tutorial_relation" data-task-state-value="pinned" aria-pressed="false">锁定</button>
                     <button data-task-state="tutorial_relation" data-task-state-value="ignored" aria-pressed="false">忽略</button>
@@ -1388,9 +1206,9 @@
                 </div>
               </section>
             
-              <section class="task-item  is-current  ">
+              <section class="task-item    ">
                 <div>
-                  <strong><span>用关键词回查</span><em>当前</em></strong>
+                  <strong><span>用关键词回查</span><em>待查</em></strong>
                   <p>阅读资料后，在关键词区点击词条继续搜索。</p>
                 </div>
                 <div class="task-actions">
@@ -1867,7 +1685,7 @@
                 <span>界面音效与录音播放</span>
               </label>
               <label class="toggle-row">
-                <input id="ambient-toggle" type="checkbox">
+                <input id="ambient-toggle" type="checkbox" disabled="">
                 <span>档案室环境音</span>
               </label>
             </article>
@@ -1876,9 +1694,9 @@
               <h4>本地进度</h4>
               <dl id="save-summary" class="save-summary">
     <dt>资料阅读</dt><dd>50 已读</dd>
-    <dt>证据收藏</dt><dd>10</dd>
+    <dt>证据收藏</dt><dd>0</dd>
     <dt>已走访地点</dt><dd>6 / 6</dd>
-    <dt>关系完成</dt><dd>6 / 6 已开放</dd>
+    <dt>关系完成</dt><dd>0 / 6 已开放</dd>
     <dt>调查笔记</dt><dd>0 字</dd>
     <dt>备忘整理</dt><dd>0 锁定 / 0 忽略</dd>
   </dl>
@@ -1898,7 +1716,7 @@
         </section>
       </section>
 
-      <section id="report-view" class="view is-active">
+      <section id="report-view" class="view">
         <section class="panel report-panel">
           <h3>最终提交</h3>
           <p>请提交你对当前卷宗继承资格的判断。系统会检查关键关系、证据绑定和规则适用。</p>
@@ -1910,27 +1728,29 @@
           <select id="descendant-select"><option value="">未选择</option><option value="zong_shichang">宗世昌（世昌集团创始人）</option><option value="li_guilan">李桂兰（宗世昌妻子）</option><option value="zong_jianguo">宗建国（计划经济局干部）</option><option value="zong_jianfang">宗建芳（县妇联干部）</option><option value="zong_jianmin">宗建民（物资局干部）</option><option value="zong_jianhong">宗建红（世昌集团第二代掌门）</option><option value="zong_jianping">宗建平（公安系统出身）</option><option value="zong_jianli">宗建丽（供销社干部）</option><option value="luo_yuezhen">罗月珍（贵州籍女知青）</option><option value="luo_jianning">罗建宁（罗月珍之女）</option><option value="chen_jing">陈静（KTV经营者）</option><option value="chen_jiadong">陈嘉东（县一中学生）</option><option value="zong_minghui">宗明辉（世昌集团第三任董事长）</option><option value="zong_mingjun">宗明军（世昌集团代理董事长）</option><option value="li_qiang">李强（鼎辉基金合伙人）</option><option value="li_min">李敏（世昌集团客服主管）</option><option value="li_tianci">李天赐（李敏之子）</option><option value="he_guosheng">何国生（供销社老会计）</option><option value="zhou_meiying">周美英（云山卫生院助产员）</option><option value="qian_shulin">钱树林（黔中汽车队司机）</option><option value="huang_yaling">黄雅玲（县一中班主任）</option><option value="fang_renjie">方仁杰（世昌集团改制会计）</option><option value="wei_xueqin">魏雪琴（世昌集团法务经理）</option><option value="ma_lihua">马丽华（云山老街社区主任）</option></select>
 
           <button id="submit-report" class="primary-action">提交报告</button>
-          <div id="report-result" class="report-result success" aria-live="polite">
-      <strong>提交成功。</strong>
-      <p>结论：罗建宁是宗世昌与罗月珍的非婚生女，属于家族信托所称直系血亲后代。陈静为罗建宁之女，按 1998 年香港家族信托条款同样具备继承资格；陈嘉东为陈静之女，虽不姓宗，仍是 2020 年现居云山且具继承资格的后代。</p>
-      <div class="chain-review">
-        <h4>证据链回顾</h4>
-        <ol>
-          <li>公开版本只承认宗世昌与李桂兰的六名子女。</li>
-          <li>知青名册和供销系统花名册证明罗月珍曾与宗世昌在云山有交集。</li>
-          <li>1969 年照片背注和旧户籍共同指向罗建宁。</li>
-          <li>陈静出生记录确认其母为罗建宁。</li>
-          <li>陈嘉东学籍确认其为陈静之女。</li>
-          <li>DNA 亲缘比对和信托条款共同确认陈静一支的继承资格。</li>
-        </ol>
-      </div>
-    </div>
+          <div id="report-result" class="report-result" aria-live="polite"></div>
         </section>
       </section>
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js"></script><pre id="document-layout-report">{
+  "status": "pass",
+  "viewport": {
+    "width": 1341,
+    "height": 763
+  },
+  "documents": 50,
+  "byKind": {
+    "press": 14,
+    "legal": 2,
+    "private": 10,
+    "archive": 16,
+    "web": 8
+  },
+  "checkedNodes": 50,
+  "failures": []
+}</pre>
 
 
 </body></html>

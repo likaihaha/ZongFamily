@@ -18,30 +18,30 @@
       </div>
 
       <nav class="tabs" aria-label="主导航">
-        <button class="tab is-active" data-view="visit"><span class="pixel-icon pixel-icon-visit" aria-hidden="true"><i></i></span><span class="tab-label">走访</span></button>
-        <button class="tab" data-view="search"><span class="pixel-icon pixel-icon-search" aria-hidden="true"><i></i></span><span class="tab-label">资料库</span></button>
-        <button class="tab" data-view="tree"><span class="pixel-icon pixel-icon-tree" aria-hidden="true"><i></i></span><span class="tab-label">家谱</span></button>
-        <button class="tab" data-view="evidence"><span class="pixel-icon pixel-icon-evidence" aria-hidden="true"><i></i></span><span class="tab-label">证据箱</span></button>
-        <button class="tab" data-view="notes"><span class="pixel-icon pixel-icon-notes" aria-hidden="true"><i></i></span><span class="tab-label">备忘录</span></button>
-        <button class="tab" data-view="updates"><span class="pixel-icon pixel-icon-updates" aria-hidden="true"><i></i></span><span class="tab-label">更新日志</span></button>
-        <button class="tab" data-view="settings"><span class="pixel-icon pixel-icon-settings" aria-hidden="true"><i></i></span><span class="tab-label">设置</span></button>
-        <button class="tab" data-view="report"><span class="pixel-icon pixel-icon-report" aria-hidden="true"><i></i></span><span class="tab-label">提交</span></button>
+        <button class="tab is-active" data-view="visit"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">走访</span></button>
+        <button class="tab" data-view="search"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">资料库</span></button>
+        <button class="tab" data-view="tree"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/genealogy-tree.png" alt=""></span><span class="tab-label">家谱</span></button>
+        <button class="tab" data-view="evidence"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">证据箱</span></button>
+        <button class="tab" data-view="notes"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/document-reading.png" alt=""></span><span class="tab-label">备忘录</span></button>
+        <button class="tab" data-view="updates"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/archive-search.png" alt=""></span><span class="tab-label">更新日志</span></button>
+        <button class="tab" data-view="settings"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/evidence-binding.png" alt=""></span><span class="tab-label">设置</span></button>
+        <button class="tab" data-view="report"><span class="nav-asset-icon" aria-hidden="true"><img src="assets/images/future-assets/ui-icons/final-submission.png" alt=""></span><span class="tab-label">提交</span></button>
       </nav>
 
       <section class="case-card">
         <h2>当前目标</h2>
-        <ol>
+        <ol id="current-goal-list">
           <li>确认宗世昌公开家庭。</li>
-          <li>找出隐藏的第七支血脉。</li>
-          <li>为关键关系绑定证据。</li>
-          <li>提交最终继承人判断。</li>
+          <li>阅读并收藏可验证资料。</li>
+          <li>为已开放关系绑定证据。</li>
+          <li>根据新线索继续走访。</li>
         </ol>
       </section>
 
       <section class="meter-card">
         <div>
           <span>资料阅读</span>
-          <strong id="read-count">0 / 0</strong>
+          <strong id="read-count">0 已读</strong>
         </div>
         <div>
           <span>证据收藏</span>
@@ -49,7 +49,7 @@
         </div>
         <div>
           <span>关系完成</span>
-          <strong id="relation-count">0 / 4</strong>
+          <strong id="relation-count">0 / 1 已开放</strong>
         </div>
       </section>
 
@@ -138,7 +138,7 @@
             <div class="section-heading people-heading">
               <div>
                 <h3>人物档案</h3>
-                <p>公开宗家、隐藏血脉、旁支与证人。</p>
+                <p>公开宗家、待核旁支、传闻人物与证人。</p>
               </div>
             </div>
             <div id="people-filters" class="people-filters" aria-label="人物档案筛选"></div>
@@ -181,7 +181,7 @@
           <section class="panel">
             <h3>调查笔记</h3>
             <p class="hint">这里会自动保存。建议记录你认为可靠的证据链，而不是只摘录八卦。</p>
-            <textarea id="notes-input" class="notes-input" placeholder="例如：罗月珍 -> 罗建宁 -> 陈静 -> 陈嘉东。需要 DNA、户籍、学籍和信托共同支撑。"></textarea>
+            <textarea id="notes-input" class="notes-input" placeholder="例如：某条身份链需要同时用户籍、学籍、亲缘材料和规则文件支撑。"></textarea>
           </section>
           <section class="panel">
             <h3>已发现关键词</h3>
@@ -237,12 +237,12 @@
       <section id="report-view" class="view">
         <section class="panel report-panel">
           <h3>最终提交</h3>
-          <p>请提交你对“第七支血脉”的判断。系统会检查关键关系、证据绑定和继承资格。</p>
+          <p>请提交你对当前卷宗继承资格的判断。系统会检查关键关系、证据绑定和规则适用。</p>
 
-          <label class="field-label" for="heir-select">谁是宗世昌隐藏血脉的第一代后代？</label>
+          <label class="field-label" for="heir-select">已核实的旁支第一代后代是谁？</label>
           <select id="heir-select"></select>
 
-          <label class="field-label" for="descendant-select">2020 年仍在云山县、具有继承资格的后代是谁？</label>
+          <label class="field-label" for="descendant-select">当前卷宗中仍需提交资格判断的后代是谁？</label>
           <select id="descendant-select"></select>
 
           <button id="submit-report" class="primary-action">提交报告</button>
