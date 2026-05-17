@@ -1,6 +1,14 @@
 # 开发状态
 
-更新时间：2026-05-17 17:55 Asia/Shanghai
+更新时间：2026-05-17 18:57 Asia/Shanghai
+
+## 2026-05-17 18:57 Asia/Shanghai 走访结果主材料按钮
+
+- 针对“取件成功后仍要在多个入口材料按钮里判断第一步”的摩擦，走访结果区新增首份入口材料主按钮，文案为“打开首份入口材料：……”，并保留原有入口材料清单。
+- 新增 `renderVisitPrimaryDocumentAction()`，只在对应材料已入卷且可解锁阅读时渲染主按钮；按钮复用现有 `data-visit-open-doc` 行为，会切到资料库、选中原件并标记已读。
+- 普通试玩回归新增主按钮断言，世昌集团取件后必须出现 `data-visit-primary-doc="doc_trust_clause"`，点击后必须打开信托材料并标记已读。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run playtest`、`npm.cmd run validate`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 17:55 Asia/Shanghai 走访入口材料直达矩阵
 

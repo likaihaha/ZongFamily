@@ -801,10 +801,11 @@ const updateLogs = [
     date: "2026-05-17",
     title: "问询材料一键打开",
     changes: [
+      "取件成功结果区新增首份入口材料主按钮，玩家可直接从最醒目的动作进入下一份应读原件",
       "成功取件后的走访结果和今日日程新增入口材料按钮，玩家可从结果区直接打开已入卷材料",
       "现场问询的“先看材料”改为可操作材料区，已入卷时可直接打开原件",
       "材料尚未办理取件时显示“办理取件后入卷”，避免误以为未取得材料也能阅读",
-      "普通试玩新增直达矩阵，覆盖 6 个走访地点的走访结果和日程入口材料按钮"
+      "普通试玩新增直达矩阵，覆盖 6 个走访地点的走访结果、首份材料主按钮和日程入口材料按钮"
     ],
     checks: [
       "node --check game\\app.js passed",
@@ -2534,6 +2535,23 @@ function renderVisitDocumentActions(ids, label = "入口材料") {
   `;
 }
 
+function renderVisitPrimaryDocumentAction(ids) {
+  const firstId = ids.find((id) => {
+    const doc = documents.find((item) => item.id === id);
+    return doc && isDocumentUnlocked(doc);
+  });
+  if (!firstId) return "";
+  return `
+    <button
+      type="button"
+      class="visit-primary-doc"
+      data-visit-primary-doc="${escapeHtml(firstId)}"
+      data-visit-open-doc="${escapeHtml(firstId)}">
+      打开首份入口材料：${escapeHtml(documentTitleById(firstId))}
+    </button>
+  `;
+}
+
 function renderVisitQuestionFirstDoc(question) {
   if (!question.firstDoc) return "";
   const doc = documents.find((item) => item.id === question.firstDoc);
@@ -2892,6 +2910,7 @@ function renderVisitDetail() {
           <strong>${result.title}</strong>
           <p>${result.text}</p>
           ${result.documents.length ? `<small>已入卷：${acquiredDocTitles(result.documents).join("、")}</small>` : ""}
+          ${renderVisitPrimaryDocumentAction(result.documents)}
           ${renderVisitDocumentActions(result.documents, "先看入口材料")}
           ${followUp ? `
             <div class="visit-next-step">
@@ -4148,6 +4167,13 @@ function runGuidedPlaytest() {
   renderAll();
   assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  const primaryResultDocButton = els.visitDetail.querySelector('.visit-result [data-visit-primary-doc="doc_trust_clause"]');
+  assert(Boolean(primaryResultDocButton), "obtained visit result should offer a primary entry-doc button");
+  primaryResultDocButton?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "primary entry-doc button should select the trust clause document");
+  assert(state.readDocs.has("doc_trust_clause"), "primary entry-doc button should mark the opened document as read");
+  switchView("visit");
+  renderAll();
   const resultDocButton = els.visitDetail.querySelector('.visit-result [data-visit-open-doc="doc_trust_clause"]');
   assert(Boolean(resultDocButton), "obtained visit result should offer a direct entry-doc open button");
   resultDocButton?.click();

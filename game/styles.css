@@ -1403,6 +1403,30 @@ select {
   background: rgba(63, 111, 82, 0.1);
 }
 
+.visit-primary-doc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  max-width: 100%;
+  margin-top: 9px;
+  border: 1px solid rgba(63, 111, 82, 0.56);
+  border-radius: 7px;
+  padding: 8px 11px;
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.visit-primary-doc:hover {
+  background: #365f49;
+}
+
 .visit-progress {
   height: 9px;
   border: 1px solid rgba(212, 200, 183, 0.9);
