@@ -799,6 +799,21 @@ const locationLabels = {
 const updateLogs = [
   {
     date: "2026-05-17",
+    title: "入口原件下一步矩阵回归",
+    changes: [
+      "普通试玩把阅读页“阅读后下一步”断言从世昌集团单点扩展到 6 个走访地点的全部入口原件",
+      "矩阵会逐份打开入口原件，确认存在对应地点的下一步搜索按钮和返回走访按钮",
+      "点击下一步搜索后必须回到资料库并露出本地点相关材料，避免入口原件读完后断链"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
     title: "原件阅读下一步查证",
     changes: [
       "走访入口材料打开后，资料阅读页底部新增“阅读后下一步”行动区",
@@ -4144,6 +4159,22 @@ function runGuidedPlaytest() {
     const entryDocs = locationEntryDocumentIds[locationId] || [];
     assert(Boolean(location), `missing visit location ${locationId}`);
     assert(entryDocs.length > 0, `${locationId} should have entry documents`);
+    const assertDocumentNextStep = (docId, sourceLabel) => {
+      const followUp = visitFollowUp(location, "obtained");
+      const locationDocs = new Set([...(locationDocumentIds[locationId] || []), ...entryDocs]);
+      const nextStep = els.documentView.querySelector(`[data-doc-next-step="${locationId}"]`);
+      assert(Boolean(nextStep), `${locationId} ${sourceLabel} should render a document next-step panel for ${docId}`);
+      const nextSearch = nextStep?.querySelector(`[data-doc-next-search="${followUp.query}"]`);
+      const nextVisit = nextStep?.querySelector(`[data-doc-next-visit="${locationId}"]`);
+      assert(Boolean(nextSearch), `${locationId} ${sourceLabel} should offer next search "${followUp.query}" for ${docId}`);
+      assert(Boolean(nextVisit), `${locationId} ${sourceLabel} should offer a return-to-visit action for ${docId}`);
+      nextSearch?.click();
+      assert(state.query === followUp.query, `${locationId} next-step search should set query "${followUp.query}"`);
+      assert(visibleResultIds().some((id) => locationDocs.has(id)), `${locationId} next-step search should surface a local visit document`);
+      switchView("visit");
+      renderAll();
+      return true;
+    };
     resetProgressForHiddenTest();
     state.activeVisitId = locationId;
     switchView("visit");
@@ -4156,14 +4187,18 @@ function runGuidedPlaytest() {
     primaryButton?.click();
     assert(state.selectedDoc === primaryDoc, `${locationId} primary entry-doc button should select ${primaryDoc}`);
     assert(state.readDocs.has(primaryDoc), `${locationId} primary entry-doc button should mark ${primaryDoc} read`);
+    assertDocumentNextStep(primaryDoc, "primary button");
     switchView("visit");
     renderAll();
+    let docNextSteps = 1;
     for (const docId of entryDocs) {
       const resultButton = els.visitDetail.querySelector(`.visit-result [data-visit-open-doc="${docId}"]`);
       assert(Boolean(resultButton), `${locationId} visit result should expose ${docId}`);
       resultButton?.click();
       assert(state.selectedDoc === docId, `${locationId} result button should select ${docId}`);
       assert(state.readDocs.has(docId), `${locationId} result button should mark ${docId} read`);
+      assertDocumentNextStep(docId, "result button");
+      docNextSteps += 1;
       switchView("visit");
       renderAll();
       const scheduleButton = els.visitDetail.querySelector(`[data-visit-log="${locationId}"] [data-visit-open-doc="${docId}"]`);
@@ -4174,7 +4209,7 @@ function runGuidedPlaytest() {
       switchView("visit");
       renderAll();
     }
-    return { location: location?.title || locationId, docs: entryDocs, primaryDoc };
+    return { location: location?.title || locationId, docs: entryDocs, primaryDoc, docNextSteps };
   };
 
   resetProgressForHiddenTest();
@@ -4259,7 +4294,8 @@ function runGuidedPlaytest() {
   record("走访入口材料直达矩阵", {
     locations: directDocCoverage.length,
     documents: directDocCoverage.reduce((sum, item) => sum + item.docs.length, 0),
-    primaryButtons: directDocCoverage.filter((item) => item.primaryDoc).length
+    primaryButtons: directDocCoverage.filter((item) => item.primaryDoc).length,
+    docNextSteps: directDocCoverage.reduce((sum, item) => sum + item.docNextSteps, 0)
   });
   resetProgressForHiddenTest();
   state.clockMinutes = 17 * 60;

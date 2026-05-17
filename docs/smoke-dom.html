@@ -1549,6 +1549,19 @@
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-17</strong>
+        <span>入口原件下一步矩阵回归</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>普通试玩把阅读页“阅读后下一步”断言从世昌集团单点扩展到 6 个走访地点的全部入口原件</li><li>矩阵会逐份打开入口原件，确认存在对应地点的下一步搜索按钮和返回走访按钮</li><li>点击下一步搜索后必须回到资料库并露出本地点相关材料，避免入口原件读完后断链</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
         <span>原件阅读下一步查证</span>
       </header>
       <div class="update-log-body">

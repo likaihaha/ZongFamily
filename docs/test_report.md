@@ -1,6 +1,23 @@
 # 测试报告
 
-更新时间：2026-05-17 20:59 Asia/Shanghai
+更新时间：2026-05-17 22:00 Asia/Shanghai
+
+## 2026-05-17 22:00 Asia/Shanghai 入口原件下一步矩阵回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径均无错误。
+- `npm.cmd run playtest` 通过并重新生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`；普通试玩矩阵现在覆盖 6 个走访地点的全部入口原件，逐份确认 `data-doc-next-step`、下一步搜索按钮和返回走访按钮存在。
+- 下一步搜索按钮会被实际点击，必须回到资料库并露出本地点相关材料，避免入口原件阅读后查证断链。
+- `npm.cmd run smoke` 通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-17 20:59 Asia/Shanghai 原件阅读下一步查证回归
 
