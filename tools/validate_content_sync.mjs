@@ -12,16 +12,41 @@ function fail(message) {
   errors.push(message);
 }
 
-function extractConstArray(appSource, name, nextName) {
+function extractConstExpression(appSource, name) {
   const startToken = `const ${name} = `;
   const start = appSource.indexOf(startToken);
   if (start === -1) throw new Error(`Missing ${name}`);
   const valueStart = start + startToken.length;
-  const endToken = nextName ? `const ${nextName} = ` : "const sourceLabels";
-  const end = appSource.indexOf(endToken, valueStart);
-  if (end === -1) throw new Error(`Missing end token after ${name}`);
+  let end = -1;
+  let depth = 0;
+  let quote = "";
+  let escaped = false;
+  for (let index = valueStart; index < appSource.length; index += 1) {
+    const char = appSource[index];
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === quote) {
+        quote = "";
+      }
+      continue;
+    }
+    if (char === "\"" || char === "'" || char === "`") {
+      quote = char;
+      continue;
+    }
+    if (char === "[" || char === "{" || char === "(") depth += 1;
+    else if (char === "]" || char === "}" || char === ")") depth -= 1;
+    else if (char === ";" && depth === 0) {
+      end = index;
+      break;
+    }
+  }
+  if (end === -1) throw new Error(`Missing semicolon after ${name}`);
   const source = appSource.slice(valueStart, end).trim().replace(/;\s*$/, "");
-  return vm.runInNewContext(source);
+  return vm.runInNewContext(`(${source})`, { Set });
 }
 
 if (!fs.existsSync(appPath)) fail(`Missing app file: ${appPath}`);
@@ -30,14 +55,16 @@ if (!fs.existsSync(bundlePath)) fail(`Missing case bundle: ${bundlePath}`);
 let people = [];
 let documents = [];
 let relationPrompts = [];
+let visitInterviews = {};
 let bundle = {};
 
 if (!errors.length) {
   try {
     const app = fs.readFileSync(appPath, "utf8");
-    people = extractConstArray(app, "people", "documents");
-    documents = extractConstArray(app, "documents", "relationPrompts");
-    relationPrompts = extractConstArray(app, "relationPrompts", null);
+    people = extractConstExpression(app, "people");
+    documents = extractConstExpression(app, "documents");
+    relationPrompts = extractConstExpression(app, "relationPrompts");
+    visitInterviews = extractConstExpression(app, "visitInterviews");
     bundle = JSON.parse(fs.readFileSync(bundlePath, "utf8"));
   } catch (error) {
     fail(error.message);
@@ -132,6 +159,8 @@ for (const bundleRelation of bundle.relationPrompts || []) {
   }
 }
 
+compareField("case bundle", "visitInterviews", "visitInterviews", visitInterviews, bundle.visitInterviews);
+
 for (const personId of relationPersonRefs) {
   if (!bundlePeopleById.has(personId)) {
     fail(`relation person missing from case_bundle familyMembers: ${personId}`);
@@ -159,7 +188,8 @@ console.log(
       appDocuments: appDocsById.size,
       relationPeopleCovered: relationPersonRefs.size,
       relationDocumentsCovered: relationDocRefs.size,
-      relationPrompts: relationPrompts.length
+      relationPrompts: relationPrompts.length,
+      visitInterviews: Object.values(visitInterviews).reduce((sum, questions) => sum + questions.length, 0)
     },
     null,
     2

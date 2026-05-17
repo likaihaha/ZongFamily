@@ -52,6 +52,7 @@ const locationDocumentIds = extractConstExpression("locationDocumentIds");
 const locationEntryDocumentIds = extractConstExpression("locationEntryDocumentIds");
 const locationLabels = extractConstExpression("locationLabels");
 const visitLocations = extractConstExpression("visitLocations");
+const visitInterviews = extractConstExpression("visitInterviews");
 const documentById = new Map(documents.map((doc) => [doc.id, doc]));
 
 const errors = [];
@@ -240,6 +241,30 @@ for (const location of visitLocations) {
     visibleIds: result.visible.map((doc) => doc.id),
     localVisibleIds: visibleLocationDocs.map((doc) => doc.id)
   });
+
+  for (const interview of visitInterviews[location.id] || []) {
+    const interviewResult = search(state, interview.query);
+    const localVisibleFromInterview = interviewResult.visible.filter((doc) => locationDocs.has(doc.id));
+    assert(
+      localVisibleFromInterview.length > 0,
+      `${locationLabels[location.id] || location.id}: interview "${interview.prompt}" query "${interview.query}" should reveal at least one local obtained document`
+    );
+    assert(
+      localVisibleFromInterview.some((doc) => doc.id === interview.firstDoc),
+      `${locationLabels[location.id] || location.id}: interview "${interview.prompt}" should surface firstDoc ${interview.firstDoc}`
+    );
+    record(`现场问询：${location.title} / ${interview.prompt}`, {
+      query: interview.query,
+      person: interview.person,
+      firstDoc: interview.firstDoc,
+      visible: interviewResult.visible.length,
+      locked: interviewResult.locked.length,
+      localVisible: localVisibleFromInterview.length,
+      visibleIds: interviewResult.visible.map((doc) => doc.id),
+      lockedIds: interviewResult.locked.map((doc) => doc.id),
+      localVisibleIds: localVisibleFromInterview.map((doc) => doc.id)
+    });
+  }
 }
 
 function docTitle(id) {
@@ -262,6 +287,8 @@ function formatMarkdownReport() {
     hour12: false
   }).format(new Date()).replaceAll("/", "-");
   const mainRows = checkpoints.filter((checkpoint) => !checkpoint.label.startsWith("走访入口："));
+  const interviewRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("现场问询："));
+  const mainRouteRows = mainRows.filter((checkpoint) => !checkpoint.label.startsWith("现场问询："));
   const visitRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("走访入口："));
 
   return `# 搜索路线试玩复盘
@@ -273,15 +300,16 @@ function formatMarkdownReport() {
 ## 结论
 
 - 状态：${errors.length ? "失败" : "通过"}
-- 主线路线检查点：${mainRows.length}
+- 主线路线检查点：${mainRouteRows.length}
 - 走访入口检查点：${visitRows.length}
+- 现场问询检查点：${interviewRows.length}
 - 错误数量：${errors.length}
 
 ## 主线搜索链
 
 | 步骤 | 搜索词 | 应出现/应锁定 | 可见资料数 | 锁定资料数 | 备注 |
 | --- | --- | --- | ---: | ---: | --- |
-${mainRows.map((checkpoint) => {
+${mainRouteRows.map((checkpoint) => {
   const expected = checkpoint.expected
     ? `应出现：${formatDocList(checkpoint.expected)}`
     : checkpoint.expectedLocked
@@ -300,6 +328,12 @@ ${mainRows.map((checkpoint) => {
 | 入口 | 默认搜索词 | 本地资料命中 | 可见资料 |
 | --- | --- | ---: | --- |
 ${visitRows.map((checkpoint) => `| ${checkpoint.label.replace("走访入口：", "")} | ${checkpoint.query} | ${checkpoint.localVisible} | ${formatDocList(checkpoint.localVisibleIds)} |`).join("\n")}
+
+## 现场问询入口
+
+| 问询 | 经手人 | 搜索词 | 先看材料 | 本地资料命中 | 可见资料 | 锁定资料 |
+| --- | --- | --- | --- | ---: | --- | --- |
+${interviewRows.map((checkpoint) => `| ${checkpoint.label.replace("现场问询：", "")} | ${checkpoint.person} | ${checkpoint.query} | ${formatDocList([checkpoint.firstDoc])} | ${checkpoint.localVisible} | ${formatDocList(checkpoint.visibleIds)} | ${formatDocList(checkpoint.lockedIds)} |`).join("\n")}
 
 ## 剩余风险
 

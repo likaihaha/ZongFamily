@@ -34,6 +34,7 @@ const requiredRootFields = [
   "clues",
   "documents",
   "familyMembers",
+  "visitInterviews",
   "submission"
 ];
 
@@ -57,6 +58,9 @@ if (!Array.isArray(data.familyMembers)) {
 }
 if ("relationPrompts" in data && !Array.isArray(data.relationPrompts)) {
   fail("relationPrompts must be an array when present");
+}
+if (!data.visitInterviews || typeof data.visitInterviews !== "object" || Array.isArray(data.visitInterviews)) {
+  fail("visitInterviews must be an object keyed by location id");
 }
 
 function validateIdArray(items, label) {
@@ -91,6 +95,7 @@ const truthIds = new Set((data.truthTable || []).map((item) => item.id));
 const familyMemberIds = new Set((data.familyMembers || []).map((item) => item.id));
 const documentIds = new Set((data.documents || []).map((item) => item.id));
 const supportingDocumentIdsByTruthId = new Map();
+const visitInterviewIds = new Set();
 
 for (const [index, clue] of data.clues.entries()) {
   if (typeof clue.name !== "string" || !clue.name.trim()) {
@@ -213,6 +218,42 @@ for (const [index, relation] of (data.relationPrompts || []).entries()) {
   for (const docId of relation.requiredEvidence || []) {
     if (!documentIds.has(docId)) {
       fail(`relationPrompts[${index}] references missing evidence document: ${docId}`);
+    }
+  }
+}
+
+for (const [locationId, questions] of Object.entries(data.visitInterviews || {})) {
+  if (typeof locationId !== "string" || !locationId.trim()) {
+    fail("visitInterviews contains an empty location id");
+  }
+  if (!Array.isArray(questions) || questions.length < 2) {
+    fail(`visitInterviews.${locationId} must contain at least two questions`);
+    continue;
+  }
+  const locationQuestionIds = new Set();
+  for (const [index, question] of questions.entries()) {
+    if (!question || typeof question !== "object") {
+      fail(`visitInterviews.${locationId}[${index}] must be an object`);
+      continue;
+    }
+    for (const field of ["id", "prompt", "person", "answer", "query", "firstDoc"]) {
+      if (typeof question[field] !== "string" || !question[field].trim()) {
+        fail(`visitInterviews.${locationId}[${index}].${field} must be a non-empty string`);
+      }
+    }
+    if (typeof question.firstDoc === "string" && question.firstDoc.trim() && !documentIds.has(question.firstDoc)) {
+      fail(`visitInterviews.${locationId}[${index}] references missing firstDoc: ${question.firstDoc}`);
+    }
+    if (typeof question.id === "string") {
+      const globalId = `${locationId}:${question.id}`;
+      if (locationQuestionIds.has(question.id)) {
+        fail(`visitInterviews.${locationId} has duplicate question id: ${question.id}`);
+      }
+      if (visitInterviewIds.has(globalId)) {
+        fail(`visitInterviews has duplicate global question id: ${globalId}`);
+      }
+      locationQuestionIds.add(question.id);
+      visitInterviewIds.add(globalId);
     }
   }
 }

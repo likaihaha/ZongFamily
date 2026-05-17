@@ -7,16 +7,41 @@ const root = process.cwd();
 const appPath = path.resolve(root, "game/app.js");
 const bundlePath = path.resolve(root, "game/data/case_bundle.json");
 
-function extractConstArray(appSource, name, nextName) {
+function extractConstExpression(appSource, name) {
   const startToken = `const ${name} = `;
   const start = appSource.indexOf(startToken);
   if (start === -1) throw new Error(`Missing ${name}`);
   const valueStart = start + startToken.length;
-  const endToken = nextName ? `const ${nextName} = ` : "const sourceLabels";
-  const end = appSource.indexOf(endToken, valueStart);
-  if (end === -1) throw new Error(`Missing end token after ${name}`);
+  let end = -1;
+  let depth = 0;
+  let quote = "";
+  let escaped = false;
+  for (let index = valueStart; index < appSource.length; index += 1) {
+    const char = appSource[index];
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === quote) {
+        quote = "";
+      }
+      continue;
+    }
+    if (char === "\"" || char === "'" || char === "`") {
+      quote = char;
+      continue;
+    }
+    if (char === "[" || char === "{" || char === "(") depth += 1;
+    else if (char === "]" || char === "}" || char === ")") depth -= 1;
+    else if (char === ";" && depth === 0) {
+      end = index;
+      break;
+    }
+  }
+  if (end === -1) throw new Error(`Missing semicolon after ${name}`);
   const source = appSource.slice(valueStart, end).trim().replace(/;\s*$/, "");
-  return vm.runInNewContext(source);
+  return vm.runInNewContext(`(${source})`, { Set });
 }
 
 function pickDefined(source, keys) {
@@ -28,9 +53,10 @@ function pickDefined(source, keys) {
 }
 
 const appSource = fs.readFileSync(appPath, "utf8");
-const people = extractConstArray(appSource, "people", "documents");
-const documents = extractConstArray(appSource, "documents", "relationPrompts");
-const relationPrompts = extractConstArray(appSource, "relationPrompts", null);
+const people = extractConstExpression(appSource, "people");
+const documents = extractConstExpression(appSource, "documents");
+const relationPrompts = extractConstExpression(appSource, "relationPrompts");
+const visitInterviews = extractConstExpression(appSource, "visitInterviews");
 const bundle = JSON.parse(fs.readFileSync(bundlePath, "utf8"));
 
 const existingPeople = new Map((bundle.familyMembers || []).map((person) => [person.id, person]));
@@ -50,6 +76,13 @@ bundle.relationPrompts = relationPrompts.map((relation) =>
   pickDefined(relation, ["id", "title", "prompt", "slots", "correct", "requiredEvidence"])
 );
 
+bundle.visitInterviews = Object.fromEntries(
+  Object.entries(visitInterviews).map(([locationId, questions]) => [
+    locationId,
+    questions.map((question) => pickDefined(question, ["id", "prompt", "person", "answer", "query", "firstDoc"]))
+  ])
+);
+
 fs.writeFileSync(bundlePath, `${JSON.stringify(bundle, null, 2)}\n`, "utf8");
 
 console.log(
@@ -58,7 +91,8 @@ console.log(
       status: "ok",
       familyMembers: bundle.familyMembers.length,
       documents: bundle.documents.length,
-      relationPrompts: bundle.relationPrompts.length
+      relationPrompts: bundle.relationPrompts.length,
+      visitInterviews: Object.values(bundle.visitInterviews).reduce((sum, questions) => sum + questions.length, 0)
     },
     null,
     2

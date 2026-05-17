@@ -1,6 +1,198 @@
 # 测试报告
 
-更新时间：2026-05-17 02:39 Asia/Shanghai
+更新时间：2026-05-17 12:50 Asia/Shanghai
+
+## 2026-05-17 12:50 Asia/Shanghai 问询先看材料回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node --check tools\validate_unlock_matrix.mjs
+node --check tools\sync_case_bundle_from_app.mjs
+node --check tools\validate_content_bundle.mjs
+npm.cmd run sync:bundle
+node tools\validate_unlock_matrix.mjs
+node tools\validate_search_paths.mjs --write
+node tools\validate_content_bundle.mjs game\data\case_bundle.json
+node tools\validate_content_sync.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- 语法检查全部通过，内容包同步继续输出 24 名人物、50 份资料、6 条关系题和 12 条现场问询。
+- 解锁矩阵通过：12 条问询都包含 `firstDoc`，且 `firstDoc` 属于对应走访地点入口材料。
+- 搜索路线复盘通过并重新生成 `docs/search_route_review.md`；12 条问询都能命中对应“先看材料”。档案馆照片背注问询现在搜索“建宁”，可见 `doc_photo_back` 与 `doc_luo_birth`。
+- `npm.cmd run validate` 和 `npm.cmd run playtest` 通过；`npm.cmd run smoke` 第一次遇到 Edge 截图文件占用，清理 `.tmp-edge-profile` 后单独重跑通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
+
+## 2026-05-17 11:47 Asia/Shanghai 问询落脚资料回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run sync:bundle
+node tools\validate_search_paths.mjs --write
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- 内容包同步通过，继续输出 24 名人物、50 份资料、6 条关系题和 12 条现场问询。
+- 搜索路线复盘通过并重新生成 `docs/search_route_review.md`；12 条现场问询现在都至少命中 1 份本地点已取得资料。
+- 县医院“出生登记要和谁对上？”现在搜索“血样”，可见 `doc_hospital_blood`；旧线“司机传闻怎么处理？”现在搜索“钱树林”，可见 `doc_yunqian_bus_line` 并锁定 `doc_false_qian` 作为后续排除线。
+- `npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过；普通试玩与自动通关产物已重新生成。
+
+## 2026-05-17 10:46 Asia/Shanghai 问询搜索路径回归
+
+命令：
+
+```powershell
+node --check tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs --write
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `tools\validate_search_paths.mjs` 语法检查通过。
+- 搜索路径独立执行通过；现在覆盖 12 个主线路线检查点、6 个走访入口检查点和 12 个现场问询检查点。
+- `docs/search_route_review.md` 已重新生成，新增“现场问询入口”表。
+- `npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过；普通试玩与自动通关产物已重新生成。
+- 观察点：县医院“出生”和旧线“传闻”问询当前主要给出锁定资料提示，真人试玩时应确认玩家是否理解这是下一步查证方向。
+
+## 2026-05-17 09:45 Asia/Shanghai 问询内容包同步回归
+
+命令：
+
+```powershell
+node --check tools\sync_case_bundle_from_app.mjs
+node --check tools\validate_content_bundle.mjs
+node --check tools\validate_content_sync.mjs
+npm.cmd run sync:bundle
+node tools\validate_content_bundle.mjs game\data\case_bundle.json
+node tools\validate_content_sync.mjs
+node tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- 三个内容包相关脚本语法检查通过。
+- `npm.cmd run sync:bundle` 通过，输出 24 名人物、50 份资料、6 条关系题和 12 条现场问询。
+- 内容包结构校验通过，`visitInterviews` 已成为必需根字段，并校验问询字段完整性与重复 ID。
+- 内容同步校验通过，确认 `game/app.js` 与 `game/data/case_bundle.json` 中的 `visitInterviews` 一致，输出 `visitInterviews: 12`。
+- 解锁矩阵独立校验通过，继续确认六个走访地点的问询覆盖和经手人来源。
+- `npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过；普通试玩和自动通关烟测产物已重新生成。
+
+## 2026-05-17 08:43 Asia/Shanghai 走访问询矩阵自检回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_unlock_matrix.mjs
+node tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game\app.js` 与 `tools\validate_unlock_matrix.mjs` 语法检查通过。
+- 解锁矩阵独立执行通过；输出 `visitLocations=6`、`visitInterviews=12`，并确认问询人来自对应地点经手人。
+- `npm.cmd run validate` 通过；新增问询矩阵自检已进入总校验链。
+- `npm.cmd run playtest` 通过；普通路径试玩仍能覆盖走访问询记录回看和错过窗口补救。
+- `npm.cmd run smoke` 通过；自动通关路径仍可完成最终提交。
+
+## 2026-05-17 07:42 Asia/Shanghai 走访问询记录回看回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game/app.js` 与 `tools\validate_unlock_matrix.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案、资产、资料视觉、解锁矩阵、游戏数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认世昌集团问询回答不仅在当前地点显示，也进入“今日调查日程”的现场问询记录回看区。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs\smoke-dom.html` 与 `docs\smoke-autotest.png`。
+
+## 2026-05-17 06:43 Asia/Shanghai 走访现场问询回归
+
+命令：
+
+```powershell
+node --check game\app.js
+node --check tools\validate_unlock_matrix.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game/app.js` 与 `tools\validate_unlock_matrix.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；解锁矩阵新增 `visitInterviews` 校验，确认六个走访地点均至少有 2 条现场问询，且问询包含题目、经手人、回答和搜索词。
+- `npm.cmd run playtest` 通过；普通试玩确认世昌集团问询按钮可渲染，记录“信托材料能查到哪一步？”后能展开回答，并且走访取件、日程、错过窗口补救仍正常。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs\smoke-dom.html` 与 `docs\smoke-autotest.png`。
+
+## 2026-05-17 05:40 Asia/Shanghai 县域路线图回归
+
+命令：
+
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、资产、资料视觉、解锁矩阵、游戏数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩新增断言确认走访页渲染县域路线图、当前路线、激活地点和办理后的当前位置/已取件地图状态。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs\smoke-dom.html` 与 `docs\smoke-autotest.png`。
+- Edge headless 普通入口截图生成 `docs\visit-map-preview.png`，确认走访页首屏能看到地点卡和县域路线图入口。
+
+## 2026-05-17 03:39 Asia/Shanghai 走访调查日程回归
+
+命令：
+
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、资产、资料视觉、解锁矩阵、游戏数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩新增断言确认世昌集团成功取件后出现在“今日调查日程”并列出《香港家族信托文件节选》，县一中错过窗口后也进入日程。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs\smoke-dom.html` 与 `docs\smoke-autotest.png`。
 
 ## 2026-05-17 02:39 Asia/Shanghai 走访结果引导回归
 

@@ -727,6 +727,8 @@ const locationCoordinates = {
   yunqian: { x: 6.3, y: 4.2, label: "云山至黔中旧线" }
 };
 
+const visitMapBounds = { maxX: 6.8, maxY: 4.6 };
+
 const locationContacts = {
   archives: ["he_guosheng"],
   hospital: ["zhou_meiying"],
@@ -795,6 +797,81 @@ const locationLabels = {
 };
 
 const updateLogs = [
+  {
+    date: "2026-05-17",
+    title: "问询先看材料提示",
+    changes: [
+      "现场问询新增“先看材料”提示，回答后直接指出应先核对的本地点入口资料",
+      "档案馆照片背注问询搜索词改为“建宁”，优先露出照片背注和旧户籍两份入口材料",
+      "内容包同步和搜索路线复盘新增 firstDoc 校验，防止问询只给关键词却不落到可读材料"
+    ],
+    checks: [
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "走访问询记录回看",
+    changes: [
+      "今日调查日程新增现场问询记录汇总，玩家离开地点后仍能回看已追问回答",
+      "问询记录保留经手人、地点和对应搜索按钮，继续不推进时间或直接解锁资料",
+      "普通试玩新增问询回看断言，防止问询只在当前地点临时显示"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "走访现场问询",
+    changes: [
+      "六个走访地点新增现场问询，每处至少两条可追问事项，补足联系人交互感",
+      "问询回答写入本地存档，已问事项会展开经手人口吻记录并提供资料库搜索按钮",
+      "解锁矩阵和普通试玩新增问询覆盖断言，确保问询不会直接解锁资料或破坏取件流程"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "node --check tools\\validate_unlock_matrix.mjs passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "县域走访路线图",
+    changes: [
+      "走访详情顶部新增县域路线图，用已有坐标标出公证处、六个走访地点、当前所在位置和目标路线",
+      "地图地点支持点击切换，已取件、已错过和待走访状态用不同标记显示",
+      "普通试玩新增路线图断言，确认开局从公证处出发，办理后当前位置移动到世昌集团"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "走访调查日程",
+    changes: [
+      "走访详情下方新增今日调查日程，按办理结束时间列出已取件和已错过状态",
+      "每条日程记录显示抵达/结束时间、经手人、取得资料和下一步关键词",
+      "普通试玩新增走访日程断言，避免时间系统只推进数值但缺少可读记录"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
   {
     date: "2026-05-17",
     title: "走访结果引导与补救",
@@ -1301,6 +1378,7 @@ const state = {
   lastVisitResult: null,
   currentLocationId: "office",
   clockMinutes: 9 * 60,
+  visitQuestionLog: {},
   report: { heir: "", descendant: "" },
   reportSubmitted: false,
   sound: true,
@@ -1612,6 +1690,117 @@ const visitFollowUps = {
   }
 };
 
+const visitInterviews = {
+  archives: [
+    {
+      id: "hukou_scope",
+      prompt: "旧户籍能证明到哪一步？",
+      person: "何国生",
+      answer: "只能证明迁入登记和同册关系，不能直接证明血缘；要和照片背注、知青名册并看。",
+      query: "旧户籍",
+      firstDoc: "doc_luo_birth"
+    },
+    {
+      id: "photo_index",
+      prompt: "照片背注该怎么查？",
+      person: "何国生",
+      answer: "先按罗月珍和建宁两个名字查索引，再看背注时间是否早于宗家公开资料口径。",
+      query: "建宁",
+      firstDoc: "doc_photo_back"
+    }
+  ],
+  hospital: [
+    {
+      id: "sample_chain",
+      prompt: "血样来源可靠吗？",
+      person: "周美英",
+      answer: "医院只保留采样登记和封存编号，亲缘结论必须回到 DNA 报告本身核对。",
+      query: "DNA",
+      firstDoc: "doc_hospital_blood"
+    },
+    {
+      id: "birth_register",
+      prompt: "出生登记要和谁对上？",
+      person: "周美英",
+      answer: "先用住院血样固定宗世昌样本来源，再回头核对出生登记、接生员签名和后续学籍监护人。",
+      query: "血样",
+      firstDoc: "doc_hospital_blood"
+    }
+  ],
+  school: [
+    {
+      id: "guardian_line",
+      prompt: "学籍里最关键的字段？",
+      person: "黄雅玲",
+      answer: "监护人、住址和家访备注最关键；它们能把陈嘉东和陈静的生活关系串起来。",
+      query: "陈嘉东",
+      firstDoc: "doc_jiadong_school"
+    },
+    {
+      id: "forum_noise",
+      prompt: "论坛帖子能不能当证据？",
+      person: "黄雅玲",
+      answer: "论坛只能提示查找方向，不能替代学籍表、家访记录和正式登记。",
+      query: "县一中",
+      firstDoc: "doc_jiadong_school"
+    }
+  ],
+  ktv: [
+    {
+      id: "tenant_record",
+      prompt: "KTV 线索先查什么？",
+      person: "马丽华",
+      answer: "先查租赁和复工检查表，确认陈静返乡经营的时间，再回头看妇联帮扶材料。",
+      query: "陈静",
+      firstDoc: "doc_ktv_license"
+    },
+    {
+      id: "neighborhood_weight",
+      prompt: "邻里走访能定案吗？",
+      person: "马丽华",
+      answer: "邻里口述只能解释生活轨迹，定案仍要靠登记、病案和亲缘材料。",
+      query: "KTV",
+      firstDoc: "doc_ktv_license"
+    }
+  ],
+  group: [
+    {
+      id: "trust_scope",
+      prompt: "信托材料能查到哪一步？",
+      person: "魏雪琴",
+      answer: "信托入口只说明受益人审查范围，不会一次性开放集团股权、尽调和董事会旧档。",
+      query: "信托",
+      firstDoc: "doc_trust_clause"
+    },
+    {
+      id: "equity_noise",
+      prompt: "股权旧档和继承有什么关系？",
+      person: "方仁杰",
+      answer: "股权旧档能解释集团内部争议，但继承资格仍要回到血缘、收养和公证材料。",
+      query: "股权",
+      firstDoc: "doc_trust_clause"
+    }
+  ],
+  yunqian: [
+    {
+      id: "route_context",
+      prompt: "旧客运线为什么要查？",
+      person: "钱树林",
+      answer: "它只证明两地长期往来方便，能解释人际路径，但不能单独证明亲缘。",
+      query: "黔中",
+      firstDoc: "doc_yunqian_bus_line"
+    },
+    {
+      id: "driver_rumor",
+      prompt: "司机传闻怎么处理？",
+      person: "钱树林",
+      answer: "先按钱树林这个名字核对线路备案和口述来源；除非能接上正式档案，否则不能放进强证据链。",
+      query: "钱树林",
+      firstDoc: "doc_yunqian_bus_line"
+    }
+  ]
+};
+
 const personGroups = [
   {
     title: "公开宗家",
@@ -1711,6 +1900,7 @@ function serializeState() {
     lastVisitResult: state.lastVisitResult,
     currentLocationId: state.currentLocationId,
     clockMinutes: state.clockMinutes,
+    visitQuestionLog: state.visitQuestionLog,
     report: state.report,
     reportSubmitted: state.reportSubmitted,
     sound: state.sound,
@@ -1747,6 +1937,11 @@ function loadState() {
     state.lastVisitResult = parsed.lastVisitResult || null;
     state.currentLocationId = parsed.currentLocationId === "office" || locationLabels[parsed.currentLocationId] ? parsed.currentLocationId : "office";
     state.clockMinutes = Number.isFinite(parsed.clockMinutes) ? Math.max(dayStartMinutes, parsed.clockMinutes) : dayStartMinutes;
+    state.visitQuestionLog = Object.fromEntries(
+      Object.entries(parsed.visitQuestionLog || {})
+        .filter(([id, values]) => locationLabels[id] && Array.isArray(values))
+        .map(([id, values]) => [id, values.filter((value) => typeof value === "string")])
+    );
     state.report = parsed.report || { heir: "", descendant: "" };
     state.reportSubmitted = parsed.reportSubmitted === true;
     state.sound = parsed.sound !== false;
@@ -2291,6 +2486,229 @@ function visitFollowUp(location, status) {
   };
 }
 
+function askedVisitQuestions(locationId) {
+  return new Set(state.visitQuestionLog[locationId] || []);
+}
+
+function recordVisitQuestion(locationId, questionId) {
+  const questions = visitInterviews[locationId] || [];
+  if (!questions.some((question) => question.id === questionId)) return;
+  const asked = askedVisitQuestions(locationId);
+  asked.add(questionId);
+  state.visitQuestionLog[locationId] = [...asked];
+}
+
+function documentTitleById(docId) {
+  return documents.find((doc) => doc.id === docId)?.title || docId;
+}
+
+function renderVisitQuestionFirstDoc(question) {
+  if (!question.firstDoc) return "";
+  return `<p class="visit-first-doc">先看材料：<strong>${escapeHtml(documentTitleById(question.firstDoc))}</strong></p>`;
+}
+
+function renderVisitInterview(location) {
+  const questions = visitInterviews[location.id] || [];
+  if (!questions.length) return "";
+  const asked = askedVisitQuestions(location.id);
+  return `
+    <div class="visit-interview" data-visit-interview="${location.id}">
+      <strong>现场问询</strong>
+      <div class="visit-question-list">
+        ${questions.map((question) => {
+          const isAsked = asked.has(question.id);
+          return `
+            <button
+              type="button"
+              class="${isAsked ? "is-asked" : ""}"
+              data-visit-question-location="${location.id}"
+              data-visit-question="${question.id}">
+              <span>${question.prompt}</span>
+              <small>${question.person}</small>
+            </button>
+          `;
+        }).join("")}
+      </div>
+      ${questions.filter((question) => asked.has(question.id)).map((question) => `
+        <blockquote data-visit-answer="${question.id}">
+          <span>${question.person}</span>
+          <p>${question.answer}</p>
+          ${renderVisitQuestionFirstDoc(question)}
+          <button type="button" class="ghost-btn" data-visit-search="${question.query}">搜索“${question.query}”</button>
+        </blockquote>
+      `).join("") || `<p class="visit-interview-empty">问询不推进时间。先选择要追问的事项，再决定是否回资料库检索。</p>`}
+    </div>
+  `;
+}
+
+function visitLogEntries() {
+  return visitLocations
+    .map((location) => {
+      const visit = state.locationVisits[location.id];
+      if (!visit) return null;
+      const followUp = ["obtained", "missed"].includes(visit.status) ? visitFollowUp(location, visit.status) : null;
+      return {
+        location,
+        visit,
+        followUp,
+        at: Number.isFinite(visit.at) ? visit.at : state.clockMinutes,
+        depart: Number.isFinite(visit.depart) ? visit.depart : null,
+        arrive: Number.isFinite(visit.arrive) ? visit.arrive : null,
+        finish: Number.isFinite(visit.finish) ? visit.finish : Number.isFinite(visit.at) ? visit.at : null
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => left.at - right.at);
+}
+
+function visitQuestionEntries() {
+  return visitLocations.flatMap((location) => {
+    const asked = askedVisitQuestions(location.id);
+    return (visitInterviews[location.id] || [])
+      .filter((question) => asked.has(question.id))
+      .map((question) => ({ location, question }));
+  });
+}
+
+function renderVisitQuestionArchive(entries) {
+  if (!entries.length) return "";
+  return `
+    <section class="visit-question-archive" aria-label="现场问询记录">
+      <strong>现场问询记录</strong>
+      <div>
+        ${entries.map(({ location, question }) => `
+          <article data-visit-question-log="${location.id}:${question.id}">
+            <span>${location.title} · ${question.person}</span>
+            <p>${question.answer}</p>
+            ${renderVisitQuestionFirstDoc(question)}
+            <button type="button" class="ghost-btn" data-visit-search="${question.query}">搜索“${question.query}”</button>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderVisitLog() {
+  const entries = visitLogEntries();
+  const questionEntries = visitQuestionEntries();
+  const questionArchive = renderVisitQuestionArchive(questionEntries);
+  const currentLabel = locationCoordinates[state.currentLocationId]?.label || "公证处临时办公室";
+  if (!entries.length) {
+    return `
+      <aside class="visit-log">
+        <header>
+          <div>
+            <span>${investigationDay}</span>
+            <h4>今日调查日程</h4>
+          </div>
+          <strong>${formatClock(state.clockMinutes)}</strong>
+        </header>
+        <p class="visit-log-empty">尚未形成走访记录。先选择一个地点并递交委托函。</p>
+        ${questionArchive}
+      </aside>
+    `;
+  }
+  return `
+    <aside class="visit-log">
+      <header>
+        <div>
+          <span>${investigationDay} · 当前位置：${currentLabel}</span>
+          <h4>今日调查日程</h4>
+        </div>
+        <strong>${formatClock(state.clockMinutes)}</strong>
+      </header>
+      <ol>
+        ${entries.map(({ location, visit, followUp, depart, arrive, finish }) => {
+          const docs = acquiredDocTitles(visit.documents || []);
+          const statusLabel = visit.status === "obtained" ? "已取件" : visit.status === "missed" ? "已错过" : "已排期";
+          const timeText = arrive !== null && finish !== null
+            ? `${formatClock(arrive)} 抵达 · ${formatClock(finish)} 结束`
+            : `${formatClock(visit.at)} 记录`;
+          const departText = depart !== null ? `${formatClock(depart)} 出发 · ` : "";
+          return `
+            <li data-visit-log="${location.id}" data-visit-log-status="${visit.status}">
+              <div class="visit-log-main">
+                <span>${departText}${timeText}</span>
+                <strong>${location.title}</strong>
+                <p>${statusLabel} · 经手人：${contactNamesForLocation(location.id) || location.contact}</p>
+                ${docs.length ? `<small>入卷：${docs.join("、")}</small>` : `<small>未取得材料，需补办或转向其他地点。</small>`}
+              </div>
+              ${followUp ? `
+                <button type="button" class="ghost-btn" data-visit-search="${followUp.query}">
+                  搜索“${followUp.query}”
+                </button>
+              ` : ""}
+            </li>
+          `;
+        }).join("")}
+      </ol>
+      ${questionArchive}
+    </aside>
+  `;
+}
+
+function visitMapPoint(locationId) {
+  const coord = locationCoordinates[locationId] || locationCoordinates.office;
+  return {
+    left: 8 + (coord.x / visitMapBounds.maxX) * 84,
+    top: 12 + (coord.y / visitMapBounds.maxY) * 76
+  };
+}
+
+function renderVisitMap(activeLocation) {
+  const currentId = state.currentLocationId || "office";
+  const activeId = activeLocation?.id || "archives";
+  const current = visitMapPoint(currentId);
+  const active = visitMapPoint(activeId);
+  const currentLabel = locationCoordinates[currentId]?.label || "公证处临时办公室";
+  const activeLabel = locationCoordinates[activeId]?.label || activeLocation?.title || "待选地点";
+  const statusClass = (location) => {
+    const status = state.locationVisits[location.id]?.status;
+    if (status === "obtained") return "is-obtained";
+    if (status === "missed") return "is-missed";
+    return "is-pending";
+  };
+  return `
+    <aside class="visit-map" data-visit-map data-current-location="${currentId}" data-active-location="${activeId}">
+      <header>
+        <div>
+          <span>当前位置：${currentLabel}</span>
+          <h4>县域路线图</h4>
+        </div>
+        <strong>${activeLabel}</strong>
+      </header>
+      <div class="visit-map-stage" aria-label="云山县走访路线图">
+        <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <path d="M 8 16 C 26 14, 34 28, 43 39 S 61 48, 71 38 S 83 55, 88 77" class="visit-map-road"></path>
+          <line x1="${current.left.toFixed(2)}" y1="${current.top.toFixed(2)}" x2="${active.left.toFixed(2)}" y2="${active.top.toFixed(2)}" class="visit-map-route"></line>
+        </svg>
+        <span class="visit-map-office" style="left: ${visitMapPoint("office").left}%; top: ${visitMapPoint("office").top}%;">公证处</span>
+        ${visitLocations.map((location) => {
+          const point = visitMapPoint(location.id);
+          return `
+            <button
+              type="button"
+              class="visit-map-pin ${activeId === location.id ? "is-active" : ""} ${statusClass(location)}"
+              style="left: ${point.left}%; top: ${point.top}%;"
+              data-map-pin="${location.id}"
+              data-visit-focus="${location.id}"
+              aria-label="查看${location.title}">
+              <span></span>
+              <strong>${location.title}</strong>
+            </button>
+          `;
+        }).join("")}
+      </div>
+      <div class="visit-map-legend" aria-label="路线图图例">
+        <span><i class="pending"></i>待走访</span>
+        <span><i class="obtained"></i>已取件</span>
+        <span><i class="missed"></i>已错过</span>
+      </div>
+    </aside>
+  `;
+}
+
 function rescheduleMissedVisit(locationId) {
   const location = locationById(locationId);
   if (!location || state.locationVisits[location.id]?.status !== "missed") return;
@@ -2325,6 +2743,12 @@ function performLocationVisit(locationId) {
     state.locationVisits[location.id] = {
       status: "obtained",
       at: state.clockMinutes,
+      depart: timing.depart,
+      arrive: timing.arrive,
+      serviceStart: timing.serviceStart,
+      finish: timing.finish,
+      travel: timing.travel,
+      wait: timing.wait,
       documents: entryDocs,
       contactIds: locationContacts[location.id] || []
     };
@@ -2339,6 +2763,12 @@ function performLocationVisit(locationId) {
     state.locationVisits[location.id] = {
       status: "missed",
       at: state.clockMinutes,
+      depart: timing.depart,
+      arrive: timing.arrive,
+      serviceStart: timing.serviceStart,
+      finish: timing.finish,
+      travel: timing.travel,
+      wait: timing.wait,
       documents: [],
       contactIds: locationContacts[location.id] || []
     };
@@ -2382,6 +2812,7 @@ function renderVisitDetail() {
   const alreadyObtained = state.locationVisits[location.id]?.status === "obtained";
   const followUp = result && ["obtained", "missed"].includes(result.status) ? visitFollowUp(location, result.status) : null;
   els.visitDetail.innerHTML = `
+    ${renderVisitMap(location)}
     <article class="visit-detail-card">
       <header>
         <div>
@@ -2401,6 +2832,7 @@ function renderVisitDetail() {
         <p>${contactNamesForLocation(location.id) || location.contact}</p>
         <span>${location.interaction}</span>
       </div>
+      ${renderVisitInterview(location)}
       <div class="visit-progress" aria-label="走访进度 ${progress}%">
         <span style="width: ${progress}%"></span>
       </div>
@@ -2434,6 +2866,7 @@ function renderVisitDetail() {
         <button type="button" class="ghost-btn" data-visit-search="${location.query}">用地点关键词检索</button>
       </div>
     </article>
+    ${renderVisitLog()}
   `;
 }
 
@@ -3550,6 +3983,7 @@ function resetProgressForHiddenTest() {
   state.lastVisitResult = null;
   state.currentLocationId = "office";
   state.clockMinutes = dayStartMinutes;
+  state.visitQuestionLog = {};
   state.taskStates = {};
   state.reportSubmitted = false;
   localStorage.removeItem("yunshan-save");
@@ -3626,15 +4060,28 @@ function runGuidedPlaytest() {
   });
   resetProgressForHiddenTest();
   switchView("visit");
+  renderAll();
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-map][data-current-location="office"]')), "visit view should render the county route map from the office");
+  assert(Boolean(els.visitDetail.querySelector('[data-map-pin="group"].is-active')), "visit route map should mark the active destination");
+  assert(Boolean(els.visitDetail.querySelector(".visit-map-route")), "visit route map should draw the current route");
+  assert(els.visitDetail.querySelectorAll('[data-visit-interview="group"] [data-visit-question]').length >= 2, "visit view should render contact interview prompts");
+  recordVisitQuestion("group", "trust_scope");
+  renderAll();
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-answer="trust_scope"]')), "visit interview should record asked contact answers");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-question-log="group:trust_scope"]')), "visit log should keep asked contact answers for review");
   performLocationVisit("group");
   renderAll();
   assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-map][data-current-location="group"]')), "visit route map should move the current location after handling");
+  assert(Boolean(els.visitDetail.querySelector('[data-map-pin="group"].is-obtained')), "visit route map should mark obtained locations");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-log="group"][data-visit-log-status="obtained"]')), "obtained group visit should appear in the visit schedule");
+  assert(els.visitDetail.querySelector(".visit-log")?.textContent.includes("香港家族信托文件节选"), "visit schedule should list obtained entry documents");
   search("信托", ["doc_trust_clause"], ["doc_family_meeting", "doc_equity_draft_2005", "doc_dinghui_due_diligence"]);
   const groupVisible = visibleResultIds();
   const groupLocationDocs = locationDocumentIds.group.filter((id) => groupVisible.includes(id));
   assert(groupLocationDocs.length < locationDocumentIds.group.length, "visiting Shichang Group should not unlock every group document at once");
-  record("世昌集团走访分层", { visibleGroupDocs: groupLocationDocs });
+  record("世昌集团走访分层", { visibleGroupDocs: groupLocationDocs, schedule: "obtained" });
   resetProgressForHiddenTest();
   state.clockMinutes = 17 * 60;
   switchView("visit");
@@ -3642,6 +4089,7 @@ function runGuidedPlaytest() {
   renderAll();
   assert(state.locationVisits.school?.status === "missed", "late school visit should record a missed window");
   assert(Boolean(els.visitDetail.querySelector("[data-visit-reschedule='school']")), "missed visit should offer next-day rescheduling");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-log="school"][data-visit-log-status="missed"]')), "missed school visit should appear in the visit schedule");
   switchView("notes");
   renderAll();
   assert(els.taskList.textContent.includes("补办错过窗口"), "missed visit should create a notebook recovery task");
@@ -3907,6 +4355,13 @@ function bindEvents() {
     const reschedule = event.target.closest("[data-visit-reschedule]");
     if (reschedule) {
       rescheduleMissedVisit(reschedule.dataset.visitReschedule);
+      playSound("click");
+      renderAll();
+      return;
+    }
+    const question = event.target.closest("[data-visit-question]");
+    if (question) {
+      recordVisitQuestion(question.dataset.visitQuestionLocation, question.dataset.visitQuestion);
       playSound("click");
       renderAll();
       return;

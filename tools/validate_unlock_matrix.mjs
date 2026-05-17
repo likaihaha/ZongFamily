@@ -81,6 +81,7 @@ let documentContactPeople = {};
 let locationLabels = {};
 let visitLocations = [];
 let visitFollowUps = {};
+let visitInterviews = {};
 let personGroups = [];
 let chainFunction = "";
 let discoveryFunction = "";
@@ -100,6 +101,7 @@ if (!errors.length) {
     locationLabels = extractConstExpression(app, "locationLabels");
     visitLocations = extractConstExpression(app, "visitLocations");
     visitFollowUps = extractConstExpression(app, "visitFollowUps");
+    visitInterviews = extractConstExpression(app, "visitInterviews");
     personGroups = extractConstExpression(app, "personGroups");
     chainFunction = extractFunctionBody(app, "chainUnlockState", "documentUnlockState");
     discoveryFunction = extractFunctionBody(app, "isPersonDiscovered", "visiblePersonIds");
@@ -110,6 +112,7 @@ if (!errors.length) {
 
 const docIds = new Set(documents.map((doc) => doc.id));
 const peopleIds = new Set(people.map((person) => person.id));
+const peopleById = new Map(people.map((person) => [person.id, person]));
 const locationIds = new Set(visitLocations.map((location) => location.id));
 const hiddenPeople = [
   {
@@ -235,8 +238,31 @@ for (const location of visitLocations) {
       if (!visitFollowUps[location.id][field]) fail(`Visit follow-up ${location.id} missing ${field}`);
     }
   }
+  const interviews = visitInterviews[location.id] || [];
+  if (interviews.length < 2) fail(`Visit location needs at least two contact interview prompts: ${location.id}`);
+  const contactNames = new Set((locationContacts[location.id] || []).map((personId) => peopleById.get(personId)?.name).filter(Boolean));
+  const interviewIds = new Set();
   const locationDocs = locationDocumentIds[location.id] || [];
   const entryDocs = locationEntryDocumentIds[location.id] || [];
+  for (const interview of interviews) {
+    for (const field of ["id", "prompt", "person", "answer", "query", "firstDoc"]) {
+      if (!interview[field]) fail(`Visit interview ${location.id} missing ${field}`);
+    }
+    if (interviewIds.has(interview.id)) fail(`Duplicate visit interview id in ${location.id}: ${interview.id}`);
+    interviewIds.add(interview.id);
+    if (contactNames.size && !contactNames.has(interview.person)) {
+      fail(`Visit interview ${location.id}:${interview.id} uses non-contact person: ${interview.person}`);
+    }
+    if (!docIds.has(interview.firstDoc)) {
+      fail(`Visit interview ${location.id}:${interview.id} references unknown firstDoc: ${interview.firstDoc}`);
+    }
+    if (!locationDocs.includes(interview.firstDoc)) {
+      fail(`Visit interview ${location.id}:${interview.id} firstDoc is not a local location document: ${interview.firstDoc}`);
+    }
+    if (!entryDocs.includes(interview.firstDoc)) {
+      fail(`Visit interview ${location.id}:${interview.id} firstDoc must be obtainable immediately at the location: ${interview.firstDoc}`);
+    }
+  }
   if (!locationDocs.length) fail(`Visit location has no unlock documents: ${location.id}`);
   if (!entryDocs.length) fail(`Visit location has no entry documents: ${location.id}`);
   assertContains(matrixDoc, location.id, `unlock_self_check.md must mention visit location ${location.id}`);
@@ -255,6 +281,10 @@ for (const location of visitLocations) {
   }
 }
 
+assertContains(matrixDoc, "visitInterviews", "unlock_self_check.md must mention visitInterviews");
+assertContains(matrixDoc, "现场问询", "unlock_self_check.md must document visit interviews");
+assertContains(matrixDoc, "visitQuestionLog", "unlock_self_check.md must mention visitQuestionLog persistence");
+
 if (fs.existsSync(readmePath)) {
   const readme = fs.readFileSync(readmePath, "utf8");
   assertContains(readme, "validate_unlock_matrix.mjs", "README must mention validate_unlock_matrix.mjs");
@@ -272,7 +302,8 @@ console.log(
       hiddenPeople: hiddenPeople.length,
       chainGroups: chainGroups.length,
       gatedDocuments: chainGroups.reduce((sum, group) => sum + group.docs.length, 0),
-      visitLocations: visitLocations.length
+      visitLocations: visitLocations.length,
+      visitInterviews: Object.values(visitInterviews).reduce((sum, items) => sum + items.length, 0)
     },
     null,
     2

@@ -1,6 +1,6 @@
 # 渐进解锁自检报告
 
-更新时间：2026-05-17 00:39 Asia/Shanghai
+更新时间：2026-05-17 08:43 Asia/Shanghai
 
 本报告把正式版渐进解锁规则整理成可审查清单。它不改变真相答案，只说明隐藏血脉、后段资料和走访地点何时进入玩家当前案卷。
 
@@ -49,6 +49,12 @@
 
 `visitFollowUps` 必须覆盖 `archives`、`hospital`、`school`、`ktv`、`group`、`yunqian` 六个地点，并为每个地点提供 `obtained`、`missed`、`query` 和 `ask` 字段。
 
+## 现场问询与记录回看
+
+走访详情还需要保留轻量人物交互，但问询只提供查证方向，不推进时间、不直接取得资料、不替代正式证据。玩家追问后，回答写入 `visitQuestionLog` 本地存档；“今日调查日程”会按地点汇总“现场问询记录”，让玩家离开当前地点后仍可回看经手人口吻回答和对应搜索按钮。
+
+`visitInterviews` 必须覆盖 `archives`、`hospital`、`school`、`ktv`、`group`、`yunqian` 六个地点。每个地点至少 2 条问询，每条问询必须提供唯一 `id`、`prompt`、`person`、`answer`、`query` 和 `firstDoc`；`person` 必须是该地点 `locationContacts` 中登记的经手人姓名，`firstDoc` 必须是该地点成功办理后立即取得的入口材料。
+
 ## 自动校验
 
 运行：
@@ -63,5 +69,7 @@ node tools/validate_unlock_matrix.mjs
 - 每个触发资料、地点和人物 ID 是否存在于 `game/app.js`。
 - `chainUnlockState` 和 `isPersonDiscovered` 是否仍包含本报告列出的触发条件。
 - 后段资料组是否误加入公开资料集合。
+- 每个走访地点是否有下一步反馈、现场问询、合法经手人和可回看的问询记录规则。
+- 每条现场问询是否明确落到一份本地点入口材料，避免只给搜索词但不告诉玩家先看哪份资料。
 
 该脚本已经接入 `npm.cmd run validate`，和普通路径试玩回归、自动通关烟测一起作为渐进解锁防回退检查。

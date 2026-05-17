@@ -1643,5 +1643,115 @@
         "doc_trust_clause"
       ]
     }
-  ]
+  ],
+  "visitInterviews": {
+    "archives": [
+      {
+        "id": "hukou_scope",
+        "prompt": "旧户籍能证明到哪一步？",
+        "person": "何国生",
+        "answer": "只能证明迁入登记和同册关系，不能直接证明血缘；要和照片背注、知青名册并看。",
+        "query": "旧户籍",
+        "firstDoc": "doc_luo_birth"
+      },
+      {
+        "id": "photo_index",
+        "prompt": "照片背注该怎么查？",
+        "person": "何国生",
+        "answer": "先按罗月珍和建宁两个名字查索引，再看背注时间是否早于宗家公开资料口径。",
+        "query": "建宁",
+        "firstDoc": "doc_photo_back"
+      }
+    ],
+    "hospital": [
+      {
+        "id": "sample_chain",
+        "prompt": "血样来源可靠吗？",
+        "person": "周美英",
+        "answer": "医院只保留采样登记和封存编号，亲缘结论必须回到 DNA 报告本身核对。",
+        "query": "DNA",
+        "firstDoc": "doc_hospital_blood"
+      },
+      {
+        "id": "birth_register",
+        "prompt": "出生登记要和谁对上？",
+        "person": "周美英",
+        "answer": "先用住院血样固定宗世昌样本来源，再回头核对出生登记、接生员签名和后续学籍监护人。",
+        "query": "血样",
+        "firstDoc": "doc_hospital_blood"
+      }
+    ],
+    "school": [
+      {
+        "id": "guardian_line",
+        "prompt": "学籍里最关键的字段？",
+        "person": "黄雅玲",
+        "answer": "监护人、住址和家访备注最关键；它们能把陈嘉东和陈静的生活关系串起来。",
+        "query": "陈嘉东",
+        "firstDoc": "doc_jiadong_school"
+      },
+      {
+        "id": "forum_noise",
+        "prompt": "论坛帖子能不能当证据？",
+        "person": "黄雅玲",
+        "answer": "论坛只能提示查找方向，不能替代学籍表、家访记录和正式登记。",
+        "query": "县一中",
+        "firstDoc": "doc_jiadong_school"
+      }
+    ],
+    "ktv": [
+      {
+        "id": "tenant_record",
+        "prompt": "KTV 线索先查什么？",
+        "person": "马丽华",
+        "answer": "先查租赁和复工检查表，确认陈静返乡经营的时间，再回头看妇联帮扶材料。",
+        "query": "陈静",
+        "firstDoc": "doc_ktv_license"
+      },
+      {
+        "id": "neighborhood_weight",
+        "prompt": "邻里走访能定案吗？",
+        "person": "马丽华",
+        "answer": "邻里口述只能解释生活轨迹，定案仍要靠登记、病案和亲缘材料。",
+        "query": "KTV",
+        "firstDoc": "doc_ktv_license"
+      }
+    ],
+    "group": [
+      {
+        "id": "trust_scope",
+        "prompt": "信托材料能查到哪一步？",
+        "person": "魏雪琴",
+        "answer": "信托入口只说明受益人审查范围，不会一次性开放集团股权、尽调和董事会旧档。",
+        "query": "信托",
+        "firstDoc": "doc_trust_clause"
+      },
+      {
+        "id": "equity_noise",
+        "prompt": "股权旧档和继承有什么关系？",
+        "person": "方仁杰",
+        "answer": "股权旧档能解释集团内部争议，但继承资格仍要回到血缘、收养和公证材料。",
+        "query": "股权",
+        "firstDoc": "doc_trust_clause"
+      }
+    ],
+    "yunqian": [
+      {
+        "id": "route_context",
+        "prompt": "旧客运线为什么要查？",
+        "person": "钱树林",
+        "answer": "它只证明两地长期往来方便，能解释人际路径，但不能单独证明亲缘。",
+        "query": "黔中",
+        "firstDoc": "doc_yunqian_bus_line"
+      },
+      {
+        "id": "driver_rumor",
+        "prompt": "司机传闻怎么处理？",
+        "person": "钱树林",
+        "answer": "先按钱树林这个名字核对线路备案和口述来源；除非能接上正式档案，否则不能放进强证据链。",
+        "query": "钱树林",
+        "firstDoc": "doc_yunqian_bus_line"
+      }
+    ]
+  }
 }

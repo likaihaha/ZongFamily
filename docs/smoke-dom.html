@@ -189,6 +189,60 @@
     </button>
   </div>
             <div id="visit-detail" class="visit-detail">
+    
+    <aside class="visit-map" data-visit-map="" data-current-location="office" data-active-location="group">
+      <header>
+        <div>
+          <span>当前位置：公证处临时办公室</span>
+          <h4>县域路线图</h4>
+        </div>
+        <strong>世昌集团</strong>
+      </header>
+      <div class="visit-map-stage" aria-label="云山县走访路线图">
+        <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <path d="M 8 16 C 26 14, 34 28, 43 39 S 61 48, 71 38 S 83 55, 88 77" class="visit-map-road"></path>
+          <line x1="8.00" y1="12.00" x2="25.29" y2="25.22" class="visit-map-route"></line>
+        </svg>
+        <span class="visit-map-office" style="left: 8%; top: 12%;">公证处</span>
+        
+            <button type="button" class="visit-map-pin  is-pending" style="left: 35.1764705882353%; top: 43.391304347826086%;" data-map-pin="archives" data-visit-focus="archives" aria-label="查看县档案馆">
+              <span></span>
+              <strong>县档案馆</strong>
+            </button>
+          
+            <button type="button" class="visit-map-pin  is-pending" style="left: 53.70588235294118%; top: 33.47826086956522%;" data-map-pin="hospital" data-visit-focus="hospital" aria-label="查看县医院">
+              <span></span>
+              <strong>县医院</strong>
+            </button>
+          
+            <button type="button" class="visit-map-pin  is-pending" style="left: 71%; top: 54.95652173913044%;" data-map-pin="school" data-visit-focus="school" aria-label="查看县一中">
+              <span></span>
+              <strong>县一中</strong>
+            </button>
+          
+            <button type="button" class="visit-map-pin  is-pending" style="left: 43.8235294117647%; top: 69.82608695652175%;" data-map-pin="ktv" data-visit-focus="ktv" aria-label="查看唱响 KTV 后巷">
+              <span></span>
+              <strong>唱响 KTV 后巷</strong>
+            </button>
+          
+            <button type="button" class="visit-map-pin is-active is-pending" style="left: 25.294117647058822%; top: 25.217391304347828%;" data-map-pin="group" data-visit-focus="group" aria-label="查看世昌集团">
+              <span></span>
+              <strong>世昌集团</strong>
+            </button>
+          
+            <button type="button" class="visit-map-pin  is-pending" style="left: 85.82352941176471%; top: 81.3913043478261%;" data-map-pin="yunqian" data-visit-focus="yunqian" aria-label="查看云山至黔中旧线">
+              <span></span>
+              <strong>云山至黔中旧线</strong>
+            </button>
+          
+      </div>
+      <div class="visit-map-legend" aria-label="路线图图例">
+        <span><i class="pending"></i>待走访</span>
+        <span><i class="obtained"></i>已取件</span>
+        <span><i class="missed"></i>已错过</span>
+      </div>
+    </aside>
+  
     <article class="visit-detail-card">
       <header>
         <div>
@@ -208,6 +262,25 @@
         <p>魏雪琴 / 方仁杰</p>
         <span>先约集团法务魏雪琴，必要时再向改制会计方仁杰追问旧股权材料。</span>
       </div>
+      
+    <div class="visit-interview" data-visit-interview="group">
+      <strong>现场问询</strong>
+      <div class="visit-question-list">
+        
+            <button type="button" class="" data-visit-question-location="group" data-visit-question="trust_scope">
+              <span>信托材料能查到哪一步？</span>
+              <small>魏雪琴</small>
+            </button>
+          
+            <button type="button" class="" data-visit-question-location="group" data-visit-question="equity_noise">
+              <span>股权旧档和继承有什么关系？</span>
+              <small>方仁杰</small>
+            </button>
+          
+      </div>
+      <p class="visit-interview-empty">问询不推进时间。先选择要追问的事项，再决定是否回资料库检索。</p>
+    </div>
+  
       <div class="visit-progress" aria-label="走访进度 0%">
         <span style="width: 0%"></span>
       </div>
@@ -223,6 +296,19 @@
         <button type="button" class="ghost-btn" data-visit-search="信托">用地点关键词检索</button>
       </div>
     </article>
+    
+      <aside class="visit-log">
+        <header>
+          <div>
+            <span>2020-09-28</span>
+            <h4>今日调查日程</h4>
+          </div>
+          <strong>09:00</strong>
+        </header>
+        <p class="visit-log-empty">尚未形成走访记录。先选择一个地点并递交委托函。</p>
+        
+      </aside>
+    
   </div>
           </section>
         </div>
@@ -1460,6 +1546,71 @@
           <h3>开发更新日志</h3>
           <p class="hint">每次开发都会在这里记录本次实际变更与验证结果。</p>
           <div id="update-log-list" class="update-log-list">
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
+        <span>问询先看材料提示</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>现场问询新增“先看材料”提示，回答后直接指出应先核对的本地点入口资料</li><li>档案馆照片背注问询搜索词改为“建宁”，优先露出照片背注和旧户籍两份入口材料</li><li>内容包同步和搜索路线复盘新增 firstDoc 校验，防止问询只给关键词却不落到可读材料</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
+        <span>走访问询记录回看</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>今日调查日程新增现场问询记录汇总，玩家离开地点后仍能回看已追问回答</li><li>问询记录保留经手人、地点和对应搜索按钮，继续不推进时间或直接解锁资料</li><li>普通试玩新增问询回看断言，防止问询只在当前地点临时显示</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
+        <span>走访现场问询</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>六个走访地点新增现场问询，每处至少两条可追问事项，补足联系人交互感</li><li>问询回答写入本地存档，已问事项会展开经手人口吻记录并提供资料库搜索按钮</li><li>解锁矩阵和普通试玩新增问询覆盖断言，确保问询不会直接解锁资料或破坏取件流程</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>node --check tools\validate_unlock_matrix.mjs passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
+        <span>县域走访路线图</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>走访详情顶部新增县域路线图，用已有坐标标出公证处、六个走访地点、当前所在位置和目标路线</li><li>地图地点支持点击切换，已取件、已错过和待走访状态用不同标记显示</li><li>普通试玩新增路线图断言，确认开局从公证处出发，办理后当前位置移动到世昌集团</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
+        <span>走访调查日程</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>走访详情下方新增今日调查日程，按办理结束时间列出已取件和已错过状态</li><li>每条日程记录显示抵达/结束时间、经手人、取得资料和下一步关键词</li><li>普通试玩新增走访日程断言，避免时间系统只推进数值但缺少可读记录</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-17</strong>

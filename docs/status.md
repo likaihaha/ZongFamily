@@ -1,6 +1,82 @@
 # 开发状态
 
-更新时间：2026-05-17 02:39 Asia/Shanghai
+更新时间：2026-05-17 12:50 Asia/Shanghai
+
+## 2026-05-17 12:50 Asia/Shanghai 问询先看材料提示
+
+- 针对“真人试玩可能仍停在问询回答后不知道先看哪份材料”的风险，给 6 个走访地点 12 条现场问询全部新增 `firstDoc`，把回答落到本地点成功办理后立即取得的入口材料。
+- 走访详情和“今日调查日程”的问询记录现在会显示“先看材料：……”，玩家离开地点后回看记录也能看到下一步应先读哪份资料。
+- 档案馆“照片背注该怎么查？”的搜索词从“罗建宁”调整为“建宁”，确保点击搜索时优先露出 `doc_photo_back` 与 `doc_luo_birth`，不再只落到旧户籍。
+- 加强 `tools/validate_unlock_matrix.mjs`、`tools/validate_search_paths.mjs`、`tools/validate_content_bundle.mjs` 和 `tools/sync_case_bundle_from_app.mjs`：问询必须携带 `firstDoc`，且 `firstDoc` 必须是对应地点入口材料并能被问询搜索命中。
+- 同步更新 `README.md`、`docs/unlock_self_check.md` 和 `docs/search_route_review.md`；`game/data/case_bundle.json` 已重新同步。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`node --check tools\validate_unlock_matrix.mjs`、`node --check tools\sync_case_bundle_from_app.mjs`、`node --check tools\validate_content_bundle.mjs`、`npm.cmd run sync:bundle`、`node tools\validate_search_paths.mjs --write`、`node tools\validate_unlock_matrix.mjs`、`node tools\validate_content_bundle.mjs game\data\case_bundle.json`、`node tools\validate_content_sync.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过；首次 `smoke` 仍遇到一次 Edge 截图文件占用，清理 `.tmp-edge-profile` 后单独重跑通过。
+
+## 2026-05-17 11:47 Asia/Shanghai 问询落脚资料加固
+
+- 针对上一轮搜索路线复盘发现的两个空转点，调整现场问询搜索入口：县医院“出生登记要和谁对上？”改为回到已取得的“血样”材料，云山至黔中旧线“司机传闻怎么处理？”改为检索“钱树林”。
+- 同步改写两条经手人口吻回答，继续保持非剧透：先固定已取得材料，再提示后续需要用正式档案或强证据交叉验证。
+- `tools/validate_search_paths.mjs` 收紧现场问询断言：每条问询不再只允许导向锁定提示，必须至少命中一份本地点已取得资料，避免玩家点“搜索”后只看到空白或纯锁定结果。
+- `npm.cmd run sync:bundle` 已把问询变更同步到 `game/data/case_bundle.json`；`docs/search_route_review.md` 已重新生成，12 条现场问询的本地资料命中均大于 0。
+- 修改文件：`game/app.js`、`game/data/case_bundle.json`、`tools/validate_search_paths.mjs`、`docs/search_route_review.md`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run sync:bundle`、`node tools\validate_search_paths.mjs --write`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+
+## 2026-05-17 10:46 Asia/Shanghai 问询搜索路径复盘
+
+- 扩展 `tools/validate_search_paths.mjs`，读取 `visitInterviews` 后逐条校验六个地点 12 个现场问询的“搜索”关键词，确认每条问询至少能导向可见资料或锁定资料提示。
+- `docs/search_route_review.md` 新增“现场问询入口”表，列出每条问询的经手人、搜索词、本地资料命中、可见资料和锁定资料，便于真人试玩前检查问询是否空转。
+- 本轮发现两条问询目前主要导向锁定资料而不是立刻可见资料：县医院“出生”与旧线“传闻”；它们仍会触发资料库锁定提示，但真人试玩时应重点观察是否让玩家困惑。
+- 修改文件：`tools/validate_search_paths.mjs`、`docs/search_route_review.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证：`node --check tools\validate_search_paths.mjs`、`node tools\validate_search_paths.mjs`、`node tools\validate_search_paths.mjs --write` 已通过；完整回归见测试报告。
+
+## 2026-05-17 09:45 Asia/Shanghai 问询内容包同步
+
+- 将走访页新增的 `visitInterviews` 纳入 `game/data/case_bundle.json`，内容包现在记录六个走访地点共 12 条现场问询，避免问询只存在于运行时代码。
+- 改造 `tools/sync_case_bundle_from_app.mjs` 的常量提取逻辑，改为按表达式括号深度截取，后续在 `app.js` 中调整常量顺序时不容易误截取。
+- 加强 `tools/validate_content_bundle.mjs`：要求内容包必须包含 `visitInterviews`，并校验每个地点至少 2 条问询、问询 ID 不重复、`prompt/person/answer/query` 字段完整。
+- 加强 `tools/validate_content_sync.mjs`：同步比对运行时代码与内容包中的 `visitInterviews`，并在输出中报告问询总数。
+- 修改文件：`game/data/case_bundle.json`、`tools/sync_case_bundle_from_app.mjs`、`tools/validate_content_bundle.mjs`、`tools/validate_content_sync.mjs`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check tools\sync_case_bundle_from_app.mjs`、`node --check tools\validate_content_bundle.mjs`、`node --check tools\validate_content_sync.mjs`、`npm.cmd run sync:bundle`、`node tools\validate_content_bundle.mjs game\data\case_bundle.json`、`node tools\validate_content_sync.mjs`、`node tools\validate_unlock_matrix.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+
+## 2026-05-17 08:43 Asia/Shanghai 走访问询矩阵自检
+
+- 补充 `docs/unlock_self_check.md` 的“现场问询与记录回看”规则，明确问询只提供查证方向，不推进时间、不直接取得资料、不替代正式证据。
+- 加强 `tools/validate_unlock_matrix.mjs`：现在会校验 `visitInterviews` 覆盖六个走访地点、每地至少 2 条问询、问询 ID 不重复，且问询人必须属于该地点 `locationContacts` 登记的经手人。
+- 解锁矩阵输出新增 `visitInterviews` 统计，本轮为 12 条现场问询。
+- 修改文件：`tools/validate_unlock_matrix.mjs`、`docs/unlock_self_check.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证：`node --check game\app.js`、`node --check tools\validate_unlock_matrix.mjs`、`node tools\validate_unlock_matrix.mjs` 已通过；完整回归见测试报告。
+
+## 2026-05-17 07:42 Asia/Shanghai 走访问询记录回看
+
+- 在“今日调查日程”中新增“现场问询记录”汇总，已追问过的经手人回答会按地点集中显示，玩家离开当前地点后仍能回看。
+- 问询记录保留地点、经手人、回答和对应“搜索”按钮；该系统继续只提供查证方向，不推进时间、不直接解锁资料。
+- 普通试玩新增断言：记录世昌集团“信托材料能查到哪一步？”后，日程回看区必须出现 `data-visit-question-log="group:trust_scope"`。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_unlock_matrix.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+
+## 2026-05-17 06:43 Asia/Shanghai 走访现场问询
+
+- 在走访详情中新增“现场问询”，六个走访地点各有 2 条可追问事项，覆盖旧户籍、血样、学籍、KTV、信托、旧客运线等入口材料的查证边界。
+- 问询回答会写入 `visitQuestionLog` 本地存档；已问事项会展开为经手人口吻的记录，并提供对应资料库搜索按钮，但不会推进时间或直接解锁资料。
+- 普通试玩新增断言：走访页必须渲染世昌集团问询按钮，记录“信托材料能查到哪一步？”后必须显示问询回答；解锁矩阵校验新增 `visitInterviews` 覆盖检查。
+- 修改文件：`game/app.js`、`game/styles.css`、`tools/validate_unlock_matrix.mjs`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_unlock_matrix.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+
+## 2026-05-17 05:40 Asia/Shanghai 县域走访路线图
+
+- 在走访详情顶部新增“县域路线图”，复用已有地点坐标，把公证处、六个走访地点、当前所在位置和目标路线放进同一张可交互地图。
+- 地图地点可点击切换走访目标，并按待走访、已取件、已错过三种状态改变标记；办理地点后当前位置会随 `currentLocationId` 移动。
+- 普通试玩新增断言：走访页必须渲染路线图、开局从公证处指向世昌集团、办理后当前位置移动到世昌集团且地图标记为已取件。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩、烟测产物和走访地图预览截图已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+
+## 2026-05-17 03:39 Asia/Shanghai 走访调查日程
+
+- 在走访详情下方新增“今日调查日程”，按办理结束时间记录已取件和已错过的地点，让时间推进、当前位置和办理结果有可回看的案内记录。
+- 每条日程显示出发/抵达/结束时间、地点、经手人、入卷材料和下一步搜索按钮；错过窗口的记录会明确提示未取得材料，避免玩家误以为已经解锁。
+- 走访办理结果现在保存 `depart`、`arrive`、`serviceStart`、`finish`、`travel` 和 `wait` 字段，旧存档缺少这些字段时仍用原有记录时间兜底展示。
+- 普通试玩新增断言：世昌集团成功取件后必须出现在日程中且列出信托入口材料；县一中错过窗口后必须出现在日程中。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 02:39 Asia/Shanghai 走访结果引导与补救
 
