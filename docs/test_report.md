@@ -1,6 +1,22 @@
 # 测试报告
 
-更新时间：2026-05-17 18:57 Asia/Shanghai
+更新时间：2026-05-17 19:58 Asia/Shanghai
+
+## 2026-05-17 19:58 Asia/Shanghai 主材料按钮矩阵回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径均无错误。
+- `npm.cmd run playtest` 通过并重新生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`；走访入口材料直达矩阵现在覆盖 6 个地点的 `data-visit-primary-doc` 主按钮、结果区入口材料按钮和今日日程入口材料按钮。
+- `npm.cmd run smoke` 通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-17 18:57 Asia/Shanghai 走访结果主材料按钮回归
 

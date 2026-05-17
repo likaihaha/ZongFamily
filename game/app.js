@@ -4113,6 +4113,14 @@ function runGuidedPlaytest() {
     performLocationVisit(locationId);
     renderAll();
     assert(state.locationVisits[locationId]?.status === "obtained", `${locationId} should obtain entry documents in matrix check`);
+    const primaryDoc = entryDocs[0];
+    const primaryButton = els.visitDetail.querySelector(`.visit-result [data-visit-primary-doc="${primaryDoc}"]`);
+    assert(Boolean(primaryButton), `${locationId} visit result should expose primary entry document ${primaryDoc}`);
+    primaryButton?.click();
+    assert(state.selectedDoc === primaryDoc, `${locationId} primary entry-doc button should select ${primaryDoc}`);
+    assert(state.readDocs.has(primaryDoc), `${locationId} primary entry-doc button should mark ${primaryDoc} read`);
+    switchView("visit");
+    renderAll();
     for (const docId of entryDocs) {
       const resultButton = els.visitDetail.querySelector(`.visit-result [data-visit-open-doc="${docId}"]`);
       assert(Boolean(resultButton), `${locationId} visit result should expose ${docId}`);
@@ -4129,7 +4137,7 @@ function runGuidedPlaytest() {
       switchView("visit");
       renderAll();
     }
-    return { location: location?.title || locationId, docs: entryDocs };
+    return { location: location?.title || locationId, docs: entryDocs, primaryDoc };
   };
 
   resetProgressForHiddenTest();
@@ -4208,7 +4216,8 @@ function runGuidedPlaytest() {
   const directDocCoverage = visitLocations.map((location) => assertVisitEntryDocButtons(location.id));
   record("走访入口材料直达矩阵", {
     locations: directDocCoverage.length,
-    documents: directDocCoverage.reduce((sum, item) => sum + item.docs.length, 0)
+    documents: directDocCoverage.reduce((sum, item) => sum + item.docs.length, 0),
+    primaryButtons: directDocCoverage.filter((item) => item.primaryDoc).length
   });
   resetProgressForHiddenTest();
   state.clockMinutes = 17 * 60;

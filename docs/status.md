@@ -1,6 +1,14 @@
 # 开发状态
 
-更新时间：2026-05-17 18:57 Asia/Shanghai
+更新时间：2026-05-17 19:58 Asia/Shanghai
+
+## 2026-05-17 19:58 Asia/Shanghai 主材料按钮矩阵回归
+
+- 针对上一轮只显式断言世昌集团主材料按钮的测试缺口，普通试玩里的 6 个走访地点入口材料矩阵现在会逐地点检查首份入口材料主按钮。
+- 新断言要求每个地点成功取件后都存在 `data-visit-primary-doc`，且点击后能切到资料库、选中对应原件并标记已读；原有结果区和今日日程入口材料按钮断言继续保留。
+- 这次不改玩家流程、资料正文或解锁规则，只补齐自动化覆盖，避免后续 UI 调整让非世昌集团地点的主按钮失效。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 18:57 Asia/Shanghai 走访结果主材料按钮
 
