@@ -493,6 +493,7 @@
       </article>
     </div>
     </div>
+    
     <div class="doc-actions">
       <button id="collect-doc" class="is-collected">
         已加入证据箱
@@ -1500,6 +1501,19 @@
     <article class="update-log-item">
       <header class="update-log-head">
         <strong>2026-05-17</strong>
+        <span>原件阅读下一步查证</span>
+      </header>
+      <div class="update-log-body">
+        <h4>变更内容</h4>
+        <ul><li>走访入口材料打开后，资料阅读页底部新增“阅读后下一步”行动区</li><li>行动区复用该走访地点的下一步建议，提供直接搜索关键词和回到走访地点两个动作</li><li>普通试玩新增断言，确认信托入口原件页能继续搜索“信托”并露出对应资料</li></ul>
+        <h4>验证结果</h4>
+        <ul><li>node --check game\app.js passed</li><li>npm.cmd run validate passed</li><li>npm.cmd run playtest passed</li><li>npm.cmd run smoke passed</li></ul>
+      </div>
+    </article>
+  
+    <article class="update-log-item">
+      <header class="update-log-head">
+        <strong>2026-05-17</strong>
         <span>问询材料一键打开</span>
       </header>
       <div class="update-log-body">
@@ -2120,6 +2134,11 @@
       "relations": 1,
       "readCounter": "0 已读",
       "relationCounter": "0 / 1 已开放"
+    },
+    {
+      "label": "原件阅读下一步查证",
+      "query": "信托",
+      "visible": 5
     },
     {
       "label": "走访结果入口材料直达",

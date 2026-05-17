@@ -799,6 +799,21 @@ const locationLabels = {
 const updateLogs = [
   {
     date: "2026-05-17",
+    title: "原件阅读下一步查证",
+    changes: [
+      "走访入口材料打开后，资料阅读页底部新增“阅读后下一步”行动区",
+      "行动区复用该走访地点的下一步建议，提供直接搜索关键词和回到走访地点两个动作",
+      "普通试玩新增断言，确认信托入口原件页能继续搜索“信托”并露出对应资料"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
     title: "问询材料一键打开",
     changes: [
       "取件成功结果区新增首份入口材料主按钮，玩家可直接从最醒目的动作进入下一份应读原件",
@@ -2503,6 +2518,27 @@ function visitFollowUp(location, status) {
   };
 }
 
+function entryLocationForDocument(docId) {
+  const match = Object.entries(locationEntryDocumentIds).find(([, ids]) => ids.includes(docId));
+  return match ? locationById(match[0]) : null;
+}
+
+function renderDocumentNextStep(doc) {
+  const location = entryLocationForDocument(doc.id);
+  if (!location) return "";
+  const followUp = visitFollowUp(location, "obtained");
+  return `
+    <div class="doc-next-step" data-doc-next-step="${escapeHtml(location.id)}">
+      <span>阅读后下一步</span>
+      <p>${escapeHtml(followUp.text)}</p>
+      <div>
+        <button type="button" data-doc-next-search="${escapeHtml(followUp.query)}">搜索“${escapeHtml(followUp.query)}”</button>
+        <button type="button" data-doc-next-visit="${escapeHtml(location.id)}">回到${escapeHtml(location.title)}</button>
+      </div>
+    </div>
+  `;
+}
+
 function askedVisitQuestions(locationId) {
   return new Set(state.visitQuestionLog[locationId] || []);
 }
@@ -3043,6 +3079,7 @@ function renderDocument() {
       <span class="doc-watermark">${doc.source}</span>
       <div class="doc-text">${renderOriginalDocument(doc)}</div>
     </div>
+    ${renderDocumentNextStep(doc)}
     <div class="doc-actions">
       <button id="collect-doc" class="${state.collected.has(doc.id) ? "is-collected" : ""}">
         ${state.collected.has(doc.id) ? "已加入证据箱" : "加入证据箱"}
@@ -4180,6 +4217,11 @@ function runGuidedPlaytest() {
   primaryResultDocButton?.click();
   assert(state.selectedDoc === "doc_trust_clause", "primary entry-doc button should select the trust clause document");
   assert(state.readDocs.has("doc_trust_clause"), "primary entry-doc button should mark the opened document as read");
+  const documentNextStep = els.documentView.querySelector('[data-doc-next-step="group"] [data-doc-next-search="信托"]');
+  assert(Boolean(documentNextStep), "opened entry document should expose a next-step search action");
+  documentNextStep?.click();
+  assert(visibleResultIds().includes("doc_trust_clause"), "entry document next-step search should show the trust clause document");
+  record("原件阅读下一步查证", { query: state.query, visible: visibleResultIds().length });
   switchView("visit");
   renderAll();
   const resultDocButton = els.visitDetail.querySelector('.visit-result [data-visit-open-doc="doc_trust_clause"]');
@@ -4603,6 +4645,23 @@ function bindEvents() {
     renderAll();
   });
   els.documentView.addEventListener("click", (event) => {
+    const nextSearch = event.target.closest("[data-doc-next-search]");
+    if (nextSearch) {
+      state.query = nextSearch.dataset.docNextSearch;
+      state.filter = "all";
+      state.selectedDoc = null;
+      playSound("search");
+      renderAll();
+      return;
+    }
+    const nextVisit = event.target.closest("[data-doc-next-visit]");
+    if (nextVisit) {
+      state.activeVisitId = nextVisit.dataset.docNextVisit;
+      switchView("visit");
+      playSound("click");
+      renderAll();
+      return;
+    }
     if (event.target.id === "collect-doc" && state.selectedDoc) {
       if (state.collected.has(state.selectedDoc)) state.collected.delete(state.selectedDoc);
       else state.collected.add(state.selectedDoc);

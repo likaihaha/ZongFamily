@@ -2406,6 +2406,44 @@ select {
   margin-top: 14px;
 }
 
+.doc-next-step {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  border: 1px solid rgba(36, 91, 125, 0.24);
+  border-radius: 8px;
+  padding: 12px;
+  background:
+    linear-gradient(90deg, rgba(36, 91, 125, 0.08), transparent 46px),
+    #f8fbf8;
+}
+
+.doc-next-step span {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.doc-next-step p {
+  margin: 0;
+  color: #3f382f;
+  line-height: 1.65;
+}
+
+.doc-next-step div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doc-next-step button {
+  border: 1px solid rgba(36, 91, 125, 0.28);
+  border-radius: 7px;
+  padding: 7px 10px;
+  background: #fffdf8;
+  color: var(--blue);
+}
+
 .doc-actions button,
 .relation-card button {
   border: 1px solid var(--line);

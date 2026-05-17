@@ -1,6 +1,14 @@
 # 开发状态
 
-更新时间：2026-05-17 19:58 Asia/Shanghai
+更新时间：2026-05-17 20:59 Asia/Shanghai
+
+## 2026-05-17 20:59 Asia/Shanghai 原件阅读下一步查证
+
+- 针对“从走访结果打开入口原件后，玩家仍可能不知道在阅读页之后该搜什么”的摩擦，资料阅读页底部新增“阅读后下一步”行动区。
+- 行动区复用对应走访地点的下一步建议，提供直接搜索关键词和回到走访地点两个动作；例如信托入口原件会提示继续搜索“信托”并可回到世昌集团。
+- 普通试玩新增断言：点击世昌集团主材料按钮打开 `doc_trust_clause` 后，原件页必须出现 `data-doc-next-step="group"` 和 `data-doc-next-search="信托"`，点击后能回到资料库搜索并露出信托材料。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 19:58 Asia/Shanghai 主材料按钮矩阵回归
 
