@@ -1337,7 +1337,7 @@ select {
 }
 
 .visit-first-doc {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 4px;
   align-items: center;
@@ -1355,6 +1355,23 @@ select {
 .visit-first-doc strong {
   color: var(--ink);
   font-size: 12px;
+}
+
+.visit-first-doc button {
+  border: 1px solid rgba(63, 111, 82, 0.32);
+  border-radius: 999px;
+  padding: 3px 7px;
+  background: rgba(63, 111, 82, 0.1);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.visit-first-doc small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .visit-progress {

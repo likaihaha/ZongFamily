@@ -1,6 +1,14 @@
 # 开发状态
 
-更新时间：2026-05-17 12:50 Asia/Shanghai
+更新时间：2026-05-17 13:49 Asia/Shanghai
+
+## 2026-05-17 13:49 Asia/Shanghai 问询材料直达
+
+- 针对“先看材料”仍需要玩家自己搜索的问题，走访问询回答和“今日调查日程”的问询记录新增“打开材料”按钮；对应入口资料已入卷时会直接切到资料库并打开原件。
+- 如果玩家尚未办理取件，“先看材料”区显示“办理取件后入卷”，避免在材料未取得时误导玩家以为可以直接阅读。
+- 普通试玩新增直达断言：世昌集团问询取件后，点击 `doc_trust_clause` 的先看材料按钮会选中该资料并标记为已读。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩与烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 12:50 Asia/Shanghai 问询先看材料提示
 

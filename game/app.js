@@ -799,6 +799,21 @@ const locationLabels = {
 const updateLogs = [
   {
     date: "2026-05-17",
+    title: "问询材料一键打开",
+    changes: [
+      "现场问询的“先看材料”改为可操作材料区，已入卷时可直接打开原件",
+      "材料尚未办理取件时显示“办理取件后入卷”，避免误以为未取得材料也能阅读",
+      "普通试玩新增直达断言，确认问询回看按钮会打开并标记阅读对应入口材料"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
     title: "问询先看材料提示",
     changes: [
       "现场问询新增“先看材料”提示，回答后直接指出应先核对的本地点入口资料",
@@ -2504,7 +2519,19 @@ function documentTitleById(docId) {
 
 function renderVisitQuestionFirstDoc(question) {
   if (!question.firstDoc) return "";
-  return `<p class="visit-first-doc">先看材料：<strong>${escapeHtml(documentTitleById(question.firstDoc))}</strong></p>`;
+  const doc = documents.find((item) => item.id === question.firstDoc);
+  const title = escapeHtml(doc?.title || question.firstDoc);
+  const docId = escapeHtml(question.firstDoc);
+  const isAvailable = doc ? isDocumentUnlocked(doc) : false;
+  return `
+    <div class="visit-first-doc" data-visit-first-doc="${docId}">
+      <span>先看材料：</span>
+      <strong>${title}</strong>
+      ${isAvailable
+        ? `<button type="button" data-visit-open-doc="${docId}">打开材料</button>`
+        : `<small>办理取件后入卷</small>`}
+    </div>
+  `;
 }
 
 function renderVisitInterview(location) {
@@ -4073,6 +4100,14 @@ function runGuidedPlaytest() {
   renderAll();
   assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  const firstDocButton = els.visitDetail.querySelector('[data-visit-open-doc="doc_trust_clause"]');
+  assert(Boolean(firstDocButton), "asked visit answers should offer a direct first-doc open button after obtaining documents");
+  firstDocButton?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "direct first-doc button should select the trust clause document");
+  assert(state.readDocs.has("doc_trust_clause"), "direct first-doc button should mark the opened document as read");
+  record("问询先看材料直达", { selectedDoc: state.selectedDoc });
+  switchView("visit");
+  renderAll();
   assert(Boolean(els.visitDetail.querySelector('[data-visit-map][data-current-location="group"]')), "visit route map should move the current location after handling");
   assert(Boolean(els.visitDetail.querySelector('[data-map-pin="group"].is-obtained')), "visit route map should mark obtained locations");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-log="group"][data-visit-log-status="obtained"]')), "obtained group visit should appear in the visit schedule");
@@ -4363,6 +4398,16 @@ function bindEvents() {
     if (question) {
       recordVisitQuestion(question.dataset.visitQuestionLocation, question.dataset.visitQuestion);
       playSound("click");
+      renderAll();
+      return;
+    }
+    const openDoc = event.target.closest("[data-visit-open-doc]");
+    if (openDoc) {
+      state.selectedDoc = openDoc.dataset.visitOpenDoc;
+      state.query = "";
+      state.filter = "all";
+      switchView("search");
+      playSound("paper");
       renderAll();
       return;
     }
