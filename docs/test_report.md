@@ -1,6 +1,24 @@
 # 测试报告
 
-更新时间：2026-05-17 13:49 Asia/Shanghai
+更新时间：2026-05-17 14:51 Asia/Shanghai
+
+## 2026-05-17 14:51 Asia/Shanghai 走访结果材料直达回归
+
+命令：
+
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+
+- `game/app.js` 语法检查通过。
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径均无错误。
+- `npm.cmd run playtest` 通过并重新生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`；新增断言确认成功取件结果区的入口材料按钮可直达 `doc_trust_clause` 并标记已读，原问询直达断言仍通过。
+- `npm.cmd run smoke` 通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-17 13:49 Asia/Shanghai 问询材料直达回归
 

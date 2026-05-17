@@ -1374,6 +1374,35 @@ select {
   font-weight: 700;
 }
 
+.visit-doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.visit-doc-actions span {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.visit-doc-actions button {
+  border: 1px solid rgba(63, 111, 82, 0.32);
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #fffdf8;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.visit-doc-actions button:hover {
+  background: rgba(63, 111, 82, 0.1);
+}
+
 .visit-progress {
   height: 9px;
   border: 1px solid rgba(212, 200, 183, 0.9);

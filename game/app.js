@@ -801,9 +801,10 @@ const updateLogs = [
     date: "2026-05-17",
     title: "问询材料一键打开",
     changes: [
+      "成功取件后的走访结果和今日日程新增入口材料按钮，玩家可从结果区直接打开已入卷材料",
       "现场问询的“先看材料”改为可操作材料区，已入卷时可直接打开原件",
       "材料尚未办理取件时显示“办理取件后入卷”，避免误以为未取得材料也能阅读",
-      "普通试玩新增直达断言，确认问询回看按钮会打开并标记阅读对应入口材料"
+      "普通试玩新增直达断言，确认走访结果和问询回看按钮会打开并标记阅读对应入口材料"
     ],
     checks: [
       "node --check game\\app.js passed",
@@ -2517,6 +2518,22 @@ function documentTitleById(docId) {
   return documents.find((doc) => doc.id === docId)?.title || docId;
 }
 
+function renderVisitDocumentActions(ids, label = "入口材料") {
+  const availableIds = ids.filter((id) => {
+    const doc = documents.find((item) => item.id === id);
+    return doc && isDocumentUnlocked(doc);
+  });
+  if (!availableIds.length) return "";
+  return `
+    <div class="visit-doc-actions" aria-label="${label}">
+      <span>${label}</span>
+      ${availableIds.map((id) => `
+        <button type="button" data-visit-open-doc="${escapeHtml(id)}">${escapeHtml(documentTitleById(id))}</button>
+      `).join("")}
+    </div>
+  `;
+}
+
 function renderVisitQuestionFirstDoc(question) {
   if (!question.firstDoc) return "";
   const doc = documents.find((item) => item.id === question.firstDoc);
@@ -2660,6 +2677,7 @@ function renderVisitLog() {
                 <strong>${location.title}</strong>
                 <p>${statusLabel} · 经手人：${contactNamesForLocation(location.id) || location.contact}</p>
                 ${docs.length ? `<small>入卷：${docs.join("、")}</small>` : `<small>未取得材料，需补办或转向其他地点。</small>`}
+                ${renderVisitDocumentActions(visit.documents || [], "打开入卷材料")}
               </div>
               ${followUp ? `
                 <button type="button" class="ghost-btn" data-visit-search="${followUp.query}">
@@ -2874,6 +2892,7 @@ function renderVisitDetail() {
           <strong>${result.title}</strong>
           <p>${result.text}</p>
           ${result.documents.length ? `<small>已入卷：${acquiredDocTitles(result.documents).join("、")}</small>` : ""}
+          ${renderVisitDocumentActions(result.documents, "先看入口材料")}
           ${followUp ? `
             <div class="visit-next-step">
               <span>${followUp.title}</span>
@@ -4100,6 +4119,14 @@ function runGuidedPlaytest() {
   renderAll();
   assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  const resultDocButton = els.visitDetail.querySelector('.visit-result [data-visit-open-doc="doc_trust_clause"]');
+  assert(Boolean(resultDocButton), "obtained visit result should offer a direct entry-doc open button");
+  resultDocButton?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "entry-doc button should select the trust clause document");
+  assert(state.readDocs.has("doc_trust_clause"), "entry-doc button should mark the opened document as read");
+  record("走访结果入口材料直达", { selectedDoc: state.selectedDoc });
+  switchView("visit");
+  renderAll();
   const firstDocButton = els.visitDetail.querySelector('[data-visit-open-doc="doc_trust_clause"]');
   assert(Boolean(firstDocButton), "asked visit answers should offer a direct first-doc open button after obtaining documents");
   firstDocButton?.click();
