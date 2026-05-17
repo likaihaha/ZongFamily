@@ -4139,6 +4139,12 @@ function runGuidedPlaytest() {
   assert(Boolean(els.visitDetail.querySelector('[data-map-pin="group"].is-obtained')), "visit route map should mark obtained locations");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-log="group"][data-visit-log-status="obtained"]')), "obtained group visit should appear in the visit schedule");
   assert(els.visitDetail.querySelector(".visit-log")?.textContent.includes("香港家族信托文件节选"), "visit schedule should list obtained entry documents");
+  const scheduleDocButton = els.visitDetail.querySelector('[data-visit-log="group"] [data-visit-open-doc="doc_trust_clause"]');
+  assert(Boolean(scheduleDocButton), "obtained visit schedule should offer a direct entry-doc open button");
+  scheduleDocButton?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "schedule entry-doc button should select the trust clause document");
+  assert(state.readDocs.has("doc_trust_clause"), "schedule entry-doc button should mark the opened document as read");
+  record("日程入卷材料直达", { selectedDoc: state.selectedDoc });
   search("信托", ["doc_trust_clause"], ["doc_family_meeting", "doc_equity_draft_2005", "doc_dinghui_due_diligence"]);
   const groupVisible = visibleResultIds();
   const groupLocationDocs = locationDocumentIds.group.filter((id) => groupVisible.includes(id));

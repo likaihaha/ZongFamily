@@ -1,6 +1,13 @@
 # 开发状态
 
-更新时间：2026-05-17 14:51 Asia/Shanghai
+更新时间：2026-05-17 16:54 Asia/Shanghai
+
+## 2026-05-17 16:54 Asia/Shanghai 日程材料直达回归加固
+
+- 在普通试玩回归里补充“今日日程”里的入卷材料直达断言：世昌集团成功取件后，日程记录中的 `doc_trust_clause` 按钮必须存在、可打开资料库并标记已读。
+- 这次没有改动玩家流程或资料内容，只把 14:51 已完成的“走访结果 / 日程材料直达”补上更细的自动化覆盖，避免后续 UI 调整只保留标题而丢失按钮。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
 
 ## 2026-05-17 14:51 Asia/Shanghai 走访结果材料直达
 
