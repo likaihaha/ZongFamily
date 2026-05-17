@@ -1,6 +1,23 @@
 # 测试报告
 
-更新时间：2026-05-17 16:54 Asia/Shanghai
+更新时间：2026-05-17 17:55 Asia/Shanghai
+
+## 2026-05-17 17:55 Asia/Shanghai 走访入口材料直达矩阵回归
+
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run playtest
+npm.cmd run validate
+npm.cmd run smoke
+```
+
+结果：
+- `game/app.js` 语法检查通过。
+- `npm.cmd run playtest` 通过并重新生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`。
+- 新增断言确认 6 个走访地点成功取件后，走访结果区和“今日调查日程”都能打开对应入口材料并标记已读，当前覆盖 10 份入口材料。
+- `npm.cmd run validate` 通过，内容包、提交答案、内容同步、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径均无错误。
+- `npm.cmd run smoke` 通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-17 16:54 Asia/Shanghai 日程材料直达回归
 

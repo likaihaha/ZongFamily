@@ -804,7 +804,7 @@ const updateLogs = [
       "成功取件后的走访结果和今日日程新增入口材料按钮，玩家可从结果区直接打开已入卷材料",
       "现场问询的“先看材料”改为可操作材料区，已入卷时可直接打开原件",
       "材料尚未办理取件时显示“办理取件后入卷”，避免误以为未取得材料也能阅读",
-      "普通试玩新增直达断言，确认走访结果和问询回看按钮会打开并标记阅读对应入口材料"
+      "普通试玩新增直达矩阵，覆盖 6 个走访地点的走访结果和日程入口材料按钮"
     ],
     checks: [
       "node --check game\\app.js passed",
@@ -4083,6 +4083,35 @@ function runGuidedPlaytest() {
     assert(state.collected.has(docId), `${docId} should be collected`);
     record(`阅读并收藏：${doc?.title || docId}`, { docId });
   };
+  const assertVisitEntryDocButtons = (locationId) => {
+    const location = locationById(locationId);
+    const entryDocs = locationEntryDocumentIds[locationId] || [];
+    assert(Boolean(location), `missing visit location ${locationId}`);
+    assert(entryDocs.length > 0, `${locationId} should have entry documents`);
+    resetProgressForHiddenTest();
+    state.activeVisitId = locationId;
+    switchView("visit");
+    performLocationVisit(locationId);
+    renderAll();
+    assert(state.locationVisits[locationId]?.status === "obtained", `${locationId} should obtain entry documents in matrix check`);
+    for (const docId of entryDocs) {
+      const resultButton = els.visitDetail.querySelector(`.visit-result [data-visit-open-doc="${docId}"]`);
+      assert(Boolean(resultButton), `${locationId} visit result should expose ${docId}`);
+      resultButton?.click();
+      assert(state.selectedDoc === docId, `${locationId} result button should select ${docId}`);
+      assert(state.readDocs.has(docId), `${locationId} result button should mark ${docId} read`);
+      switchView("visit");
+      renderAll();
+      const scheduleButton = els.visitDetail.querySelector(`[data-visit-log="${locationId}"] [data-visit-open-doc="${docId}"]`);
+      assert(Boolean(scheduleButton), `${locationId} schedule should expose ${docId}`);
+      scheduleButton?.click();
+      assert(state.selectedDoc === docId, `${locationId} schedule button should select ${docId}`);
+      assert(state.readDocs.has(docId), `${locationId} schedule button should mark ${docId} read`);
+      switchView("visit");
+      renderAll();
+    }
+    return { location: location?.title || locationId, docs: entryDocs };
+  };
 
   resetProgressForHiddenTest();
   renderAll();
@@ -4150,6 +4179,11 @@ function runGuidedPlaytest() {
   const groupLocationDocs = locationDocumentIds.group.filter((id) => groupVisible.includes(id));
   assert(groupLocationDocs.length < locationDocumentIds.group.length, "visiting Shichang Group should not unlock every group document at once");
   record("世昌集团走访分层", { visibleGroupDocs: groupLocationDocs, schedule: "obtained" });
+  const directDocCoverage = visitLocations.map((location) => assertVisitEntryDocButtons(location.id));
+  record("走访入口材料直达矩阵", {
+    locations: directDocCoverage.length,
+    documents: directDocCoverage.reduce((sum, item) => sum + item.docs.length, 0)
+  });
   resetProgressForHiddenTest();
   state.clockMinutes = 17 * 60;
   switchView("visit");
