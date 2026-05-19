@@ -34,7 +34,15 @@
 npm.cmd run validate
 ```
 
-该命令会检查内容包结构、线索来源资料映射、最终提交答案一致性、内容包与游戏内人物/资料/关系谜题的双向同步、未来资产清单、运行时图片/音频引用、资料页补充美术映射、基础游戏数据、关键搜索路径、锁定资料的走访建议和现场问询搜索入口。内容包校验要求每条线索绑定至少一份来源资料，并要求每条必需真相至少有两份来源资料覆盖；现场问询还要求提供 `firstDoc`，让回答明确落到一份本地点入口材料。当前 `case_bundle.json` 已覆盖运行时 24 名人物、50 份资料、6 条关系谜题和 12 条现场问询；后续若只改 `game/app.js` 而漏同步内容包，校验会失败。
+该命令会检查内容包结构、线索来源资料映射、最终提交答案一致性、内容包与游戏内人物/资料/关系谜题/走访矩阵的双向同步、未来资产清单、运行时图片/音频引用、资料页补充美术映射、基础游戏数据、关键搜索路径、锁定资料的走访建议、现场问询搜索入口、真人试玩记录材料和完整可玩表面。内容包校验要求每条线索绑定至少一份来源资料，并要求每条必需真相至少有两份来源资料覆盖；走访地点还必须同步坐标、窗口时间、经手人、全部地点资料、入口材料和阅读后跟进。搜索路径校验会限制入口原件后续搜索和现场问询搜索的锁定命中数量，避免玩家刚拿到入口材料就被大量未入卷结果淹没。当前 `case_bundle.json` 已覆盖运行时 24 名人物、50 份资料、6 条关系谜题、6 个走访地点和 12 条现场问询；后续若只改 `game/app.js` 而漏同步内容包，校验会失败。
+
+单独检查可玩表面：
+
+```powershell
+npm.cmd run check:surface
+```
+
+该命令会确认走访、资料库、家谱、证据箱、备忘录、设置、提交和更新日志入口仍在页面上，本地存档、JSON 导出、最终提交、试玩模式、自动通关模式、程序音效和 TTS 占位语音仍有运行时入口。
 
 从运行时数据同步内容包结构字段：
 
@@ -42,7 +50,7 @@ npm.cmd run validate
 npm.cmd run sync:bundle
 ```
 
-该命令会把 `game/app.js` 中的人物别名、生卒年、角色说明、资料年份、来源、可信度、关键词、摘要、图片、关系谜题和现场问询字段写回 `game/data/case_bundle.json`。同步后仍需运行 `npm.cmd run validate`。
+该命令会把 `game/app.js` 中的人物别名、生卒年、角色说明、资料年份、来源、可信度、关键词、摘要、图片、关系谜题、走访地点矩阵、经手人映射和现场问询字段写回 `game/data/case_bundle.json`。同步后仍需运行 `npm.cmd run validate`。
 
 单独检查资料页补充美术映射可运行：
 
@@ -62,7 +70,47 @@ node tools/validate_search_paths.mjs
 npm.cmd run review:search
 ```
 
-该命令会生成 `docs/search_route_review.md`，把开局公开入口、锁定提示、阅读解锁、后段强证据、6 个走访入口和 12 条现场问询入口整理成表格，并列出每条问询建议先看的入口材料，便于人工试玩前先确认主线搜索链没有断点。
+该命令会生成 `docs/search_route_review.md`，把开局公开入口、锁定提示、阅读解锁、后段强证据、6 个走访入口、6 条入口原件后续搜索和 12 条现场问询入口整理成表格，并列出每条问询建议先看的入口材料及锁定命中，便于人工试玩前先确认主线搜索链没有断点或过载。
+
+真人试玩记录清单：
+
+```powershell
+npm.cmd run check:manual-playtest
+```
+
+清单文件位于 `docs/manual_playtest_checklist.md`，用于记录自动试玩无法判断的体验问题，重点观察走访问询后的“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”是否能被玩家自然注意到。校验脚本会确认这份清单仍覆盖关键观察点、路线步骤、通过标准和记录模板。
+
+真人试玩执行包：
+
+```powershell
+npm.cmd run check:manual-packet
+```
+
+执行包文件位于 `docs/manual_playtest_packet.html`，可直接用浏览器打开或打印给观察员。它把试玩基础信息、8 步路线、关键观察点、记录表、通过标准和结论选项放在同一页，避免真人试玩时遗漏“更多回查 / 新问询入口 / 先看材料 / 锁定提示”等当前风险点。填写后可点击“生成回收 Markdown”，生成与结果模板一致的 `manual_playtest_result_YYYYMMDD_observer.md` 内容。
+
+如果当前环境拦截 `file://` 页面，可以用本地 HTTP 入口打开执行包：
+
+```powershell
+npm.cmd run manual:serve
+```
+
+命令会打印 `http://127.0.0.1:<port>/docs/manual_playtest_packet.html` 和游戏入口地址；试玩结束后按 `Ctrl+C` 停止服务。`npm.cmd run check:manual-serve` 会只检查执行包和游戏入口文件是否存在且非空，不启动长驻服务。
+
+如果希望观察员少一步复制地址，可以用一键会话脚本启动本地服务并打开系统浏览器：
+
+```powershell
+npm.cmd run manual:start
+```
+
+命令会打开试玩执行包、打印游戏入口和建议保存的 `docs\manual_playtest_result_YYYYMMDD_observer.md` 路径；试玩结束并保存回收 Markdown 后，在终端按 Enter 停止本地服务，再运行 `npm.cmd run check:manual-results`。`npm.cmd run check:manual-session` 只做脚本和入口文件检查，不打开浏览器。
+
+真人试玩结果回收模板：
+
+```powershell
+npm.cmd run check:manual-results
+```
+
+模板文件位于 `docs/manual_playtest_results_template.md`，用于把试玩后的玩家原话、30 秒以上停顿、搜索词、回查入口理解和改动建议统一回收到同一格式。校验脚本会确认模板保留关键观察项、路线记录、判定表和下一步建议；如果 `docs/` 下已有 `manual_playtest_result_YYYYMMDD_observer.md`，也会一起检查结果文件结构和关键字段是否已填写，避免只有模板默认值却被误判为有效真人反馈。
 
 单独检查渐进解锁矩阵与自检报告：
 

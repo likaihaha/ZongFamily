@@ -52,6 +52,7 @@ const locationDocumentIds = extractConstExpression("locationDocumentIds");
 const locationEntryDocumentIds = extractConstExpression("locationEntryDocumentIds");
 const locationLabels = extractConstExpression("locationLabels");
 const visitLocations = extractConstExpression("visitLocations");
+const visitFollowUps = extractConstExpression("visitFollowUps");
 const visitInterviews = extractConstExpression("visitInterviews");
 const documentById = new Map(documents.map((doc) => [doc.id, doc]));
 
@@ -230,8 +231,9 @@ for (const location of visitLocations) {
   const state = createState();
   state.visitedLocations.add(location.id);
   for (const docId of locationEntryDocumentIds[location.id] || []) state.obtainedDocuments.add(docId);
-  const result = search(state, location.query);
+  const entryDocs = locationEntryDocumentIds[location.id] || [];
   const locationDocs = new Set(locationDocumentIds[location.id] || []);
+  const result = search(state, location.query);
   const visibleLocationDocs = result.visible.filter((doc) => locationDocs.has(doc.id));
   assert(visibleLocationDocs.length > 0, `${locationLabels[location.id] || location.id}: visiting location then searching "${location.query}" should reveal at least one local document`);
   record(`走访入口：${location.title}`, {
@@ -245,6 +247,7 @@ for (const location of visitLocations) {
   for (const interview of visitInterviews[location.id] || []) {
     const interviewResult = search(state, interview.query);
     const localVisibleFromInterview = interviewResult.visible.filter((doc) => locationDocs.has(doc.id));
+    const interviewLockedLimit = Math.max(4, interviewResult.visible.length + 2);
     assert(
       localVisibleFromInterview.length > 0,
       `${locationLabels[location.id] || location.id}: interview "${interview.prompt}" query "${interview.query}" should reveal at least one local obtained document`
@@ -252,6 +255,10 @@ for (const location of visitLocations) {
     assert(
       localVisibleFromInterview.some((doc) => doc.id === interview.firstDoc),
       `${locationLabels[location.id] || location.id}: interview "${interview.prompt}" should surface firstDoc ${interview.firstDoc}`
+    );
+    assert(
+      interviewResult.locked.length <= interviewLockedLimit,
+      `${locationLabels[location.id] || location.id}: interview "${interview.prompt}" query "${interview.query}" has too many locked hits (${interviewResult.locked.length}) compared with visible hits (${interviewResult.visible.length})`
     );
     record(`现场问询：${location.title} / ${interview.prompt}`, {
       query: interview.query,
@@ -263,6 +270,43 @@ for (const location of visitLocations) {
       visibleIds: interviewResult.visible.map((doc) => doc.id),
       lockedIds: interviewResult.locked.map((doc) => doc.id),
       localVisibleIds: localVisibleFromInterview.map((doc) => doc.id)
+    });
+  }
+
+  const afterReadState = createState();
+  afterReadState.visitedLocations.add(location.id);
+  for (const docId of entryDocs) {
+    afterReadState.obtainedDocuments.add(docId);
+    afterReadState.readDocs.add(docId);
+  }
+  const followUp = visitFollowUps[location.id];
+  assert(followUp?.query, `${locationLabels[location.id] || location.id}: visit follow-up should define a query`);
+  if (followUp?.query) {
+    const followUpResult = search(afterReadState, followUp.query);
+    const localVisibleAfterRead = followUpResult.visible.filter((doc) => locationDocs.has(doc.id));
+    const entryVisibleAfterRead = followUpResult.visible.filter((doc) => entryDocs.includes(doc.id));
+    const lockedLimit = Math.max(4, followUpResult.visible.length + 2);
+    assert(
+      localVisibleAfterRead.length > 0,
+      `${locationLabels[location.id] || location.id}: after reading entry documents, follow-up query "${followUp.query}" should surface a local document`
+    );
+    assert(
+      entryVisibleAfterRead.length > 0,
+      `${locationLabels[location.id] || location.id}: after reading entry documents, follow-up query "${followUp.query}" should keep at least one entry document visible`
+    );
+    assert(
+      followUpResult.locked.length <= lockedLimit,
+      `${locationLabels[location.id] || location.id}: follow-up query "${followUp.query}" has too many locked hits (${followUpResult.locked.length}) compared with visible hits (${followUpResult.visible.length})`
+    );
+    record(`入口原件后续：${location.title}`, {
+      query: followUp.query,
+      entryDocs,
+      visible: followUpResult.visible.length,
+      locked: followUpResult.locked.length,
+      localVisible: localVisibleAfterRead.length,
+      visibleIds: followUpResult.visible.map((doc) => doc.id),
+      lockedIds: followUpResult.locked.map((doc) => doc.id),
+      localVisibleIds: localVisibleAfterRead.map((doc) => doc.id)
     });
   }
 }
@@ -288,7 +332,8 @@ function formatMarkdownReport() {
   }).format(new Date()).replaceAll("/", "-");
   const mainRows = checkpoints.filter((checkpoint) => !checkpoint.label.startsWith("走访入口："));
   const interviewRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("现场问询："));
-  const mainRouteRows = mainRows.filter((checkpoint) => !checkpoint.label.startsWith("现场问询："));
+  const documentNextRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("入口原件后续："));
+  const mainRouteRows = mainRows.filter((checkpoint) => !checkpoint.label.startsWith("现场问询：") && !checkpoint.label.startsWith("入口原件后续："));
   const visitRows = checkpoints.filter((checkpoint) => checkpoint.label.startsWith("走访入口："));
 
   return `# 搜索路线试玩复盘
@@ -302,6 +347,7 @@ function formatMarkdownReport() {
 - 状态：${errors.length ? "失败" : "通过"}
 - 主线路线检查点：${mainRouteRows.length}
 - 走访入口检查点：${visitRows.length}
+- 入口原件后续检查点：${documentNextRows.length}
 - 现场问询检查点：${interviewRows.length}
 - 错误数量：${errors.length}
 
@@ -328,6 +374,12 @@ ${mainRouteRows.map((checkpoint) => {
 | 入口 | 默认搜索词 | 本地资料命中 | 可见资料 |
 | --- | --- | ---: | --- |
 ${visitRows.map((checkpoint) => `| ${checkpoint.label.replace("走访入口：", "")} | ${checkpoint.query} | ${checkpoint.localVisible} | ${formatDocList(checkpoint.localVisibleIds)} |`).join("\n")}
+
+## 入口原件后续
+
+| 入口 | 下一步搜索词 | 本地资料命中 | 可见资料数 | 锁定资料数 | 可见资料 |
+| --- | --- | ---: | ---: | ---: | --- |
+${documentNextRows.map((checkpoint) => `| ${checkpoint.label.replace("入口原件后续：", "")} | ${checkpoint.query} | ${checkpoint.localVisible} | ${checkpoint.visible} | ${checkpoint.locked} | ${formatDocList(checkpoint.visibleIds)} |`).join("\n")}
 
 ## 现场问询入口
 

@@ -1659,7 +1659,7 @@
         "prompt": "照片背注该怎么查？",
         "person": "何国生",
         "answer": "先按罗月珍和建宁两个名字查索引，再看背注时间是否早于宗家公开资料口径。",
-        "query": "建宁",
+        "query": "背注",
         "firstDoc": "doc_photo_back"
       }
     ],
@@ -1669,7 +1669,7 @@
         "prompt": "血样来源可靠吗？",
         "person": "周美英",
         "answer": "医院只保留采样登记和封存编号，亲缘结论必须回到 DNA 报告本身核对。",
-        "query": "DNA",
+        "query": "亲缘比对",
         "firstDoc": "doc_hospital_blood"
       },
       {
@@ -1687,7 +1687,7 @@
         "prompt": "学籍里最关键的字段？",
         "person": "黄雅玲",
         "answer": "监护人、住址和家访备注最关键；它们能把陈嘉东和陈静的生活关系串起来。",
-        "query": "陈嘉东",
+        "query": "学生信息",
         "firstDoc": "doc_jiadong_school"
       },
       {
@@ -1705,7 +1705,7 @@
         "prompt": "KTV 线索先查什么？",
         "person": "马丽华",
         "answer": "先查租赁和复工检查表，确认陈静返乡经营的时间，再回头看妇联帮扶材料。",
-        "query": "陈静",
+        "query": "个体工商",
         "firstDoc": "doc_ktv_license"
       },
       {
@@ -1713,7 +1713,7 @@
         "prompt": "邻里走访能定案吗？",
         "person": "马丽华",
         "answer": "邻里口述只能解释生活轨迹，定案仍要靠登记、病案和亲缘材料。",
-        "query": "KTV",
+        "query": "经营场所",
         "firstDoc": "doc_ktv_license"
       }
     ],
@@ -1723,7 +1723,7 @@
         "prompt": "信托材料能查到哪一步？",
         "person": "魏雪琴",
         "answer": "信托入口只说明受益人审查范围，不会一次性开放集团股权、尽调和董事会旧档。",
-        "query": "信托",
+        "query": "香港家族信托",
         "firstDoc": "doc_trust_clause"
       },
       {
@@ -1741,7 +1741,7 @@
         "prompt": "旧客运线为什么要查？",
         "person": "钱树林",
         "answer": "它只证明两地长期往来方便，能解释人际路径，但不能单独证明亲缘。",
-        "query": "黔中",
+        "query": "旧客运线",
         "firstDoc": "doc_yunqian_bus_line"
       },
       {
@@ -1752,6 +1752,377 @@
         "query": "钱树林",
         "firstDoc": "doc_yunqian_bus_line"
       }
+    ]
+  },
+  "visitLocations": [
+    {
+      "id": "archives",
+      "title": "县档案馆",
+      "query": "旧户籍",
+      "meta": "户籍 · 知青 · 旧报刊",
+      "text": "调阅迁入登记、知青名册和早年公开报道，核对旧年往来与身份登记。",
+      "contact": "何国生",
+      "interaction": "递交公证处委托函，说明需要查迁入登记和旧照片索引。",
+      "windowStart": 540,
+      "windowEnd": 990,
+      "entryCutoff": 900,
+      "duration": 90,
+      "coordinates": {
+        "x": 2.2,
+        "y": 1.9,
+        "label": "县档案馆"
+      },
+      "contactPersonIds": [
+        "he_guosheng"
+      ],
+      "documentIds": [
+        "doc_educated_youth",
+        "doc_photo_back",
+        "doc_luo_birth",
+        "doc_supply_roster",
+        "doc_midwife_register",
+        "doc_supply_advance",
+        "doc_archive_request_log"
+      ],
+      "entryDocumentIds": [
+        "doc_educated_youth",
+        "doc_photo_back",
+        "doc_luo_birth"
+      ],
+      "followUp": {
+        "obtained": "先读照片背注和旧户籍，再回资料库搜“罗建宁”，把罗月珍与孩子的档案链连起来。",
+        "missed": "档案馆闭窗后不要空等，先转去云山至黔中旧线核对交通与邮电材料，次日再补办旧户籍。",
+        "query": "罗建宁",
+        "ask": "何国生"
+      }
+    },
+    {
+      "id": "hospital",
+      "title": "县医院",
+      "query": "血样",
+      "meta": "血样 · 出生 · 病历",
+      "text": "复核出生记录、留存血样和亲缘比对来源，确认材料来源是否可靠。",
+      "contact": "周美英",
+      "interaction": "请退休助产员核对登记簿影印件，再到病案窗口补登记。",
+      "windowStart": 540,
+      "windowEnd": 960,
+      "entryCutoff": 870,
+      "duration": 80,
+      "coordinates": {
+        "x": 3.7,
+        "y": 1.3,
+        "label": "县医院"
+      },
+      "contactPersonIds": [
+        "zhou_meiying"
+      ],
+      "documentIds": [
+        "doc_dna_record",
+        "doc_hospital_blood",
+        "doc_chen_birth",
+        "doc_midwife_register"
+      ],
+      "entryDocumentIds": [
+        "doc_hospital_blood"
+      ],
+      "followUp": {
+        "obtained": "先读血样留存单，再搜“DNA”，把亲缘比对记录和医院样本来源并排核对。",
+        "missed": "医院病案窗口错过后，先去县一中或唱响 KTV 取得陈嘉东与陈静的身份入口，再次日补血样。",
+        "query": "DNA",
+        "ask": "周美英"
+      }
+    },
+    {
+      "id": "school",
+      "title": "县一中",
+      "query": "县一中",
+      "meta": "学籍 · 家访 · 未成年人",
+      "text": "查验学籍、班主任家访和监护人信息，核实未成年人身份材料。",
+      "contact": "黄雅玲",
+      "interaction": "等班主任课间空档，出示委托函后核对学生信息表。",
+      "windowStart": 840,
+      "windowEnd": 1020,
+      "entryCutoff": 960,
+      "duration": 70,
+      "coordinates": {
+        "x": 5.1,
+        "y": 2.6,
+        "label": "县一中"
+      },
+      "contactPersonIds": [
+        "huang_yaling"
+      ],
+      "documentIds": [
+        "doc_jiadong_school",
+        "doc_teacher_visit",
+        "doc_scholarship_notice",
+        "doc_school_forum"
+      ],
+      "entryDocumentIds": [
+        "doc_school_forum",
+        "doc_jiadong_school"
+      ],
+      "followUp": {
+        "obtained": "先读学生信息表和家访记录，再搜“陈嘉东”，确认监护人与学籍材料是否一致。",
+        "missed": "县一中放学后窗口收档，先转去唱响 KTV 查陈静经营线，次日午后再回学校补学籍。",
+        "query": "陈嘉东",
+        "ask": "黄雅玲"
+      }
+    },
+    {
+      "id": "ktv",
+      "title": "唱响 KTV 后巷",
+      "query": "KTV",
+      "meta": "租赁 · 社区 · 复工检查",
+      "text": "核对返乡经营登记、租住人口记录和社区走访材料。",
+      "contact": "马丽华",
+      "interaction": "通过社区主任核对租住人口和复工检查留痕。",
+      "windowStart": 660,
+      "windowEnd": 1320,
+      "entryCutoff": 1260,
+      "duration": 60,
+      "coordinates": {
+        "x": 2.9,
+        "y": 3.5,
+        "label": "唱响 KTV"
+      },
+      "contactPersonIds": [
+        "ma_lihua"
+      ],
+      "documentIds": [
+        "doc_women_fed",
+        "doc_blog_chenjing",
+        "doc_tiktok_chenjing",
+        "doc_gossip_wrong_mother",
+        "doc_ktv_license",
+        "doc_talent_window",
+        "doc_ktv_lease_archive",
+        "doc_neighborhood_visit",
+        "doc_ktv_reopen_check"
+      ],
+      "entryDocumentIds": [
+        "doc_ktv_license",
+        "doc_women_fed"
+      ],
+      "followUp": {
+        "obtained": "先读妇联帮扶和 KTV 登记，再搜“陈静”，把返乡经营、档案挂靠和母女线索分开。",
+        "missed": "KTV 夜间仍可办理，若错过就先回资料库整理陈静相关材料，次日上午补社区记录。",
+        "query": "陈静",
+        "ask": "马丽华"
+      }
+    },
+    {
+      "id": "group",
+      "title": "世昌集团",
+      "query": "信托",
+      "meta": "股权 · 董事会 · 信托",
+      "text": "区分公司控制权、公开子女口径和家族信托受益人审查。",
+      "contact": "魏雪琴 / 方仁杰",
+      "interaction": "先约集团法务魏雪琴，必要时再向改制会计方仁杰追问旧股权材料。",
+      "windowStart": 570,
+      "windowEnd": 1020,
+      "entryCutoff": 930,
+      "duration": 75,
+      "coordinates": {
+        "x": 1.4,
+        "y": 0.8,
+        "label": "世昌集团"
+      },
+      "contactPersonIds": [
+        "wei_xueqin",
+        "fang_renjie"
+      ],
+      "documentIds": [
+        "doc_trust_clause",
+        "doc_notary_meeting",
+        "doc_estate_law_note",
+        "doc_equity_draft_2005",
+        "doc_board_handover_2015",
+        "doc_dinghui_due_diligence",
+        "doc_sibling_meeting_2020",
+        "doc_jianhong_pr_plan",
+        "doc_family_meeting",
+        "doc_gossip_li_tianci",
+        "doc_gossip_mingjun"
+      ],
+      "entryDocumentIds": [
+        "doc_trust_clause"
+      ],
+      "followUp": {
+        "obtained": "先读信托条款，再搜“信托”，只沿继承规则小链查公证与司法材料，不把集团资料整包展开。",
+        "missed": "集团法务窗口过点后，先查公开宗家和县档案馆旧档，次日上午再补信托入口材料。",
+        "query": "信托",
+        "ask": "魏雪琴 / 方仁杰"
+      }
+    },
+    {
+      "id": "yunqian",
+      "title": "云山至黔中旧线",
+      "query": "黔中",
+      "meta": "客运 · 邮电 · 传闻",
+      "text": "核对两地长期往来的交通背景，排除司机认父等低可信传闻。",
+      "contact": "钱树林",
+      "interaction": "在旧线客运点核对车队口述和线路备案，不把传闻当强证据。",
+      "windowStart": 600,
+      "windowEnd": 1050,
+      "entryCutoff": 960,
+      "duration": 95,
+      "coordinates": {
+        "x": 6.3,
+        "y": 4.2,
+        "label": "云山至黔中旧线"
+      },
+      "contactPersonIds": [
+        "qian_shulin"
+      ],
+      "documentIds": [
+        "doc_yunqian_bus_line",
+        "doc_old_postcard",
+        "doc_classmate_luo",
+        "doc_false_qian",
+        "doc_false_peng",
+        "doc_li_guilan_letter",
+        "doc_jianli_old_letters",
+        "doc_remittance_stub"
+      ],
+      "entryDocumentIds": [
+        "doc_yunqian_bus_line",
+        "doc_old_postcard"
+      ],
+      "followUp": {
+        "obtained": "先读旧线备案和明信片残片，再搜“黔中”，区分交通背景与钱树林传闻。",
+        "missed": "旧线客运点收摊后，先回档案馆或资料库核对罗月珍，次日再补邮电与车队口述。",
+        "query": "黔中",
+        "ask": "钱树林"
+      }
+    }
+  ],
+  "documentContactPeople": {
+    "doc_trust_clause": [
+      "wei_xueqin"
+    ],
+    "doc_notary_meeting": [
+      "wei_xueqin"
+    ],
+    "doc_estate_law_note": [
+      "wei_xueqin"
+    ],
+    "doc_equity_draft_2005": [
+      "fang_renjie"
+    ],
+    "doc_board_handover_2015": [
+      "fang_renjie"
+    ],
+    "doc_dinghui_due_diligence": [
+      "fang_renjie"
+    ],
+    "doc_sibling_meeting_2020": [
+      "wei_xueqin"
+    ],
+    "doc_jianhong_pr_plan": [
+      "wei_xueqin"
+    ],
+    "doc_family_meeting": [
+      "wei_xueqin"
+    ],
+    "doc_gossip_li_tianci": [
+      "wei_xueqin"
+    ],
+    "doc_gossip_mingjun": [
+      "wei_xueqin"
+    ],
+    "doc_educated_youth": [
+      "he_guosheng"
+    ],
+    "doc_photo_back": [
+      "he_guosheng"
+    ],
+    "doc_luo_birth": [
+      "he_guosheng"
+    ],
+    "doc_supply_roster": [
+      "he_guosheng"
+    ],
+    "doc_midwife_register": [
+      "zhou_meiying"
+    ],
+    "doc_supply_advance": [
+      "he_guosheng"
+    ],
+    "doc_archive_request_log": [
+      "he_guosheng"
+    ],
+    "doc_dna_record": [
+      "zhou_meiying"
+    ],
+    "doc_hospital_blood": [
+      "zhou_meiying"
+    ],
+    "doc_chen_birth": [
+      "zhou_meiying"
+    ],
+    "doc_jiadong_school": [
+      "huang_yaling"
+    ],
+    "doc_teacher_visit": [
+      "huang_yaling"
+    ],
+    "doc_scholarship_notice": [
+      "huang_yaling"
+    ],
+    "doc_school_forum": [
+      "huang_yaling"
+    ],
+    "doc_women_fed": [
+      "ma_lihua"
+    ],
+    "doc_blog_chenjing": [
+      "ma_lihua"
+    ],
+    "doc_tiktok_chenjing": [
+      "ma_lihua"
+    ],
+    "doc_gossip_wrong_mother": [
+      "ma_lihua"
+    ],
+    "doc_ktv_license": [
+      "ma_lihua"
+    ],
+    "doc_talent_window": [
+      "ma_lihua"
+    ],
+    "doc_ktv_lease_archive": [
+      "ma_lihua"
+    ],
+    "doc_neighborhood_visit": [
+      "ma_lihua"
+    ],
+    "doc_ktv_reopen_check": [
+      "ma_lihua"
+    ],
+    "doc_yunqian_bus_line": [
+      "qian_shulin"
+    ],
+    "doc_old_postcard": [
+      "qian_shulin"
+    ],
+    "doc_classmate_luo": [
+      "qian_shulin"
+    ],
+    "doc_false_qian": [
+      "qian_shulin"
+    ],
+    "doc_false_peng": [
+      "qian_shulin"
+    ],
+    "doc_li_guilan_letter": [
+      "qian_shulin"
+    ],
+    "doc_jianli_old_letters": [
+      "qian_shulin"
+    ],
+    "doc_remittance_stub": [
+      "qian_shulin"
     ]
   }
 }

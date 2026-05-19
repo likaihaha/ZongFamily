@@ -798,6 +798,303 @@ const locationLabels = {
 
 const updateLogs = [
   {
+    date: "2026-05-19",
+    title: "真人试玩结果回收模板",
+    changes: [
+      "新增真人试玩结果回收模板，用于记录玩家原话、停顿位置、搜索词、回查入口理解和修改建议",
+      "新增校验脚本确认结果模板持续覆盖更多回查、新问询入口、先看材料、锁定提示和 2 分钟判定",
+      "该校验已接入 npm.cmd run validate，让真人反馈能稳定转成后续开发任务"
+    ],
+    checks: [
+      "node --check tools\\validate_manual_playtest_results.mjs passed",
+      "npm.cmd run check:manual-results passed",
+      "npm.cmd run validate passed"
+    ]
+  },
+  {
+    date: "2026-05-19",
+    title: "真人试玩执行包",
+    changes: [
+      "新增可打印的真人试玩执行包，把路线、观察点、记录表、通过标准和结论选项集中在一页",
+      "新增校验脚本确认试玩包持续覆盖更多回查、新问询入口、先看材料、锁定提示和 2 分钟通过标准",
+      "该校验已接入 npm.cmd run validate，避免后续文档整理时丢失真人试玩关键观察项"
+    ],
+    checks: [
+      "node --check tools\\validate_manual_playtest_packet.mjs passed",
+      "npm.cmd run check:manual-packet passed",
+      "npm.cmd run validate passed"
+    ]
+  },
+  {
+    date: "2026-05-19",
+    title: "可玩表面守门校验",
+    changes: [
+      "新增工具校验资料库、阅读、家谱、证据箱、备忘录、设置、本地存档、最终提交和语音按钮仍在页面上",
+      "校验脚本会确认核心渲染函数、隐藏试玩模式、本地存档键和运行时音频资源没有被误删",
+      "该校验已接入 npm.cmd run validate，后续 UI 精简时会先保护完整可玩闭环"
+    ],
+    checks: [
+      "node --check tools\\validate_playable_surface.mjs passed",
+      "npm.cmd run check:surface passed",
+      "npm.cmd run validate passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "回查类型提示",
+    changes: [
+      "调查备忘录的“更多回查”首次展开时，会把现场问询回查标成“新问询入口”",
+      "未确认的新批次继续自动展开并显示一次性提示，确认后回到普通“有新入口”状态",
+      "普通试玩新增断言，确认首个和第二个问询批次都能暴露具体回查类型"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "回查批次上下文",
+    changes: [
+      "调查备忘录的“更多回查”现在会把地点、问询项和先看材料纳入批次判断",
+      "玩家确认过一个问询回查后，新的现场问询仍会作为新批次自动展开并显示一次性提示",
+      "普通试玩新增断言，确认第二个问询回查不会被旧的已看状态吞掉"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "更多回查首次提示",
+    changes: [
+      "调查备忘录的“更多回查”首次自动展开时，会显示一次性“首次展开”状态",
+      "玩家点击折叠区或其中任务后，提示随回查批次一起记为已看，后续不再反复出现",
+      "普通试玩新增断言，确认首次提示出现、确认后消失，且不抢占核心教学高亮"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "更多回查一次展开",
+    changes: [
+      "调查备忘录会识别新的回查批次，首次出现时自动展开“更多回查”",
+      "玩家关闭折叠区或点击其中任务后，会记住这一批次，后续不反复展开打扰",
+      "普通试玩新增断言，确认未读批次会展开、确认后恢复折叠且任务仍保留"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "更多回查状态提示",
+    changes: [
+      "调查备忘录的“更多回查”折叠区新增 pending / clear 状态标记",
+      "存在待回查入口时，折叠标题显示“有新入口”短状态，避免玩家只看到数量而忽略含义",
+      "普通试玩新增断言，确认状态标记和短状态文案存在，且不会抢占核心教学高亮"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "更多回查数量提示",
+    changes: [
+      "调查备忘录的“更多回查”折叠标题新增待回查数量徽标",
+      "徽标使用更明确的待办语义和轻提示色，降低折叠后完全漏看的风险",
+      "普通试玩新增断言，确认回查折叠区暴露 data-task-review-count 和待回查文案"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "备忘录更多回查",
+    changes: [
+      "调查备忘录会把动态问询回查任务折叠到教学组底部的“更多回查”区域",
+      "回查任务仍保留入口词和问询来源上下文，但不再进入主待办列表竞争当前高亮",
+      "普通试玩新增断言，确认回查按钮在折叠区内且收藏证据仍是下一步核心教学动作"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "备忘录回查降噪",
+    changes: [
+      "备忘录中的动态问询回查任务仍会保留入口，但不再优先抢占教学组当前任务高亮",
+      "玩家读过任意资料后，教学组会优先提示收藏第一份证据，问询回查作为补充入口保留",
+      "普通试玩新增断言，确认回查任务可用但不会挤掉下一步核心教学动作"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "先看材料提示收敛",
+    changes: [
+      "侧栏阶段提示会识别当前页已有的先看材料入口，避免走访页置顶提醒和侧栏直达同时抢同一动作",
+      "玩家停留在走访页时，侧栏只提示查看顶部置顶；离开走访页后仍保留材料直达能力",
+      "普通试玩新增断言，确认置顶优先和离开走访页后的侧栏直达两种状态"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "走访页材料置顶提醒",
+    changes: [
+      "地点已取件但入口材料尚未阅读时，走访详情顶部会持续显示先看材料提醒",
+      "置顶提醒直接打开第一份未读入口原件，并在材料读过后自动消失",
+      "普通试玩新增断言，确认置顶提醒出现和读后清除两种状态"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "阶段提示材料直达",
+    changes: [
+      "问询对应的入口材料已入卷后，侧栏阶段按钮会直接打开先看原件",
+      "入口材料尚未取得时仍保留入口词检索回查，避免跳到不可读材料",
+      "普通试玩新增断言，确认阶段提示直达会选中 firstDoc 并标记已读"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "阶段提示问询回查",
+    changes: [
+      "侧栏阶段提示会在已问询但未读先看材料时临时切到“回看问询入口”",
+      "阶段按钮复用问询入口词并保留现场问询来源，避免离开走访页后断线",
+      "普通试玩新增断言，确认阶段提示回查不会丢失 searchContext"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "备忘录问询入口回查",
+    changes: [
+      "调查备忘录新增“回看问询入口”动态任务，只在已问询但尚未阅读先看材料时出现",
+      "任务按钮会带着现场问询来源回到资料库，保留入口词检索回显和先看材料提示",
+      "普通试玩新增断言，确认从备忘录回查问询入口不会丢失 searchContext"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "问询入口检索回显",
+    changes: [
+      "从现场问询进入资料库时保留问询来源，搜索结果顶部会标明这是入口词检索",
+      "入口词检索回显区固定对应先看材料，并可直接打开原件继续阅读",
+      "普通试玩新增断言，确认问询入口检索、回显材料和打开材料按钮没有断链"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "问询入口词标识",
+    changes: [
+      "现场问询和日程回看中的搜索按钮改为“用入口词检索”，明确它先定位入口原件",
+      "问询搜索按钮新增 first-doc 语义标记，避免后续 UI 调整退回普通搜索按钮",
+      "普通试玩新增断言，覆盖问询回答区和日程回看区的入口词标识"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "node tools\\validate_search_paths.mjs passed",
+      "npm.cmd run validate passed",
+      "npm.cmd run playtest passed",
+      "npm.cmd run smoke passed"
+    ]
+  },
+  {
+    date: "2026-05-18",
+    title: "现场问询搜索收敛",
+    changes: [
+      "现场问询搜索词从宽泛人物词收窄到入口原件词，减少锁定资料刷屏",
+      "档案馆、医院、学校、KTV、集团和旧线问询仍会命中对应 firstDoc",
+      "搜索路线复盘新增现场问询锁定命中上限，防止后续内容扩写再次把问询入口变宽"
+    ],
+    checks: [
+      "node --check game\\app.js passed",
+      "node --check tools\\validate_search_paths.mjs passed",
+      "npm.cmd run validate passed"
+    ]
+  },
+  {
+    date: "2026-05-17",
+    title: "走访矩阵内容包同步",
+    changes: [
+      "内容包同步现在写入 6 个走访地点的坐标、办理窗口、经手人、地点资料和入口材料",
+      "内容包新增资料经手人映射和走访 followUp，避免玩法矩阵只存在于运行时代码",
+      "内容包校验会检查走访地点、现场问询 firstDoc、入口材料和经手人映射是否漂移"
+    ],
+    checks: [
+      "node --check tools\\sync_case_bundle_from_app.mjs passed",
+      "node --check tools\\validate_content_bundle.mjs passed",
+      "node --check tools\\validate_content_sync.mjs passed",
+      "npm.cmd run validate passed"
+    ]
+  },
+  {
     date: "2026-05-17",
     title: "入口原件下一步矩阵回归",
     changes: [
@@ -1410,7 +1707,9 @@ const updateLogs = [
 ];
 
 const state = {
+  activeView: "visit",
   query: "",
+  searchContext: null,
   filter: "all",
   selectedDoc: null,
   readDocs: new Set(),
@@ -1431,7 +1730,8 @@ const state = {
   sound: true,
   ambient: false,
   notes: "",
-  taskStates: {}
+  taskStates: {},
+  reviewSeenKey: ""
 };
 
 const phaseGoals = [
@@ -1582,6 +1882,27 @@ const notebookTaskGroups = [
         done: () => missedVisitLocations().length === 0
       },
       {
+        id: "tutorial_visit_question_entry",
+        title: "回看问询入口",
+        detail: () => {
+          const context = pendingVisitQuestionContext();
+          if (!context) return "问询回答会保留入口词和先看材料，便于离开走访页后回查。";
+          const location = locationById(context.locationId);
+          const question = visitQuestionById(context.locationId, context.questionId);
+          return `${location?.title || "走访地点"}的问询还没有读先看材料，先用入口词回到资料库。`;
+        },
+        actionLabel: "回到入口词",
+        view: "search",
+        query: () => pendingVisitQuestionContext()?.query || "",
+        reviewKey: () => {
+          const context = pendingVisitQuestionContext();
+          if (!context) return "";
+          return `${context.locationId}:${context.questionId}:${context.firstDoc}`;
+        },
+        searchContext: () => pendingVisitQuestionContext(),
+        done: () => !pendingVisitQuestionContext()
+      },
+      {
         id: "tutorial_collect",
         title: "收藏第一份证据",
         detail: "打开资料后点击“加入证据箱”，让它可用于家谱绑定。",
@@ -1609,7 +1930,9 @@ const notebookTaskGroups = [
   }
 ];
 
-const notebookTaskIds = new Set(notebookTaskGroups.flatMap((group) => group.items.map((item) => item.id)));
+const notebookTasks = notebookTaskGroups.flatMap((group) => group.items);
+const notebookTaskIds = new Set(notebookTasks.map((item) => item.id));
+const notebookTaskById = new Map(notebookTasks.map((item) => [item.id, item]));
 
 const visitLocations = [
   {
@@ -1752,7 +2075,7 @@ const visitInterviews = {
       prompt: "照片背注该怎么查？",
       person: "何国生",
       answer: "先按罗月珍和建宁两个名字查索引，再看背注时间是否早于宗家公开资料口径。",
-      query: "建宁",
+      query: "背注",
       firstDoc: "doc_photo_back"
     }
   ],
@@ -1762,7 +2085,7 @@ const visitInterviews = {
       prompt: "血样来源可靠吗？",
       person: "周美英",
       answer: "医院只保留采样登记和封存编号，亲缘结论必须回到 DNA 报告本身核对。",
-      query: "DNA",
+      query: "亲缘比对",
       firstDoc: "doc_hospital_blood"
     },
     {
@@ -1780,7 +2103,7 @@ const visitInterviews = {
       prompt: "学籍里最关键的字段？",
       person: "黄雅玲",
       answer: "监护人、住址和家访备注最关键；它们能把陈嘉东和陈静的生活关系串起来。",
-      query: "陈嘉东",
+      query: "学生信息",
       firstDoc: "doc_jiadong_school"
     },
     {
@@ -1798,7 +2121,7 @@ const visitInterviews = {
       prompt: "KTV 线索先查什么？",
       person: "马丽华",
       answer: "先查租赁和复工检查表，确认陈静返乡经营的时间，再回头看妇联帮扶材料。",
-      query: "陈静",
+      query: "个体工商",
       firstDoc: "doc_ktv_license"
     },
     {
@@ -1806,7 +2129,7 @@ const visitInterviews = {
       prompt: "邻里走访能定案吗？",
       person: "马丽华",
       answer: "邻里口述只能解释生活轨迹，定案仍要靠登记、病案和亲缘材料。",
-      query: "KTV",
+      query: "经营场所",
       firstDoc: "doc_ktv_license"
     }
   ],
@@ -1816,7 +2139,7 @@ const visitInterviews = {
       prompt: "信托材料能查到哪一步？",
       person: "魏雪琴",
       answer: "信托入口只说明受益人审查范围，不会一次性开放集团股权、尽调和董事会旧档。",
-      query: "信托",
+      query: "香港家族信托",
       firstDoc: "doc_trust_clause"
     },
     {
@@ -1834,7 +2157,7 @@ const visitInterviews = {
       prompt: "旧客运线为什么要查？",
       person: "钱树林",
       answer: "它只证明两地长期往来方便，能解释人际路径，但不能单独证明亲缘。",
-      query: "黔中",
+      query: "旧客运线",
       firstDoc: "doc_yunqian_bus_line"
     },
     {
@@ -1847,6 +2170,94 @@ const visitInterviews = {
     }
   ]
 };
+
+function visitQuestionById(locationId, questionId) {
+  return (visitInterviews[locationId] || []).find((question) => question.id === questionId) || null;
+}
+
+function pendingVisitQuestionContext() {
+  const contexts = [];
+  for (const [locationId, questionIds] of Object.entries(state.visitQuestionLog)) {
+    for (const questionId of questionIds) {
+      const question = visitQuestionById(locationId, questionId);
+      if (!question || state.readDocs.has(question.firstDoc)) continue;
+      contexts.push({
+        type: "visit-question",
+        locationId,
+        questionId,
+        query: question.query,
+        firstDoc: question.firstDoc
+      });
+    }
+  }
+  return contexts[contexts.length - 1] || null;
+}
+
+function activeViewHandlesVisitQuestion(context) {
+  if (!context) return null;
+  const location = locationById(context.locationId);
+  const question = visitQuestionById(context.locationId, context.questionId);
+  if (state.activeView === "visit" && state.activeVisitId === context.locationId && unreadEntryDocumentIds(context.locationId).includes(context.firstDoc)) {
+    return {
+      title: "先看走访置顶材料",
+      prompt: `${location?.title || "走访地点"}顶部已经置顶“${documentTitleById(context.firstDoc)}”，先打开这份入口原件。`,
+      actionLabel: "查看置顶提醒",
+      view: "visit",
+      done: () => false
+    };
+  }
+  if (state.activeView === "notes") {
+    return {
+      title: "按备忘录回查",
+      prompt: `${location?.title || "走访地点"}的${question?.prompt || "现场问询"}已列入备忘录，按任务按钮回到入口材料。`,
+      actionLabel: "查看备忘录任务",
+      view: "notes",
+      done: () => false
+    };
+  }
+  return null;
+}
+
+function pendingVisitQuestionPhaseGoal() {
+  const context = pendingVisitQuestionContext();
+  if (!context) return null;
+  const handledHere = activeViewHandlesVisitQuestion(context);
+  if (handledHere) return handledHere;
+  const location = locationById(context.locationId);
+  const question = visitQuestionById(context.locationId, context.questionId);
+  return {
+    title: "回看问询入口",
+    prompt: `${location?.title || "走访地点"}的${question?.prompt || "现场问询"}还没读先看材料，先回资料库打开入口原件。`,
+    actionLabel: "回看先看材料",
+    query: context.query,
+    searchContext: context,
+    view: "search",
+    done: () => false
+  };
+}
+
+function normalizeSearchContext(context, query = state.query) {
+  if (!context || context.type !== "visit-question") return null;
+  const question = visitQuestionById(context.locationId, context.questionId);
+  if (!question || question.query !== query || question.firstDoc !== context.firstDoc) return null;
+  return {
+    type: "visit-question",
+    locationId: context.locationId,
+    questionId: context.questionId,
+    query: question.query,
+    firstDoc: question.firstDoc
+  };
+}
+
+function clearSearchContext() {
+  state.searchContext = null;
+}
+
+function setSearchQuery(query, context = null) {
+  state.query = query || "";
+  state.filter = "all";
+  state.searchContext = normalizeSearchContext(context, state.query);
+}
 
 const personGroups = [
   {
@@ -1933,6 +2344,7 @@ function $(id) {
 function serializeState() {
   return {
     query: state.query,
+    searchContext: state.searchContext,
     filter: state.filter,
     selectedDoc: state.selectedDoc,
     readDocs: [...state.readDocs],
@@ -1953,7 +2365,8 @@ function serializeState() {
     sound: state.sound,
     ambient: state.ambient,
     notes: state.notes,
-    taskStates: state.taskStates
+    taskStates: state.taskStates,
+    reviewSeenKey: state.reviewSeenKey
   };
 }
 
@@ -1968,6 +2381,7 @@ function loadState() {
   try {
     const parsed = JSON.parse(raw);
     state.query = parsed.query || "";
+    state.searchContext = normalizeSearchContext(parsed.searchContext, state.query);
     state.filter = purposeFilterIds.has(parsed.filter) ? parsed.filter : "all";
     state.selectedDoc = parsed.selectedDoc || null;
     state.readDocs = new Set(parsed.readDocs || []);
@@ -1997,6 +2411,7 @@ function loadState() {
     state.taskStates = Object.fromEntries(
       Object.entries(parsed.taskStates || {}).filter(([id, value]) => notebookTaskIds.has(id) && ["pinned", "ignored"].includes(value))
     );
+    state.reviewSeenKey = typeof parsed.reviewSeenKey === "string" ? parsed.reviewSeenKey : "";
   } catch {
     localStorage.removeItem("yunshan-save");
   }
@@ -2603,6 +3018,35 @@ function renderVisitPrimaryDocumentAction(ids) {
   `;
 }
 
+function unreadEntryDocumentIds(locationId) {
+  const visit = state.locationVisits[locationId];
+  if (visit?.status !== "obtained") return [];
+  return (locationEntryDocumentIds[locationId] || []).filter((id) => {
+    const doc = documents.find((item) => item.id === id);
+    return doc && isDocumentUnlocked(doc) && !state.readDocs.has(id);
+  });
+}
+
+function renderVisitPinnedDocumentReminder(location) {
+  const unreadIds = unreadEntryDocumentIds(location.id);
+  if (!unreadIds.length) return "";
+  const firstId = unreadIds[0];
+  const remaining = unreadIds.length > 1 ? `，另有 ${unreadIds.length - 1} 份入口材料待核对` : "";
+  return `
+    <div class="visit-pinned-doc" data-visit-pinned-doc="${escapeHtml(location.id)}">
+      <span>先看材料</span>
+      <strong>${escapeHtml(documentTitleById(firstId))}</strong>
+      <p>该地点已取件，先核对入口原件再继续扩展搜索${remaining}。</p>
+      <button
+        type="button"
+        data-visit-pinned-first-doc="${escapeHtml(firstId)}"
+        data-visit-open-doc="${escapeHtml(firstId)}">
+        打开材料
+      </button>
+    </div>
+  `;
+}
+
 function renderVisitQuestionFirstDoc(question) {
   if (!question.firstDoc) return "";
   const doc = documents.find((item) => item.id === question.firstDoc);
@@ -2617,6 +3061,21 @@ function renderVisitQuestionFirstDoc(question) {
         ? `<button type="button" data-visit-open-doc="${docId}">打开材料</button>`
         : `<small>办理取件后入卷</small>`}
     </div>
+  `;
+}
+
+function renderVisitQuestionSearchAction(question, locationId) {
+  return `
+    <button
+      type="button"
+      class="ghost-btn"
+      data-visit-search="${escapeHtml(question.query)}"
+      data-visit-search-context="first-doc"
+      data-visit-search-location="${escapeHtml(locationId)}"
+      data-visit-search-question="${escapeHtml(question.id)}"
+      data-visit-search-first-doc="${escapeHtml(question.firstDoc)}">
+      用入口词检索“${escapeHtml(question.query)}”
+    </button>
   `;
 }
 
@@ -2647,7 +3106,7 @@ function renderVisitInterview(location) {
           <span>${question.person}</span>
           <p>${question.answer}</p>
           ${renderVisitQuestionFirstDoc(question)}
-          <button type="button" class="ghost-btn" data-visit-search="${question.query}">搜索“${question.query}”</button>
+          ${renderVisitQuestionSearchAction(question, location.id)}
         </blockquote>
       `).join("") || `<p class="visit-interview-empty">问询不推进时间。先选择要追问的事项，再决定是否回资料库检索。</p>`}
     </div>
@@ -2694,7 +3153,7 @@ function renderVisitQuestionArchive(entries) {
             <span>${location.title} · ${question.person}</span>
             <p>${question.answer}</p>
             ${renderVisitQuestionFirstDoc(question)}
-            <button type="button" class="ghost-btn" data-visit-search="${question.query}">搜索“${question.query}”</button>
+            ${renderVisitQuestionSearchAction(question, location.id)}
           </article>
         `).join("")}
       </div>
@@ -2759,6 +3218,31 @@ function renderVisitLog() {
       </ol>
       ${questionArchive}
     </aside>
+  `;
+}
+
+function renderSearchContextCallout() {
+  const context = normalizeSearchContext(state.searchContext);
+  if (!context) return "";
+  const location = locationById(context.locationId);
+  const question = visitQuestionById(context.locationId, context.questionId);
+  const doc = documents.find((item) => item.id === context.firstDoc);
+  if (!location || !question || !doc) return "";
+  const docAvailable = isDocumentUnlocked(doc);
+  return `
+    <div
+      class="search-context-callout"
+      data-search-origin="visit-question"
+      data-search-location="${escapeHtml(location.id)}"
+      data-search-question="${escapeHtml(question.id)}"
+      data-search-first-doc="${escapeHtml(doc.id)}">
+      <span>问询入口检索</span>
+      <strong>${escapeHtml(location.title)} · ${escapeHtml(question.person)}</strong>
+      <p>先核对《${escapeHtml(doc.title)}》，再判断是否继续沿“${escapeHtml(question.query)}”扩展。</p>
+      ${docAvailable
+        ? `<button type="button" data-context-open-doc="${escapeHtml(doc.id)}">打开先看材料</button>`
+        : `<small>办理取件后入卷</small>`}
+    </div>
   `;
 }
 
@@ -2946,6 +3430,7 @@ function renderVisitDetail() {
         <p>${contactNamesForLocation(location.id) || location.contact}</p>
         <span>${location.interaction}</span>
       </div>
+      ${renderVisitPinnedDocumentReminder(location)}
       ${renderVisitInterview(location)}
       <div class="visit-progress" aria-label="走访进度 ${progress}%">
         <span style="width: ${progress}%"></span>
@@ -3017,6 +3502,7 @@ function renderResults() {
     })
     .map(({ doc }) => doc);
   const suggestedLocations = suggestedLocationsForLockedDocs(lockedMatches);
+  const searchContextCallout = renderSearchContextCallout();
   const suggestedLocationButtons = suggestedLocations.length ? `
     <div class="unlock-actions" aria-label="建议走访地点">
       ${suggestedLocations.slice(0, 3).map((location) => `
@@ -3034,7 +3520,7 @@ function renderResults() {
       <button type="button" data-unlock-view="visit">查看全部走访地点</button>
     </div>
   ` : "";
-  els.resultList.innerHTML = results.map((doc) => {
+  const resultCards = results.map((doc) => {
     const read = state.readDocs.has(doc.id) ? "is-read" : "";
     const imageData = getDocImage(doc);
     const image = imageData ? `<img class="result-thumb" src="${imageData.src}" alt="" loading="lazy">` : "";
@@ -3055,7 +3541,8 @@ function renderResults() {
         </div>
       </button>
     `;
-  }).join("") + lockedCallout || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或调查目的试试。</p></div>`;
+  }).join("");
+  els.resultList.innerHTML = searchContextCallout + resultCards + lockedCallout || `<div class="empty-state"><h3>没有找到资料</h3><p>换一个人物名、年份或调查目的试试。</p></div>`;
 }
 
 function renderDocument() {
@@ -3736,11 +4223,32 @@ function taskManualState(taskId) {
   return state.taskStates[taskId] || "";
 }
 
-function taskStatusLabel(done, current, manualState) {
+function taskStatusLabel(done, current, manualState, deferred) {
   if (done) return "已完成";
   if (manualState === "pinned") return "已锁定";
   if (manualState === "ignored") return "已忽略";
+  if (deferred) return "回查";
   return current ? "当前" : "待查";
+}
+
+function taskValue(item, field) {
+  const value = item?.[field];
+  return typeof value === "function" ? value() : value;
+}
+
+function taskSearchContext(item, query) {
+  const context = taskValue(item, "searchContext");
+  return normalizeSearchContext(context, query);
+}
+
+function taskReviewKey(item) {
+  const reviewKey = taskValue(item, "reviewKey");
+  return reviewKey ? `${item.id}:${reviewKey}` : item.id;
+}
+
+function taskReviewContextLabel(items) {
+  if (items.some((item) => item.id === "tutorial_visit_question_entry")) return "问询入口";
+  return "回查入口";
 }
 
 function isNotebookTaskAvailable(item) {
@@ -3752,9 +4260,25 @@ function isNotebookTaskAvailable(item) {
     side_zong_jianfang: () => isPersonDiscovered("chen_jing") || hasReadOrCollected(["doc_women_fed", "doc_talent_window"]),
     side_qian_rumor: () => hasObtainedOrRead(["doc_yunqian_bus_line"]) || hasReadOrCollected(["doc_false_qian", "doc_yunqian_bus_line"]),
     side_equity_trust: () => hasReadOrCollected(["doc_equity_draft_2005", "doc_board_handover_2015"]),
-    visit_missed_recovery: () => missedVisitLocations().length > 0
+    visit_missed_recovery: () => missedVisitLocations().length > 0,
+    tutorial_visit_question_entry: () => Boolean(pendingVisitQuestionContext())
   };
   return rules[item.id] ? rules[item.id]() : true;
+}
+
+function isNotebookTaskDeferred(item) {
+  const rules = {
+    tutorial_visit_question_entry: () => Boolean(pendingVisitQuestionContext())
+  };
+  return rules[item.id] ? rules[item.id]() : false;
+}
+
+function acknowledgeReviewDrawer(drawer) {
+  if (!drawer || drawer.dataset.taskReviewStatus !== "pending") return;
+  const key = drawer.dataset.taskReviewKey || "";
+  if (!key || state.reviewSeenKey === key) return;
+  state.reviewSeenKey = key;
+  saveState();
 }
 
 function renderNotebookTasks() {
@@ -3762,9 +4286,47 @@ function renderNotebookTasks() {
   els.taskList.innerHTML = notebookTaskGroups.map((group) => {
     const items = group.items.filter(isNotebookTaskAvailable);
     if (items.length === 0) return "";
+    const primaryItems = items.filter((item) => !isNotebookTaskDeferred(item));
+    const deferredItems = items.filter((item) => isNotebookTaskDeferred(item));
+    const pendingDeferredItems = deferredItems.filter((item) => !item.done());
+    const pendingDeferredCount = pendingDeferredItems.length;
+    const pendingDeferredKey = pendingDeferredItems.map(taskReviewKey).sort().join("|");
+    const reviewStatus = pendingDeferredCount > 0 ? "pending" : "clear";
+    const reviewContextLabel = pendingDeferredCount > 0 ? taskReviewContextLabel(pendingDeferredItems) : "回查入口";
+    const reviewUnseen = pendingDeferredCount > 0 && state.reviewSeenKey !== pendingDeferredKey;
+    const reviewStatusLabel = pendingDeferredCount > 0 ? (reviewUnseen ? `新${reviewContextLabel}` : "有新入口") : "已清空";
+    const reviewCueLabel = reviewUnseen ? "首次展开" : "";
+    const reviewOpenAttr = reviewUnseen ? " open" : "";
     const completed = items.filter((item) => item.done()).length;
-    const firstOpen = items.find((item) => !item.done() && taskManualState(item.id) !== "ignored")
-      || items.find((item) => !item.done());
+    const firstOpen = primaryItems.find((item) => !item.done() && taskManualState(item.id) !== "ignored")
+      || primaryItems.find((item) => !item.done());
+    const renderTaskItem = (item, deferred = false) => {
+      const done = item.done();
+      const current = !deferred && !done && item === firstOpen;
+      const manualState = taskManualState(item.id);
+      const statusLabel = taskStatusLabel(done, current, manualState, deferred);
+      const pinned = manualState === "pinned";
+      const ignored = manualState === "ignored";
+      const detail = taskValue(item, "detail");
+      const actionLabel = taskValue(item, "actionLabel");
+      const query = taskValue(item, "query");
+      const queryAttr = query ? ` data-task-query="${escapeHtml(query)}"` : "";
+      return `
+        <section class="task-item ${done ? "is-done" : ""} ${current ? "is-current" : ""} ${pinned ? "is-pinned" : ""} ${ignored ? "is-ignored" : ""} ${deferred ? "is-deferred" : ""}">
+          <div>
+            <strong><span>${item.title}</span><em>${statusLabel}</em></strong>
+            <p>${escapeHtml(detail)}</p>
+          </div>
+          <div class="task-actions">
+            <button class="task-primary" data-task-view="${item.view}" data-task-id="${item.id}"${queryAttr}>${done ? "复查" : actionLabel}</button>
+            <div class="task-state-actions" aria-label="${item.title}手动状态">
+              <button data-task-state="${item.id}" data-task-state-value="pinned" aria-pressed="${pinned}">${pinned ? "取消锁定" : "锁定"}</button>
+              <button data-task-state="${item.id}" data-task-state-value="ignored" aria-pressed="${ignored}">${ignored ? "取消忽略" : "忽略"}</button>
+            </div>
+          </div>
+        </section>
+      `;
+    };
     return `
       <article class="task-group">
         <header>
@@ -3772,31 +4334,21 @@ function renderNotebookTasks() {
           <span>${completed} / ${items.length}</span>
         </header>
         <div class="task-items">
-          ${items.map((item) => {
-            const done = item.done();
-            const current = !done && item === firstOpen;
-            const manualState = taskManualState(item.id);
-            const statusLabel = taskStatusLabel(done, current, manualState);
-            const pinned = manualState === "pinned";
-            const ignored = manualState === "ignored";
-            const queryAttr = item.query ? ` data-task-query="${item.query}"` : "";
-            return `
-              <section class="task-item ${done ? "is-done" : ""} ${current ? "is-current" : ""} ${pinned ? "is-pinned" : ""} ${ignored ? "is-ignored" : ""}">
-                <div>
-                  <strong><span>${item.title}</span><em>${statusLabel}</em></strong>
-                  <p>${item.detail}</p>
-                </div>
-                <div class="task-actions">
-                  <button class="task-primary" data-task-view="${item.view}"${queryAttr}>${done ? "复查" : item.actionLabel}</button>
-                  <div class="task-state-actions" aria-label="${item.title}手动状态">
-                    <button data-task-state="${item.id}" data-task-state-value="pinned" aria-pressed="${pinned}">${pinned ? "取消锁定" : "锁定"}</button>
-                    <button data-task-state="${item.id}" data-task-state-value="ignored" aria-pressed="${ignored}">${ignored ? "取消忽略" : "忽略"}</button>
-                  </div>
-                </div>
-              </section>
-            `;
-          }).join("")}
+          ${primaryItems.map((item) => renderTaskItem(item)).join("")}
         </div>
+        ${deferredItems.length ? `
+          <details class="task-review-drawer" data-task-review-drawer data-task-review-status="${reviewStatus}" data-task-review-context="${escapeHtml(reviewContextLabel)}" data-task-review-count="${pendingDeferredCount}" data-task-review-key="${escapeHtml(pendingDeferredKey)}" data-task-review-unseen="${reviewUnseen}"${reviewOpenAttr}>
+            <summary aria-label="更多回查，${reviewStatusLabel}，${pendingDeferredCount} 项待回查${reviewCueLabel ? `，${reviewCueLabel}` : ""}">
+              <span class="task-review-title">更多回查</span>
+              ${reviewCueLabel ? `<span class="task-review-cue">${reviewCueLabel}</span>` : ""}
+              <span class="task-review-status">${reviewStatusLabel}</span>
+              <span class="task-review-count">${pendingDeferredCount} 项待回查</span>
+            </summary>
+            <div class="task-items">
+              ${deferredItems.map((item) => renderTaskItem(item, true)).join("")}
+            </div>
+          </details>
+        ` : ""}
       </article>
     `;
   }).join("");
@@ -3875,9 +4427,19 @@ function renderCurrentGoals() {
 function renderPhaseGoal() {
   if (!els.phaseGoalBody) return;
   const completed = phaseGoals.filter((goal) => goal.done()).length;
-  const current = phaseGoals.find((goal) => !goal.done()) || phaseGoals[phaseGoals.length - 1];
+  const current = pendingVisitQuestionPhaseGoal() || phaseGoals.find((goal) => !goal.done()) || phaseGoals[phaseGoals.length - 1];
   const progress = Math.round((completed / phaseGoals.length) * 100);
-  const queryAttr = current.query ? ` data-phase-query="${current.query}"` : "";
+  const query = typeof current.query === "function" ? current.query() : current.query;
+  const searchContext = typeof current.searchContext === "function" ? current.searchContext() : current.searchContext;
+  const directDoc = searchContext?.type === "visit-question"
+    ? documents.find((doc) => doc.id === searchContext.firstDoc)
+    : null;
+  const phaseOpenDoc = directDoc && isDocumentUnlocked(directDoc) ? directDoc.id : "";
+  const queryAttr = query ? ` data-phase-query="${escapeHtml(query)}"` : "";
+  const openDocAttr = phaseOpenDoc ? ` data-phase-open-doc="${escapeHtml(phaseOpenDoc)}"` : "";
+  const contextAttr = searchContext?.type === "visit-question"
+    ? ` data-phase-context-type="visit-question" data-phase-location="${escapeHtml(searchContext.locationId)}" data-phase-question="${escapeHtml(searchContext.questionId)}" data-phase-first-doc="${escapeHtml(searchContext.firstDoc)}"`
+    : "";
   els.phaseGoalBody.innerHTML = `
     <div class="phase-step">
       <div class="phase-progress" aria-label="阶段进度 ${completed}/${phaseGoals.length}">
@@ -3885,7 +4447,7 @@ function renderPhaseGoal() {
       </div>
       <h3>${current.title}</h3>
       <p>${current.prompt}</p>
-      <button class="phase-action" data-phase-view="${current.view}"${queryAttr}>${current.actionLabel}</button>
+      <button class="phase-action" data-phase-view="${current.view}"${queryAttr}${openDocAttr}${contextAttr}>${current.actionLabel}</button>
     </div>
   `;
 }
@@ -3959,6 +4521,7 @@ function renderAll() {
 }
 
 function switchView(viewName) {
+  state.activeView = viewName;
   document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("is-active", tab.dataset.view === viewName));
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("is-active"));
   $(`${viewName}-view`).classList.add("is-active");
@@ -4083,6 +4646,7 @@ function runAutotest() {
 
 function resetProgressForHiddenTest() {
   state.query = "";
+  state.searchContext = null;
   state.filter = "all";
   state.selectedDoc = null;
   state.readDocs = new Set();
@@ -4102,6 +4666,7 @@ function resetProgressForHiddenTest() {
   state.clockMinutes = dayStartMinutes;
   state.visitQuestionLog = {};
   state.taskStates = {};
+  state.reviewSeenKey = "";
   state.reportSubmitted = false;
   localStorage.removeItem("yunshan-save");
 }
@@ -4132,6 +4697,7 @@ function runGuidedPlaytest() {
   };
   const search = (query, expectedIds, lockedIds = [], guidanceLocationIds = []) => {
     state.query = query;
+    clearSearchContext();
     state.filter = "all";
     state.selectedDoc = null;
     switchView("search");
@@ -4243,10 +4809,99 @@ function runGuidedPlaytest() {
   renderAll();
   assert(Boolean(els.visitDetail.querySelector('[data-visit-answer="trust_scope"]')), "visit interview should record asked contact answers");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-question-log="group:trust_scope"]')), "visit log should keep asked contact answers for review");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-answer="trust_scope"] [data-visit-search-context="first-doc"]')), "visit interview search should be labeled as a first-doc entry query");
+  assert(Boolean(els.visitDetail.querySelector('[data-visit-question-log="group:trust_scope"] [data-visit-search-context="first-doc"]')), "visit log search should keep the first-doc entry query label");
+  const phaseQuestionAction = els.phaseGoalBody.querySelector('[data-phase-context-type="visit-question"][data-phase-first-doc="doc_trust_clause"]');
+  assert(Boolean(phaseQuestionAction), "asked visit question should create a sidebar phase entry-search action");
+  phaseQuestionAction?.click();
+  assert(state.searchContext?.type === "visit-question", "sidebar phase entry-search action should preserve visit question context");
+  assert(Boolean(els.resultList.querySelector('[data-search-origin="visit-question"][data-search-first-doc="doc_trust_clause"]')), "sidebar phase entry-search action should render the question origin callout");
+  record("阶段提示问询入口回查", { query: state.query, firstDoc: state.searchContext?.firstDoc });
+  switchView("notes");
+  renderAll();
+  const visitQuestionTask = els.taskList.querySelector('[data-task-id="tutorial_visit_question_entry"][data-task-view="search"]');
+  assert(Boolean(visitQuestionTask), "asked visit question should create a notebook entry-search task");
+  assert(Boolean(visitQuestionTask?.closest("[data-task-review-drawer]")), "notebook entry-search task should be folded into the review drawer");
+  const initialReviewDrawer = visitQuestionTask?.closest("[data-task-review-drawer]");
+  assert(initialReviewDrawer?.dataset.taskReviewUnseen === "true", "first notebook review batch should be marked unseen");
+  assert(initialReviewDrawer?.dataset.taskReviewContext === "问询入口", "first notebook review batch should expose its concrete review type");
+  assert(Boolean(initialReviewDrawer?.open), "first notebook review batch should open automatically");
+  assert(Boolean(initialReviewDrawer?.textContent.includes("首次展开")), "first notebook review batch should label the one-time opening cue");
+  assert(Boolean(initialReviewDrawer?.textContent.includes("新问询入口")), "first notebook review batch should label unseen visit-question review entries");
+  assert(!visitQuestionTask?.closest(".task-item")?.classList.contains("is-current"), "notebook entry-search task should stay available without taking the current teaching highlight");
+  const initialReviewKey = initialReviewDrawer?.dataset.taskReviewKey || "";
+  visitQuestionTask?.click();
+  assert(state.reviewSeenKey === initialReviewKey, "clicking a review task should remember the current review batch");
+  assert(state.searchContext?.type === "visit-question", "notebook entry-search task should preserve visit question context");
+  assert(Boolean(els.resultList.querySelector('[data-search-origin="visit-question"][data-search-first-doc="doc_trust_clause"]')), "notebook entry-search task should render the question origin callout");
+  record("备忘录问询入口回查", { query: state.query, firstDoc: state.searchContext?.firstDoc });
+  state.readDocs.add("doc_official_family");
+  switchView("notes");
+  renderAll();
+  const deferredVisitQuestionTask = els.taskList.querySelector('[data-task-id="tutorial_visit_question_entry"][data-task-view="search"]');
+  assert(Boolean(deferredVisitQuestionTask), "notebook entry-search task should remain available after a first read");
+  assert(Boolean(deferredVisitQuestionTask?.closest("[data-task-review-drawer]")), "deferred notebook entry-search task should stay in the review drawer after a first read");
+  const reviewDrawer = deferredVisitQuestionTask?.closest("[data-task-review-drawer]");
+  assert(reviewDrawer?.dataset.taskReviewStatus === "pending", "review drawer should mark pending review entries");
+  assert(reviewDrawer?.dataset.taskReviewCount === "1", "review drawer should expose pending review count");
+  assert(reviewDrawer?.dataset.taskReviewUnseen === "false", "acknowledged review drawer should not stay marked unseen");
+  assert(!reviewDrawer?.open, "acknowledged review drawer should stay folded");
+  assert(!reviewDrawer?.textContent.includes("首次展开"), "acknowledged review drawer should remove the one-time opening cue");
+  assert(Boolean(reviewDrawer?.textContent.includes("有新入口")), "review drawer summary should label pending review entries as new entry points");
+  assert(Boolean(reviewDrawer?.textContent.includes("1 项待回查")), "review drawer summary should label the pending review count");
+  assert(!deferredVisitQuestionTask?.closest(".task-item")?.classList.contains("is-current"), "notebook entry-search task should not replace the next core teaching step after a first read");
+  assert(Boolean(els.taskList.querySelector('.task-item.is-current [data-task-id="tutorial_collect"]')), "collecting first evidence should remain the current teaching step after a first read");
+  recordVisitQuestion("group", "equity_noise");
+  renderAll();
+  const secondReviewTask = els.taskList.querySelector('[data-task-id="tutorial_visit_question_entry"][data-task-view="search"]');
+  const secondReviewDrawer = secondReviewTask?.closest("[data-task-review-drawer]");
+  assert(Boolean(secondReviewDrawer), "a second visit question should keep using the review drawer");
+  assert(secondReviewDrawer?.dataset.taskReviewKey !== initialReviewKey, "review drawer key should include the concrete visit question context");
+  assert(secondReviewDrawer?.dataset.taskReviewUnseen === "true", "a new visit question context should be marked unseen even after acknowledging the previous one");
+  assert(secondReviewDrawer?.dataset.taskReviewContext === "问询入口", "a new visit question context should keep the review type label");
+  assert(Boolean(secondReviewDrawer?.open), "a new visit question context should open the review drawer automatically");
+  assert(Boolean(secondReviewDrawer?.textContent.includes("首次展开")), "a new visit question context should show the one-time opening cue");
+  assert(Boolean(secondReviewDrawer?.textContent.includes("新问询入口")), "a new visit question context should show the concrete unseen review label");
+  record("备忘录回查批次更新", { previousKey: initialReviewKey, currentKey: secondReviewDrawer?.dataset.taskReviewKey });
+  record("备忘录回查折叠", { deferredTask: "tutorial_visit_question_entry", drawer: "更多回查", currentTask: "tutorial_collect" });
+  switchView("visit");
+  renderAll();
   performLocationVisit("group");
   renderAll();
   assert(Boolean(els.visitDetail.querySelector(".visit-next-step")), "obtained visit should show a next-step panel");
   assert(Boolean(els.visitDetail.querySelector('[data-visit-search="信托"]')), "obtained group visit should suggest searching trust");
+  const pinnedVisitDoc = els.visitDetail.querySelector('[data-visit-pinned-doc="group"] [data-visit-pinned-first-doc="doc_trust_clause"]');
+  assert(Boolean(pinnedVisitDoc), "obtained visit should keep an unread entry-doc reminder at the top of the visit detail");
+  record("走访页先看材料置顶", { firstDoc: pinnedVisitDoc?.dataset.visitPinnedFirstDoc });
+  const localPhaseQuestionAction = els.phaseGoalBody.querySelector('[data-phase-view="visit"]:not([data-phase-open-doc])');
+  assert(Boolean(localPhaseQuestionAction), "visit page should let the pinned entry-doc reminder own the first-doc action");
+  assert(!els.phaseGoalBody.querySelector('[data-phase-open-doc="doc_trust_clause"]'), "visit page should not duplicate the pinned entry-doc action in the sidebar");
+  record("先看材料提示收敛", { activeView: state.activeView, pinned: pinnedVisitDoc?.dataset.visitPinnedFirstDoc });
+  switchView("search");
+  renderAll();
+  const directPhaseQuestionAction = els.phaseGoalBody.querySelector('[data-phase-context-type="visit-question"][data-phase-open-doc="doc_trust_clause"]');
+  assert(Boolean(directPhaseQuestionAction), "sidebar phase question action should open firstDoc directly after leaving the visit page");
+  directPhaseQuestionAction?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "sidebar phase direct action should select the trust clause document");
+  assert(state.readDocs.has("doc_trust_clause"), "sidebar phase direct action should mark the firstDoc as read");
+  record("阶段提示先看材料直达", { firstDoc: state.selectedDoc });
+  switchView("visit");
+  renderAll();
+  assert(!els.visitDetail.querySelector('[data-visit-pinned-doc="group"] [data-visit-pinned-first-doc="doc_trust_clause"]'), "entry-doc reminder should clear after the material is read");
+  const visitQuestionSearchButton = els.visitDetail.querySelector('[data-visit-answer="trust_scope"] [data-visit-search-context="first-doc"]');
+  assert(Boolean(visitQuestionSearchButton), "asked visit answers should keep an entry-query search button after obtaining documents");
+  visitQuestionSearchButton?.click();
+  assert(state.searchContext?.type === "visit-question", "visit question search should preserve its search origin");
+  const contextCallout = els.resultList.querySelector('[data-search-origin="visit-question"][data-search-first-doc="doc_trust_clause"]');
+  assert(Boolean(contextCallout), "visit question search should render an origin callout in results");
+  const contextOpenButton = contextCallout?.querySelector('[data-context-open-doc="doc_trust_clause"]');
+  assert(Boolean(contextOpenButton), "visit question search origin should offer direct first-doc opening");
+  contextOpenButton?.click();
+  assert(state.selectedDoc === "doc_trust_clause", "visit question search origin should open the firstDoc");
+  assert(state.readDocs.has("doc_trust_clause"), "visit question search origin should mark the firstDoc as read");
+  record("问询入口检索回显", { query: state.query, firstDoc: state.selectedDoc });
+  switchView("visit");
+  renderAll();
   const primaryResultDocButton = els.visitDetail.querySelector('.visit-result [data-visit-primary-doc="doc_trust_clause"]');
   assert(Boolean(primaryResultDocButton), "obtained visit result should offer a primary entry-doc button");
   primaryResultDocButton?.click();
@@ -4585,6 +5240,7 @@ function bindEvents() {
     if (openDoc) {
       state.selectedDoc = openDoc.dataset.visitOpenDoc;
       state.query = "";
+      clearSearchContext();
       state.filter = "all";
       switchView("search");
       playSound("paper");
@@ -4593,8 +5249,14 @@ function bindEvents() {
     }
     const search = event.target.closest("[data-visit-search]");
     if (!search) return;
-    state.query = search.dataset.visitSearch;
-    state.filter = "all";
+    const context = search.dataset.visitSearchContext === "first-doc" ? {
+      type: "visit-question",
+      locationId: search.dataset.visitSearchLocation,
+      questionId: search.dataset.visitSearchQuestion,
+      query: search.dataset.visitSearch,
+      firstDoc: search.dataset.visitSearchFirstDoc
+    } : null;
+    setSearchQuery(search.dataset.visitSearch, context);
     switchView("search");
     playSound("search");
     renderAll();
@@ -4602,8 +5264,7 @@ function bindEvents() {
   els.familyMap.addEventListener("click", (event) => {
     const button = event.target.closest("[data-map-query]");
     if (!button) return;
-    state.query = button.dataset.mapQuery;
-    state.filter = "all";
+    setSearchQuery(button.dataset.mapQuery);
     switchView("search");
     playSound("search");
     renderAll();
@@ -4618,9 +5279,24 @@ function bindEvents() {
   els.phaseGoalBody.addEventListener("click", (event) => {
     const button = event.target.closest("[data-phase-view]");
     if (!button) return;
-    if (button.dataset.phaseQuery) {
-      state.query = button.dataset.phaseQuery;
+    if (button.dataset.phaseOpenDoc) {
+      state.selectedDoc = button.dataset.phaseOpenDoc;
+      state.query = "";
+      clearSearchContext();
       state.filter = "all";
+      switchView("search");
+      playSound("paper");
+    } else if (button.dataset.phaseQuery) {
+      const searchContext = button.dataset.phaseContextType === "visit-question"
+        ? {
+            type: "visit-question",
+            locationId: button.dataset.phaseLocation,
+            questionId: button.dataset.phaseQuestion,
+            query: button.dataset.phaseQuery,
+            firstDoc: button.dataset.phaseFirstDoc
+          }
+        : null;
+      setSearchQuery(button.dataset.phaseQuery, searchContext);
       switchView("search");
       playSound("search");
     } else {
@@ -4631,12 +5307,14 @@ function bindEvents() {
   });
   els.searchBtn.addEventListener("click", () => {
     state.query = els.query.value;
+    clearSearchContext();
     playSound("search");
     renderAll();
   });
   els.query.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       state.query = els.query.value;
+      clearSearchContext();
       playSound("search");
       renderAll();
     }
@@ -4651,8 +5329,7 @@ function bindEvents() {
   els.resultList.addEventListener("click", (event) => {
     const startQuery = event.target.closest("[data-start-query]");
     if (startQuery) {
-      state.query = startQuery.dataset.startQuery;
-      state.filter = "all";
+      setSearchQuery(startQuery.dataset.startQuery);
       playSound("search");
       renderAll();
       return;
@@ -4660,10 +5337,16 @@ function bindEvents() {
     const locationButton = event.target.closest("[data-unlock-location]");
     if (locationButton) {
       performLocationVisit(locationButton.dataset.unlockLocation);
-      state.query = locationButton.dataset.locationQuery || "";
-      state.filter = "all";
+      setSearchQuery(locationButton.dataset.locationQuery || "");
       switchView("search");
       playSound("search");
+      renderAll();
+      return;
+    }
+    const contextDoc = event.target.closest("[data-context-open-doc]");
+    if (contextDoc) {
+      state.selectedDoc = contextDoc.dataset.contextOpenDoc;
+      playSound("paper");
       renderAll();
       return;
     }
@@ -4683,8 +5366,7 @@ function bindEvents() {
   els.documentView.addEventListener("click", (event) => {
     const nextSearch = event.target.closest("[data-doc-next-search]");
     if (nextSearch) {
-      state.query = nextSearch.dataset.docNextSearch;
-      state.filter = "all";
+      setSearchQuery(nextSearch.dataset.docNextSearch);
       state.selectedDoc = null;
       playSound("search");
       renderAll();
@@ -4735,8 +5417,7 @@ function bindEvents() {
     }
     const search = event.target.closest("[data-relation-search]");
     if (!search) return;
-    state.query = search.dataset.relationSearch;
-    state.filter = "all";
+    setSearchQuery(search.dataset.relationSearch);
     switchView("search");
     playSound("search");
     renderAll();
@@ -4758,14 +5439,19 @@ function bindEvents() {
   els.keywordList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-keyword]");
     if (!button) return;
-    state.query = button.dataset.keyword;
+    setSearchQuery(button.dataset.keyword);
     switchView("search");
     playSound("search");
     renderAll();
   });
   els.taskList.addEventListener("click", (event) => {
+    const reviewSummary = event.target.closest("[data-task-review-drawer] summary");
+    if (reviewSummary) {
+      acknowledgeReviewDrawer(reviewSummary.closest("[data-task-review-drawer]"));
+    }
     const stateButton = event.target.closest("[data-task-state]");
     if (stateButton) {
+      acknowledgeReviewDrawer(stateButton.closest("[data-task-review-drawer]"));
       const taskId = stateButton.dataset.taskState;
       const value = stateButton.dataset.taskStateValue;
       if (!notebookTaskIds.has(taskId) || !["pinned", "ignored"].includes(value)) return;
@@ -4779,9 +5465,11 @@ function bindEvents() {
     }
     const button = event.target.closest("[data-task-view]");
     if (!button) return;
-    if (button.dataset.taskQuery) {
-      state.query = button.dataset.taskQuery;
-      state.filter = "all";
+    acknowledgeReviewDrawer(button.closest("[data-task-review-drawer]"));
+    const item = notebookTaskById.get(button.dataset.taskId);
+    const query = taskValue(item, "query") || button.dataset.taskQuery || "";
+    if (query) {
+      setSearchQuery(query, taskSearchContext(item, query));
       switchView("search");
       playSound("search");
     } else {

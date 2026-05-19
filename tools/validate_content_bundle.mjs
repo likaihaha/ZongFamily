@@ -34,7 +34,9 @@ const requiredRootFields = [
   "clues",
   "documents",
   "familyMembers",
+  "visitLocations",
   "visitInterviews",
+  "documentContactPeople",
   "submission"
 ];
 
@@ -59,8 +61,14 @@ if (!Array.isArray(data.familyMembers)) {
 if ("relationPrompts" in data && !Array.isArray(data.relationPrompts)) {
   fail("relationPrompts must be an array when present");
 }
+if (!Array.isArray(data.visitLocations)) {
+  fail("visitLocations must be an array");
+}
 if (!data.visitInterviews || typeof data.visitInterviews !== "object" || Array.isArray(data.visitInterviews)) {
   fail("visitInterviews must be an object keyed by location id");
+}
+if (!data.documentContactPeople || typeof data.documentContactPeople !== "object" || Array.isArray(data.documentContactPeople)) {
+  fail("documentContactPeople must be an object keyed by document id");
 }
 
 function validateIdArray(items, label) {
@@ -222,14 +230,78 @@ for (const [index, relation] of (data.relationPrompts || []).entries()) {
   }
 }
 
+const visitLocationIds = new Set();
+for (const [index, location] of (data.visitLocations || []).entries()) {
+  if (!location || typeof location !== "object") {
+    fail(`visitLocations[${index}] must be an object`);
+    continue;
+  }
+  for (const field of ["id", "title", "query", "meta", "text", "contact", "interaction"]) {
+    if (typeof location[field] !== "string" || !location[field].trim()) {
+      fail(`visitLocations[${index}].${field} must be a non-empty string`);
+    }
+  }
+  for (const field of ["windowStart", "windowEnd", "entryCutoff", "duration"]) {
+    if (!Number.isFinite(location[field]) || location[field] <= 0) {
+      fail(`visitLocations[${index}].${field} must be a positive number`);
+    }
+  }
+  if (location.windowStart >= location.windowEnd) {
+    fail(`visitLocations[${index}] windowStart must be before windowEnd`);
+  }
+  if (location.entryCutoff < location.windowStart || location.entryCutoff > location.windowEnd) {
+    fail(`visitLocations[${index}] entryCutoff must be inside the service window`);
+  }
+  if (!location.coordinates || !Number.isFinite(location.coordinates.x) || !Number.isFinite(location.coordinates.y)) {
+    fail(`visitLocations[${index}].coordinates must include numeric x and y`);
+  }
+  if (!Array.isArray(location.contactPersonIds) || location.contactPersonIds.length === 0) {
+    fail(`visitLocations[${index}].contactPersonIds must be a non-empty array`);
+  } else {
+    for (const personId of location.contactPersonIds) {
+      if (!familyMemberIds.has(personId)) fail(`visitLocations[${index}] references missing contact person: ${personId}`);
+    }
+  }
+  if (!Array.isArray(location.documentIds) || location.documentIds.length === 0) {
+    fail(`visitLocations[${index}].documentIds must be a non-empty array`);
+  } else {
+    for (const docId of location.documentIds) {
+      if (!documentIds.has(docId)) fail(`visitLocations[${index}] references missing document: ${docId}`);
+    }
+  }
+  if (!Array.isArray(location.entryDocumentIds) || location.entryDocumentIds.length === 0) {
+    fail(`visitLocations[${index}].entryDocumentIds must be a non-empty array`);
+  } else {
+    for (const docId of location.entryDocumentIds) {
+      if (!documentIds.has(docId)) fail(`visitLocations[${index}] references missing entry document: ${docId}`);
+      if (Array.isArray(location.documentIds) && !location.documentIds.includes(docId)) {
+        fail(`visitLocations[${index}] entry document is not in documentIds: ${docId}`);
+      }
+    }
+  }
+  for (const field of ["obtained", "missed", "query", "ask"]) {
+    if (!location.followUp || typeof location.followUp[field] !== "string" || !location.followUp[field].trim()) {
+      fail(`visitLocations[${index}].followUp.${field} must be a non-empty string`);
+    }
+  }
+  if (typeof location.id === "string") {
+    if (visitLocationIds.has(location.id)) fail(`visitLocations has duplicate id: ${location.id}`);
+    visitLocationIds.add(location.id);
+  }
+}
+
 for (const [locationId, questions] of Object.entries(data.visitInterviews || {})) {
   if (typeof locationId !== "string" || !locationId.trim()) {
     fail("visitInterviews contains an empty location id");
+  }
+  if (!visitLocationIds.has(locationId)) {
+    fail(`visitInterviews references missing visit location: ${locationId}`);
   }
   if (!Array.isArray(questions) || questions.length < 2) {
     fail(`visitInterviews.${locationId} must contain at least two questions`);
     continue;
   }
+  const location = (data.visitLocations || []).find((item) => item.id === locationId);
   const locationQuestionIds = new Set();
   for (const [index, question] of questions.entries()) {
     if (!question || typeof question !== "object") {
@@ -244,6 +316,9 @@ for (const [locationId, questions] of Object.entries(data.visitInterviews || {})
     if (typeof question.firstDoc === "string" && question.firstDoc.trim() && !documentIds.has(question.firstDoc)) {
       fail(`visitInterviews.${locationId}[${index}] references missing firstDoc: ${question.firstDoc}`);
     }
+    if (location?.entryDocumentIds && !location.entryDocumentIds.includes(question.firstDoc)) {
+      fail(`visitInterviews.${locationId}[${index}] firstDoc is not a local entry document: ${question.firstDoc}`);
+    }
     if (typeof question.id === "string") {
       const globalId = `${locationId}:${question.id}`;
       if (locationQuestionIds.has(question.id)) {
@@ -254,6 +329,25 @@ for (const [locationId, questions] of Object.entries(data.visitInterviews || {})
       }
       locationQuestionIds.add(question.id);
       visitInterviewIds.add(globalId);
+    }
+  }
+}
+
+for (const [docId, personIds] of Object.entries(data.documentContactPeople || {})) {
+  if (!documentIds.has(docId)) fail(`documentContactPeople references missing document: ${docId}`);
+  if (!Array.isArray(personIds) || personIds.length === 0) {
+    fail(`documentContactPeople.${docId} must be a non-empty array`);
+    continue;
+  }
+  for (const personId of personIds) {
+    if (!familyMemberIds.has(personId)) fail(`documentContactPeople.${docId} references missing person: ${personId}`);
+  }
+}
+
+for (const location of data.visitLocations || []) {
+  for (const docId of location.documentIds || []) {
+    if (!data.documentContactPeople?.[docId]?.length) {
+      fail(`visitLocations.${location.id} document has no contact people mapping: ${docId}`);
     }
   }
 }

@@ -87,4 +87,21 @@ if ($archivesGuidance.Count -lt 1) {
   throw "Guided playtest failed: Luo Yuezhen locked search should suggest the county archives"
 }
 
+function DecodeUtf8Label([int[]]$bytes) {
+  return [System.Text.Encoding]::UTF8.GetString([byte[]]$bytes)
+}
+
+$checkpointLabels = @($report.checkpoints | ForEach-Object { $_.label })
+$requiredNotebookCheckpoints = @(
+  (DecodeUtf8Label @(233,152,182,230,174,181,230,143,144,231,164,186,233,151,174,232,175,162,229,133,165,229,143,163,229,155,158,230,159,165)),
+  (DecodeUtf8Label @(229,164,135,229,191,152,229,189,149,233,151,174,232,175,162,229,133,165,229,143,163,229,155,158,230,159,165)),
+  (DecodeUtf8Label @(229,164,135,229,191,152,229,189,149,229,155,158,230,159,165,230,137,185,230,172,161,230,155,180,230,150,176)),
+  (DecodeUtf8Label @(229,164,135,229,191,152,229,189,149,229,155,158,230,159,165,230,138,152,229,143,160)),
+  (DecodeUtf8Label @(233,151,174,232,175,162,229,133,165,229,143,163,230,163,128,231,180,162,229,155,158,230,152,190))
+)
+$missingNotebookCheckpoints = @($requiredNotebookCheckpoints | Where-Object { $checkpointLabels -notcontains $_ })
+if ($missingNotebookCheckpoints.Count -gt 0) {
+  throw "Guided playtest failed: missing notebook review checkpoints: $($missingNotebookCheckpoints -join ', ')"
+}
+
 Write-Host "Guided playtest passed. Wrote docs\playtest-dom.html and docs\playtest-guided.png"

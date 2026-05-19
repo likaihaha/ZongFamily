@@ -1,6 +1,321 @@
 # 开发状态
+## 2026-05-19 13:43 Asia/Shanghai 真人试玩一键会话
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板、Git 状态和真实回收文件；确认 12:12 已有“防空填”校验推进，当前仍没有真实 `docs/manual_playtest_result_*.md` 回收文件。
+- 主要阻塞仍是真人试玩尚未执行；本轮没有伪造试玩结论，也没有继续增加游戏内提示。
+- 为减少观察员执行步骤，新增 `tools/start_manual_playtest.ps1`：运行时会寻找可用本地端口，启动 `tools/serve_manual_playtest.mjs`，打印执行包、游戏入口和建议保存的结果文件名，并默认打开系统浏览器；试玩结束后按 Enter 会停止本地服务。
+- `package.json` 新增 `npm.cmd run manual:start` 和 `npm.cmd run check:manual-session`，并把 `powershell -ExecutionPolicy Bypass -File tools/start_manual_playtest.ps1 -Check` 接入 `npm.cmd run validate`。
+- README 已补充一键会话用法，说明保存回收 Markdown 后继续运行 `npm.cmd run check:manual-results`。
+- 修改文件：`tools/start_manual_playtest.ps1`、`package.json`、`README.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证通过：PowerShell 解析器检查、`npm.cmd run check:manual-session`、`node --check tools\serve_manual_playtest.mjs`、`npm.cmd run validate`；额外用 `-NoOpen` 短暂启动会话脚本，确认本地执行包 URL 返回 200 并可停止服务。
+- 下一步建议：运行 `npm.cmd run manual:start`，在打开的执行包中完成至少 1 轮真人试玩；保存生成的 `docs\manual_playtest_result_20260519_observer.md` 后运行 `npm.cmd run check:manual-results`。
 
-更新时间：2026-05-17 22:00 Asia/Shanghai
+## 2026-05-19 12:12 Asia/Shanghai 真人试玩回收防空填
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板和 Git 状态；确认 11:43 后仍没有真实 `docs/manual_playtest_result_*.md` 回收文件。
+- 主要阻塞仍是真人试玩尚未执行；本轮没有伪造试玩结论，也没有继续增加游戏内提示。
+- 为避免后续出现“保存了结果文件但仍是模板默认值”的假通过，`docs/manual_playtest_packet.html` 的“通过标准”增加 5 个可填写判定下拉项，生成的回收 Markdown 会带入通过 / 未通过 / 未记录。
+- `tools/validate_manual_playtest_packet.mjs` 新增对判定字段和生成脚本的检查；`tools/validate_manual_playtest_results.mjs` 在发现真实 `manual_playtest_result_*.md` 后，会要求基础信息、至少一项核心观察、至少一项路线记录、至少一项判定和下一步建议不是空值或默认值。
+- README 已同步说明结果校验会检查关键字段是否已填写，避免只有模板结构而没有有效观察。
+- 修改文件：`docs/manual_playtest_packet.html`、`tools/validate_manual_playtest_packet.mjs`、`tools/validate_manual_playtest_results.mjs`、`README.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证通过：`node --check tools\validate_manual_playtest_packet.mjs`、`node --check tools\validate_manual_playtest_results.mjs`、`node tools\validate_manual_playtest_packet.mjs`、`node tools\validate_manual_playtest_results.mjs`、`npm.cmd run validate`。
+- 下一步建议：运行 `npm.cmd run manual:serve`，执行至少 1 轮真人试玩；在执行包中填写记录、判定下拉和结论后生成并保存 `docs/manual_playtest_result_YYYYMMDD_observer.md`，再运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 11:43 Asia/Shanghai 真人试玩本地 HTTP 入口
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板、校验脚本和当前 Git 状态；确认 10:41 后仍没有真实 `docs/manual_playtest_result_*.md` 回收文件，主要阻塞仍是真人试玩尚未执行。
+- 针对应用内浏览器拒绝 `file://` 本地页面的问题，新增 `tools/serve_manual_playtest.mjs`，提供只读本地 HTTP 静态入口；默认打开 `docs/manual_playtest_packet.html`，同时可访问 `game/index.html`。
+- `package.json` 新增 `npm.cmd run manual:serve` 和 `npm.cmd run check:manual-serve`，并把只读文件检查接入 `npm.cmd run validate`；README 已补充当 `file://` 被拦截时的执行方式。
+- 本轮没有伪造真人试玩结果，也没有继续叠加游戏内提示；目标是降低观察员打开执行包和游戏入口的摩擦。
+- 修改文件：`tools/serve_manual_playtest.mjs`、`package.json`、`README.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证通过：`node --check tools\serve_manual_playtest.mjs`、`npm.cmd run check:manual-serve`、`npm.cmd run validate`；额外短暂启动 `PORT=8791 node tools/serve_manual_playtest.mjs` 后，HTTP 检查确认试玩包和游戏入口均返回 200。
+- 下一步建议：运行 `npm.cmd run manual:serve`，用打印出的本地 HTTP 地址执行至少 1 轮真人试玩；保存页面生成的 `manual_playtest_result_YYYYMMDD_observer.md` 后运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 10:41 Asia/Shanghai 真人试玩入口复核
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板、校验脚本和当前 Git 状态；发现 08:38 已有“真人试玩阻塞复核”记录，未覆盖这些既有未提交改动。
+- 当前仍没有真实 `docs/manual_playtest_result_*.md` 回收文件；本轮没有伪造试玩结论，也没有继续叠加游戏内提示，避免在缺少玩家观察时增加界面噪声。
+- 尝试用应用内浏览器打开 `docs/manual_playtest_packet.html` 做入口复核时，`file://` 本地页面被浏览器安全策略拒绝；这不是项目构建或资源问题，本轮没有绕过该策略。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；游戏运行时代码、内容包、试玩执行包和结果模板未改动。
+- 验证通过：`npm.cmd run validate`；内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、执行包、结果模板和可玩表面校验均无错误。
+- 下一步建议：由观察员直接在系统浏览器中打开 `docs/manual_playtest_packet.html` 执行至少 1 轮真人试玩，在页面中生成 Markdown 后保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md`，再运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 08:38 Asia/Shanghai 真人试玩阻塞复核
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板和校验脚本；发现 07:39 已新增“执行包生成回收 Markdown”能力，未覆盖这些既有未提交改动。
+- 当前仍没有真实 `docs/manual_playtest_result_*.md` 回收文件；本轮没有伪造试玩结论，也没有继续叠加游戏内提示，避免在缺少玩家观察时增加界面噪声。
+- 复核结果确认当前阻塞不是构建、数据同步、试玩包或结果回收格式，而是真人试玩观察尚未执行；下一步应直接用 `docs/manual_playtest_packet.html` 做至少 1 轮真人试玩。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；游戏运行时代码、内容包和试玩执行包未改动。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_manual_playtest_packet.mjs`、`node --check tools\validate_manual_playtest_results.mjs`、`node tools\validate_manual_playtest_packet.mjs`、`node tools\validate_manual_playtest_results.mjs`、`npm.cmd run validate`。
+- 下一步建议：打开 `docs/manual_playtest_packet.html` 执行真人试玩，在页面中生成 Markdown 后保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md`，再运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 07:39 Asia/Shanghai 真人试玩回收降摩擦
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、试玩执行包、结果模板和校验脚本；确认 06:37 已复跑验证且当前仍没有真实 `manual_playtest_result_*.md` 回收文件。
+- 未伪造真人试玩结论，也没有继续叠加游戏内提示；本轮只推进真人试玩回收链路，减少观察员从 HTML 记录到 Markdown 结果文件的手工整理成本。
+- `docs/manual_playtest_packet.html` 新增可填写的基础信息和记录字段，并提供“生成回收 Markdown / 复制 Markdown”按钮；生成内容匹配结果模板结构，可保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md`。
+- `tools/validate_manual_playtest_packet.mjs` 新增对可编辑字段、生成区和内联生成脚本的结构断言；`tools/validate_manual_playtest_results.mjs` 在保留模板校验的同时，会自动检查已有 `manual_playtest_result_*.md` 结果文件结构。
+- 同步更新 `docs/manual_playtest_results_template.md` 和 `README.md`，说明执行包可生成回收 Markdown，且结果文件出现后会纳入校验。
+- 验证通过：`node --check tools\validate_manual_playtest_packet.mjs`、`node --check tools\validate_manual_playtest_results.mjs`、`node tools\validate_manual_playtest_packet.mjs`、`node tools\validate_manual_playtest_results.mjs`、`npm.cmd run validate`；额外用 Node 编译 `docs/manual_playtest_packet.html` 中 1 段内联脚本通过。
+- 下一步建议：直接打开 `docs/manual_playtest_packet.html` 执行至少 1 轮真人试玩，在页面中生成 Markdown 后保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md`，再运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 06:37 Asia/Shanghai 真人试玩前监督复跑
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告和可用脚本；确认上轮主要结论仍成立：当前不是功能缺口阻塞，而是需要至少 1 轮真人试玩观察来判断引导是否自然。
+- 未继续增加游戏内 UI、提示或资料内容，避免在缺少玩家反馈时继续堆叠噪声；本轮只做监督复跑、失败定位和回归确认。
+- 首次 `npm.cmd run smoke` 因 Edge 临时 profile / 截图文件占用失败；检查错误日志后，安全清理工作区内 `.tmp-edge-profile` 和旧截图，再次运行通过。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`；`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_playable_surface.mjs`、`node --check tools\validate_manual_playtest_packet.mjs`、`node --check tools\validate_manual_playtest_results.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：直接打开 `docs/manual_playtest_packet.html` 做至少 1 轮真人试玩，并把观察结果填入从 `docs/manual_playtest_results_template.md` 复制出的结果文件；只有结果显示玩家漏看或误解，再改视觉权重、按钮文案、搜索路径或资料内容。
+
+## 2026-05-19 05:36 Asia/Shanghai 试玩交付物监督复核
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、真人试玩清单、试玩执行包、结果回收模板和可玩表面校验；确认 2026-05-19 04:34 已补齐真人试玩结果回收模板，未覆盖这些既有未提交改动。
+- 当前游戏可玩闭环、自动试玩、烟测、内容包同步和试玩交付物校验均未发现阻塞；主要剩余风险仍是真人观察本身，自动化不能判断玩家是否自然注意到“更多回查 / 新问询入口 / 先看材料 / 锁定提示”。
+- 本轮没有继续增加游戏内 UI 或文案入口，避免在缺少真人反馈时继续堆叠提示；只做监督复核、复跑回归并确认下一步应进入真人试玩。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_playable_surface.mjs`、`node --check tools\validate_manual_playtest_packet.mjs`、`node --check tools\validate_manual_playtest_results.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：直接打开 `docs/manual_playtest_packet.html` 执行至少 1 轮真人试玩，并把观察结果填入从 `docs/manual_playtest_results_template.md` 复制出的结果文件；只有结果显示玩家漏看或误解，再改视觉权重、按钮文案、搜索路径或资料内容。
+
+## 2026-05-19 04:34 Asia/Shanghai 真人试玩结果回收模板
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单和执行包；确认 2026-05-19 03:33 已新增真人试玩执行包，未覆盖这些既有未提交改动。
+- 当前主要剩余阻塞仍是真人观察本身；本轮不继续叠加游戏内 UI，而是补齐试玩后的结果回收格式，避免真人反馈回来后只有散乱描述、无法直接转成开发任务。
+- 新增 `docs/manual_playtest_results_template.md`，要求记录玩家原话、30 秒以上停顿、自发搜索词、走访/问询动作、回查入口理解、通过判定和修改建议。
+- 新增 `tools/validate_manual_playtest_results.mjs`，并在 `package.json` 增加 `npm.cmd run check:manual-results`、接入 `npm.cmd run validate`；README 和游戏内更新日志已同步说明。
+- 修改文件：`docs/manual_playtest_results_template.md`、`tools/validate_manual_playtest_results.mjs`、`package.json`、`README.md`、`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩与烟测产物已重新生成。
+- 验证通过：`node --check tools\validate_manual_playtest_results.mjs`、`node --check game\app.js`、`npm.cmd run check:manual-results`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：用 `docs/manual_playtest_packet.html` 执行至少 1 轮真人试玩，并把观察结果填入复制后的 `docs/manual_playtest_results_template.md`；只有结果显示玩家漏看或误解，再改视觉权重、按钮文案、搜索路径或资料内容。
+
+## 2026-05-19 03:33 Asia/Shanghai 真人试玩执行包
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单、可玩表面校验和当前未提交改动；确认 2026-05-19 02:34 已新增可玩表面守门校验，未覆盖这些既有改动。
+- 当前 `npm.cmd run validate` 基线通过；主要剩余阻塞仍是真人观察本身，而不是玩法入口或自动回归缺失。本轮继续不叠加游戏内“更多回查”提示，避免缺少玩家反馈时增加备忘录噪声。
+- 新增 `docs/manual_playtest_packet.html`，把试玩基础信息、8 步执行路线、关键观察点、记录表、通过标准和结论选项做成可直接打开或打印的一页执行包，方便下一轮真人试玩按同一口径记录。
+- 新增 `tools/validate_manual_playtest_packet.mjs`，并在 `package.json` 增加 `npm.cmd run check:manual-packet`、接入 `npm.cmd run validate`；README 和游戏内更新日志已同步说明该执行包。
+- 修改文件：`docs/manual_playtest_packet.html`、`tools/validate_manual_playtest_packet.mjs`、`package.json`、`README.md`、`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩与烟测产物已重新生成。
+- 验证通过：`node --check tools\validate_manual_playtest_packet.mjs`、`node --check game\app.js`、`npm.cmd run check:manual-packet`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：直接用 `docs/manual_playtest_packet.html` 做至少 1 轮真人试玩；只有记录到玩家漏看“更多回查 / 新问询入口”或不理解“先看材料 / 锁定提示”后，再改视觉权重、动效时长或按钮文案。
+
+## 2026-05-19 02:34 Asia/Shanghai 可玩表面守门校验
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、校验脚本和当前未提交改动；确认 2026-05-18 至 2026-05-19 01:32 已有“更多回查 / 新问询入口 / 真人试玩清单 / 监督回归复查”成果，未覆盖这些既有改动。
+- 当前完整回归、原件口吻审计和内容包同步均可通过；主要体验风险仍是真人是否自然注意到“更多回查 / 新问询入口 / 先看材料”，本轮没有继续叠加游戏内入口或视觉动效。
+- 为避免后续 UI 精简或重构误删核心可玩闭环，新增 `tools/validate_playable_surface.mjs`，显式检查走访、资料库、家谱、证据箱、备忘录、设置、提交、更新日志、本地存档、JSON 导出、隐藏试玩模式、自动通关模式、程序音效和 TTS 占位语音入口。
+- `package.json` 新增 `npm.cmd run check:surface`，并把该校验接入 `npm.cmd run validate`；README 已补充可玩表面校验说明；游戏内更新日志已加入本轮记录。
+- 修改文件：`tools/validate_playable_surface.mjs`、`package.json`、`README.md`、`game/app.js`、`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`node --check tools\validate_playable_surface.mjs`、`node --check game\app.js`、`npm.cmd run check:surface`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`、`npm.cmd run audit:originals`。
+- 下一步建议：直接按 `docs/manual_playtest_checklist.md` 做至少 1 轮真人试玩；只有观察到玩家漏看“更多回查 / 新问询入口”或不理解“先看材料”后，再调整视觉权重、动效时长或按钮文案。
+
+## 2026-05-19 01:32 Asia/Shanghai 监督回归复查
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单和手工清单校验脚本；确认 2026-05-18 至 2026-05-19 00:29 已有“更多回查 / 新问询入口 / 真人试玩清单 / 监督回归复跑”成果，未覆盖这些未提交改动。
+- 当前没有发现需要立刻改代码的阻塞；自动化链已覆盖内容包、提交答案、内容同步、资产引用、资料视觉映射、解锁矩阵、基础数据、搜索路径和真人试玩清单。
+- 本轮继续不新增备忘录入口、走访入口或视觉动效，避免在缺少真人观察数据时增加界面噪声；只做监督复查、复跑回归并重生成普通试玩与烟测产物。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_manual_playtest_checklist.mjs`、`npm.cmd run check:manual-playtest`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：直接按 `docs/manual_playtest_checklist.md` 做真人试玩；只有观察到玩家漏看“更多回查 / 新问询入口”或不理解“先看材料”后，再调整视觉权重、动效时长或按钮文案。
+
+## 2026-05-19 00:29 Asia/Shanghai 监督回归复跑
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单和相关校验脚本；确认 2026-05-18 已有“更多回查 / 新问询入口 / 真人试玩清单”多轮未提交成果，未覆盖这些既有改动。
+- 当前代码和文档已经把走访问询回查、先看材料直达、备忘录更多回查、回查批次记忆、搜索路径矩阵和真人试玩清单接入验证链；本轮没有在缺少真人观察数据时继续增加游戏内入口或视觉提示。
+- 复跑完整回归后确认未发现构建失败、数据漂移、普通试玩断链或自动通关失败；剩余关键风险仍是真人是否自然注意到“更多回查 / 新问询入口 / 先看材料”。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：直接按 `docs/manual_playtest_checklist.md` 做至少 1 轮真人试玩；只有观察到玩家漏看“更多回查 / 新问询入口”或不理解“先看材料”后，再调整视觉权重、动效时长或按钮文案。
+
+## 2026-05-18 23:28 Asia/Shanghai 监督回归确认
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单和清单校验脚本；确认 22:27 已完成真人试玩前复核，未覆盖这些既有成果。
+- 当前阻塞仍是真人试玩观察缺失；自动化已经覆盖内容包、提交答案、解锁矩阵、搜索路径、备忘录回查检查点和手工试玩清单，因此本轮没有继续增加游戏内入口或视觉提示。
+- 复跑完整回归后确认未发现构建失败、数据漂移、普通试玩断链或自动通关失败；`docs/manual_playtest_checklist.md` 仍是下一步最重要输入。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：按 `docs/manual_playtest_checklist.md` 做至少 1 轮真人试玩；只有观察到玩家漏看“更多回查 / 新问询入口”或不理解“先看材料”后，再改视觉权重、动效时长或按钮文案。
+
+## 2026-05-18 22:27 Asia/Shanghai 真人试玩前复核
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README、真人试玩清单和清单校验脚本；确认 21:29 已新增 `docs/manual_playtest_checklist.md` 并接入 `npm.cmd run validate`，未覆盖这些既有成果。
+- 当前主要阻塞仍是真人试玩反馈缺失，而不是代码入口不足；因此没有继续叠加备忘录提示、走访入口或视觉动效，避免在无观察数据时增加界面噪声。
+- 复核 `docs/manual_playtest_checklist.md` 后确认它已经覆盖“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”、侧栏阶段提示、先看材料、锁定提示、通过标准和记录模板。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：按 `docs/manual_playtest_checklist.md` 做至少 1 轮真人试玩；只有试玩者确实漏看“更多回查”或不理解“先看材料”后，再调整视觉权重、动效时长或按钮文案。
+
+## 2026-05-18 21:29 Asia/Shanghai 真人试玩清单
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告、README 和搜索路线复盘；确认 20:28 已加固备忘录/问询回查外层回归，当前主要阻塞仍是缺少真人试玩反馈。
+- 没有继续叠加游戏内入口或视觉提示，避免在无玩家反馈时增加备忘录噪声；改为新增 `docs/manual_playtest_checklist.md`，把“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”拆成真人试玩路线、观察问题、通过标准和记录模板。
+- 新增 `tools/validate_manual_playtest_checklist.mjs`，校验手工清单必须保留关键观察点、至少 7 个路线步骤、至少 6 个玩家观察问题和记录表；`npm.cmd run validate` 已接入该脚本，README 新增手工试玩清单说明和 `npm.cmd run check:manual-playtest`。
+- 修改文件：`docs/manual_playtest_checklist.md`、`tools/validate_manual_playtest_checklist.mjs`、`package.json`、`README.md`、`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`node --check tools\validate_manual_playtest_checklist.mjs`、`npm.cmd run check:manual-playtest`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：按 `docs/manual_playtest_checklist.md` 做至少 1 轮真人试玩；只有试玩者确实漏看“更多回查”后，再调整视觉权重或动效，不再提前增加新入口。
+
+## 2026-05-18 20:28 Asia/Shanghai 备忘录回查外层回归
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档、测试报告和回归脚本；确认 19:26 已做一次只复核不改功能的监督回归，当前主要剩余风险仍是缺少真人试玩反馈来判断“更多回查 / 新问询入口”是否足够显眼。
+- 没有继续增加新的入口或视觉提示，避免在没有真人反馈时继续堆叠备忘录页；改为加固外层回归：`tools/run_playtest.ps1` 现在会从 `guided-playtest-report` 中强制检查 5 个备忘录/问询回查关键检查点。
+- 新增外层检查点要求覆盖：阶段提示问询入口回查、备忘录问询入口回查、备忘录回查批次更新、备忘录回查折叠、问询入口检索回显；后续如果这些检查点被误删或内置试玩覆盖变窄，`npm.cmd run playtest` 会直接失败。
+- 修改文件：`tools/run_playtest.ps1`、`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`，`npm.cmd run smoke` 重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 验证通过：`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：必须做一轮真人试玩备忘录页，重点观察“新问询入口 / 首次展开 / 1 项待回查”是否会被自然注意到；只有确认仍漏看后，再做视觉权重微调。
+
+## 2026-05-18 19:26 Asia/Shanghai 自动化监督复核
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档和回归报告；发现自动化记忆停在 2026-05-17 13:49，但工作区和文档已推进到 2026-05-18 18:25 的“回查类型提示”，本轮未覆盖这些既有未提交成果。
+- 当前代码已覆盖走访问询入口、资料直达、备忘录回查降噪、更多回查折叠、批次记忆和具体“问询入口”提示；未发现构建失败、测试失败或资料/内容包漂移。
+- 本轮没有继续增加入口或视觉提示，避免在缺少真人试玩反馈时把备忘录页堆得更重；只做回归复核并重新生成普通试玩与烟测产物。
+- 修改文件：`docs/status.md`、`docs/test_report.md`；`npm.cmd run playtest` 和 `npm.cmd run smoke` 重新生成 `docs/playtest-dom.html`、`docs/playtest-guided.png`、`docs/smoke-dom.html`、`docs/smoke-autotest.png`。
+- 验证通过：`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：必须做一轮真人试玩备忘录页，重点观察“新问询入口 / 首次展开 / 1 项待回查”是否会被自然注意到；只有确认仍漏看后，再做视觉权重微调。
+
+## 2026-05-18 18:25 Asia/Shanghai 回查类型提示
+- 本轮先读取自动化记忆、检查工作区、最近修改、状态文档和回归报告，确认 15:30 已有“回查批次上下文”成果，未覆盖这些既有改动。
+- 针对上一轮“新回查批次可能仍不够显眼”的风险继续推进：调查备忘录“更多回查”首次展开时，现在会把现场问询回查明确标成“新问询入口”，而不是泛化的“有新入口”。
+- 新增 `taskReviewContextLabel()` 和 `data-task-review-context`，未确认批次显示具体类型，确认后恢复普通“有新入口”状态，避免长期高亮干扰核心教学任务。
+- 样式上强化未确认批次的状态徽标，但不新增入口、不改变任务排序，也不抢占“收藏第一份证据”等主教学高亮。
+- 普通试玩新增断言：首个问询回查和第二个问询回查都必须暴露 `data-task-review-context="问询入口"` 并显示“新问询入口”。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察“新问询入口 / 首次展开 / 1 项待回查”是否足够被注意；如果仍漏看，再做视觉权重微调，不再增加入口。
+
+## 2026-05-18 15:30 Asia/Shanghai 回查批次上下文
+- 本轮先读取自动化记忆、检查工作区、最近修改和回归文档，确认 14:36 已有“更多回查首次提示”成果，未覆盖这些既有改动。
+- 发现一个实际状态缺口：`reviewSeenKey` 之前只按任务 id 记住“更多回查”批次，玩家确认过一个现场问询回查后，后续新的地点/问询可能被误判为同一批次，不再触发首次展开提示。
+- 已给动态问询回查任务新增 `reviewKey`，把地点、问询项和先看材料纳入 `data-task-review-key`；`renderNotebookTasks()` 现在用 `taskReviewKey()` 生成待回查批次。
+- 普通试玩新增断言：确认第一个问询回查被点击记为已看后，再记录第二个问询时，“更多回查”必须生成不同 key、重新标记未看、自动展开并显示“首次展开”。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页时重点连续问两个不同问题，观察第二个回查是否确实被注意到；若还漏看，再调整视觉权重，不再增加入口。
+
+
+## 2026-05-18 14:36 Asia/Shanghai 更多回查首次提示
+- 本轮先读取自动化记忆、检查工作区、最近修改和回归文档，确认 14:20 已有“更多回查一次展开”成果，未覆盖这些既有改动。
+- 针对上一轮“首次自动展开仍可能不够明显”的风险继续推进：调查备忘录的“更多回查”首次自动展开时新增一次性“首次展开”状态徽标。
+- 该徽标只在新的回查批次尚未确认时显示，并配合短暂轻动效；玩家点击折叠标题、手动整理按钮或其中的回查任务后，会随 `reviewSeenKey` 一起记为已看，后续不再反复出现。
+- 普通试玩新增断言：首次问询回查批次必须显示“首次展开”；点击回查任务后，同一批次再次渲染时该提示必须消失，同时仍保持折叠、不抢占“收藏第一份证据”教学高亮。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察一次性“首次展开”提示是否足够明显；如果仍漏看，应优先调整视觉权重或动画时长，不再增加新的入口。
+
+## 2026-05-18 14:20 Asia/Shanghai 更多回查一次展开
+- 本轮先读取自动化记忆、检查工作区、最近修改和回归文档，确认 13:19 已有“更多回查状态提示”成果，未覆盖这些既有改动。
+- 针对上一轮“有新入口 / 1 项待回查仍可能被漏看”的风险继续推进：调查备忘录现在会为新的回查批次生成 `data-task-review-key` 和 `data-task-review-unseen`。
+- 新回查批次首次出现时，“更多回查”会默认展开并用轻提示底色标记；玩家点击折叠标题、手动整理按钮或其中的回查任务后，会把该批次记入存档，后续保持折叠，避免反复打扰。
+- 普通试玩新增断言：首次问询回查批次必须自动展开并标记未看；点击回查任务后必须记住批次；读过第一份资料后同一回查任务仍保留，但不再自动展开，且不会抢占“收藏第一份证据”教学高亮。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察一次性展开是否足够让玩家注意到回查入口；如果仍漏看，再考虑短暂动效或“展开后记忆已读”提示，而不是增加新的入口。
+
+## 2026-05-18 13:19 Asia/Shanghai 更多回查状态提示
+- 本轮先读取自动化记忆并检查工作区，确认 12:17 已有“更多回查数量提示”成果，未覆盖这些既有改动。
+- 针对上一轮“数量徽标仍可能被漏看”的风险继续推进：调查备忘录的“更多回查”折叠区新增 `data-task-review-status`，按待回查数量标记 `pending` / `clear`。
+- 折叠标题新增“有新入口”短状态，与“1 项待回查”数量并列显示；样式只强化折叠标题，不新增入口，也不抢占“收藏第一份证据”等核心教学高亮。
+- 普通试玩新增断言：问询回查任务折叠后必须暴露 `data-task-review-status="pending"`，折叠标题必须包含“有新入口”和“1 项待回查”。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察“有新入口 / 1 项待回查”是否足够被注意；如果仍漏看，再做短暂状态变化或展开后记忆，而不是继续增加新的入口。
+
+## 2026-05-18 12:17 Asia/Shanghai 更多回查数量提示
+- 本轮先读取自动化记忆并检查工作区，确认 10:28 已有“备忘录更多回查”成果，未覆盖这些既有改动。
+- 针对上一轮“折叠后可能被玩家漏看”的风险继续推进：调查备忘录的“更多回查”折叠标题新增待回查数量徽标，文案从单纯数字改为“1 项待回查”。
+- 折叠区现在写入 `data-task-review-count`，并用轻提示色强化数量提示；回查任务仍保持折叠、可点击和非当前高亮，不抢占“收藏第一份证据”等核心教学动作。
+- 普通试玩新增断言：问询回查任务折叠后必须暴露 `data-task-review-count="1"`，折叠标题必须包含“1 项待回查”。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察“更多回查”的数量徽标是否足够被注意；如果仍漏看，再考虑在折叠标题上增加短暂状态变化，而不是继续增加新的入口。
+
+## 2026-05-18 10:28 Asia/Shanghai 备忘录更多回查
+- 本轮先读取自动化记忆并检查工作区，确认 10:10 已有“备忘录回查降噪”成果，未覆盖这些既有改动。
+- 针对上一轮“如果玩家漏看，再把回查任务折叠到教学组底部的更多回查区域”的建议推进：备忘录渲染现在会把 `tutorial_visit_question_entry` 这类动态问询回查任务放入“更多回查”折叠区。
+- 回查任务仍保留入口词、问询来源和可点击按钮，但不会进入主待办列表，也不会参与 `.is-current` 当前高亮竞争；主教学动作会继续优先提示“收藏第一份证据”等核心步骤。
+- 游戏内更新日志同步新增“备忘录更多回查”；普通试玩断言确认回查按钮位于 `data-task-review-drawer` 内，并且读过第一份资料后当前教学任务仍是 `tutorial_collect`。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩备忘录页，重点观察“更多回查”是否既减少拥挤又不导致玩家完全漏看问询入口；如漏看，可在折叠标题旁增加未读提示色或数量脉冲。
+
+## 2026-05-18 10:10 Asia/Shanghai 备忘录回查降噪
+- 本轮先读取自动化记忆并检查工作区，确认 09:17 已有“先看材料提示收敛”成果，未覆盖这些既有改动。
+- 针对上一轮“若仍拥挤，把备忘录中的动态回查任务降为非当前任务”的建议推进：新增备忘录任务高亮优先级判断，`tutorial_visit_question_entry` 仍可用，但不会优先抢占教学组当前任务。
+- 玩家问询后如果已经读过任意资料但尚未收藏证据，备忘录会优先高亮“收藏第一份证据”，动态“回看问询入口”作为补充入口保留，减少走访页、侧栏和备忘录三处同时催同一动作的拥挤感。
+- 普通试玩新增断言：问询回查任务必须继续存在并可点击；读过第一份资料后，该任务不能带 `.is-current`，`tutorial_collect` 必须成为当前教学任务。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 浏览器检查：in-app browser 拒绝 `file://` 本地页和 `127.0.0.1:8876` 本地服务访问，已停止临时服务；本轮以 Edge headless 回归和 DOM 断言兜底。
+- 下一步建议：做真人试玩备忘录页，观察动态回查降噪后是否仍能被找到；如果玩家漏看，再把回查任务折叠到教学组底部的“更多回查”区域。
+
+## 2026-05-18 09:17 Asia/Shanghai 先看材料提示收敛
+- 本轮先读取自动化记忆并检查工作区，确认 08:00 已有走访页材料置顶提醒、侧栏阶段提示直达和备忘录回查等未提交成果，未覆盖这些既有改动。
+- 针对上一轮“置顶提醒、侧栏阶段提示和备忘录回查三者是否重复”的风险继续推进：新增当前页面优先规则，侧栏阶段提示会识别当前页是否已经有同一条“先看材料”入口。
+- 当玩家停留在对应走访页且顶部已有未读入口材料置顶时，侧栏不再重复渲染 `data-phase-open-doc` 直达按钮，只提示查看走访页置顶提醒；离开走访页后，侧栏仍恢复材料直达，避免断点丢失。
+- 普通试玩新增断言：世昌集团取件后，走访页置顶提醒拥有 `doc_trust_clause` 的主动作，侧栏不会同时重复直达；切到资料库后，侧栏阶段提示恢复 `data-phase-open-doc="doc_trust_clause"` 并可直接打开。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩走访页和备忘录页，观察“当前页优先”是否减少重复感；若仍拥挤，再把备忘录中的动态回查任务降为非当前任务或折叠到教学组底部。
+
+## 2026-05-18 08:00 Asia/Shanghai 走访页材料置顶提醒
+- 本轮先读取自动化记忆并检查工作区，确认 2026-05-17 13:49 之后已有多轮走访入口材料直达、问询回查、侧栏阶段提示直达和内容包同步等未提交成果，未覆盖这些既有改动。
+- 针对上一轮“侧栏直达是否足够明显”的风险继续推进：地点已取件但入口材料尚未阅读时，走访详情顶部新增持久的“先看材料”提醒，不再只依赖刚办完取件时的结果区。
+- 置顶提醒会直接打开第一份未读入口原件；对应材料被阅读后提醒自动消失，避免已完成事项继续占据走访页。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；普通试玩和烟测产物已重新生成。
+- 验证通过：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke`。
+- 下一步建议：真人试玩走访页，观察置顶提醒、侧栏阶段提示和备忘录回查三者是否重复；如果显得拥挤，应合并文案优先级而不是继续增加入口。
+
+## 2026-05-18 07:13 Asia/Shanghai 阶段提示材料直达
+- 针对上一轮“阶段提示仍先回入口词检索，玩家还要再点一次打开先看材料”的摩擦，本轮把已入卷材料的侧栏路径改成直达原件。
+- 阶段提示仍会保留 `data-phase-context-type="visit-question"`、地点、问询项和 `firstDoc`；当对应 `firstDoc` 已可读时，按钮额外写入 `data-phase-open-doc` 并直接打开该材料。
+- 材料尚未办理取件时仍沿用入口词检索和问询来源回显，不会跳到不可读资料。
+- 普通试玩新增断言：世昌集团取件后，侧栏阶段提示必须出现 `data-phase-open-doc="doc_trust_clause"`，点击后选中信托原件并标记已读。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：真人试玩走访页、侧栏和备忘录联动，观察侧栏直达是否足够明显；如果仍停顿，再考虑把“先看材料”做成走访页办理结果之外的持久置顶提醒。
+
+## 2026-05-18 05:31 Asia/Shanghai 阶段提示问询回查
+- 针对上一轮“回看问询入口”如果只在备忘录出现，玩家可能看不到的问题，本轮把同一回查路径接入侧栏阶段提示。
+- 新增 `pendingVisitQuestionPhaseGoal()`；当玩家已经现场问询但尚未阅读对应先看材料时，阶段提示会临时显示“回看问询入口”，按钮直接用入口词回到资料库。
+- 阶段按钮会写入 `data-phase-context-type="visit-question"` 并保留地点、问询项和 `firstDoc`，点击后继续显示问询来源回显和先看材料入口。
+- 普通试玩新增断言，确认世昌集团问询后侧栏阶段提示会出现问询入口回查动作，点击后不会丢失 `searchContext`。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：真人试玩走访页、侧栏和备忘录联动，观察阶段提示是否比备忘录更容易被注意到；如果仍停顿，再把“打开先看材料”提升为侧栏主按钮后的默认下一跳。
+
+## 2026-05-18 04:28 Asia/Shanghai 备忘录问询入口回查
+- 针对上一轮“问询入口检索回显若只在资料库出现，玩家离开后仍可能丢失上下文”的风险，本轮把该回查路径接入调查备忘录。
+- 新增 `pendingVisitQuestionContext()`、动态待办“回看问询入口”和任务级 `searchContext`；当玩家已经现场问询但尚未阅读对应先看材料时，备忘录会出现回查任务。
+- 点击该任务会用问询入口词进入资料库，并保留 `data-search-origin="visit-question"`、来源地点、问询事项和对应 `firstDoc`，继续显示“打开先看材料 / 办理取件后入卷”的回显。
+- 普通试玩新增断言，确认世昌集团问询后备忘录出现 `tutorial_visit_question_entry`，点击后不会丢失问询来源上下文。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：真人试玩走访页和备忘录页，观察“回看问询入口”是否减少离开走访页后的断点；如果仍停顿，再把同类回查入口接入侧边栏阶段提示。
+
+## 2026-05-18 03:36 Asia/Shanghai 问询入口检索回显
+- 针对上一轮“入口词按钮旁的先看材料视觉层级仍可能不够”的风险，本轮让问询入口检索在资料库结果页保留来源上下文。
+- 新增 `searchContext` 状态、`normalizeSearchContext()` 和 `renderSearchContextCallout()`；从现场问询点击“用入口词检索”后，结果页顶部会显示“问询入口检索”、来源地点/经手人、对应 `firstDoc` 和“打开先看材料”按钮。
+- 问询搜索按钮新增 location/question/firstDoc 数据字段；普通试玩新增断言，确认世昌集团问询检索后能看到 `data-search-origin="visit-question"`，并能从结果页直达 `doc_trust_clause`。
+- 修改文件：`game/app.js`、`game/styles.css`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：真人试玩走访页，重点观察“问询入口检索”回显是否能让玩家明确先读哪份材料；如果仍卡顿，再考虑把入口检索回显接入备忘录任务。
+
+## 2026-05-18 03:07 Asia/Shanghai 问询入口词标识
+- 针对上一轮“问询入口词变窄后，玩家可能误以为这是完整主线搜索词”的风险，本轮把现场问询按钮文案改为“用入口词检索”。
+- 新增 `renderVisitQuestionSearchAction()`，现场问询回答区和“今日调查日程”的问询记录回看共用同一套入口词搜索按钮。
+- 问询搜索按钮新增 `data-visit-search-context="first-doc"`，普通试玩新增断言，确认当前问询回答和日程回看都保留该语义标记。
+- 修改文件：`game/app.js`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node tools\validate_search_paths.mjs`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：真人试玩走访页，重点观察“用入口词检索”是否足够清楚；如果仍停顿，再把入口词按钮旁的“先看材料”视觉层级提高。
+
+## 2026-05-18 02:08 Asia/Shanghai 现场问询搜索收敛
+- 针对上一轮留下的“现场问询搜索是否也会带出过多锁定资料”风险，本轮把该观察点落成自动化回归，并收敛过宽问询词。
+- `visitInterviews` 中 6 条宽泛搜索词改为更贴近入口原件：照片背注、亲缘比对、学生信息、个体工商、经营场所、香港家族信托和旧客运线等入口词会优先命中本地 firstDoc。
+- `tools/validate_search_paths.mjs` 现在对每条现场问询也设置锁定命中上限，要求问询搜索不仅能露出本地点资料和 firstDoc，还不能让锁定资料明显淹没可见结果。
+- `npm.cmd run sync:bundle` 已把新的问询搜索词同步进 `game/data/case_bundle.json`，`docs/search_route_review.md` 已重新生成，现场问询表现在能直接看到每条问询的可见/锁定命中。
+- 修改文件：`game/app.js`、`game/data/case_bundle.json`、`tools/validate_search_paths.mjs`、`docs/search_route_review.md`、`README.md`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\validate_search_paths.mjs`、`node tools\validate_search_paths.mjs`、`npm.cmd run sync:bundle`、`node tools\validate_search_paths.mjs --write`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：做一轮真人试玩式走访页复盘，重点观察“问询入口词变窄后，玩家是否仍能理解它们只是先看材料，而不是完整主线搜索词”。
+
+## 2026-05-18 01:05 Asia/Shanghai 入口原件后续搜索矩阵
+- 针对上一轮“入口材料读完后的下一步搜索是否会带出过多锁定资料”的风险，本轮把该观察点落成自动化回归。
+- `tools/validate_search_paths.mjs` 现在会读取 `visitFollowUps`，对 6 个走访地点逐一模拟“成功取件 -> 入口原件已读 -> 点击阅读后下一步搜索”。
+- 新断言要求后续搜索必须露出本地点资料、至少保留一份入口原件可见，并限制锁定命中数量不能明显压过可见命中，避免玩家读完入口材料后被大量未入卷结果淹没。
+- `docs/search_route_review.md` 新增“入口原件后续”表，列出每个地点的下一步搜索词、本地资料命中、可见资料数和锁定资料数。
+- 修改文件：`tools/validate_search_paths.mjs`、`docs/search_route_review.md`、`docs/status.md`、`docs/test_report.md`。
+- 验证：`node --check tools\validate_search_paths.mjs`、`node tools\validate_search_paths.mjs --write`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：继续把真人试玩观察点自动化，优先检查现场问询搜索是否也需要类似“锁定结果不过载”的上限。
+
+更新时间：2026-05-17 23:03 Asia/Shanghai
+
+## 2026-05-17 23:03 Asia/Shanghai 走访矩阵内容包同步
+
+- 针对走访玩法关键数据此前主要留在 `game/app.js`、内容包只同步现场问询的风险，本轮把 6 个走访地点矩阵写入 `game/data/case_bundle.json`。
+- `npm.cmd run sync:bundle` 现在会同步地点标题、搜索词、坐标、办理窗口、办理耗时、经手人 ID、完整地点资料、入口材料和阅读后 `followUp`。
+- `case_bundle.json` 新增 `documentContactPeople`，保存每份地点资料对应的经手人，避免后续资料/人物调整时只改运行时代码。
+- `tools/validate_content_bundle.mjs` 和 `tools/validate_content_sync.mjs` 已加固：校验走访地点字段完整、入口材料属于地点资料、问询 `firstDoc` 属于入口材料、资料经手人存在，并与 `game/app.js` 双向一致。
+- 修改文件：`game/app.js`、`game/data/case_bundle.json`、`tools/sync_case_bundle_from_app.mjs`、`tools/validate_content_bundle.mjs`、`tools/validate_content_sync.mjs`、`README.md`、`docs/unlock_self_check.md`、`docs/status.md`、`docs/test_report.md`；试玩和烟测产物已重新生成。
+- 验证：`node --check game\app.js`、`node --check tools\sync_case_bundle_from_app.mjs`、`node --check tools\validate_content_bundle.mjs`、`node --check tools\validate_content_sync.mjs`、`npm.cmd run sync:bundle`、`npm.cmd run validate`、`npm.cmd run playtest`、`npm.cmd run smoke` 均通过。
+- 下一步建议：继续把真人试玩观察点落成自动化复盘，优先检查“入口材料读完后的下一步搜索”是否会把玩家带到过多锁定资料。
 
 ## 2026-05-17 22:00 Asia/Shanghai 入口原件下一步矩阵
 

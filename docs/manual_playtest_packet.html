@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>云山宗氏案真人试玩执行包</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f1e3;
+      --ink: #2a2119;
+      --muted: #6f6255;
+      --line: #cdbb9b;
+      --accent: #8d2f2f;
+      --field: #fffaf0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #e7ddc9;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 24px auto;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(52, 39, 24, 0.15);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h2 {
+      margin-top: 28px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 20px;
+    }
+
+    p,
+    li {
+      font-size: 15px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .field,
+    .field input,
+    .criterion-select,
+    textarea {
+      min-height: 38px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      background: var(--field);
+    }
+
+    .field strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      margin-top: 6px;
+      font: inherit;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0;
+      list-style: none;
+      counter-reset: route;
+    }
+
+    .route li {
+      position: relative;
+      min-height: 96px;
+      padding: 14px 14px 14px 46px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.72);
+    }
+
+    .route li::before {
+      counter-increment: route;
+      content: counter(route);
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      line-height: 22px;
+      text-align: center;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checks li {
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255, 250, 240, 0.78);
+    }
+
+    .criteria-list li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 160px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .criterion-select {
+      width: 100%;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--field);
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      width: 24%;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      font: inherit;
+    }
+
+    td textarea {
+      min-height: 58px;
+      border: 0;
+      background: transparent;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .decision label {
+      display: block;
+      min-height: 74px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.78);
+      font-size: 14px;
+    }
+
+    .decision input {
+      margin-right: 8px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .packet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .packet-actions button {
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .packet-actions button.secondary {
+      background: var(--field);
+      color: var(--accent);
+    }
+
+    .result-output {
+      min-height: 320px;
+      white-space: pre-wrap;
+      font-family: Consolas, "Microsoft YaHei", monospace;
+      font-size: 13px;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      main {
+        width: auto;
+        margin: 0;
+        padding: 12mm;
+        box-shadow: none;
+      }
+
+      .route,
+      .checks,
+      .decision,
+      .meta {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main data-manual-playtest-packet="true">
+    <h1>《云山宗氏案》真人试玩执行包</h1>
+    <p class="note">用途：记录自动试玩无法判断的体验问题，重点观察走访问询后的“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”是否能被玩家自然注意到。填写后可生成 `manual_playtest_result_YYYYMMDD_observer.md` 格式的回收 Markdown。</p>
+
+    <section class="meta" aria-label="试玩基础信息">
+      <label class="field"><strong>试玩者</strong><input data-meta-field="player" autocomplete="off"></label>
+      <label class="field"><strong>日期</strong><input data-meta-field="date" autocomplete="off"></label>
+      <label class="field"><strong>设备/浏览器</strong><input data-meta-field="device" autocomplete="off"></label>
+      <label class="field"><strong>观察员</strong><input data-meta-field="observer" autocomplete="off"></label>
+    </section>
+
+    <h2>执行路线</h2>
+    <ol class="route" data-route-steps>
+      <li>打开无历史存档的 `game/index.html`，不使用 `?playtest=1` 或 `?autotest=1`。</li>
+      <li>只告诉玩家目标：判断宗世昌信托继承资格中的隐藏血脉。</li>
+      <li>观察玩家是否能从资料库、走访页或备忘录找到第一个公开宗家入口。</li>
+      <li>让玩家自由推进到世昌集团，办理取件并阅读信托入口材料。</li>
+      <li>在世昌集团问询任意一个问题后，不提示下一步，观察侧栏阶段提示和调查备忘录。</li>
+      <li>打开调查备忘录，观察“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”是否被注意到。</li>
+      <li>继续追踪罗月珍、罗建宁、陈静、陈嘉东链条，记录搜索停顿和是否依赖锁定提示。</li>
+      <li>让玩家尝试完成家谱关系核验和最终提交，记录错误证据绑定点。</li>
+    </ol>
+
+    <h2>关键观察点</h2>
+    <ul class="checks" data-observation-checks>
+      <li>问询后，玩家是否先看走访结果区的入口材料按钮？</li>
+      <li>离开走访页后，玩家是否还能从侧栏阶段提示回到先看材料？</li>
+      <li>玩家打开备忘录时，是否自然注意到“更多回查”区域？</li>
+      <li>“新问询入口 / 首次展开 / 1 项待回查”是否被理解为可行动入口？</li>
+      <li>玩家是否理解锁定搜索结果是在提示走访方向，而不是搜索失败？</li>
+      <li>玩家是否在家谱证据绑定中误把传闻材料当强证据？</li>
+    </ul>
+
+    <h2>记录表</h2>
+    <table data-record-template>
+      <tr><th>试玩时长</th><td><textarea data-record-field="duration"></textarea></td></tr>
+      <tr><th>是否空白存档</th><td><textarea data-record-field="freshSave"></textarea></td></tr>
+      <tr><th>是否使用提示模式</th><td><textarea data-record-field="hintMode"></textarea></td></tr>
+      <tr><th>首次卡住位置</th><td><textarea data-record-field="firstBlock"></textarea></td></tr>
+      <tr><th>停顿超过 30 秒的位置</th><td><textarea data-record-field="longPauses"></textarea></td></tr>
+      <tr><th>自发搜索词</th><td><textarea data-record-field="searchTerms"></textarea></td></tr>
+      <tr><th>点击过的走访地点</th><td><textarea data-record-field="visitedLocations"></textarea></td></tr>
+      <tr><th>点击过的现场问询</th><td><textarea data-record-field="interviews"></textarea></td></tr>
+      <tr><th>打开的入口材料</th><td><textarea data-record-field="openedDocs"></textarea></td></tr>
+      <tr><th>是否注意到侧栏阶段提示</th><td><textarea data-record-field="phaseHint"></textarea></td></tr>
+      <tr><th>是否注意到备忘录更多回查</th><td><textarea data-record-field="followUpNotice"></textarea></td></tr>
+      <tr><th>是否理解新问询入口</th><td><textarea data-record-field="newInterview"></textarea></td></tr>
+      <tr><th>是否理解先看材料</th><td><textarea data-record-field="firstDoc"></textarea></td></tr>
+      <tr><th>是否理解锁定提示</th><td><textarea data-record-field="lockedHint"></textarea></td></tr>
+      <tr><th>最远推进位置</th><td><textarea data-record-field="furthest"></textarea></td></tr>
+      <tr><th>最终提交结果</th><td><textarea data-record-field="finalSubmit"></textarea></td></tr>
+      <tr><th>错误证据绑定点</th><td><textarea data-record-field="evidenceMistake"></textarea></td></tr>
+      <tr><th>需要修改的文案/UI</th><td><textarea data-record-field="uiIssues"></textarea></td></tr>
+    </table>
+
+    <h2>通过标准</h2>
+    <ul class="checks criteria-list" data-pass-criteria>
+      <li>
+        <span>玩家在一次现场问询后，2 分钟内能找到至少一个回查入口。</span>
+        <select class="criterion-select" data-criterion-field="followUp2Min" aria-label="2 分钟内找到回查入口">
+          <option>未记录</option>
+          <option>通过</option>
+          <option>未通过</option>
+        </select>
+      </li>
+      <li>
+        <span>玩家能说出“先看材料”对应哪份资料，并实际打开至少一份入口材料。</span>
+        <select class="criterion-select" data-criterion-field="firstDocName" aria-label="能说出先看材料对应哪份资料">
+          <option>未记录</option>
+          <option>通过</option>
+          <option>未通过</option>
+        </select>
+      </li>
+      <li>
+        <span>玩家至少能独立推进到罗建宁线，不需要主持人直接给出姓名。</span>
+        <select class="criterion-select" data-criterion-field="luoLine" aria-label="独立推进到罗建宁线">
+          <option>未记录</option>
+          <option>通过</option>
+          <option>未通过</option>
+        </select>
+      </li>
+      <li>
+        <span>玩家理解锁定结果代表当前资料未入卷，需要走访或阅读前置材料。</span>
+        <select class="criterion-select" data-criterion-field="lockedResult" aria-label="理解锁定结果不是搜索失败">
+          <option>未记录</option>
+          <option>通过</option>
+          <option>未通过</option>
+        </select>
+      </li>
+      <li>
+        <span>玩家在家谱证据绑定中没有明显误用传闻材料。</span>
+        <select class="criterion-select" data-criterion-field="evidenceBinding" aria-label="家谱证据绑定无明显误会">
+          <option>未记录</option>
+          <option>通过</option>
+          <option>未通过</option>
+        </select>
+      </li>
+    </ul>
+
+    <h2>结论</h2>
+    <div class="decision" data-decision-options>
+      <label><input type="checkbox" data-decision-field="pass">通过：不调整“更多回查”视觉权重，继续内容/资产迭代。</label>
+      <label><input type="checkbox" data-decision-field="smallChange">小改：只调整文案、视觉权重或动效时长。</label>
+      <label><input type="checkbox" data-decision-field="blocked">阻塞：玩家仍找不到回查入口，需要重新设计备忘录引导。</label>
+    </div>
+    <p><textarea id="conclusion-notes" aria-label="试玩结论补充"></textarea></p>
+
+    <h2>回收 Markdown</h2>
+    <p class="note">生成后将下方内容保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md`，再运行 `npm.cmd run check:manual-results`。</p>
+    <div class="packet-actions">
+      <button type="button" id="generate-markdown">生成回收 Markdown</button>
+      <button type="button" id="copy-markdown" class="secondary">复制 Markdown</button>
+    </div>
+    <textarea id="generated-result" class="result-output" data-generated-result readonly aria-label="生成的真人试玩回收 Markdown"></textarea>
+  </main>
+  <script>
+    const recordLabels = {
+      duration: "试玩时长",
+      freshSave: "是否空白存档",
+      hintMode: "是否使用提示模式",
+      firstBlock: "首次卡住位置",
+      longPauses: "停顿超过 30 秒的位置",
+      searchTerms: "自发搜索词",
+      visitedLocations: "点击过的走访地点",
+      interviews: "点击过的现场问询",
+      openedDocs: "打开的入口材料",
+      phaseHint: "离开走访页后是否注意到侧栏阶段提示",
+      followUpNotice: "是否注意到更多回查",
+      newInterview: "是否理解新问询入口",
+      firstDoc: "是否理解先看材料",
+      lockedHint: "是否理解锁定提示代表走访或前置阅读",
+      furthest: "最远推进位置",
+      finalSubmit: "最终提交结果",
+      evidenceMistake: "是否在家谱证据绑定中误用传闻材料",
+      uiIssues: "需要修改的文案/UI",
+    };
+
+    const valueOf = (selector) => document.querySelector(selector)?.value.trim() || "";
+    const record = (key) => valueOf(`[data-record-field="${key}"]`) || "未记录";
+    const criterion = (key) => valueOf(`[data-criterion-field="${key}"]`) || "未记录";
+    const tableLine = (left, middle = "", right = "") => `| ${left} | ${middle || "未记录"} | ${right || ""} |`;
+
+    function generateMarkdown() {
+      const today = new Date().toISOString().slice(0, 10);
+      const player = valueOf('[data-meta-field="player"]') || "未记录";
+      const observer = valueOf('[data-meta-field="observer"]') || "未记录";
+      const date = valueOf('[data-meta-field="date"]') || today;
+      const device = valueOf('[data-meta-field="device"]') || "未记录";
+      const conclusion = valueOf("#conclusion-notes") || "未记录";
+      const decisions = Array.from(document.querySelectorAll("[data-decision-field]:checked"))
+        .map((input) => input.parentElement.textContent.trim())
+        .join("；") || "未记录";
+
+      return `# 真人试玩结果回收
+
+来源：docs/manual_playtest_packet.html
+
+## 基础信息
+
+| 项目 | 记录 |
+| --- | --- |
+| 试玩者代号 | ${player} |
+| 观察员 | ${observer} |
+| 日期 | ${date} |
+| 浏览器 / 设备 | ${device} |
+| 试玩时长 | ${record("duration")} |
+| 是否空白存档 | ${record("freshSave")} |
+| 是否使用提示模式 | ${record("hintMode")} |
+
+## 核心观察
+
+| 观察项 | 结果 | 原话或行为证据 |
+| --- | --- | --- |
+${tableLine("问询后是否先看走访结果区的入口材料按钮", record("openedDocs"))}
+${tableLine(recordLabels.phaseHint, record("phaseHint"))}
+${tableLine("是否打开调查备忘录", record("followUpNotice"))}
+${tableLine(recordLabels.followUpNotice, record("followUpNotice"))}
+${tableLine(recordLabels.newInterview, record("newInterview"))}
+${tableLine(recordLabels.firstDoc, record("firstDoc"))}
+${tableLine(recordLabels.lockedHint, record("lockedHint"))}
+${tableLine(recordLabels.evidenceMistake, record("evidenceMistake"))}
+
+## 路线记录
+
+| 节点 | 记录 |
+| --- | --- |
+| 首次卡住位置 | ${record("firstBlock")} |
+| 停顿超过 30 秒的位置 | ${record("longPauses")} |
+| 自发搜索词 | ${record("searchTerms")} |
+| 点击过的走访地点 | ${record("visitedLocations")} |
+| 点击过的现场问询 | ${record("interviews")} |
+| 打开的入口材料 | ${record("openedDocs")} |
+| 最远推进位置 | ${record("furthest")} |
+| 最终提交结果 | ${record("finalSubmit")} |
+
+## 判定
+
+| 判定项 | 选择 |
+| --- | --- |
+| 2 分钟内找到回查入口 | ${criterion("followUp2Min")} |
+| 能说出先看材料对应哪份资料 | ${criterion("firstDocName")} |
+| 独立推进到罗建宁线 | ${criterion("luoLine")} |
+| 理解锁定结果不是搜索失败 | ${criterion("lockedResult")} |
+| 家谱证据绑定无明显误会 | ${criterion("evidenceBinding")} |
+
+## 修改建议
+
+| 优先级 | 问题 | 建议修改 | 证据 |
+| --- | --- | --- | --- |
+| P0 / P1 / P2 | ${record("uiIssues")} | 未记录 | 未记录 |
+
+## 结论
+
+- 是否需要调整视觉权重：未定
+- 是否需要调整按钮文案：未定
+- 是否需要补搜索路径：未定
+- 是否需要补资料内容：未定
+- 试玩结论：${decisions}
+- 下一步建议：${conclusion}
+`;
+    }
+
+    document.querySelector("#generate-markdown")?.addEventListener("click", () => {
+      document.querySelector("#generated-result").value = generateMarkdown();
+    });
+
+    document.querySelector("#copy-markdown")?.addEventListener("click", async () => {
+      const output = document.querySelector("#generated-result");
+      if (!output.value.trim()) output.value = generateMarkdown();
+      output.select();
+      try {
+        await navigator.clipboard.writeText(output.value);
+      } catch {
+        document.execCommand("copy");
+      }
+    });
+  </script>
+</body>
+</html>

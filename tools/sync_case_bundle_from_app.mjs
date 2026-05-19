@@ -56,7 +56,14 @@ const appSource = fs.readFileSync(appPath, "utf8");
 const people = extractConstExpression(appSource, "people");
 const documents = extractConstExpression(appSource, "documents");
 const relationPrompts = extractConstExpression(appSource, "relationPrompts");
+const visitLocations = extractConstExpression(appSource, "visitLocations");
+const visitFollowUps = extractConstExpression(appSource, "visitFollowUps");
 const visitInterviews = extractConstExpression(appSource, "visitInterviews");
+const locationDocumentIds = extractConstExpression(appSource, "locationDocumentIds");
+const locationEntryDocumentIds = extractConstExpression(appSource, "locationEntryDocumentIds");
+const locationCoordinates = extractConstExpression(appSource, "locationCoordinates");
+const locationContacts = extractConstExpression(appSource, "locationContacts");
+const documentContactPeople = extractConstExpression(appSource, "documentContactPeople");
 const bundle = JSON.parse(fs.readFileSync(bundlePath, "utf8"));
 
 const existingPeople = new Map((bundle.familyMembers || []).map((person) => [person.id, person]));
@@ -76,11 +83,36 @@ bundle.relationPrompts = relationPrompts.map((relation) =>
   pickDefined(relation, ["id", "title", "prompt", "slots", "correct", "requiredEvidence"])
 );
 
+bundle.visitLocations = visitLocations.map((location) => ({
+  ...pickDefined(location, [
+    "id",
+    "title",
+    "query",
+    "meta",
+    "text",
+    "contact",
+    "interaction",
+    "windowStart",
+    "windowEnd",
+    "entryCutoff",
+    "duration"
+  ]),
+  coordinates: locationCoordinates[location.id],
+  contactPersonIds: locationContacts[location.id] || [],
+  documentIds: locationDocumentIds[location.id] || [],
+  entryDocumentIds: locationEntryDocumentIds[location.id] || [],
+  followUp: visitFollowUps[location.id] || null
+}));
+
 bundle.visitInterviews = Object.fromEntries(
   Object.entries(visitInterviews).map(([locationId, questions]) => [
     locationId,
     questions.map((question) => pickDefined(question, ["id", "prompt", "person", "answer", "query", "firstDoc"]))
   ])
+);
+
+bundle.documentContactPeople = Object.fromEntries(
+  Object.entries(documentContactPeople).filter(([docId]) => documents.some((doc) => doc.id === docId))
 );
 
 fs.writeFileSync(bundlePath, `${JSON.stringify(bundle, null, 2)}\n`, "utf8");
@@ -92,6 +124,7 @@ console.log(
       familyMembers: bundle.familyMembers.length,
       documents: bundle.documents.length,
       relationPrompts: bundle.relationPrompts.length,
+      visitLocations: bundle.visitLocations.length,
       visitInterviews: Object.values(bundle.visitInterviews).reduce((sum, questions) => sum + questions.length, 0)
     },
     null,

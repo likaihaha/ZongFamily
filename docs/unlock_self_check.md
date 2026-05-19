@@ -49,6 +49,8 @@
 
 `visitFollowUps` 必须覆盖 `archives`、`hospital`、`school`、`ktv`、`group`、`yunqian` 六个地点，并为每个地点提供 `obtained`、`missed`、`query` 和 `ask` 字段。
 
+`case_bundle.json` 必须同步 `visitLocations` 和 `documentContactPeople`。每个 `visitLocations` 条目需要保留地点坐标、办理窗口、经手人 ID、完整地点资料、入口材料和 `followUp`，避免内容包只记录问询文本而丢失走访玩法矩阵。
+
 ## 现场问询与记录回看
 
 走访详情还需要保留轻量人物交互，但问询只提供查证方向，不推进时间、不直接取得资料、不替代正式证据。玩家追问后，回答写入 `visitQuestionLog` 本地存档；“今日调查日程”会按地点汇总“现场问询记录”，让玩家离开当前地点后仍可回看经手人口吻回答和对应搜索按钮。

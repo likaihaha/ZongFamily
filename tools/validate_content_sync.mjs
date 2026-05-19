@@ -55,7 +55,14 @@ if (!fs.existsSync(bundlePath)) fail(`Missing case bundle: ${bundlePath}`);
 let people = [];
 let documents = [];
 let relationPrompts = [];
+let visitLocations = [];
+let visitFollowUps = {};
 let visitInterviews = {};
+let locationDocumentIds = {};
+let locationEntryDocumentIds = {};
+let locationCoordinates = {};
+let locationContacts = {};
+let documentContactPeople = {};
 let bundle = {};
 
 if (!errors.length) {
@@ -64,7 +71,14 @@ if (!errors.length) {
     people = extractConstExpression(app, "people");
     documents = extractConstExpression(app, "documents");
     relationPrompts = extractConstExpression(app, "relationPrompts");
+    visitLocations = extractConstExpression(app, "visitLocations");
+    visitFollowUps = extractConstExpression(app, "visitFollowUps");
     visitInterviews = extractConstExpression(app, "visitInterviews");
+    locationDocumentIds = extractConstExpression(app, "locationDocumentIds");
+    locationEntryDocumentIds = extractConstExpression(app, "locationEntryDocumentIds");
+    locationCoordinates = extractConstExpression(app, "locationCoordinates");
+    locationContacts = extractConstExpression(app, "locationContacts");
+    documentContactPeople = extractConstExpression(app, "documentContactPeople");
     bundle = JSON.parse(fs.readFileSync(bundlePath, "utf8"));
   } catch (error) {
     fail(error.message);
@@ -76,6 +90,7 @@ const appDocsById = new Map(documents.map((doc) => [doc.id, doc]));
 const bundlePeopleById = new Map((bundle.familyMembers || []).map((person) => [person.id, person]));
 const bundleDocsById = new Map((bundle.documents || []).map((doc) => [doc.id, doc]));
 const bundleRelationPromptsById = new Map((bundle.relationPrompts || []).map((relation) => [relation.id, relation]));
+const bundleVisitLocationsById = new Map((bundle.visitLocations || []).map((location) => [location.id, location]));
 
 function stable(value) {
   return JSON.stringify(value ?? null);
@@ -159,7 +174,44 @@ for (const bundleRelation of bundle.relationPrompts || []) {
   }
 }
 
+function normalizedVisitLocation(location) {
+  return {
+    id: location.id,
+    title: location.title,
+    query: location.query,
+    meta: location.meta,
+    text: location.text,
+    contact: location.contact,
+    interaction: location.interaction,
+    windowStart: location.windowStart,
+    windowEnd: location.windowEnd,
+    entryCutoff: location.entryCutoff,
+    duration: location.duration,
+    coordinates: locationCoordinates[location.id],
+    contactPersonIds: locationContacts[location.id] || [],
+    documentIds: locationDocumentIds[location.id] || [],
+    entryDocumentIds: locationEntryDocumentIds[location.id] || [],
+    followUp: visitFollowUps[location.id] || null
+  };
+}
+
+for (const location of visitLocations) {
+  const bundleLocation = bundleVisitLocationsById.get(location.id);
+  if (!bundleLocation) {
+    fail(`app.js visit location missing from case_bundle visitLocations: ${location.id}`);
+  } else {
+    compareField("visit location", location.id, "matrix", normalizedVisitLocation(location), bundleLocation);
+  }
+}
+
+for (const bundleLocation of bundle.visitLocations || []) {
+  if (!visitLocations.some((location) => location.id === bundleLocation.id)) {
+    fail(`case_bundle visit location missing from app.js: ${bundleLocation.id}`);
+  }
+}
+
 compareField("case bundle", "visitInterviews", "visitInterviews", visitInterviews, bundle.visitInterviews);
+compareField("case bundle", "documentContactPeople", "documentContactPeople", documentContactPeople, bundle.documentContactPeople);
 
 for (const personId of relationPersonRefs) {
   if (!bundlePeopleById.has(personId)) {
@@ -189,6 +241,7 @@ console.log(
       relationPeopleCovered: relationPersonRefs.size,
       relationDocumentsCovered: relationDocRefs.size,
       relationPrompts: relationPrompts.length,
+      visitLocations: visitLocations.length,
       visitInterviews: Object.values(visitInterviews).reduce((sum, questions) => sum + questions.length, 0)
     },
     null,

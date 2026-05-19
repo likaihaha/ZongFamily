@@ -1,6 +1,622 @@
 # 测试报告
+## 2026-05-19 13:43 Asia/Shanghai 真人试玩一键会话
+命令：
+```powershell
+$errors = $null; $tokens = $null; [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path tools\start_manual_playtest.ps1), [ref]$tokens, [ref]$errors) | Out-Null; if ($errors.Count -gt 0) { $errors | Format-List; exit 1 } else { 'PowerShell parser check passed.' }
+npm.cmd run check:manual-session
+node --check tools\serve_manual_playtest.mjs
+npm.cmd run validate
+'' | powershell -ExecutionPolicy Bypass -File tools\start_manual_playtest.ps1 -NoOpen
+```
 
-更新时间：2026-05-17 22:00 Asia/Shanghai
+结果：
+- `tools\start_manual_playtest.ps1` 通过 PowerShell 解析器检查。
+- `npm.cmd run check:manual-session` 通过，确认一键会话脚本、试玩执行包和游戏入口文件存在且非空。
+- `tools\serve_manual_playtest.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；完整验证链已包含真人试玩一键会话脚本的只读检查。
+- `tools\start_manual_playtest.ps1 -NoOpen` 短暂启动本地服务成功，打印 `http://127.0.0.1:8787/docs/manual_playtest_packet.html`、游戏入口和建议保存路径 `docs\manual_playtest_result_20260519_observer.md`，随后自动回车停止服务。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码、内容包和自动通关路径未改动；验证重点是减少真人试玩执行入口摩擦。
+
+## 2026-05-19 12:12 Asia/Shanghai 真人试玩回收防空填
+命令：
+```powershell
+node --check tools\validate_manual_playtest_packet.mjs
+node --check tools\validate_manual_playtest_results.mjs
+node tools\validate_manual_playtest_packet.mjs
+node tools\validate_manual_playtest_results.mjs
+npm.cmd run validate
+```
+
+结果：
+- `tools\validate_manual_playtest_packet.mjs` 和 `tools\validate_manual_playtest_results.mjs` 语法检查通过。
+- `node tools\validate_manual_playtest_packet.mjs` 通过，确认执行包仍包含路线、观察点、记录表、判定字段、结论选项和 Markdown 生成脚本。
+- `node tools\validate_manual_playtest_results.mjs` 通过；当前仍无真实 `manual_playtest_result_*.md`，因此只校验模板，但脚本已具备结果文件非空字段检查。
+- `npm.cmd run validate` 通过；完整验证链包含内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、执行包、结果回收、本地 HTTP 入口和可玩表面。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码、内容包和自动通关路径未改动；验证重点是真人试玩回收文件的防空填约束。
+
+## 2026-05-19 11:43 Asia/Shanghai 真人试玩本地 HTTP 入口
+命令：
+```powershell
+node --check tools\serve_manual_playtest.mjs
+npm.cmd run check:manual-serve
+npm.cmd run validate
+$env:PORT='8791'; $p = Start-Process -FilePath node -ArgumentList 'tools/serve_manual_playtest.mjs' -WorkingDirectory (Get-Location) -PassThru -WindowStyle Hidden; try { Start-Sleep -Seconds 2; Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:8791/docs/manual_playtest_packet.html'; Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:8791/game/index.html' } finally { if ($p -and !$p.HasExited) { Stop-Process -Id $p.Id -Force } }
+```
+
+结果：
+- `tools\serve_manual_playtest.mjs` 语法检查通过。
+- `npm.cmd run check:manual-serve` 通过，确认 `docs/manual_playtest_packet.html` 和 `game/index.html` 存在且非空。
+- `npm.cmd run validate` 通过；完整验证链已包含真人试玩本地 HTTP 入口的只读检查。
+- 短暂启动本地服务后，`http://127.0.0.1:8791/docs/manual_playtest_packet.html` 返回 200 且包含“真人试玩执行包”；`http://127.0.0.1:8791/game/index.html` 返回 200 且包含 `app.js` 引用。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码、内容包和自动通关路径未改动；验证重点是解决 `file://` 被拦截后的真人试玩执行入口。
+
+## 2026-05-19 10:41 Asia/Shanghai 真人试玩入口复核
+命令：
+```powershell
+npm.cmd run validate
+```
+
+补充检查：
+- `Get-ChildItem docs -Filter 'manual_playtest_result_*.md'` 返回空，确认当前仍没有真实真人试玩回收文件。
+- 应用内浏览器尝试打开 `file:///D:/MyWork/ZongFamily/docs/manual_playtest_packet.html` 被浏览器安全策略拒绝；未绕过该策略。
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径、真人试玩清单、试玩执行包、结果回收模板和可玩表面校验均无错误。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码、内容包和试玩执行包未改动；验证重点是确认 08:38 后阻塞边界仍是真人试玩缺失。
+- 当前下一步仍是用系统浏览器打开 `docs/manual_playtest_packet.html` 做至少 1 轮真人试玩，并把页面生成的 Markdown 保存为 `docs/manual_playtest_result_YYYYMMDD_observer.md` 后运行 `npm.cmd run check:manual-results`。
+
+## 2026-05-19 08:38 Asia/Shanghai 真人试玩阻塞复核
+命令：
+```powershell
+node --check tools\validate_manual_playtest_packet.mjs
+node --check tools\validate_manual_playtest_results.mjs
+node --check game\app.js
+node tools\validate_manual_playtest_packet.mjs
+node tools\validate_manual_playtest_results.mjs
+npm.cmd run validate
+```
+
+结果：
+- `tools\validate_manual_playtest_packet.mjs`、`tools\validate_manual_playtest_results.mjs` 和 `game\app.js` 语法检查通过。
+- `node tools\validate_manual_playtest_packet.mjs` 通过，确认试玩执行包结构仍完整。
+- `node tools\validate_manual_playtest_results.mjs` 通过；当前尚无真实 `manual_playtest_result_*.md` 文件，因此只校验结果模板。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、执行包、结果模板和可玩表面校验均无错误。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码和内容包未改动；验证重点是确认 07:39 的试玩回收链路仍是当前阻塞边界。
+
+## 2026-05-19 07:39 Asia/Shanghai 真人试玩回收降摩擦
+命令：
+```powershell
+node --check tools\validate_manual_playtest_packet.mjs
+node --check tools\validate_manual_playtest_results.mjs
+node tools\validate_manual_playtest_packet.mjs
+node tools\validate_manual_playtest_results.mjs
+npm.cmd run validate
+@'
+const fs = require('fs');
+const vm = require('vm');
+const html = fs.readFileSync('docs/manual_playtest_packet.html', 'utf8');
+const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((match) => match[1]);
+for (const [index, script] of scripts.entries()) {
+  new vm.Script(script, { filename: `manual_playtest_packet_script_${index + 1}.js` });
+}
+console.log(`Checked ${scripts.length} inline script(s).`);
+'@ | node -
+```
+
+结果：
+- `tools\validate_manual_playtest_packet.mjs` 和 `tools\validate_manual_playtest_results.mjs` 语法检查通过。
+- `node tools\validate_manual_playtest_packet.mjs` 通过，确认执行包保留真人试玩风险词、路线、记录表、通过标准、结论选项，并新增可编辑字段、生成区和 Markdown 生成脚本入口。
+- `node tools\validate_manual_playtest_results.mjs` 通过，当前尚无真实 `manual_playtest_result_*.md` 文件，因此本轮只校验结果模板；后续结果文件出现后会自动纳入结构检查。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、执行包、结果模板和可玩表面校验均无错误。
+- 额外用 Node 编译 `docs/manual_playtest_packet.html` 中 1 段内联脚本通过，降低浏览器打开后生成按钮脚本语法失败的风险。
+- 本轮未运行 `npm.cmd run playtest` 或 `npm.cmd run smoke`，因为游戏运行时代码未改动；验证重点是试玩执行包与结果回收链路。
+
+## 2026-05-19 06:37 Asia/Shanghai 真人试玩前监督复跑
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_playable_surface.mjs
+node --check tools\validate_manual_playtest_packet.mjs
+node --check tools\validate_manual_playtest_results.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js`、`tools\validate_playable_surface.mjs`、`tools\validate_manual_playtest_packet.mjs` 和 `tools\validate_manual_playtest_results.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径、真人试玩清单、试玩执行包、结果回收模板和可玩表面校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 首次因 Edge 临时 profile / 截图文件占用失败；安全清理工作区内 `.tmp-edge-profile` 和旧 `docs/smoke-autotest.png` 后重跑通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮未发现构建失败、测试失败、内容包漂移或可玩入口缺失；当前剩余风险仍是真人试玩观察缺失，自动化不能判断玩家是否自然注意到“更多回查 / 新问询入口 / 先看材料 / 锁定提示”。
+
+## 2026-05-19 05:36 Asia/Shanghai 试玩交付物监督复核
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_playable_surface.mjs
+node --check tools\validate_manual_playtest_packet.mjs
+node --check tools\validate_manual_playtest_results.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js`、`tools\validate_playable_surface.mjs`、`tools\validate_manual_playtest_packet.mjs` 和 `tools\validate_manual_playtest_results.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径、真人试玩清单、试玩执行包、结果回收模板和可玩表面校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮未发现构建失败、测试失败、内容包漂移或可玩入口缺失；当前剩余风险仍是真人试玩观察缺失，应进入 `docs/manual_playtest_packet.html` 的人工执行环节。
+
+## 2026-05-19 04:34 Asia/Shanghai 真人试玩结果回收模板
+命令：
+```powershell
+node --check tools\validate_manual_playtest_results.mjs
+node --check game\app.js
+npm.cmd run check:manual-results
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\validate_manual_playtest_results.mjs` 和 `game\app.js` 语法检查通过。
+- `npm.cmd run check:manual-results` 通过；`docs/manual_playtest_results_template.md` 保留真人试玩结果回收模板、核心观察、路线记录、判定表、修改建议和结论，并覆盖“更多回查 / 新问询入口 / 先看材料 / 锁定提示 / 2 分钟内 / 罗建宁线”等关键字段。
+- `npm.cmd run validate` 通过；新增结果模板校验已接入完整验证链，内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、试玩执行包、结果回收模板和可玩入口均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 当前剩余风险仍是真人观察本身；结果模板用于让试玩反馈可执行，但不能替代真实玩家反馈。
+
+## 2026-05-19 03:33 Asia/Shanghai 真人试玩执行包
+命令：
+```powershell
+node --check tools\validate_manual_playtest_packet.mjs
+node --check game\app.js
+npm.cmd run check:manual-packet
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\validate_manual_playtest_packet.mjs` 和 `game\app.js` 语法检查通过。
+- `npm.cmd run check:manual-packet` 通过；`docs/manual_playtest_packet.html` 保留真人试玩执行包、8 步路线、关键观察点、记录表、通过标准、结论选项，以及“更多回查 / 新问询入口 / 首次展开 / 1 项待回查 / 先看材料 / 锁定提示 / 2 分钟内”等关键观察项。
+- `npm.cmd run validate` 通过；新增试玩包校验已接入完整验证链，内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单、试玩包和可玩入口均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 当前剩余风险仍是真人观察本身；执行包用于降低试玩执行成本，但不能替代真实玩家反馈。
+
+## 2026-05-19 02:34 Asia/Shanghai 可玩表面守门校验
+命令：
+```powershell
+npm.cmd run audit:originals
+node tools\sync_case_bundle_from_app.mjs
+node --check tools\validate_playable_surface.mjs
+node --check game\app.js
+npm.cmd run check:surface
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run audit:originals` 通过；游戏内 50 份资料和内容包 50 份资料均判定为原件式材料，`needsRewrite=0`。
+- `node tools\sync_case_bundle_from_app.mjs` 通过；从当前运行时数据同步出 24 名人物、50 份资料、6 条关系谜题、6 个走访地点和 12 条现场问询。
+- `tools\validate_playable_surface.mjs` 和 `game\app.js` 语法检查通过。
+- `npm.cmd run check:surface` 通过；页面仍保留 8 个核心视图、16 个关键 DOM 入口、50 份资料、24 名人物、6 条关系谜题和 6 个走访地点。
+- `npm.cmd run validate` 通过；新增可玩表面校验已接入完整验证链，内容包、提交答案一致性、内容同步、资产、解锁矩阵、基础数据、搜索路径、真人试玩清单和可玩入口均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 当前剩余风险仍是真人观察本身；自动化可以保护入口和路径不断链，但不能替代玩家是否自然注意到“更多回查 / 新问询入口 / 先看材料”。
+
+## 2026-05-19 01:32 Asia/Shanghai 监督回归复查
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_manual_playtest_checklist.mjs
+npm.cmd run check:manual-playtest
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_manual_playtest_checklist.mjs` 语法检查通过。
+- `npm.cmd run check:manual-playtest` 通过；真人试玩清单仍覆盖“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”、侧栏阶段提示、先看材料、锁定提示、通过标准和记录模板。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径和真人试玩清单校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮未发现构建、数据同步、普通试玩或自动通关失败；当前剩余风险仍是真人观察本身，自动化不能替代玩家是否自然注意到“更多回查 / 新问询入口 / 先看材料”。
+
+## 2026-05-19 00:29 Asia/Shanghai 监督回归复跑
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径和真人试玩清单校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮没有发现需要立刻改代码的阻塞；当前唯一不能由自动化替代的风险仍是真人是否自然注意到“更多回查 / 新问询入口 / 先看材料”。
+
+## 2026-05-18 23:28 Asia/Shanghai 监督回归确认
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径和真人试玩清单校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮没有发现需要立刻改代码的阻塞；当前唯一不能由自动化替代的风险仍是真人是否自然注意到“更多回查 / 新问询入口 / 先看材料”。
+
+## 2026-05-18 22:27 Asia/Shanghai 真人试玩前复核
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据、搜索路径和真人试玩清单校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮未发现构建、数据同步、普通试玩或自动通关失败；当前剩余风险仍是真人观察本身，自动化不能替代玩家是否自然注意到“更多回查 / 新问询入口”的判断。
+
+## 2026-05-18 21:29 Asia/Shanghai 真人试玩清单回归
+命令：
+```powershell
+node --check tools\validate_manual_playtest_checklist.mjs
+npm.cmd run check:manual-playtest
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\validate_manual_playtest_checklist.mjs` 语法检查通过。
+- `npm.cmd run check:manual-playtest` 通过；清单覆盖“更多回查 / 新问询入口 / 首次展开 / 1 项待回查”、侧栏阶段提示、先看材料、锁定提示、通过标准和记录模板。
+- `npm.cmd run validate` 通过；新增手工清单校验已接入完整校验链，内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验仍无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 当前剩余风险仍是真人观察本身：自动化已经能保证清单存在和路径不断链，但不能替代玩家是否自然注意到“更多回查”的判断。
+
+## 2026-05-18 20:28 Asia/Shanghai 备忘录回查外层回归
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 首次因新增中文检查点字符串在 PowerShell 文件编码下被误读而解析失败；已改为 UTF-8 字节解码方式构造检查点标签，避免脚本编码影响中文匹配。
+- `npm.cmd run playtest` 修复后通过；外层脚本确认 `guided-playtest-report` 至少包含 5 个关键检查点：阶段提示问询入口回查、备忘录问询入口回查、备忘录回查批次更新、备忘录回查折叠、问询入口检索回显。
+- `npm.cmd run smoke` 通过；自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 当前剩余风险仍是缺少真人试玩反馈，自动脚本只能确认入口存在和路径不断链，不能判断玩家是否会自然注意到“更多回查”。
+
+## 2026-05-18 19:26 Asia/Shanghai 自动化监督复核
+命令：
+```powershell
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过，并重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，自动通关路径仍可完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- 本轮没有发现需要立刻改代码的阻塞；当前风险仍是缺少真人试玩反馈，无法确认“更多回查”的新问询入口是否足够显眼。
+
+## 2026-05-18 18:25 Asia/Shanghai 回查类型提示回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认首个和第二个现场问询回查都会写入 `data-task-review-context="问询入口"`，并在未确认的新批次中显示“新问询入口”和“首次展开”。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 15:30 Asia/Shanghai 回查批次上下文回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认第二个现场问询回查会生成不同 `data-task-review-key`，即使上一个回查已被确认，也会重新标记 `data-task-review-unseen="true"`、自动展开并显示“首次展开”。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+
+## 2026-05-18 14:36 Asia/Shanghai 更多回查首次提示回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认新回查批次首次自动展开时显示“首次展开”，点击回查任务后写入 `reviewSeenKey`，再次渲染同一批次时该提示消失，且当前教学高亮仍回到 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 14:20 Asia/Shanghai 更多回查一次展开回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 首次在断言位置上失败：脚本先点击了问询回查任务，后续再检查同一批次时已经被记为已看过。本轮将断言移动到回查任务首次出现的位置，并新增点击后记忆批次的检查，重跑通过。
+- `npm.cmd run playtest` 最终通过；普通试玩确认新回查批次首次自动展开并带 `data-task-review-unseen="true"`，点击回查任务后写入 `reviewSeenKey`，读过第一份资料后同一回查任务保持折叠且不抢占 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 13:19 Asia/Shanghai 更多回查状态提示回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询回查任务继续折叠在 `data-task-review-drawer` 内，折叠区暴露 `data-task-review-status="pending"` 和 `data-task-review-count="1"`，标题显示“有新入口”和“1 项待回查”，且当前教学高亮仍是 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 12:17 Asia/Shanghai 更多回查数量提示回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询回查任务继续折叠在 `data-task-review-drawer` 内，折叠区暴露 `data-task-review-count="1"`，标题显示“1 项待回查”，且当前教学高亮仍是 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 10:28 Asia/Shanghai 备忘录更多回查回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询回查任务继续存在且可点击，但已被折叠到 `data-task-review-drawer`“更多回查”区域，读过第一份资料后不会抢占 `.is-current`，当前教学高亮仍转给 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 10:10 Asia/Shanghai 备忘录回查降噪回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询回查任务继续存在并可打开入口词，同时读过第一份资料后不会抢占 `.is-current`，当前教学高亮转给 `tutorial_collect`。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+- in-app browser 检查受策略限制：`file://` 本地页和 `127.0.0.1:8876` 本地服务均被拒绝访问；临时本地服务已停止。
+
+## 2026-05-18 09:17 Asia/Shanghai 先看材料提示收敛回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认世昌集团取件后走访页置顶提醒优先承接 `doc_trust_clause`，侧栏不重复渲染 `data-phase-open-doc`；切到资料库后侧栏恢复直达并可打开该材料。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 08:00 Asia/Shanghai 走访页材料置顶提醒回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认世昌集团取件后走访详情顶部出现 `data-visit-pinned-doc="group"` 和 `data-visit-pinned-first-doc="doc_trust_clause"`，打开并阅读材料后该置顶提醒自动消失。
+- `npm.cmd run smoke` 通过；自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 07:13 Asia/Shanghai 阶段提示材料直达回归
+命令：
+```powershell
+node --check game\app.js
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询材料尚未取得时侧栏仍走入口词回查，世昌集团取件后侧栏阶段提示出现 `data-phase-open-doc="doc_trust_clause"`，点击后直接打开并标记已读。
+- `npm.cmd run smoke` 通过，自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 05:31 Asia/Shanghai 阶段提示问询回查回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认现场问询后侧栏阶段提示会出现 `data-phase-context-type="visit-question"` 和 `data-phase-first-doc="doc_trust_clause"`，点击后资料库保留 `data-search-origin="visit-question"`。
+- `npm.cmd run smoke` 通过，自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 04:28 Asia/Shanghai 备忘录问询入口回查回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认现场问询后备忘录会出现 `data-task-id="tutorial_visit_question_entry"`，点击后资料库保留 `data-search-origin="visit-question"` 和 `data-search-first-doc="doc_trust_clause"`。
+- `npm.cmd run smoke` 通过，自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 03:36 Asia/Shanghai 问询入口检索回显回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过；普通试玩确认问询入口检索会保留 `searchContext`，资料库结果页出现 `data-search-origin="visit-question"` 和 `data-search-first-doc="doc_trust_clause"`，并可从回显区直接打开先看材料。
+- `npm.cmd run smoke` 通过，自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 03:07 Asia/Shanghai 问询入口词标识回归
+命令：
+```powershell
+node --check game\app.js
+node tools\validate_search_paths.mjs
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 语法检查通过。
+- 搜索路径校验通过；12 条现场问询仍能命中对应地点资料和 `firstDoc`，锁定命中没有超过上限。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过，普通试玩新增断言确认问询回答区和日程回看区都带有 `data-visit-search-context="first-doc"`。
+- `npm.cmd run smoke` 通过，自动通关路径仍能完成最终提交，并重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 02:08 Asia/Shanghai 现场问询搜索收敛回归
+命令：
+```powershell
+node --check game\app.js
+node --check tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs
+npm.cmd run sync:bundle
+node tools\validate_search_paths.mjs --write
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `game\app.js` 和 `tools\validate_search_paths.mjs` 语法检查通过。
+- 现场问询搜索路径校验通过；每条问询都能命中对应地点资料和 `firstDoc`，且锁定命中数量未超过问询上限。
+- `npm.cmd run sync:bundle` 通过，内容包仍为 24 名人物、50 份资料、6 个走访地点和 12 条现场问询。
+- `node tools\validate_search_paths.mjs --write` 通过，并重新生成 `docs/search_route_review.md`。
+- `npm.cmd run validate` 通过；内容包、提交答案一致性、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+## 2026-05-18 01:05 Asia/Shanghai 入口原件后续搜索矩阵回归
+命令：
+```powershell
+node --check tools\validate_search_paths.mjs
+node tools\validate_search_paths.mjs --write
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- `tools\validate_search_paths.mjs` 语法检查通过。
+- `node tools\validate_search_paths.mjs --write` 通过，并重新生成 `docs/search_route_review.md`。
+- 搜索路线复盘现在包含 12 个主线检查点、6 个走访入口检查点、6 个入口原件后续检查点和 12 个现场问询检查点。
+- 6 个入口原件后续检查点均确认：后续搜索能命中本地点资料、入口原件仍可见，且锁定命中数量未超过当前设定上限。
+- `npm.cmd run validate` 通过；内容包、提交答案、内容同步、未来资产、运行时资产、资料视觉映射、解锁矩阵、基础数据和搜索路径校验均无错误。
+- `npm.cmd run playtest` 通过，重新生成 `docs/playtest-dom.html` 和 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过，重新生成 `docs/smoke-dom.html` 和 `docs/smoke-autotest.png`。
+
+更新时间：2026-05-17 23:03 Asia/Shanghai
+
+## 2026-05-17 23:03 Asia/Shanghai 走访矩阵内容包同步回归
+
+命令：
+```powershell
+node --check game\app.js
+node --check tools\sync_case_bundle_from_app.mjs
+node --check tools\validate_content_bundle.mjs
+node --check tools\validate_content_sync.mjs
+npm.cmd run sync:bundle
+npm.cmd run validate
+npm.cmd run playtest
+npm.cmd run smoke
+```
+
+结果：
+- 语法检查全部通过。
+- `npm.cmd run sync:bundle` 通过，内容包同步输出 24 名人物、50 份资料、6 条关系题、6 个走访地点和 12 条现场问询。
+- `npm.cmd run validate` 通过；内容包结构校验现在覆盖 `visitLocations` 和 `documentContactPeople`，并检查入口材料、经手人、坐标、办理窗口、问询 `firstDoc` 与运行时代码一致。
+- `npm.cmd run playtest` 通过并重新生成 `docs/playtest-dom.html` 与 `docs/playtest-guided.png`。
+- `npm.cmd run smoke` 通过并重新生成 `docs/smoke-dom.html` 与 `docs/smoke-autotest.png`。
 
 ## 2026-05-17 22:00 Asia/Shanghai 入口原件下一步矩阵回归
 

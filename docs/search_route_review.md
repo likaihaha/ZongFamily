@@ -1,6 +1,6 @@
 # 搜索路线试玩复盘
 
-更新时间：2026-05-17 13:23 Asia/Shanghai
+更新时间：2026-05-19 14:24 Asia/Shanghai
 
 该报告由 `node tools/validate_search_paths.mjs --write` 生成，用来把渐进解锁后的主线搜索链转成可读台账。它不能替代真人试玩，但可以确认公开入口、锁定提示、阅读解锁和走访兜底没有断链。
 
@@ -9,6 +9,7 @@
 - 状态：通过
 - 主线路线检查点：12
 - 走访入口检查点：6
+- 入口原件后续检查点：6
 - 现场问询检查点：12
 - 错误数量：0
 
@@ -40,21 +41,32 @@
 | 世昌集团 | 信托 | 1 | 香港家族信托文件节选（doc_trust_clause） |
 | 云山至黔中旧线 | 黔中 | 2 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line）、旧明信片残片（doc_old_postcard） |
 
+## 入口原件后续
+
+| 入口 | 下一步搜索词 | 本地资料命中 | 可见资料数 | 锁定资料数 | 可见资料 |
+| --- | --- | ---: | ---: | ---: | --- |
+| 县档案馆 | 罗建宁 | 2 | 4 | 5 | 黔中地区旧户籍迁入登记（doc_luo_birth）、陈静出生医学记录复印件（doc_chen_birth）、云山卫生院 1969 年冬接生登记摘页（doc_midwife_register）、黔中中专同学访谈：罗建宁（doc_classmate_luo） |
+| 县医院 | DNA | 2 | 2 | 4 | 云山县疾控中心亲缘比对记录（doc_dna_record）、云山县人民医院住院样本留存单（doc_hospital_blood） |
+| 县一中 | 陈嘉东 | 4 | 4 | 6 | 云山家长汇论坛：县一中家长会（doc_school_forum）、云山县第一中学学生信息表（doc_jiadong_school）、县一中高二三班家访记录（doc_teacher_visit）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
+| 唱响 KTV 后巷 | 陈静 | 7 | 13 | 6 | 云山县妇联创业帮扶登记表（doc_women_fed）、陈静博客：2014 年 3 月 15 日（doc_blog_chenjing）、云山家长汇论坛：县一中家长会（doc_school_forum）、云山县疾控中心亲缘比对记录（doc_dna_record）、陈静出生医学记录复印件（doc_chen_birth）、云山县第一中学学生信息表（doc_jiadong_school）、唱响 KTV 个体工商登记（doc_ktv_license）、云山县教育局人才窗口档案挂靠说明（doc_talent_window）、县一中高二三班家访记录（doc_teacher_visit）、唱响 KTV 房屋租赁备案（doc_ktv_lease_archive）、老街社区 2016 年走访记录（doc_neighborhood_visit）、唱响 KTV 2020 年复工检查表（doc_ktv_reopen_check）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
+| 世昌集团 | 信托 | 3 | 5 | 6 | 世昌集团官网《集团历程》（doc_group_history）、香港家族信托文件节选（doc_trust_clause）、世昌集团匿名信（doc_anonymous_letter）、云山县公证处接待笔录（doc_notary_meeting）、云山县司法所继承咨询摘记（doc_estate_law_note） |
+| 云山至黔中旧线 | 黔中 | 4 | 6 | 3 | 《云山县情概览》2020 年修订页（doc_yunshan_county_profile）、云山至黔中旧客运线路备案（doc_yunqian_bus_line）、黔中地区旧户籍迁入登记（doc_luo_birth）、旧明信片残片（doc_old_postcard）、黔中邮电所 1971 年汇款回执残联（doc_remittance_stub）、黔中中专同学访谈：罗建宁（doc_classmate_luo） |
+
 ## 现场问询入口
 
 | 问询 | 经手人 | 搜索词 | 先看材料 | 本地资料命中 | 可见资料 | 锁定资料 |
 | --- | --- | --- | --- | ---: | --- | --- |
 | 县档案馆 / 旧户籍能证明到哪一步？ | 何国生 | 旧户籍 | 黔中地区旧户籍迁入登记（doc_luo_birth） | 1 | 黔中地区旧户籍迁入登记（doc_luo_birth） | 无 |
-| 县档案馆 / 照片背注该怎么查？ | 何国生 | 建宁 | 云山县档案馆：1969 年春节合影背注（doc_photo_back） | 2 | 云山县档案馆：1969 年春节合影背注（doc_photo_back）、黔中地区旧户籍迁入登记（doc_luo_birth） | 云山县疾控中心亲缘比对记录（doc_dna_record）、陈静出生医学记录复印件（doc_chen_birth）、云山县公证处接待笔录（doc_notary_meeting）、旧明信片残片（doc_old_postcard）、云山卫生院 1969 年冬接生登记摘页（doc_midwife_register）、供销社仓储点临时借支单（doc_supply_advance）、黔中邮电所 1971 年汇款回执残联（doc_remittance_stub）、李桂兰未寄出信稿（doc_li_guilan_letter）、黔中中专同学访谈：罗建宁（doc_classmate_luo）、地方论坛《黔中旧事》：钱树林认父帖（doc_false_qian）、世昌集团舆情应对草案（doc_jianhong_pr_plan）、宗建丽整理父亲旧信清单（doc_jianli_old_letters）、云山县档案馆 2020 年调档登记簿（doc_archive_request_log） |
-| 县医院 / 血样来源可靠吗？ | 周美英 | DNA | 云山县人民医院住院样本留存单（doc_hospital_blood） | 1 | 云山县人民医院住院样本留存单（doc_hospital_blood） | 香港家族信托文件节选（doc_trust_clause）、云山县疾控中心亲缘比对记录（doc_dna_record）、《云山八卦周刊》：李天赐疑云（doc_gossip_li_tianci）、云山县司法所继承咨询摘记（doc_estate_law_note）、鼎辉基金受益人尽调函（doc_dinghui_due_diligence） |
+| 县档案馆 / 照片背注该怎么查？ | 何国生 | 背注 | 云山县档案馆：1969 年春节合影背注（doc_photo_back） | 1 | 云山县档案馆：1969 年春节合影背注（doc_photo_back） | 宗建丽整理父亲旧信清单（doc_jianli_old_letters）、云山县档案馆 2020 年调档登记簿（doc_archive_request_log） |
+| 县医院 / 血样来源可靠吗？ | 周美英 | 亲缘比对 | 云山县人民医院住院样本留存单（doc_hospital_blood） | 1 | 云山县人民医院住院样本留存单（doc_hospital_blood） | 云山县疾控中心亲缘比对记录（doc_dna_record） |
 | 县医院 / 出生登记要和谁对上？ | 周美英 | 血样 | 云山县人民医院住院样本留存单（doc_hospital_blood） | 1 | 云山县人民医院住院样本留存单（doc_hospital_blood） | 云山县疾控中心亲缘比对记录（doc_dna_record）、云山县司法所继承咨询摘记（doc_estate_law_note） |
-| 县一中 / 学籍里最关键的字段？ | 黄雅玲 | 陈嘉东 | 云山县第一中学学生信息表（doc_jiadong_school） | 2 | 云山家长汇论坛：县一中家长会（doc_school_forum）、云山县第一中学学生信息表（doc_jiadong_school） | 陈静短视频《我的乖女儿》转写（doc_tiktok_chenjing）、县一中高二三班家访记录（doc_teacher_visit）、云山县司法所继承咨询摘记（doc_estate_law_note）、唱响 KTV 房屋租赁备案（doc_ktv_lease_archive）、老街社区 2016 年走访记录（doc_neighborhood_visit）、世昌集团舆情应对草案（doc_jianhong_pr_plan）、唱响 KTV 2020 年复工检查表（doc_ktv_reopen_check）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
+| 县一中 / 学籍里最关键的字段？ | 黄雅玲 | 学生信息 | 云山县第一中学学生信息表（doc_jiadong_school） | 1 | 云山县第一中学学生信息表（doc_jiadong_school） | 无 |
 | 县一中 / 论坛帖子能不能当证据？ | 黄雅玲 | 县一中 | 云山县第一中学学生信息表（doc_jiadong_school） | 2 | 云山家长汇论坛：县一中家长会（doc_school_forum）、云山县第一中学学生信息表（doc_jiadong_school） | 陈静短视频《我的乖女儿》转写（doc_tiktok_chenjing）、县一中高二三班家访记录（doc_teacher_visit）、老街社区 2016 年走访记录（doc_neighborhood_visit）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
-| 唱响 KTV 后巷 / KTV 线索先查什么？ | 马丽华 | 陈静 | 唱响 KTV 个体工商登记（doc_ktv_license） | 2 | 云山县妇联创业帮扶登记表（doc_women_fed）、唱响 KTV 个体工商登记（doc_ktv_license） | 陈静博客：2014 年 3 月 15 日（doc_blog_chenjing）、云山家长汇论坛：县一中家长会（doc_school_forum）、陈静短视频《我的乖女儿》转写（doc_tiktok_chenjing）、云山县疾控中心亲缘比对记录（doc_dna_record）、陈静出生医学记录复印件（doc_chen_birth）、云山县第一中学学生信息表（doc_jiadong_school）、地方论坛《云山茶馆》：陈静身世帖（doc_gossip_wrong_mother）、云山县教育局人才窗口档案挂靠说明（doc_talent_window）、地方论坛《云山茶馆》：贵州男友误认帖（doc_false_peng）、县一中高二三班家访记录（doc_teacher_visit）、云山县司法所继承咨询摘记（doc_estate_law_note）、宗建芳给妇联旧同事的便条（doc_jianfang_note）、唱响 KTV 房屋租赁备案（doc_ktv_lease_archive）、老街社区 2016 年走访记录（doc_neighborhood_visit）、世昌集团舆情应对草案（doc_jianhong_pr_plan）、唱响 KTV 2020 年复工检查表（doc_ktv_reopen_check）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
-| 唱响 KTV 后巷 / 邻里走访能定案吗？ | 马丽华 | KTV | 唱响 KTV 个体工商登记（doc_ktv_license） | 2 | 云山县 2020 年秋公共场所办事须知（doc_2020_county_notice）、云山县妇联创业帮扶登记表（doc_women_fed）、唱响 KTV 个体工商登记（doc_ktv_license） | 云山家长汇论坛：县一中家长会（doc_school_forum）、陈静短视频《我的乖女儿》转写（doc_tiktok_chenjing）、地方论坛《云山茶馆》：陈静身世帖（doc_gossip_wrong_mother）、县一中高二三班家访记录（doc_teacher_visit）、唱响 KTV 房屋租赁备案（doc_ktv_lease_archive）、老街社区 2016 年走访记录（doc_neighborhood_visit）、唱响 KTV 2020 年复工检查表（doc_ktv_reopen_check）、县一中 2020 年秋奖学金公示撤稿截图（doc_scholarship_notice） |
-| 世昌集团 / 信托材料能查到哪一步？ | 魏雪琴 | 信托 | 香港家族信托文件节选（doc_trust_clause） | 1 | 世昌集团官网《集团历程》（doc_group_history）、香港家族信托文件节选（doc_trust_clause）、世昌集团匿名信（doc_anonymous_letter） | 《云山八卦周刊》：李天赐疑云（doc_gossip_li_tianci）、云山县公证处接待笔录（doc_notary_meeting）、世昌集团家族会议纪要节选（doc_family_meeting）、云山县司法所继承咨询摘记（doc_estate_law_note）、世昌集团 2005 年改制股权底稿（doc_equity_draft_2005）、世昌集团 2016 年春治理调整备忘（doc_board_handover_2015）、鼎辉基金受益人尽调函（doc_dinghui_due_diligence）、世昌集团舆情应对草案（doc_jianhong_pr_plan） |
+| 唱响 KTV 后巷 / KTV 线索先查什么？ | 马丽华 | 个体工商 | 唱响 KTV 个体工商登记（doc_ktv_license） | 1 | 唱响 KTV 个体工商登记（doc_ktv_license） | 无 |
+| 唱响 KTV 后巷 / 邻里走访能定案吗？ | 马丽华 | 经营场所 | 唱响 KTV 个体工商登记（doc_ktv_license） | 1 | 云山县 2020 年秋公共场所办事须知（doc_2020_county_notice）、唱响 KTV 个体工商登记（doc_ktv_license） | 老街社区 2016 年走访记录（doc_neighborhood_visit） |
+| 世昌集团 / 信托材料能查到哪一步？ | 魏雪琴 | 香港家族信托 | 香港家族信托文件节选（doc_trust_clause） | 1 | 世昌集团官网《集团历程》（doc_group_history）、香港家族信托文件节选（doc_trust_clause） | 云山县公证处接待笔录（doc_notary_meeting）、世昌集团舆情应对草案（doc_jianhong_pr_plan） |
 | 世昌集团 / 股权旧档和继承有什么关系？ | 方仁杰 | 股权 | 香港家族信托文件节选（doc_trust_clause） | 1 | 香港家族信托文件节选（doc_trust_clause） | 世昌集团 2005 年改制股权底稿（doc_equity_draft_2005）、世昌集团 2016 年春治理调整备忘（doc_board_handover_2015） |
-| 云山至黔中旧线 / 旧客运线为什么要查？ | 钱树林 | 黔中 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line） | 2 | 《云山县情概览》2020 年修订页（doc_yunshan_county_profile）、云山至黔中旧客运线路备案（doc_yunqian_bus_line）、旧明信片残片（doc_old_postcard） | 《云山县志》1995 年卷：知青名册节选（doc_educated_youth）、黔中地区旧户籍迁入登记（doc_luo_birth）、地方论坛《云山茶馆》：贵州男友误认帖（doc_false_peng）、黔中邮电所 1971 年汇款回执残联（doc_remittance_stub）、黔中中专同学访谈：罗建宁（doc_classmate_luo）、地方论坛《黔中旧事》：钱树林认父帖（doc_false_qian） |
+| 云山至黔中旧线 / 旧客运线为什么要查？ | 钱树林 | 旧客运线 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line） | 1 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line） | 无 |
 | 云山至黔中旧线 / 司机传闻怎么处理？ | 钱树林 | 钱树林 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line） | 1 | 云山至黔中旧客运线路备案（doc_yunqian_bus_line） | 地方论坛《黔中旧事》：钱树林认父帖（doc_false_qian） |
 
 ## 剩余风险
